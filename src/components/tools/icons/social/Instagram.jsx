@@ -28,10 +28,10 @@ export default function Instagram(props) {
 				y1="0"
 				y2="0"
 			>
-				<stop offset="0" stop-color="#515bd4" />
-				<stop offset="0.26" stop-color="#9510b8" />
-				<stop offset="0.66" stop-color="#e51804" />
-				<stop offset="1" stop-color="#feda77" />
+				<stop offset="0" stopColor="#515bd4" />
+				<stop offset="0.26" stopColor="#9510b8" />
+				<stop offset="0.66" stopColor="#e51804" />
+				<stop offset="1" stopColor="#feda77" />
 			</linearGradient>
 			<linearGradient
 				gradientTransform="matrix(-149.618,494.3,-494.3,-149.618,300.81,-27.1283)"
@@ -42,10 +42,10 @@ export default function Instagram(props) {
 				y1="0"
 				y2="0"
 			>
-				<stop offset="0" stop-color="#515bd4" />
-				<stop offset="0.26" stop-color="#9510b8" />
-				<stop offset="0.66" stop-color="#e51804" />
-				<stop offset="1" stop-color="#ffbf00" />
+				<stop offset="0" stopColor="#515bd4" />
+				<stop offset="0.26" stopColor="#9510b8" />
+				<stop offset="0.66" stopColor="#e51804" />
+				<stop offset="1" stopColor="#ffbf00" />
 			</linearGradient>
 			<linearGradient
 				gradientTransform="matrix(-149.618,494.3,-494.3,-149.618,300.81,-27.1283)"
@@ -56,10 +56,10 @@ export default function Instagram(props) {
 				y1="0"
 				y2="0"
 			>
-				<stop offset="0" stop-color="#515bd4" />
-				<stop offset="0.26" stop-color="#9510b8" />
-				<stop offset="0.66" stop-color="#e51804" />
-				<stop offset="1" stop-color="#ffbf00" />
+				<stop offset="0" stopColor="#515bd4" />
+				<stop offset="0.26" stopColor="#9510b8" />
+				<stop offset="0.66" stopColor="#e51804" />
+				<stop offset="1" stopColor="#ffbf00" />
 			</linearGradient>
 		</SvgIcon>
 	);

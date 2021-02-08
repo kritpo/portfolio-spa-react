@@ -8,6 +8,7 @@ import Loading from '../components/Loading';
 import Error from '../components/Error';
 import HeroContainer from '../containers/HeroContainer';
 import DetailsContainer from '../containers/DetailsContainer';
+import CareerContainer from '../containers/CareerContainer';
 
 // configure the prop types validation
 Portfolio.propTypes = {
@@ -38,9 +39,14 @@ function Portfolio({ resume }) {
 									Impossible de charger les données
 								</Error>
 							) : (
-								<Box textAlign="center">
-									<DetailsContainer />
-								</Box>
+								<Fragment>
+									<Box mb={4} textAlign="center">
+										<DetailsContainer />
+									</Box>
+									<Box>
+										<CareerContainer />
+									</Box>
+								</Fragment>
 							)}
 						</Paper>
 					</Box>

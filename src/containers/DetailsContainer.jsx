@@ -10,8 +10,8 @@ const mapStateToProps = (state, props) => ({
 	...props
 });
 
-export const DetailsContainer = ({ ...props }) => {
+function DetailsContainer({ ...props }) {
 	return <Details {...props} />;
-};
+}
 
 export default connect(mapStateToProps)(DetailsContainer);

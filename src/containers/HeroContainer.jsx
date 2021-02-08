@@ -71,7 +71,7 @@ const mapStateToProps = (state, ...props) => ({
 	...props
 });
 
-export const HeroContainer = ({ resume, ...props }) => {
+function HeroContainer({ resume, ...props }) {
 	// setup the title state hook
 	const [title, setTitle] = useState('|');
 
@@ -98,6 +98,6 @@ export const HeroContainer = ({ resume, ...props }) => {
 	}, [resume]);
 
 	return <Hero title={title} description={description} {...props} />;
-};
+}
 
 export default connect(mapStateToProps)(HeroContainer);

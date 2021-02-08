@@ -17,7 +17,7 @@ const mapDispatchToProps = {
 	fetchResume
 };
 
-export const PortfolioContainer = ({ fetchResume, ...props }) => {
+function PortfolioContainer({ fetchResume, ...props }) {
 	// setup the resume fetching hook
 	useEffect(() => {
 		// fetch the resume at the loading of the component
@@ -25,6 +25,6 @@ export const PortfolioContainer = ({ fetchResume, ...props }) => {
 	}, [fetchResume]);
 
 	return <Portfolio {...props} />;
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);

@@ -6,6 +6,7 @@ import { ExpandMore } from '@material-ui/icons';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import HeroContainer from '../containers/HeroContainer';
+import DetailsContainer from '../containers/DetailsContainer';
 
 function Portfolio({ resume }) {
 	return (
@@ -27,7 +28,9 @@ function Portfolio({ resume }) {
 									Impossible de charger les données
 								</Error>
 							) : (
-								<Box textAlign="center">Hello World!</Box>
+								<Box textAlign="center">
+									<DetailsContainer />
+								</Box>
 							)}
 						</Paper>
 					</Box>

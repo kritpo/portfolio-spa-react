@@ -8,6 +8,7 @@ import Portfolio from '../components/Portfolio';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (state, ...props) => ({
+	resume: state.resume,
 	...props
 });
 

@@ -30,6 +30,21 @@ export const fetchResume = () => dispatch => {
 					response.files['resume.json'].content
 				);
 
+				// FIXME temporary fix by attributing id to career items
+				let i = 0;
+				resume.work = resume.work.map(workItem => ({
+					...workItem,
+					id: i++
+				}));
+				resume.education = resume.education.map(educationItem => ({
+					...educationItem,
+					id: i++
+				}));
+				resume.volunteer = resume.volunteer.map(volunteerItem => ({
+					...volunteerItem,
+					id: i++
+				}));
+
 				// update state with fetched data
 				dispatch(resumeLoaded(resume));
 			})

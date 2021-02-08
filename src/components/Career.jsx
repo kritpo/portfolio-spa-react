@@ -45,8 +45,8 @@ function Career({
 	const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
 	// convert careers details to React component
-	const careerList = careers.map((career, index) => (
-		<CareerItem career={career} id={index} key={index} />
+	const careerList = careers.map(career => (
+		<CareerItem career={career} id={career.id} key={career.id} />
 	));
 
 	return (

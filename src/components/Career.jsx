@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { useTheme } from '@material-ui/core/styles';
 
-import { Box, Typography, useMediaQuery } from '@material-ui/core';
+import { Box, Button, Typography, useMediaQuery } from '@material-ui/core';
 import { ArrowUpward, Star } from '@material-ui/icons';
 import {
 	Timeline,
@@ -22,10 +22,24 @@ Career.propTypes = {
 		PropTypes.shape({
 			type: PropTypes.oneOf([WORK, EDUCATION, VOLUNTEER]).isRequired
 		})
-	).isRequired
+	).isRequired,
+	showWork: PropTypes.bool.isRequired,
+	workToggle: PropTypes.func.isRequired,
+	showEducation: PropTypes.bool.isRequired,
+	educationToggle: PropTypes.func.isRequired,
+	showVolunteer: PropTypes.bool.isRequired,
+	volunteerToggle: PropTypes.func.isRequired
 };
 
-function Career({ careers }) {
+function Career({
+	careers,
+	showWork,
+	workToggle,
+	showEducation,
+	educationToggle,
+	showVolunteer,
+	volunteerToggle
+}) {
 	// setup the breakpoints matchers hooks
 	const theme = useTheme();
 	const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -41,6 +55,38 @@ function Career({ careers }) {
 				<Typography component="h3" variant="h4" gutterBottom>
 					Mon parcours
 				</Typography>
+			</Box>
+			<Box display="flex" flexWrap="wrap" justifyContent="center">
+				<Box m={2} clone>
+					<Button
+						variant="contained"
+						color={showWork ? 'default' : 'primary'}
+						disableElevation={showWork}
+						onClick={workToggle}
+					>
+						Professionnel
+					</Button>
+				</Box>
+				<Box m={2} clone>
+					<Button
+						variant="contained"
+						color={showEducation ? 'default' : 'primary'}
+						disableElevation={showEducation}
+						onClick={educationToggle}
+					>
+						Scolaire
+					</Button>
+				</Box>
+				<Box m={2} clone>
+					<Button
+						variant="contained"
+						color={showVolunteer ? 'default' : 'primary'}
+						disableElevation={showVolunteer}
+						onClick={volunteerToggle}
+					>
+						Associatif
+					</Button>
+				</Box>
 			</Box>
 			<Timeline align={isUpMd ? 'alternate' : 'left'}>
 				{careerList.length > 0 ? (

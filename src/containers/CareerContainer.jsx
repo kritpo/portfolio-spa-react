@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -111,18 +111,45 @@ const mapStateToProps = (state, props) => ({
 });
 
 function CareerContainer({ resume, ...props }) {
+	// setup the show career items hooks
+	const [showWork, setShowWork] = useState(true);
+	const [showEducation, setShowEducation] = useState(true);
+	const [showVolunteer, setShowVolunteer] = useState(true);
+
 	// setup the load of careers
 	const careers = useMemo(
 		() =>
 			loadCareer(
-				{ show: true, data: resume.work },
-				{ show: true, data: resume.education },
-				{ show: true, data: resume.volunteer }
+				{ show: showWork, data: resume.work },
+				{ show: showEducation, data: resume.education },
+				{ show: showVolunteer, data: resume.volunteer }
 			),
-		[resume]
+		[resume, showEducation, showVolunteer, showWork]
 	);
 
-	return <Career careers={careers} {...props} />;
+	// setup filter event handlers
+	const workToggle = () => {
+		setShowWork(!showWork);
+	};
+	const educationToggle = () => {
+		setShowEducation(!showEducation);
+	};
+	const volunteerToggle = () => {
+		setShowVolunteer(!showVolunteer);
+	};
+
+	return (
+		<Career
+			careers={careers}
+			showWork={showWork}
+			workToggle={workToggle}
+			showEducation={showEducation}
+			educationToggle={educationToggle}
+			showVolunteer={showVolunteer}
+			volunteerToggle={volunteerToggle}
+			{...props}
+		/>
+	);
 }
 
 export default connect(mapStateToProps)(CareerContainer);

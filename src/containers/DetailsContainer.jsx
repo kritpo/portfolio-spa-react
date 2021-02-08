@@ -6,7 +6,7 @@ import Details from '../components/Details';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (state, props) => ({
-	resume: state.resume,
+	resume: state.resume.resume,
 	...props
 });
 

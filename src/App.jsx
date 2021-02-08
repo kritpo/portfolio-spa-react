@@ -18,6 +18,8 @@ import { Provider } from 'react-redux';
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
+import PortfolioContainer from './containers/PortfolioContainer';
+
 function App() {
 	// setup the dark mode status hook
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -55,6 +57,7 @@ function App() {
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
+				<PortfolioContainer />
 			</ThemeProvider>
 		</Provider>
 	);

@@ -20,7 +20,7 @@ Skill.propTypes = {
 			PropTypes.shape({
 				name: PropTypes.string.isRequired,
 				level: PropTypes.string.isRequired,
-				skills: PropTypes.arrayOf(PropTypes.string).isRequired
+				keywords: PropTypes.arrayOf(PropTypes.string).isRequired
 			})
 		).isRequired
 	}).isRequired

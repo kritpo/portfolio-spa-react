@@ -2,6 +2,7 @@
 export const SOCIAL = 'SOCIAL';
 export const CAREER = 'career';
 export const TECHNOLOGY = 'TECHNOLOGY';
+export const HOBBY = 'HOBBY';
 
 // store all details about icons
 const icons = [
@@ -171,6 +172,22 @@ const icons = [
 		loadIcon: () => import('./technology/VueJS'),
 		type: TECHNOLOGY,
 		keyword: ['vuejs', 'vue js', 'vue']
+	},
+
+	{
+		loadIcon: () => import('./hobby/Book'),
+		type: HOBBY,
+		keyword: ['livre', 'culture']
+	},
+	{
+		loadIcon: () => import('./hobby/Computer'),
+		type: HOBBY,
+		keyword: ['ordinateur', 'informatique']
+	},
+	{
+		loadIcon: () => import('./hobby/Robot'),
+		type: HOBBY,
+		keyword: ['robot', 'robotique']
 	}
 ];
 

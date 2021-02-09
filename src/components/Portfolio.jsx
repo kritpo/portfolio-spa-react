@@ -48,7 +48,7 @@ function Portfolio({ resume }) {
 										<CareerContainer />
 									</Box>
 									<Box textAlign="center" clone>
-										<Grid container spacing={2}>
+										<Grid container spacing={4}>
 											<SkillContainer />
 										</Grid>
 									</Box>

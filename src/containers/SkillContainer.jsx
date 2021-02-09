@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Skill from '../components/Skill';
 import Languages from '../components/Languages';
+import Hobbies from '../components/Hobbies';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (state, props) => ({
@@ -16,6 +17,7 @@ function SkillContainer({ ...props }) {
 		<Fragment>
 			<Skill {...props} />
 			<Languages {...props} />
+			<Hobbies {...props} />
 		</Fragment>
 	);
 }

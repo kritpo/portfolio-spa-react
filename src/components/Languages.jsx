@@ -20,7 +20,7 @@ Languages.propTypes = {
 function Languages({ resume }) {
 	// convert languages details to React component
 	const languages = resume.languages.map((language, index) => (
-		<Box fontSize="2em" key={index} clone>
+		<Box fontSize="2em" clone key={index}>
 			<Grid item xs={12} sm={6} lg={4} xl={3}>
 				<LanguageIcon language={language.language} />
 				<Typography variant="body1">{language.language}</Typography>

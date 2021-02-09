@@ -10,6 +10,7 @@ import HeroContainer from '../containers/HeroContainer';
 import DetailsContainer from '../containers/DetailsContainer';
 import CareerContainer from '../containers/CareerContainer';
 import SkillContainer from '../containers/SkillContainer';
+import ReferencesContainer from '../containers/ReferencesContainer';
 
 // configure the prop types validation
 Portfolio.propTypes = {
@@ -47,10 +48,13 @@ function Portfolio({ resume }) {
 									<Box mb={4}>
 										<CareerContainer />
 									</Box>
-									<Box textAlign="center" clone>
+									<Box mb={4} textAlign="center">
 										<Grid container spacing={4}>
 											<SkillContainer />
 										</Grid>
+									</Box>
+									<Box textAlign="center">
+										<ReferencesContainer />
 									</Box>
 								</Fragment>
 							)}

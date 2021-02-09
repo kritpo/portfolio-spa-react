@@ -47,7 +47,11 @@ function Details({ resume }) {
 			<Button href={profile.url} target="_blank">
 				<Box display="flex" flexDirection="column" alignItems="center">
 					<CustomIcon social={profile.network} />
-					<Typography variant="body1" noWrap>
+					<Typography
+						variant="body1"
+						style={{ textTransform: 'none' }}
+						noWrap
+					>
 						{profile.username}
 					</Typography>
 				</Box>

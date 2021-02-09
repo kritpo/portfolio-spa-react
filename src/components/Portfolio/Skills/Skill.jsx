@@ -43,12 +43,12 @@ function Skill({ resume }) {
 					variant="determinate"
 					value={
 						skill.level === 'Maîtrise'
-							? 95
+							? 98
 							: skill.level === 'Avancé'
-							? 75
+							? 90
 							: skill.level === 'Intermédiaire'
-							? 50
-							: 25
+							? 75
+							: 50
 					}
 				/>
 			</Box>

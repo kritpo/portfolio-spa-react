@@ -20,6 +20,7 @@ import CareerContainer from '../containers/Portfolio/CareerContainer';
 import SkillsContainer from '../containers/Portfolio/SkillsContainer';
 import ReferencesContainer from '../containers/Portfolio/ReferencesContainer';
 import Nav from './Nav';
+import Footer from './Footer';
 
 // configure the prop types validation
 Portfolio.propTypes = {
@@ -74,6 +75,7 @@ function Portfolio({ resume }) {
 					</Box>
 				</Container>
 			</Box>
+			<Footer />
 		</Fragment>
 	);
 }

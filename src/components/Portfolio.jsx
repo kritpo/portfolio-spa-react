@@ -39,9 +39,9 @@ function Portfolio({ resume }) {
 			<Box component="main" mt={-8} p={2}>
 				<Container fixed>
 					<Box px={2} pb={2} clone>
-						<Paper>
+						<Paper id="start">
 							<Box mb={2} textAlign="center">
-								<HashLink to="#details">
+								<HashLink to="#start">
 									<Typography color="textPrimary">
 										<IconButton>
 											<ExpandMore />

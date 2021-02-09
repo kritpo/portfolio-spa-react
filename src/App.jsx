@@ -15,6 +15,8 @@ import store from './store';
 
 import { Provider } from 'react-redux';
 
+import { BrowserRouter } from 'react-router-dom';
+
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
@@ -57,7 +59,9 @@ function App() {
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
-				<PortfolioContainer />
+				<BrowserRouter>
+					<PortfolioContainer />
+				</BrowserRouter>
 			</ThemeProvider>
 		</Provider>
 	);

@@ -1,7 +1,15 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Box, Container, Paper, IconButton } from '@material-ui/core';
+import { HashLink } from 'react-router-hash-link';
+
+import {
+	Box,
+	Container,
+	Paper,
+	IconButton,
+	Typography
+} from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
 import Loading from '../components/Loading';
@@ -11,6 +19,7 @@ import DetailsContainer from '../containers/Portfolio/DetailsContainer';
 import CareerContainer from '../containers/Portfolio/CareerContainer';
 import SkillsContainer from '../containers/Portfolio/SkillsContainer';
 import ReferencesContainer from '../containers/Portfolio/ReferencesContainer';
+import Nav from './Nav';
 
 // configure the prop types validation
 Portfolio.propTypes = {
@@ -24,15 +33,20 @@ Portfolio.propTypes = {
 function Portfolio({ resume }) {
 	return (
 		<Fragment>
+			<Nav />
 			<HeroContainer />
 			<Box component="main" mt={-8} p={2}>
 				<Container fixed>
 					<Box px={2} pb={2} clone>
 						<Paper>
 							<Box mb={2} textAlign="center">
-								<IconButton>
-									<ExpandMore />
-								</IconButton>
+								<HashLink to="#details">
+									<Typography color="textPrimary">
+										<IconButton>
+											<ExpandMore />
+										</IconButton>
+									</Typography>
+								</HashLink>
 							</Box>
 							{resume.isLoading ? (
 								<Loading size="40vh" />
@@ -42,16 +56,18 @@ function Portfolio({ resume }) {
 								</Error>
 							) : (
 								<Fragment>
-									<Box mb={4}>
+									<Box id="details" mb={4}>
 										<DetailsContainer />
 									</Box>
-									<Box mb={4}>
+									<Box id="career" mb={4}>
 										<CareerContainer />
 									</Box>
-									<Box mb={4}>
+									<Box id="skills" mb={4}>
 										<SkillsContainer />
 									</Box>
-									<ReferencesContainer />
+									<Box id="references">
+										<ReferencesContainer />
+									</Box>
 								</Fragment>
 							)}
 						</Paper>

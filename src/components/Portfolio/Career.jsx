@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 
 import { useTheme } from '@material-ui/core/styles';
 
+import { HashLink } from 'react-router-hash-link';
+
 import { Box, Button, Typography, useMediaQuery } from '@material-ui/core';
 import { ArrowUpward, Star } from '@material-ui/icons';
 import {
@@ -94,9 +96,11 @@ function Career({
 				) : (
 					<TimelineItem>
 						<TimelineSeparator>
-							<TimelineDot color="primary">
-								<Star />
-							</TimelineDot>
+							<HashLink to="#career">
+								<TimelineDot color="primary">
+									<Star />
+								</TimelineDot>
+							</HashLink>
 							<TimelineConnector />
 						</TimelineSeparator>
 						<Box mt={1} clone>
@@ -110,9 +114,11 @@ function Career({
 				)}
 				<TimelineItem>
 					<TimelineSeparator>
-						<TimelineDot color="primary">
-							<ArrowUpward />
-						</TimelineDot>
+						<HashLink to="#career">
+							<TimelineDot color="primary">
+								<ArrowUpward />
+							</TimelineDot>
+						</HashLink>
 					</TimelineSeparator>
 					<TimelineContent />
 				</TimelineItem>

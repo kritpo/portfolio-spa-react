@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 
 import { useTheme } from '@material-ui/core/styles';
 
+import { HashLink } from 'react-router-hash-link';
+
 import {
 	Box,
 	Card,
@@ -142,7 +144,9 @@ function CareerItem({ career, id }) {
 				</TimelineOppositeContent>
 				<Hidden xsDown>
 					<TimelineSeparator>
-						<TimelineDot color="secondary">{icon}</TimelineDot>
+						<HashLink to="#career">
+							<TimelineDot color="secondary">{icon}</TimelineDot>
+						</HashLink>
 						<TimelineConnector />
 					</TimelineSeparator>
 				</Hidden>

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Box, Container, Paper, IconButton } from '@material-ui/core';
+import { Box, Container, Grid, Paper, IconButton } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
 import Loading from '../components/Loading';
@@ -9,6 +9,7 @@ import Error from '../components/Error';
 import HeroContainer from '../containers/HeroContainer';
 import DetailsContainer from '../containers/DetailsContainer';
 import CareerContainer from '../containers/CareerContainer';
+import SkillContainer from '../containers/SkillContainer';
 
 // configure the prop types validation
 Portfolio.propTypes = {
@@ -43,8 +44,13 @@ function Portfolio({ resume }) {
 									<Box mb={4} textAlign="center">
 										<DetailsContainer />
 									</Box>
-									<Box>
+									<Box mb={4}>
 										<CareerContainer />
+									</Box>
+									<Box textAlign="center" clone>
+										<Grid container spacing={2}>
+											<SkillContainer />
+										</Grid>
 									</Box>
 								</Fragment>
 							)}

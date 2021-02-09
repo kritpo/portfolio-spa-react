@@ -41,7 +41,7 @@ function Portfolio({ resume }) {
 								</Error>
 							) : (
 								<Fragment>
-									<Box mb={4} textAlign="center">
+									<Box mb={4}>
 										<DetailsContainer />
 									</Box>
 									<Box mb={4}>

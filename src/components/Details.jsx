@@ -57,9 +57,11 @@ function Details({ resume }) {
 
 	return (
 		<Fragment>
-			<Typography component="h3" variant="h4" gutterBottom>
-				Ma présentation
-			</Typography>
+			<Box textAlign="center">
+				<Typography component="h3" variant="h4" gutterBottom>
+					Ma présentation
+				</Typography>
+			</Box>
 			<Grid container spacing={2}>
 				<Grid item xs={12} md={6} lg={4}>
 					<Box
@@ -67,6 +69,7 @@ function Details({ resume }) {
 						flexDirection="column"
 						justifyContent="center"
 						alignItems="center"
+						textAlign="center"
 						height="100%"
 					>
 						<Box mb={2} height="10vh" width="10vh" clone>

@@ -95,6 +95,12 @@ function HeroContainer({ resume, ...props }) {
 		// start the writing animation
 		writingAnimation(setTitle, finalTitle, SHORT_SPEED, true);
 		writingAnimation(setDescription, finalDescription, LONG_SPEED, false);
+
+		return () => {
+			// clear the timeouts
+			clearTimeout(titleTimeout);
+			clearTimeout(descriptionTimeout);
+		};
 	}, [resume]);
 
 	return <Hero title={title} description={description} {...props} />;

@@ -14,7 +14,7 @@ import {
 	TimelineDot
 } from '@material-ui/lab';
 
-import CareerItem, { WORK, EDUCATION, VOLUNTEER } from './CareerItem';
+import CareerItem, { WORK, EDUCATION, VOLUNTEER } from './Career/CareerItem';
 
 // configure the prop types validation
 Career.propTypes = {

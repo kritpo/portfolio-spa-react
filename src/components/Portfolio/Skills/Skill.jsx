@@ -3,7 +3,6 @@ import { PropTypes } from 'prop-types';
 
 import {
 	Box,
-	Grid,
 	Collapse,
 	LinearProgress,
 	Typography,
@@ -11,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { ExpandMore, ExpandLess } from '@material-ui/icons';
 
-import CustomIcon from './tools/icons/CustomIcon';
+import CustomIcon from '../../../tools/icons/CustomIcon';
 
 // configure the prop types validation
 Skill.propTypes = {
@@ -31,7 +30,7 @@ function Skill({ resume }) {
 	const [openCollapse, setOpenCollapse] = useState(false);
 
 	// setup the toggle handler
-	const collapseToggle = state => {
+	const collapseToggle = () => {
 		setOpenCollapse(!openCollapse);
 	};
 
@@ -57,7 +56,7 @@ function Skill({ resume }) {
 	));
 
 	return (
-		<Grid item xs={12}>
+		<Fragment>
 			<Typography component="h3" variant="h4" gutterBottom>
 				Mes compétences
 			</Typography>
@@ -74,7 +73,7 @@ function Skill({ resume }) {
 					</Collapse>
 				</Fragment>
 			)}
-		</Grid>
+		</Fragment>
 	);
 }
 

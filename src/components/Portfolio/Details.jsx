@@ -10,7 +10,7 @@ import {
 	Avatar
 } from '@material-ui/core';
 
-import CustomIcon from './tools/icons/CustomIcon';
+import CustomIcon from '../../tools/icons/CustomIcon';
 
 // configure the prop types validation
 Details.propTypes = {
@@ -57,7 +57,7 @@ function Details({ resume }) {
 
 	return (
 		<Fragment>
-			<Box textAlign="center">
+			<Box textAlign="center" clone>
 				<Typography component="h3" variant="h4" gutterBottom>
 					Ma présentation
 				</Typography>

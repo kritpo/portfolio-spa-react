@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import Details from '../components/Details';
+import Skills from '../../components/Portfolio/Skills';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (state, props) => ({
@@ -10,8 +10,8 @@ const mapStateToProps = (state, props) => ({
 	...props
 });
 
-function DetailsContainer({ ...props }) {
-	return <Details {...props} />;
+function SkillContainer({ ...props }) {
+	return <Skills {...props} />;
 }
 
-export default connect(mapStateToProps)(DetailsContainer);
+export default connect(mapStateToProps)(SkillContainer);

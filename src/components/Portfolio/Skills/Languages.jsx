@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { Box, Grid, Typography } from '@material-ui/core';
 
-import LanguageIcon from './tools/icons/LanguageIcon';
+import LanguageIcon from '../../../tools/icons/LanguageIcon';
 
 // configure the prop types validation
 Languages.propTypes = {
@@ -32,14 +32,14 @@ function Languages({ resume }) {
 	));
 
 	return (
-		<Grid item xs={12} md={6}>
+		<Fragment>
 			<Typography component="h3" variant="h4" gutterBottom>
 				Langues
 			</Typography>
 			<Grid container spacing={2} alignItems="center">
 				{languages}
 			</Grid>
-		</Grid>
+		</Fragment>
 	);
 }
 

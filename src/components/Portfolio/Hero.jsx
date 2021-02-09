@@ -3,13 +3,13 @@ import { PropTypes } from 'prop-types';
 
 import { withStyles } from '@material-ui/styles';
 
-import hero800w from '../assets/hero/hero-800w.png';
-import hero1366w from '../assets/hero/hero-1366w.png';
-import hero1440w from '../assets/hero/hero-1440w.png';
-import hero1536w from '../assets/hero/hero-1536w.png';
-import hero1920w from '../assets/hero/hero-1920w.png';
-import hero2560w from '../assets/hero/hero-2560w.png';
-import hero3768w from '../assets/hero/hero-3768w.png';
+import hero800w from '../../assets/hero/hero-800w.png';
+import hero1366w from '../../assets/hero/hero-1366w.png';
+import hero1440w from '../../assets/hero/hero-1440w.png';
+import hero1536w from '../../assets/hero/hero-1536w.png';
+import hero1920w from '../../assets/hero/hero-1920w.png';
+import hero2560w from '../../assets/hero/hero-2560w.png';
+import hero3768w from '../../assets/hero/hero-3768w.png';
 
 import { Box, Container, Typography } from '@material-ui/core';
 

@@ -2,9 +2,13 @@ import React, { useState, useMemo } from 'react';
 
 import { connect } from 'react-redux';
 
-import { WORK, EDUCATION, VOLUNTEER } from '../components/CareerItem';
+import {
+	WORK,
+	EDUCATION,
+	VOLUNTEER
+} from '../../components/Portfolio/Career/CareerItem';
 
-import Career from '../components/Career';
+import Career from '../../components/Portfolio/Career';
 
 /**
  * setup the anti-chronological comparator between two career objects

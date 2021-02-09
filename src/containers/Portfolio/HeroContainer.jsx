@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { connect } from 'react-redux';
 
-import Hero from '../components/Hero';
+import Hero from '../../components/Portfolio/Hero';
 
 // setup cursor speed constants
 const CURSOR_SPEED = 250;

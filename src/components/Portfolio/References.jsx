@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 
 import { Box, Card, CardContent, Typography } from '@material-ui/core';
@@ -42,12 +42,12 @@ function References({ resume }) {
 	));
 
 	return (
-		<Fragment>
+		<Box textAlign="center">
 			<Typography component="h3" variant="h4" gutterBottom>
 				Mes recommandations
 			</Typography>
 			{references}
-		</Fragment>
+		</Box>
 	);
 }
 

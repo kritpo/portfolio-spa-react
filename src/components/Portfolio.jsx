@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Box, Container, Grid, Paper, IconButton } from '@material-ui/core';
+import { Box, Container, Paper, IconButton } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
 import Loading from '../components/Loading';
 import Error from '../components/Error';
-import HeroContainer from '../containers/HeroContainer';
-import DetailsContainer from '../containers/DetailsContainer';
-import CareerContainer from '../containers/CareerContainer';
-import SkillContainer from '../containers/SkillContainer';
-import ReferencesContainer from '../containers/ReferencesContainer';
+import HeroContainer from '../containers/Portfolio/HeroContainer';
+import DetailsContainer from '../containers/Portfolio/DetailsContainer';
+import CareerContainer from '../containers/Portfolio/CareerContainer';
+import SkillsContainer from '../containers/Portfolio/SkillsContainer';
+import ReferencesContainer from '../containers/Portfolio/ReferencesContainer';
 
 // configure the prop types validation
 Portfolio.propTypes = {
@@ -48,14 +48,10 @@ function Portfolio({ resume }) {
 									<Box mb={4}>
 										<CareerContainer />
 									</Box>
-									<Box mb={4} textAlign="center">
-										<Grid container spacing={4}>
-											<SkillContainer />
-										</Grid>
+									<Box mb={4}>
+										<SkillsContainer />
 									</Box>
-									<Box textAlign="center">
-										<ReferencesContainer />
-									</Box>
+									<ReferencesContainer />
 								</Fragment>
 							)}
 						</Paper>

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { Box, Grid, Typography } from '@material-ui/core';
 
-import CustomIcon from './tools/icons/CustomIcon';
+import CustomIcon from '../../../tools/icons/CustomIcon';
 
 // configure the prop types validation
 Hobbies.propTypes = {
@@ -22,7 +22,7 @@ function Hobbies({ resume }) {
 	const hobbies = resume.interests.map((interest, index) => (
 		<Box fontSize="2em" clone key={index}>
 			<Grid item xs={12} sm={6} lg={4} xl={3}>
-				<CustomIcon hobby={interest.name} />
+				<CustomIcon hobby={interest.name} notExact />
 				{interest.keywords.map((keyword, index) => (
 					<Typography
 						variant="body2"
@@ -37,14 +37,14 @@ function Hobbies({ resume }) {
 	));
 
 	return (
-		<Grid item xs={12} md={6}>
+		<Fragment>
 			<Typography component="h3" variant="h4" gutterBottom>
 				Centres d'intérêts
 			</Typography>
 			<Grid container spacing={2} justify="center" alignItems="center">
 				{hobbies}
 			</Grid>
-		</Grid>
+		</Fragment>
 	);
 }
 

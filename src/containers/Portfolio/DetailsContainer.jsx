@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-import References from '../components/References';
+import Details from '../../components/Portfolio/Details';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (state, props) => ({
@@ -10,8 +10,8 @@ const mapStateToProps = (state, props) => ({
 	...props
 });
 
-function ReferencesContainer({ ...props }) {
-	return <References {...props} />;
+function DetailsContainer({ ...props }) {
+	return <Details {...props} />;
 }
 
-export default connect(mapStateToProps)(ReferencesContainer);
+export default connect(mapStateToProps)(DetailsContainer);

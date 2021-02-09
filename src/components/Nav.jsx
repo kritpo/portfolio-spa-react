@@ -10,10 +10,10 @@ function Nav() {
 		<Box component="nav">
 			<BurgerMenu top="1em" right="1em">
 				<MenuList>
-					<NavHashItem to="#details">Présentation</NavHashItem>
-					<NavHashItem to="#career">Parcours</NavHashItem>
-					<NavHashItem to="#skills">Compétences</NavHashItem>
-					<NavHashItem to="#references">Recommandations</NavHashItem>
+					<NavHashItem to="/#details">Présentation</NavHashItem>
+					<NavHashItem to="/#career">Parcours</NavHashItem>
+					<NavHashItem to="/#skills">Compétences</NavHashItem>
+					<NavHashItem to="/#references">Recommandations</NavHashItem>
 				</MenuList>
 			</BurgerMenu>
 		</Box>

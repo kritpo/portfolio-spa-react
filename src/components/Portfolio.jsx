@@ -19,8 +19,6 @@ import DetailsContainer from '../containers/Portfolio/DetailsContainer';
 import CareerContainer from '../containers/Portfolio/CareerContainer';
 import SkillsContainer from '../containers/Portfolio/SkillsContainer';
 import ReferencesContainer from '../containers/Portfolio/ReferencesContainer';
-import Nav from './Nav';
-import Footer from './Footer';
 
 // configure the prop types validation
 Portfolio.propTypes = {
@@ -34,7 +32,6 @@ Portfolio.propTypes = {
 function Portfolio({ resume }) {
 	return (
 		<Fragment>
-			<Nav />
 			<HeroContainer />
 			<Box component="main" mt={-8} p={2}>
 				<Container fixed>
@@ -75,7 +72,6 @@ function Portfolio({ resume }) {
 					</Box>
 				</Container>
 			</Box>
-			<Footer />
 		</Fragment>
 	);
 }

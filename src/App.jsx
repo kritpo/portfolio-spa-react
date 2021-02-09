@@ -15,12 +15,15 @@ import store from './store';
 
 import { Provider } from 'react-redux';
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import PortfolioContainer from './containers/PortfolioContainer';
+import Terms from './components/Terms';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
 
 function App() {
 	// setup the dark mode status hook
@@ -60,7 +63,18 @@ function App() {
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<BrowserRouter>
-					<PortfolioContainer />
+					<Nav />
+
+					<Switch>
+						<Route path="/terms">
+							<Terms />
+						</Route>
+						<Route path="/">
+							<PortfolioContainer />
+						</Route>
+					</Switch>
+
+					<Footer />
 				</BrowserRouter>
 			</ThemeProvider>
 		</Provider>

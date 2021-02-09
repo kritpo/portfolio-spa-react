@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Paper, Box, Typography, Button } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+
+import { Paper, Box, Link, Typography, Button } from '@material-ui/core';
 
 import CustomIcon from '../tools/icons/CustomIcon';
 
@@ -56,7 +58,10 @@ function Footer() {
 					</Button>
 				</Box>
 				<Typography variant="body2">
-					&copy; Réalisé par Jimmy Weng
+					&copy; Réalisé par Jimmy Weng -{' '}
+					<Link component={RouterLink} to="/terms">
+						Mentions légales
+					</Link>
 				</Typography>
 			</Box>
 		</Paper>

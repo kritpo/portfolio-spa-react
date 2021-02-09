@@ -20,7 +20,7 @@ import {
 	TimelineDot
 } from '@material-ui/lab';
 
-import CustomIcon from './tools/CustomIcon';
+import CustomIcon from './tools/icons/CustomIcon';
 import CareerItemButton from './CareerItemButton';
 
 // setup career types constants

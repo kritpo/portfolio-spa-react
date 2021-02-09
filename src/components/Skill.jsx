@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { ExpandMore, ExpandLess } from '@material-ui/icons';
 
-import CustomIcon from './tools/CustomIcon';
+import CustomIcon from './tools/icons/CustomIcon';
 
 // configure the prop types validation
 Skill.propTypes = {

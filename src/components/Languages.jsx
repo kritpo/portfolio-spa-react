@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { Box, Grid, Typography } from '@material-ui/core';
 
-import LanguageIcon from './tools/LanguageIcon';
+import LanguageIcon from './tools/icons/LanguageIcon';
 
 // configure the prop types validation
 Languages.propTypes = {

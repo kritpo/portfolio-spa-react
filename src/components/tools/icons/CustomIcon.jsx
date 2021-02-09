@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { useAsync } from 'react-async';
 
-import icons, { SOCIAL, CAREER, TECHNOLOGY } from './icons/icons';
+import icons, { SOCIAL, CAREER, TECHNOLOGY } from './icons';
 
 /**
  * retrieve the icon or return the keyword

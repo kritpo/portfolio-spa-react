@@ -10,7 +10,7 @@ import {
 	Avatar
 } from '@material-ui/core';
 
-import CustomIcon from './tools/CustomIcon';
+import CustomIcon from './tools/icons/CustomIcon';
 
 // configure the prop types validation
 Details.propTypes = {

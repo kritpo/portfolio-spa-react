@@ -40,7 +40,7 @@ To see the application, go to [http://localhost:3000](http://localhost:3000) in 
 To build the application and generate all necessary files to put on a server, run:
 
 ```sh
-npm build
+npm run build
 ```
 
 The build files will be placed in the `build` folder.

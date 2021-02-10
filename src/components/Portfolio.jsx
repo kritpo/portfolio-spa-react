@@ -26,17 +26,18 @@ Portfolio.propTypes = {
 		isLoading: PropTypes.bool.isRequired,
 		resume: PropTypes.object,
 		error: PropTypes.string
-	}).isRequired
+	}).isRequired,
+	navIntersectionRef: PropTypes.func
 };
 
-function Portfolio({ resume }) {
+function Portfolio({ resume, navIntersectionRef }) {
 	return (
 		<Fragment>
 			<HeroContainer />
 			<Box component="main" mt={-8} p={2}>
 				<Container fixed>
 					<Box px={2} pb={2} clone>
-						<Paper id="start">
+						<Paper id="start" ref={navIntersectionRef}>
 							<Box mb={2} textAlign="center">
 								<HashLink to="#start">
 									<Typography color="textPrimary">

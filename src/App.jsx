@@ -21,8 +21,8 @@ import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import PortfolioContainer from './containers/PortfolioContainer';
+import NavContainer from './containers/NavContainer';
 import Terms from './components/Terms';
-import Nav from './components/Nav';
 import Footer from './components/Footer';
 
 function App() {
@@ -63,7 +63,7 @@ function App() {
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<BrowserRouter>
-					<Nav />
+					<NavContainer />
 
 					<Switch>
 						<Route path="/terms">

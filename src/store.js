@@ -6,7 +6,8 @@ import * as Reducers from './reducers';
 
 // configure the root reducer by combining all reducers
 const rootReducer = combineReducers({
-	resume: Reducers.resume
+	resume: Reducers.resume,
+	navIntersection: Reducers.navIntersection
 });
 
 // create a redux store

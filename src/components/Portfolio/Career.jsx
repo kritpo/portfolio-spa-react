@@ -57,6 +57,14 @@ function Career({
 		<CareerItem career={career} id={career.id} key={career.id} />
 	));
 
+	// setup the all toddle handlers
+	const allToggle = () => {
+		// toggle all elements
+		workToggle();
+		educationToggle();
+		volunteerToggle();
+	};
+
 	return (
 		<Fragment>
 			<Box textAlign="center" clone>
@@ -65,6 +73,15 @@ function Career({
 				</Typography>
 			</Box>
 			<Grid container spacing={2} justify="center">
+				<Grid item>
+					<Button
+						variant="contained"
+						color="primary"
+						onClick={allToggle}
+					>
+						Inverser la sélection
+					</Button>
+				</Grid>
 				<Grid item>
 					<Button
 						variant="contained"

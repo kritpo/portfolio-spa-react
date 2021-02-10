@@ -54,10 +54,12 @@ const styles = theme => ({
 // configure the prop types validation
 Hero.propTypes = {
 	title: PropTypes.string.isRequired,
-	description: PropTypes.string.isRequired
+	titleCursor: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
+	descriptionCursor: PropTypes.string.isRequired
 };
 
-function Hero({ classes, title, description }) {
+function Hero({ classes, title, titleCursor, description, descriptionCursor }) {
 	return (
 		<Box
 			component="header"
@@ -80,6 +82,7 @@ function Hero({ classes, title, description }) {
 								fontSize="10vh"
 							>
 								{title}
+								{titleCursor}
 							</Box>
 						</Typography>
 					</Box>
@@ -90,6 +93,7 @@ function Hero({ classes, title, description }) {
 							fontSize="3.5vh"
 						>
 							{description}
+							{descriptionCursor}
 						</Box>
 					</Typography>
 				</Container>

@@ -16,53 +16,84 @@ let descriptionTimeout = null;
 /**
  * setup the writing animation
  * @param {function(string|function)} setState state updater
+ * @param {function(string|function)} setCursorState cursor state updater
  * @param {string} text text to write
- * @param {number} speed speed of the write
  * @param {boolean} isTitle if the animation is a title
  */
-const writingAnimation = (setState, text, speed, isTitle) => {
-	// setup the animation
-	const setAnimator = () => {
-		// update the state
-		setState(prev => {
-			// check if the animation is finished
-			let final = '';
-			if (prev.includes(text)) {
-				// alternate cursor showing/hiding
-				if (prev === text + '|') final = text + '\u00A0';
-				else final = text + '|';
-
-				// override speed to uniformize it when it is finished
-				speed = CURSOR_SPEED;
-			} else {
-				// compute the next step
-				final = prev.slice(0, -1) + text[prev.length - 1] + '|';
-			}
-
-			// clear the timeout in case of concurrency
-			clearTimeout(isTitle ? titleTimeout : descriptionTimeout);
-
-			// setup the timeout for the next step
-			const timeout = setTimeout(() => setAnimator(), speed);
-
-			// check if it is the title animation
-			if (isTitle) {
-				// update the title timeout
-				titleTimeout = timeout;
-			} else {
-				// otherwise update the description timeout
-				descriptionTimeout = timeout;
-			}
-
-			return final;
-		});
+const writingAnimation = (setState, setCursorState, text, isTitle) => {
+	// setup timeout cleaner
+	const cleanTimeout = () => {
+		// check if the title timeout is defined
+		if (isTitle && titleTimeout !== undefined) {
+			// clear the timeout
+			clearTimeout(titleTimeout);
+			titleTimeout = undefined;
+		} else if (!isTitle && descriptionTimeout !== undefined) {
+			// clear the timeout
+			clearTimeout(descriptionTimeout);
+			descriptionTimeout = undefined;
+		}
 	};
 
-	// reset the state
-	setState('|');
+	// clean the timeout
+	cleanTimeout();
+
+	// clean the writing space
+	setState('');
+	setCursorState('|');
+
+	// save a local copy of the text to write
+	let leftText = text;
+
+	// setup the animation stepper
+	const nextStep = () => {
+		// clean the timeout
+		cleanTimeout();
+
+		// check if the text still need to be written
+		if (leftText.length > 0) {
+			// retrieve the next letter to write
+			const letter = leftText[0];
+
+			// update the textContainer
+			leftText = leftText.substring(1);
+
+			// check if it is a title
+			if (isTitle) {
+				// set the next animation state for the title
+				titleTimeout = setTimeout(() => {
+					nextStep();
+				}, SHORT_SPEED);
+			} else {
+				// otherwise set the next animation state for the description
+				descriptionTimeout = setTimeout(() => {
+					nextStep();
+				}, LONG_SPEED);
+			}
+
+			// setup the writing animation
+			setState(prev => prev + letter);
+		} else {
+			// check if it is a title
+			if (isTitle) {
+				// set the next animation state for the title cursor
+				titleTimeout = setTimeout(() => {
+					nextStep();
+				}, CURSOR_SPEED);
+			} else {
+				// otherwise set the next animation state for the description cursor
+				descriptionTimeout = setTimeout(() => {
+					nextStep();
+				}, CURSOR_SPEED);
+			}
+
+			// alternate cursor / blank space
+			setCursorState(prev => (prev === '|' ? '\u00A0' : '|'));
+		}
+	};
 
 	// start the animation with the first step
-	setAnimator();
+	nextStep();
 };
 
 // configure the states to pass as props to the component
@@ -73,10 +104,12 @@ const mapStateToProps = (state, ...props) => ({
 
 function HeroContainer({ resume, ...props }) {
 	// setup the title state hook
-	const [title, setTitle] = useState('|');
+	const [title, setTitle] = useState('');
+	const [titleCursor, setTitleCursor] = useState('|');
 
 	// setup the description state hook
-	const [description, setDescription] = useState('|');
+	const [description, setDescription] = useState('');
+	const [descriptionCursor, setDescriptionCursor] = useState('|');
 
 	// setup the writing animation hook
 	useEffect(() => {
@@ -93,8 +126,13 @@ function HeroContainer({ resume, ...props }) {
 				: 'Développeur Full-Stack';
 
 		// start the writing animation
-		writingAnimation(setTitle, finalTitle, SHORT_SPEED, true);
-		writingAnimation(setDescription, finalDescription, LONG_SPEED, false);
+		writingAnimation(setTitle, setTitleCursor, finalTitle, true);
+		writingAnimation(
+			setDescription,
+			setDescriptionCursor,
+			finalDescription,
+			false
+		);
 
 		return () => {
 			// clear the timeouts
@@ -103,7 +141,15 @@ function HeroContainer({ resume, ...props }) {
 		};
 	}, [resume]);
 
-	return <Hero title={title} description={description} {...props} />;
+	return (
+		<Hero
+			title={title}
+			titleCursor={titleCursor}
+			description={description}
+			descriptionCursor={descriptionCursor}
+			{...props}
+		/>
+	);
 }
 
 export default connect(mapStateToProps)(HeroContainer);

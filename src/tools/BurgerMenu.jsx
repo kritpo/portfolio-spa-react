@@ -41,7 +41,10 @@ const styles = theme => ({
 	button: {
 		// duplicate the button to apply a design
 		'&:before': {
-			backgroundColor: theme.palette.primary.main,
+			backgroundColor:
+				theme.palette.type === 'dark'
+					? theme.palette.primary.dark
+					: theme.palette.primary.light,
 			borderRadius: '50%',
 			content: '""',
 			height: '59px',

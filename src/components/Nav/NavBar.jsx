@@ -1,18 +1,12 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { withStyles } from '@material-ui/styles';
+import { useTheme, withStyles } from '@material-ui/styles';
 
 import { NavLink as RouterLink } from 'react-router-dom';
 import { NavHashLink as HashLink } from 'react-router-hash-link';
 
-import {
-	Grid,
-	Paper,
-	Box,
-	Button,
-	Link,
-} from '@material-ui/core';
+import { Grid, Paper, Box, Button, Link } from '@material-ui/core';
 
 // define the style of the component
 const styles = theme => ({
@@ -34,6 +28,9 @@ NavBar.propTypes = {
 };
 
 function NavBar({ classes, children, darkModeMenu }) {
+	// retrieve the current theme
+	const theme = useTheme();
+
 	// convert links details to React component
 	const links = children.map(({ title, link, isHash = false }, index) => (
 		<Link
@@ -55,7 +52,7 @@ function NavBar({ classes, children, darkModeMenu }) {
 			alignItems="center"
 			width="100%"
 			height="4em"
-			bgcolor="primary.main"
+			bgcolor={`primary.${theme.palette.type}`}
 			clone
 		>
 			<Paper square>

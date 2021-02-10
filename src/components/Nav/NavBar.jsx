@@ -56,7 +56,9 @@ function NavBar({ classes, children, darkModeMenu }) {
 		>
 			<Paper
 				square
-				style={{ backgroundColor: `primary.${theme.palette.type}` }}
+				style={{
+					backgroundColor: theme.palette.primary[theme.palette.type]
+				}}
 			>
 				<Grid container spacing={2} justify="center">
 					{links}

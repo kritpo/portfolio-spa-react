@@ -1,4 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+
+import { connect } from 'react-redux';
 
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -11,6 +13,8 @@ import {
 	red
 } from '@material-ui/core/colors';
 
+import { setThemeMode } from './actions';
+
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { CssBaseline } from '@material-ui/core';
@@ -21,16 +25,32 @@ import NavContainer from './containers/NavContainer';
 import Terms from './components/Terms';
 import Footer from './components/Footer';
 
-function App() {
+// configure the states to pass as props to the component
+const mapStateToProps = (state, ...props) => ({
+	darkMode: state.darkMode,
+	...props
+});
+
+// configure the actions to pass as props to the component
+const mapDispatchToProps = {
+	setThemeMode
+};
+
+function App({ darkMode, setThemeMode }) {
 	// setup the dark mode status hook
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+	// save the user theme
+	useEffect(() => {
+		setThemeMode(prefersDarkMode);
+	}, [prefersDarkMode, setThemeMode]);
 
 	// setup the app theme
 	const theme = useMemo(
 		() =>
 			createMuiTheme({
 				palette: {
-					type: prefersDarkMode ? 'dark' : 'light',
+					type: darkMode ? 'dark' : 'light',
 					primary: {
 						main: orange[500]
 					},
@@ -51,7 +71,7 @@ function App() {
 					}
 				}
 			}),
-		[prefersDarkMode]
+		[darkMode]
 	);
 
 	return (
@@ -75,4 +95,4 @@ function App() {
 	);
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

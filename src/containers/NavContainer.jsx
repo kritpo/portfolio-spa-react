@@ -4,19 +4,26 @@ import { connect } from 'react-redux';
 
 import { useInView } from 'react-intersection-observer';
 
-import { updateNavIntersection } from '../actions';
+import {
+	updateNavIntersection,
+	setToLightMode,
+	setToDarkMode
+} from '../actions';
 
 import Nav from '../components/Nav';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (state, ...props) => ({
 	inView: state.navIntersection.inView,
+	darkMode: state.darkMode,
 	...props
 });
 
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
-	updateNavIntersection
+	updateNavIntersection,
+	setToLightMode,
+	setToDarkMode
 };
 
 function NavContainer({ updateNavIntersection, ...props }) {

@@ -5,7 +5,14 @@ import { useLocation } from 'react-router-dom';
 
 import { useTheme } from '@material-ui/styles';
 
-import { Box, MenuList, useMediaQuery } from '@material-ui/core';
+import {
+	Box,
+	MenuList,
+	FormControlLabel,
+	Switch,
+	useMediaQuery
+} from '@material-ui/core';
+import { Brightness4 as Dark, Brightness7 as Light } from '@material-ui/icons';
 
 import BurgerMenu from '../tools/BurgerMenu';
 import NavBar from './Nav/NavBar';
@@ -46,10 +53,13 @@ const linkItems = links.map(({ title, link, isHash = false }, index) =>
 
 // configure the prop types validation
 Nav.propTypes = {
-	inView: PropTypes.bool.isRequired
+	inView: PropTypes.bool.isRequired,
+	darkMode: PropTypes.bool,
+	setToLightMode: PropTypes.func.isRequired,
+	setToDarkMode: PropTypes.func.isRequired
 };
 
-function Nav({ inView }) {
+function Nav({ inView, darkMode, setToLightMode, setToDarkMode }) {
 	// setup the nav type hook
 	const [showBar, setShowBar] = useState(false);
 
@@ -65,13 +75,36 @@ function Nav({ inView }) {
 		setShowBar(isUpSm && (route !== '/' || inView));
 	}, [inView, isUpSm, route]);
 
+	// setup the dark mode toggler
+	const darkModeToggle = () => {
+		// check if the dark mode is active
+		if (darkMode) {
+			setToLightMode();
+		} else {
+			setToDarkMode();
+		}
+	};
+
 	return (
 		<Box component="nav">
 			{showBar ? (
 				<NavBar>{links}</NavBar>
 			) : (
 				<BurgerMenu top="1em" right="1em">
-					<MenuList>{linkItems}</MenuList>
+					<MenuList>
+						{linkItems}
+						<Box display="flex" justifyContent="center">
+							<FormControlLabel
+								control={
+									<Switch
+										checked={darkMode}
+										onChange={darkModeToggle}
+									/>
+								}
+								label={darkMode ? <Dark /> : <Light />}
+							/>
+						</Box>
+					</MenuList>
 				</BurgerMenu>
 			)}
 		</Box>

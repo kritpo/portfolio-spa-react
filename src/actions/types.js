@@ -5,3 +5,8 @@ export const RESUME_FAILED = 'RESUME_FAILED';
 
 // nav intersection observer actions constants
 export const UPDATE_NAV_INTERSECTION = 'UPDATE_NAV_INTERSECTION';
+
+// dark theme actions constants
+export const SET_THEME_MODE = 'SET_THEME_MODE';
+export const SET_LIGHT_MODE = 'SET_LIGHT_MODE';
+export const SET_DARK_MODE = 'SET_DARK_MODE';

@@ -10,6 +10,7 @@ import { NavHashLink } from 'react-router-hash-link';
 // define the style of the component
 const styles = theme => ({
 	root: {
+		fontSize:'5vh',
 		padding: '0px 0px'
 	},
 	link: {

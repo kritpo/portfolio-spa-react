@@ -52,10 +52,12 @@ function NavBar({ classes, children, darkModeMenu }) {
 			alignItems="center"
 			width="100%"
 			height="4em"
-			bgcolor={`primary.${theme.palette.type}`}
 			clone
 		>
-			<Paper square>
+			<Paper
+				square
+				style={{ backgroundColor: `primary.${theme.palette.type}` }}
+			>
 				<Grid container spacing={2} justify="center">
 					{links}
 				</Grid>

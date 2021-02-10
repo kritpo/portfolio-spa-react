@@ -37,6 +37,7 @@ function NavHashItem({ classes, to, children }) {
 				to={`${to}`}
 				className={classes.link}
 				activeClassName={classes.active}
+				smooth
 			>
 				{children}
 			</NavHashLink>

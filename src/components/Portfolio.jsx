@@ -39,7 +39,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 					<Box px={2} pb={2} clone>
 						<Paper id="start" ref={navIntersectionRef}>
 							<Box mb={2} textAlign="center">
-								<HashLink to="#start">
+								<HashLink to="#start" smooth>
 									<Typography color="textPrimary">
 										<IconButton>
 											<ExpandMore />

@@ -144,7 +144,7 @@ function CareerItem({ career, id }) {
 				</TimelineOppositeContent>
 				<Hidden xsDown>
 					<TimelineSeparator>
-						<HashLink to="#career">
+						<HashLink to="#career" smooth>
 							<TimelineDot color="secondary">{icon}</TimelineDot>
 						</HashLink>
 						<TimelineConnector />

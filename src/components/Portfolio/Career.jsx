@@ -119,7 +119,7 @@ function Career({
 				) : (
 					<TimelineItem>
 						<TimelineSeparator>
-							<HashLink to="#career">
+							<HashLink to="#career" smooth>
 								<TimelineDot color="primary">
 									<Star />
 								</TimelineDot>
@@ -137,7 +137,7 @@ function Career({
 				)}
 				<TimelineItem>
 					<TimelineSeparator>
-						<HashLink to="#career">
+						<HashLink to="#career" smooth>
 							<TimelineDot color="primary">
 								<ArrowUpward />
 							</TimelineDot>

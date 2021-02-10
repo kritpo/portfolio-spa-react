@@ -34,6 +34,7 @@ function NavBar({ classes, children }) {
 			to={link}
 			activeClassName={classes.active}
 			key={index}
+			smooth={isHash}
 		>
 			<Button>{title}</Button>
 		</Link>

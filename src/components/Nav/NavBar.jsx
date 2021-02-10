@@ -6,7 +6,13 @@ import { withStyles } from '@material-ui/styles';
 import { NavLink as RouterLink } from 'react-router-dom';
 import { NavHashLink as HashLink } from 'react-router-hash-link';
 
-import { Grid, Paper, Box, Button, Link } from '@material-ui/core';
+import {
+	Grid,
+	Paper,
+	Box,
+	Button,
+	Link,
+} from '@material-ui/core';
 
 // define the style of the component
 const styles = theme => ({
@@ -23,10 +29,11 @@ NavBar.propTypes = {
 			link: PropTypes.string.isRequired,
 			isHash: PropTypes.bool
 		})
-	).isRequired
+	).isRequired,
+	darkModeMenu: PropTypes.element.isRequired
 };
 
-function NavBar({ classes, children }) {
+function NavBar({ classes, children, darkModeMenu }) {
 	// convert links details to React component
 	const links = children.map(({ title, link, isHash = false }, index) => (
 		<Link
@@ -55,6 +62,7 @@ function NavBar({ classes, children }) {
 				<Grid container spacing={2} justify="center">
 					{links}
 				</Grid>
+				{darkModeMenu}
 			</Paper>
 		</Box>
 	);

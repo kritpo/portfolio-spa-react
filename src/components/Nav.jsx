@@ -85,14 +85,23 @@ function Nav({ inView, darkMode, setToLightMode, setToDarkMode }) {
 		}
 	};
 
+	// setup the dark mode menu
+	const darkModeMenu = (
+		<Box display="flex" justifyContent="center">
+			<FormControlLabel
+				control={
+					<Switch checked={darkMode} onChange={darkModeToggle} />
+				}
+				label={darkMode ? <Dark /> : <Light />}
+			/>
+		</Box>
+	);
+
 	return (
 		<Box component="nav">
 			{showBar ? (
-				<NavBar>{links}</NavBar>
-			) : (
-				<BurgerMenu top="1em" right="1em">
-					<MenuList>
-						{linkItems}
+				<NavBar
+					darkModeMenu={
 						<Box display="flex" justifyContent="center">
 							<FormControlLabel
 								control={
@@ -104,6 +113,15 @@ function Nav({ inView, darkMode, setToLightMode, setToDarkMode }) {
 								label={darkMode ? <Dark /> : <Light />}
 							/>
 						</Box>
+					}
+				>
+					{links}
+				</NavBar>
+			) : (
+				<BurgerMenu top="1em" right="1em">
+					<MenuList>
+						{linkItems}
+						{darkModeMenu}
 					</MenuList>
 				</BurgerMenu>
 			)}

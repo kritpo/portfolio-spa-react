@@ -1,7 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
+import { useHistory } from 'react-router-dom';
+
 import { HashLink } from 'react-router-hash-link';
+
+import { useInView } from 'react-intersection-observer';
 
 import {
 	Box,
@@ -31,6 +35,66 @@ Portfolio.propTypes = {
 };
 
 function Portfolio({ resume, navIntersectionRef }) {
+	// retrieve the history object
+	const history = useHistory();
+
+	// setup the presentation intersection observer hook
+	const { ref: detailsRef, inView: detailsInView } = useInView({
+		rootMargin: '0% 0% -90% 0%'
+	});
+	useEffect(() => {
+		// check if the details section are in viewport
+		if (detailsInView) {
+			history.push('/#details');
+		}
+	}, [detailsInView, history]);
+
+	// setup the career intersection observer hook
+	const { ref: careerRef, inView: careerInView } = useInView({
+		rootMargin: '0% 0% -90% 0%'
+	});
+	useEffect(() => {
+		// check if the career section are in viewport
+		if (careerInView) {
+			history.push('/#career');
+		}
+	}, [careerInView, history]);
+
+	// setup the skills intersection observer hook
+	const { ref: skillsRef, inView: skillsInView } = useInView({
+		rootMargin: '0% 0% -90% 0%'
+	});
+	useEffect(() => {
+		// check if the skills section are in viewport
+		if (skillsInView) {
+			history.push('/#skills');
+		}
+	}, [history, skillsInView]);
+
+	// setup the references intersection observer hook
+	const { ref: referencesRef, inView: referencesInView } = useInView({
+		rootMargin: '0% 0% -90% 0%'
+	});
+	useEffect(() => {
+		// check if the references section are in viewport
+		if (referencesInView) {
+			history.push('/#references');
+		}
+	}, [history, referencesInView]);
+
+	// setup the no intersection observer hook
+	useEffect(() => {
+		// check if the all section are not in viewport
+		if (
+			!detailsInView &&
+			!careerInView &&
+			!skillsInView &&
+			!referencesInView
+		) {
+			history.push('./');
+		}
+	}, [careerInView, detailsInView, history, referencesInView, skillsInView]);
+
 	return (
 		<Fragment>
 			<HeroContainer />
@@ -55,7 +119,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 								</Error>
 							) : (
 								<Fragment>
-									<Box mb={4}>
+									<Box mb={4} ref={detailsRef}>
 										<Box
 											position="relative"
 											top="-4em"
@@ -63,7 +127,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 										/>
 										<DetailsContainer />
 									</Box>
-									<Box mb={4}>
+									<Box mb={4} ref={careerRef}>
 										<Box
 											position="relative"
 											top="-4em"
@@ -71,7 +135,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 										/>
 										<CareerContainer />
 									</Box>
-									<Box mb={4}>
+									<Box mb={4} ref={skillsRef}>
 										<Box
 											position="relative"
 											top="-4em"
@@ -79,7 +143,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 										/>
 										<SkillsContainer />
 									</Box>
-									<Box>
+									<Box ref={referencesRef}>
 										<Box
 											position="relative"
 											top="-4em"

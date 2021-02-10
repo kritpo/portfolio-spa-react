@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import {
 	Box,
+	Grid,
 	Dialog,
 	DialogTitle,
 	DialogContent,
@@ -119,7 +120,7 @@ function CareerItemButton({ children, link, courses, id }) {
 
 			// add the category button
 			courseButtons.push(
-				<Box m={2} clone key={category}>
+				<Grid item key={category}>
 					<Button
 						variant="contained"
 						color="secondary"
@@ -128,7 +129,7 @@ function CareerItemButton({ children, link, courses, id }) {
 					>
 						{category === NO_CATEGORY ? 'Défaut' : category}
 					</Button>
-				</Box>
+				</Grid>
 			);
 		}
 
@@ -165,8 +166,10 @@ function CareerItemButton({ children, link, courses, id }) {
 						Liste des cours
 					</DialogTitle>
 					<DialogContent id={`${'scroll-dialog-description'}-${id}`}>
-						{courseButtons}
-						{courseContent}
+						<Grid container spacing={2} justify="center">
+							{courseButtons}
+						</Grid>
+						<Box mt={2}>{courseContent}</Box>
 					</DialogContent>
 				</Dialog>
 			)}

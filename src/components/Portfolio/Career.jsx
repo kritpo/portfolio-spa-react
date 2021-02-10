@@ -5,7 +5,13 @@ import { useTheme } from '@material-ui/core/styles';
 
 import { HashLink } from 'react-router-hash-link';
 
-import { Box, Button, Typography, useMediaQuery } from '@material-ui/core';
+import {
+	Box,
+	Grid,
+	Button,
+	Typography,
+	useMediaQuery
+} from '@material-ui/core';
 import { ArrowUpward, Star } from '@material-ui/icons';
 import {
 	Timeline,
@@ -58,8 +64,8 @@ function Career({
 					Mon parcours
 				</Typography>
 			</Box>
-			<Box display="flex" flexWrap="wrap" justifyContent="center">
-				<Box m={2} clone>
+			<Grid container spacing={2} justify="center">
+				<Grid item>
 					<Button
 						variant="contained"
 						color={showWork ? 'default' : 'primary'}
@@ -68,8 +74,8 @@ function Career({
 					>
 						Professionnel
 					</Button>
-				</Box>
-				<Box m={2} clone>
+				</Grid>
+				<Grid item>
 					<Button
 						variant="contained"
 						color={showEducation ? 'default' : 'primary'}
@@ -78,8 +84,8 @@ function Career({
 					>
 						Scolaire
 					</Button>
-				</Box>
-				<Box m={2} clone>
+				</Grid>
+				<Grid item>
 					<Button
 						variant="contained"
 						color={showVolunteer ? 'default' : 'primary'}
@@ -88,8 +94,8 @@ function Career({
 					>
 						Associatif
 					</Button>
-				</Box>
-			</Box>
+				</Grid>
+			</Grid>
 			<Timeline align={isUpMd ? 'alternate' : 'left'}>
 				{careerList.length > 0 ? (
 					careerList

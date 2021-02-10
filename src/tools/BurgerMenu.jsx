@@ -159,7 +159,7 @@ function BurgerMenu({ children, classes, top, bottom, left, right }) {
 				className={classes.button}
 				clone
 			>
-				<IconButton onClick={toggleMenu}>
+				<IconButton onClick={toggleMenu} style={{ position: 'fixed' }}>
 					<Box width="35px" height="35px">
 						<Box className={classes.icon} />
 					</Box>

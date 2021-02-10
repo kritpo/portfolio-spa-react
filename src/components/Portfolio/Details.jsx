@@ -76,10 +76,11 @@ function Details({ resume }) {
 						textAlign="center"
 						height="100%"
 					>
-						<Box mb={2} height="10vh" width="10vh" clone>
+						<Box mb={2} clone>
 							<Avatar
 								alt={`Portfolio de ${resume.basics.name}`}
 								src={resume.basics.picture}
+								style={{height:'20vh',width:'20vh'}}
 							/>
 						</Box>
 						<Box mb={2}>

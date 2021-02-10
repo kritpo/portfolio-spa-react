@@ -143,8 +143,11 @@ function BurgerMenu({ children, classes, top, bottom, left, right }) {
 	// setup the menu state hook
 	const [isOpen, setIsOpen] = useState(false);
 
-	// setup the toggle menu handler
-	const toggleMenu = () => setIsOpen(!isOpen);
+	// setup the open menu handler
+	const openMenu = () => setIsOpen(true);
+
+	// setup the clone menu handler
+	const closeMenu = () => setIsOpen(false);
 
 	return (
 		<Box className={`${classes.root} ${isOpen ? 'open' : ''}`}>
@@ -159,7 +162,7 @@ function BurgerMenu({ children, classes, top, bottom, left, right }) {
 				className={classes.button}
 				clone
 			>
-				<IconButton onClick={toggleMenu} style={{ position: 'fixed' }}>
+				<IconButton onClick={openMenu} style={{ position: 'fixed' }}>
 					<Box width="35px" height="35px">
 						<Box className={classes.icon} />
 					</Box>
@@ -177,7 +180,7 @@ function BurgerMenu({ children, classes, top, bottom, left, right }) {
 					width="100%"
 					height="100%"
 					className={classes.cursorPointer}
-					onClick={toggleMenu}
+					onClick={closeMenu}
 				>
 					{children}
 				</Box>

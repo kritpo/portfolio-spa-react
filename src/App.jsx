@@ -11,10 +11,6 @@ import {
 	red
 } from '@material-ui/core/colors';
 
-import store from './store';
-
-import { Provider } from 'react-redux';
-
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { CssBaseline } from '@material-ui/core';
@@ -59,25 +55,23 @@ function App() {
 	);
 
 	return (
-		<Provider store={store}>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<BrowserRouter>
-					<NavContainer />
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<BrowserRouter>
+				<NavContainer />
 
-					<Switch>
-						<Route path="/terms">
-							<Terms />
-						</Route>
-						<Route path="/">
-							<PortfolioContainer />
-						</Route>
-					</Switch>
+				<Switch>
+					<Route path="/terms">
+						<Terms />
+					</Route>
+					<Route path="/">
+						<PortfolioContainer />
+					</Route>
+				</Switch>
 
-					<Footer />
-				</BrowserRouter>
-			</ThemeProvider>
-		</Provider>
+				<Footer />
+			</BrowserRouter>
+		</ThemeProvider>
 	);
 }
 

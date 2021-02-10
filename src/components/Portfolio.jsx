@@ -55,16 +55,36 @@ function Portfolio({ resume, navIntersectionRef }) {
 								</Error>
 							) : (
 								<Fragment>
-									<Box id="details" mb={4}>
+									<Box mb={4}>
+										<Box
+											position="relative"
+											top="-4em"
+											id="details"
+										/>
 										<DetailsContainer />
 									</Box>
-									<Box id="career" mb={4}>
+									<Box mb={4}>
+										<Box
+											position="relative"
+											top="-4em"
+											id="career"
+										/>
 										<CareerContainer />
 									</Box>
-									<Box id="skills" mb={4}>
+									<Box mb={4}>
+										<Box
+											position="relative"
+											top="-4em"
+											id="skills"
+										/>
 										<SkillsContainer />
 									</Box>
-									<Box id="references">
+									<Box>
+										<Box
+											position="relative"
+											top="-4em"
+											id="references"
+										/>
 										<ReferencesContainer />
 									</Box>
 								</Fragment>

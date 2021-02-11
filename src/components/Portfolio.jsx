@@ -1,5 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { lazy, Fragment, Suspense } from 'react';
 import { PropTypes } from 'prop-types';
+
+import { useInView } from 'react-intersection-observer';
 
 import { Box, Container, Paper, IconButton } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
@@ -10,9 +12,17 @@ import CustomLink from '../tools/CustomLink';
 import AutoHashMatcher from '../tools/AutoHashMatcher';
 import HeroContainer from '../containers/Portfolio/HeroContainer';
 import DetailsContainer from '../containers/Portfolio/DetailsContainer';
-import CareerContainer from '../containers/Portfolio/CareerContainer';
-import SkillsContainer from '../containers/Portfolio/SkillsContainer';
-import ReferencesContainer from '../containers/Portfolio/ReferencesContainer';
+
+// import components in lazy mode
+const CareerContainer = lazy(() =>
+	import('../containers/Portfolio/CareerContainer')
+);
+const SkillsContainer = lazy(() =>
+	import('../containers/Portfolio/SkillsContainer')
+);
+const ReferencesContainer = lazy(() =>
+	import('../containers/Portfolio/ReferencesContainer')
+);
 
 // configure the prop types validation
 Portfolio.propTypes = {
@@ -25,6 +35,17 @@ Portfolio.propTypes = {
 };
 
 function Portfolio({ resume, navIntersectionRef }) {
+	// setup intersections observers
+	const { ref: detailsRef, inView: detailsInView } = useInView({
+		triggerOnce: true
+	});
+	const { ref: careerRef, inView: careerInView } = useInView({
+		triggerOnce: true
+	});
+	const { ref: skillsRef, inView: skillsInView } = useInView({
+		triggerOnce: true
+	});
+
 	return (
 		<Fragment>
 			<HeroContainer />
@@ -48,7 +69,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 							) : (
 								<Fragment>
 									<AutoHashMatcher hashText="details">
-										<Box mb={4}>
+										<Box mb={4} ref={detailsRef}>
 											<Box
 												position="relative"
 												top="-4em"
@@ -58,23 +79,39 @@ function Portfolio({ resume, navIntersectionRef }) {
 										</Box>
 									</AutoHashMatcher>
 									<AutoHashMatcher hashText="career">
-										<Box mb={4}>
+										<Box mb={4} ref={careerRef}>
 											<Box
 												position="relative"
 												top="-4em"
 												id="career"
 											/>
-											<CareerContainer />
+											<Suspense
+												fallback={
+													<Loading size="40vh" />
+												}
+											>
+												{detailsInView && (
+													<CareerContainer />
+												)}
+											</Suspense>
 										</Box>
 									</AutoHashMatcher>
 									<AutoHashMatcher hashText="skills">
-										<Box mb={4}>
+										<Box mb={4} ref={skillsRef}>
 											<Box
 												position="relative"
 												top="-4em"
 												id="skills"
 											/>
-											<SkillsContainer />
+											<Suspense
+												fallback={
+													<Loading size="40vh" />
+												}
+											>
+												{careerInView && (
+													<SkillsContainer />
+												)}
+											</Suspense>
 										</Box>
 									</AutoHashMatcher>
 									<AutoHashMatcher hashText="references">
@@ -84,7 +121,15 @@ function Portfolio({ resume, navIntersectionRef }) {
 												top="-4em"
 												id="references"
 											/>
-											<ReferencesContainer />
+											<Suspense
+												fallback={
+													<Loading size="40vh" />
+												}
+											>
+												{skillsInView && (
+													<ReferencesContainer />
+												)}
+											</Suspense>
 										</Box>
 									</AutoHashMatcher>
 								</Fragment>

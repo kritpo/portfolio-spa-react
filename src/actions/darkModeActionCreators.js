@@ -2,6 +2,7 @@ import * as ActionTypes from './types';
 
 /**
  * redux action: set the theme mode
+ * @param {boolean} payload if set the dark mode
  */
 export const setThemeMode = payload => ({
 	type: ActionTypes.SET_THEME_MODE,

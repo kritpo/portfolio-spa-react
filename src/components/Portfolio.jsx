@@ -16,8 +16,8 @@ import {
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
-import Loading from '../components/Loading';
-import Error from '../components/Error';
+import Loading from '../tools/Loading';
+import Error from '../tools/Error';
 import HeroContainer from '../containers/Portfolio/HeroContainer';
 import DetailsContainer from '../containers/Portfolio/DetailsContainer';
 import CareerContainer from '../containers/Portfolio/CareerContainer';

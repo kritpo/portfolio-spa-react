@@ -38,7 +38,7 @@ function Header({ title, history }) {
 				width="100%"
 			>
 				<Box ml={4} mb={2}>
-					<Typography component="h1" variant="h1">
+					<Typography component="h1" variant="h3">
 						{title}
 					</Typography>
 				</Box>

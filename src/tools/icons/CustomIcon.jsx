@@ -1,21 +1,17 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { useAsync } from 'react-async';
-
 import icons, { SOCIAL, CAREER, TECHNOLOGY, HOBBY } from './icons';
+
+import { Box } from '@material-ui/core';
+
+import Loading from '../Loading';
 
 /**
  * retrieve the icon or return the keyword
  * @param {object} props input keyword object
  */
-const retrieveIcon = async ({
-	social,
-	career,
-	technology,
-	hobby,
-	notExact = true
-}) => {
+const retrieveIcon = (social, career, technology, hobby, notExact = true) => {
 	// check if no props is defined
 	if (
 		social === undefined &&
@@ -54,7 +50,7 @@ const retrieveIcon = async ({
 	// check if an icon is found
 	if (icon !== undefined) {
 		// return the icon component export object
-		return icon.loadIcon();
+		return lazy(icon.loadIcon);
 	} else {
 		// otherwise return the input keyword
 		return keyword;
@@ -112,33 +108,23 @@ CustomIcon.propTypes = {
 };
 
 function CustomIcon({ social, career, technology, hobby, notExact }) {
-	// setup the icon retrieve hook
-	const { data } = useAsync({
-		promiseFn: retrieveIcon,
-		social,
-		career,
-		technology,
-		hobby,
-		notExact
-	});
+	// retrieve the icon
+	const Icon = retrieveIcon(social, career, technology, hobby, notExact);
 
-	// check if data is retrieved
-	if (data) {
-		// check if the data is the file import object
-		if (typeof data === 'object') {
-			// retrieve the icon component
-			const Icon = data.default;
+	// setup the text container if the icon is a plain text
+	const text = typeof Icon === 'string' ? Icon : undefined;
 
-			// return the matched icon
-			return <Icon />;
-		}
-
-		// return the keyword as no icon matches it
-		return data;
-	}
-
-	// return null when the asynchronous function to retrieve icon is not ended
-	return null;
+	return (
+		<Suspense
+			fallback={
+				<Box>
+					<Loading size="1em" />
+				</Box>
+			}
+		>
+			{text === undefined ? <Icon /> : text}
+		</Suspense>
+	);
 }
 
 export default CustomIcon;

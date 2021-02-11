@@ -15,15 +15,15 @@ import {
 
 import { setThemeMode } from './actions';
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
-import PortfolioContainer from './containers/PortfolioContainer';
 import NavContainer from './containers/NavContainer';
-import Terms from './components/Terms';
 import Footer from './components/Footer';
+
+import Routes from './Routes';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (state, ...props) => ({
@@ -79,16 +79,7 @@ function App({ darkMode, setThemeMode }) {
 			<CssBaseline />
 			<BrowserRouter>
 				<NavContainer />
-
-				<Switch>
-					<Route path="/terms">
-						<Terms />
-					</Route>
-					<Route path="/">
-						<PortfolioContainer />
-					</Route>
-				</Switch>
-
+				<Routes />
 				<Footer />
 			</BrowserRouter>
 		</ThemeProvider>

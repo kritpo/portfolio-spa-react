@@ -3,10 +3,9 @@ import { PropTypes } from 'prop-types';
 
 import { useTheme, withStyles } from '@material-ui/styles';
 
-import { NavLink as RouterLink } from 'react-router-dom';
-import { NavHashLink as HashLink } from 'react-router-hash-link';
+import { Grid, Paper, Box, Button } from '@material-ui/core';
 
-import { Grid, Paper, Box, Button, Link } from '@material-ui/core';
+import CustomLink from '../../tools/CustomLink';
 
 // define the style of the component
 const styles = theme => ({
@@ -33,15 +32,16 @@ function NavBar({ classes, children, darkModeMenu }) {
 
 	// convert links details to React component
 	const links = children.map(({ title, link, isHash = false }, index) => (
-		<Link
-			component={isHash ? HashLink : RouterLink}
+		<CustomLink
 			to={link}
+			nav
+			hash={isHash}
 			activeClassName={classes.active}
-			key={index}
 			smooth={isHash}
+			key={index}
 		>
 			<Button>{title}</Button>
-		</Link>
+		</CustomLink>
 	));
 
 	return (

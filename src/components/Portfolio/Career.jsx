@@ -3,8 +3,6 @@ import { PropTypes } from 'prop-types';
 
 import { useTheme } from '@material-ui/core/styles';
 
-import { HashLink } from 'react-router-hash-link';
-
 import {
 	Box,
 	Grid,
@@ -22,6 +20,7 @@ import {
 	TimelineDot
 } from '@material-ui/lab';
 
+import CustomLink from '../../tools/CustomLink';
 import CareerItem, { WORK, EDUCATION, VOLUNTEER } from './Career/CareerItem';
 
 // configure the prop types validation
@@ -119,11 +118,11 @@ function Career({
 				) : (
 					<TimelineItem>
 						<TimelineSeparator>
-							<HashLink to="#career" smooth>
+							<CustomLink to="#career" hash smooth>
 								<TimelineDot color="primary">
 									<Star />
 								</TimelineDot>
-							</HashLink>
+							</CustomLink>
 							<TimelineConnector />
 						</TimelineSeparator>
 						<Box mt={1} clone>
@@ -137,11 +136,11 @@ function Career({
 				)}
 				<TimelineItem>
 					<TimelineSeparator>
-						<HashLink to="#career" smooth>
+						<CustomLink to="#career" hash smooth>
 							<TimelineDot color="primary">
 								<ArrowUpward />
 							</TimelineDot>
-						</HashLink>
+						</CustomLink>
 					</TimelineSeparator>
 					<TimelineContent />
 				</TimelineItem>

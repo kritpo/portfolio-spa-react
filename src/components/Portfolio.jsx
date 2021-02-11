@@ -5,8 +5,6 @@ import { useHistory } from 'react-router-dom';
 
 import * as routes from '../routes';
 
-import { HashLink } from 'react-router-hash-link';
-
 import { useInView } from 'react-intersection-observer';
 
 import {
@@ -20,6 +18,7 @@ import { ExpandMore } from '@material-ui/icons';
 
 import Loading from '../tools/Loading';
 import Error from '../tools/Error';
+import CustomLink from '../tools/CustomLink';
 import HeroContainer from '../containers/Portfolio/HeroContainer';
 import DetailsContainer from '../containers/Portfolio/DetailsContainer';
 import CareerContainer from '../containers/Portfolio/CareerContainer';
@@ -105,13 +104,11 @@ function Portfolio({ resume, navIntersectionRef }) {
 					<Box px={2} pb={2} clone>
 						<Paper id="start" ref={navIntersectionRef}>
 							<Box mb={2} textAlign="center">
-								<HashLink to="#start" smooth>
-									<Typography color="textPrimary">
-										<IconButton>
-											<ExpandMore />
-										</IconButton>
-									</Typography>
-								</HashLink>
+								<CustomLink to="#start" hash smooth>
+									<IconButton>
+										<ExpandMore />
+									</IconButton>
+								</CustomLink>
 							</Box>
 							{resume.isLoading ? (
 								<Loading size="40vh" />

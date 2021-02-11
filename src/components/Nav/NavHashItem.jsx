@@ -5,12 +5,12 @@ import { withStyles } from '@material-ui/styles';
 
 import { MenuItem } from '@material-ui/core';
 
-import { NavHashLink } from 'react-router-hash-link';
+import CustomLink from '../../tools/CustomLink';
 
 // define the style of the component
 const styles = theme => ({
 	root: {
-		fontSize:'5vh',
+		fontSize: '5vh',
 		padding: '0px 0px'
 	},
 	link: {
@@ -18,7 +18,11 @@ const styles = theme => ({
 		height: '100%',
 		padding: '6px 16px',
 		textDecoration: 'none',
-		width: '100%'
+		width: '100%',
+
+		'&:hover': {
+			textDecoration: 'none'
+		}
 	},
 	active: {
 		backgroundColor: theme.palette.divider
@@ -34,14 +38,16 @@ NavHashItem.propTypes = {
 function NavHashItem({ classes, to, children }) {
 	return (
 		<MenuItem className={classes.root}>
-			<NavHashLink
-				to={`${to}`}
+			<CustomLink
+				to={to}
+				nav
+				hash
 				className={classes.link}
 				activeClassName={classes.active}
 				smooth
 			>
 				{children}
-			</NavHashLink>
+			</CustomLink>
 		</MenuItem>
 	);
 }

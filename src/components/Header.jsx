@@ -1,10 +1,10 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Link as RouterLink } from 'react-router-dom';
-
-import { Paper, Box, Typography, Breadcrumbs, Link } from '@material-ui/core';
+import { Paper, Box, Typography, Breadcrumbs } from '@material-ui/core';
 import { NavigateNext } from '@material-ui/icons';
+
+import CustomLink from '../tools/CustomLink';
 
 // configure the prop types validation
 Header.propTypes = {
@@ -20,9 +20,9 @@ Header.propTypes = {
 function Header({ title, history }) {
 	// convert history details to React component
 	const breadcrumb = history.map(({ link, title }, index) => (
-		<Link component={RouterLink} color="inherit" to={link} key={index}>
+		<CustomLink to={link} color="inherit" key={index}>
 			{title}
-		</Link>
+		</CustomLink>
 	));
 
 	return (

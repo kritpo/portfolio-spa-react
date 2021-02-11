@@ -3,8 +3,6 @@ import { PropTypes } from 'prop-types';
 
 import { useTheme } from '@material-ui/core/styles';
 
-import { HashLink } from 'react-router-hash-link';
-
 import {
 	Box,
 	Card,
@@ -23,6 +21,7 @@ import {
 } from '@material-ui/lab';
 
 import CustomIcon from '../../../tools/icons/CustomIcon';
+import CustomLink from '../../../tools/CustomLink';
 import CareerItemButton from './CareerItemButton';
 
 // setup career types constants
@@ -144,9 +143,9 @@ function CareerItem({ career, id }) {
 				</TimelineOppositeContent>
 				<Hidden xsDown>
 					<TimelineSeparator>
-						<HashLink to="#career" smooth>
+						<CustomLink to="#career" hash smooth>
 							<TimelineDot color="secondary">{icon}</TimelineDot>
-						</HashLink>
+						</CustomLink>
 						<TimelineConnector />
 					</TimelineSeparator>
 				</Hidden>

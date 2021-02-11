@@ -1,6 +1,8 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
+import { routePreloadComponent } from '../routes';
+
 import { Link as RouterLink, NavLink as NavRouterLink } from 'react-router-dom';
 import { HashLink, NavHashLink } from 'react-router-hash-link';
 
@@ -20,6 +22,9 @@ CustomLink.propTypes = {
 };
 
 function CustomLink({ children, to, nav, hash, ...props }) {
+	// setup the route component preloader
+	const preloadRoutedComponent = () => routePreloadComponent(to);
+
 	return (
 		<Link
 			component={
@@ -32,6 +37,7 @@ function CustomLink({ children, to, nav, hash, ...props }) {
 					: RouterLink
 			}
 			to={to}
+			onMouseEnter={preloadRoutedComponent}
 			{...props}
 		>
 			{children}

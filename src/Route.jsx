@@ -1,27 +1,27 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 
-import * as routes from './routes';
+import routes from './routes';
 
 import { Switch, Route } from 'react-router-dom';
 
 import Loading from './tools/Loading';
 import Error404 from './components/Error404';
 
-const PortfolioContainer = lazy(() =>
-	import('./containers/PortfolioContainer')
-);
-const Terms = lazy(() => import('./components/Terms'));
-
 function Routes() {
+	// convert routes details to React component
+	const routesList = routes.map(route => (
+		<Route
+			path={route.path}
+			exact={route.exact}
+			component={route.component}
+			key={route.path}
+		/>
+	));
+
 	return (
 		<Suspense fallback={<Loading size="50vh" />}>
 			<Switch>
-				<Route exact path={routes.HOME}>
-					<PortfolioContainer />
-				</Route>
-				<Route exact path={routes.TERMS}>
-					<Terms />
-				</Route>
+				{routesList}
 				<Route>
 					<Error404 />
 				</Route>

@@ -23,7 +23,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import NavContainer from './containers/NavContainer';
 import Footer from './components/Footer';
 
-import Routes from './Routes';
+import Route from './Route';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (state, ...props) => ({
@@ -79,7 +79,7 @@ function App({ darkMode, setThemeMode }) {
 			<CssBaseline />
 			<BrowserRouter>
 				<NavContainer />
-				<Routes />
+				<Route />
 				<Footer />
 			</BrowserRouter>
 		</ThemeProvider>

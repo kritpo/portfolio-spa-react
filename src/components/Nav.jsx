@@ -5,6 +5,8 @@ import { useLocation } from 'react-router-dom';
 
 import { useTheme } from '@material-ui/styles';
 
+import * as routes from '../routes';
+
 import {
 	Box,
 	MenuList,
@@ -22,22 +24,22 @@ import NavHashItem from './Nav/NavHashItem';
 const links = [
 	{
 		title: 'Présentation',
-		link: '/#details',
+		link: `${routes.HOME}#details`,
 		isHash: true
 	},
 	{
 		title: 'Parcours',
-		link: '/#career',
+		link: `${routes.HOME}#career`,
 		isHash: true
 	},
 	{
 		title: 'Compétences',
-		link: '/#skills',
+		link: `${routes.HOME}#skills`,
 		isHash: true
 	},
 	{
 		title: 'Recommandations',
-		link: '/#references',
+		link: `${routes.HOME}#references`,
 		isHash: true
 	}
 ];
@@ -72,7 +74,7 @@ function Nav({ inView, darkMode, setToLightMode, setToDarkMode }) {
 
 	// setup the nav type updater
 	useEffect(() => {
-		setShowBar(isUpSm && (route !== '/' || inView));
+		setShowBar(isUpSm && (route !== routes.HOME || inView));
 	}, [inView, isUpSm, route]);
 
 	// setup the dark mode toggler

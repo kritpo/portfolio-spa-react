@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 
+import * as routes from '../routes';
+
 import {
 	Container,
 	Box,
@@ -17,7 +19,7 @@ function Terms() {
 		<Fragment>
 			<Header
 				title="Mentions légales"
-				history={[{ link: '/', title: 'Accueil' }]}
+				history={[{ link: routes.HOME, title: 'Accueil' }]}
 			/>
 			<Container fixed>
 				<Box mb={2} clone>

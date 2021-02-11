@@ -1,5 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 
+import * as routes from './routes';
+
 import { Switch, Route } from 'react-router-dom';
 
 import Loading from './tools/Loading';
@@ -14,10 +16,10 @@ function Routes() {
 	return (
 		<Suspense fallback={<Loading size="50vh" />}>
 			<Switch>
-				<Route exact path="/">
+				<Route exact path={routes.HOME}>
 					<PortfolioContainer />
 				</Route>
-				<Route path="/terms">
+				<Route exact path={routes.TERMS}>
 					<Terms />
 				</Route>
 				<Route>

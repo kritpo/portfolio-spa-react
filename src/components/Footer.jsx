@@ -1,5 +1,7 @@
 import React from 'react';
 
+import * as routes from '../routes';
+
 import { Link as RouterLink } from 'react-router-dom';
 
 import { Paper, Box, Link, Typography, Button } from '@material-ui/core';
@@ -59,7 +61,7 @@ function Footer() {
 				</Box>
 				<Typography variant="body2">
 					&copy; Réalisé par Jimmy Weng -{' '}
-					<Link component={RouterLink} to="/terms">
+					<Link component={RouterLink} to={routes.TERMS}>
 						Mentions légales
 					</Link>
 				</Typography>

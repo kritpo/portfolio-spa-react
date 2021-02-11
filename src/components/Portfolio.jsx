@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 
 import { useHistory } from 'react-router-dom';
 
+import * as routes from '../routes';
+
 import { HashLink } from 'react-router-hash-link';
 
 import { useInView } from 'react-intersection-observer';
@@ -45,7 +47,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 	useEffect(() => {
 		// check if the details section are in viewport
 		if (detailsInView) {
-			history.push('/#details');
+			history.push(`${routes.HOME}#details`);
 		}
 	}, [detailsInView, history]);
 
@@ -56,7 +58,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 	useEffect(() => {
 		// check if the career section are in viewport
 		if (careerInView) {
-			history.push('/#career');
+			history.push(`${routes.HOME}#career`);
 		}
 	}, [careerInView, history]);
 
@@ -67,7 +69,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 	useEffect(() => {
 		// check if the skills section are in viewport
 		if (skillsInView) {
-			history.push('/#skills');
+			history.push(`${routes.HOME}#skills`);
 		}
 	}, [history, skillsInView]);
 
@@ -78,7 +80,7 @@ function Portfolio({ resume, navIntersectionRef }) {
 	useEffect(() => {
 		// check if the references section are in viewport
 		if (referencesInView) {
-			history.push('/#references');
+			history.push(`${routes.HOME}#references`);
 		}
 	}, [history, referencesInView]);
 

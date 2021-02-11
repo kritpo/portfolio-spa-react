@@ -13,7 +13,7 @@ import {
 	red
 } from '@material-ui/core/colors';
 
-import { setThemeMode } from './actions';
+import { checkWebpSupport, setThemeMode } from './actions';
 
 import { BrowserRouter } from 'react-router-dom';
 
@@ -33,10 +33,16 @@ const mapStateToProps = (state, ...props) => ({
 
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
+	checkWebpSupport,
 	setThemeMode
 };
 
-function App({ darkMode, setThemeMode }) {
+function App({ darkMode, checkWebpSupport, setThemeMode }) {
+	// check the webp image support
+	useEffect(() => {
+		checkWebpSupport();
+	}, [checkWebpSupport]);
+
 	// setup the dark mode status hook
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 

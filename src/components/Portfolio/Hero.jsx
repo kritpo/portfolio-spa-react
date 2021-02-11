@@ -11,38 +11,53 @@ import hero1920w from '../../assets/hero/hero-1920w.png';
 import hero2560w from '../../assets/hero/hero-2560w.png';
 import hero3768w from '../../assets/hero/hero-3768w.png';
 
+import webpHero800w from '../../assets/hero/hero-800w.webp';
+import webpHero1366w from '../../assets/hero/hero-1366w.webp';
+import webpHero1440w from '../../assets/hero/hero-1440w.webp';
+import webpHero1536w from '../../assets/hero/hero-1536w.webp';
+import webpHero1920w from '../../assets/hero/hero-1920w.webp';
+import webpHero2560w from '../../assets/hero/hero-2560w.webp';
+import webpHero3768w from '../../assets/hero/hero-3768w.webp';
+
 import { Box, Container, Typography } from '@material-ui/core';
 
 // define the style of the component
 const styles = theme => ({
 	root: {
-		backgroundImage: `url(${hero800w})`,
+		backgroundImage: ({ webpSupport }) =>
+			webpSupport ? `url(${webpHero800w})` : `url(${hero800w})`,
 		backgroundPosition: 'center',
 		backgroundSize: 'cover',
 
 		// SEO optimization by loading a sized hero background image
 		'@media (min-width: 800px)': {
-			backgroundImage: `url(${hero1366w})`
+			backgroundImage: ({ webpSupport }) =>
+				webpSupport ? `url(${webpHero1366w})` : `url(${hero1366w})`
 		},
 
 		'@media (min-width: 1366px)': {
-			backgroundImage: `url(${hero1440w})`
+			backgroundImage: ({ webpSupport }) =>
+				webpSupport ? `url(${webpHero1440w})` : `url(${hero1440w})`
 		},
 
 		'@media (min-width: 1440px)': {
-			backgroundImage: `url(${hero1536w})`
+			backgroundImage: ({ webpSupport }) =>
+				webpSupport ? `url(${webpHero1536w})` : `url(${hero1536w})`
 		},
 
 		'@media (min-width: 1536px)': {
-			backgroundImage: `url(${hero1920w})`
+			backgroundImage: ({ webpSupport }) =>
+				webpSupport ? `url(${webpHero1920w})` : `url(${hero1920w})`
 		},
 
 		'@media (min-width: 1920px)': {
-			backgroundImage: `url(${hero2560w})`
+			backgroundImage: ({ webpSupport }) =>
+				webpSupport ? `url(${webpHero2560w})` : `url(${hero2560w})`
 		},
 
 		'@media (min-width: 2560px)': {
-			backgroundImage: `url(${hero3768w})`
+			backgroundImage: ({ webpSupport }) =>
+				webpSupport ? `url(${webpHero3768w})` : `url(${hero3768w})`
 		}
 	},
 	// filter the hero background to match the theme

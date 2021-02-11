@@ -8,7 +8,8 @@ import * as Reducers from './reducers';
 const rootReducer = combineReducers({
 	resume: Reducers.resume,
 	navIntersection: Reducers.navIntersection,
-	darkMode: Reducers.darkMode
+	darkMode: Reducers.darkMode,
+	webpSupport: Reducers.webpSupport
 });
 
 // create a redux store

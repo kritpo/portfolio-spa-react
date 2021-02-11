@@ -1,23 +1,12 @@
-import { lazy } from 'react';
-
 import { matchPath } from 'react-router-dom';
 
-// setup the component loader
-const loader = imp => {
-	// setup the dynamic import
-	const Component = lazy(imp);
-
-	// put the import statement into the preload stack
-	Component.preload = imp;
-
-	return Component;
-};
+import impLoader from './tools/impLoader';
 
 // load all components
-const PortfolioContainer = loader(() =>
+const PortfolioContainer = impLoader(() =>
 	import('./containers/PortfolioContainer')
 );
-const Terms = loader(() => import('./components/Terms'));
+const Terms = impLoader(() => import('./components/Terms'));
 
 // setup route constants
 export const HOME = '/';

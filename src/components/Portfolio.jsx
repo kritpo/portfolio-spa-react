@@ -7,13 +7,7 @@ import * as routes from '../routes';
 
 import { useInView } from 'react-intersection-observer';
 
-import {
-	Box,
-	Container,
-	Paper,
-	IconButton,
-	Typography
-} from '@material-ui/core';
+import { Box, Container, Paper, IconButton } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
 import Loading from '../tools/Loading';

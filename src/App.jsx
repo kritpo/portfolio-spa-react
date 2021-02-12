@@ -1,4 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+
+import { connect } from 'react-redux';
 
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -11,23 +13,50 @@ import {
 	red
 } from '@material-ui/core/colors';
 
-import store from './store';
+import { checkWebpSupport, setThemeMode } from './actions';
 
-import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 
-function App() {
+import NavContainer from './containers/NavContainer';
+import Footer from './components/Footer';
+
+import Route from './Route';
+
+// configure the states to pass as props to the component
+const mapStateToProps = (state, ...props) => ({
+	darkMode: state.darkMode,
+	...props
+});
+
+// configure the actions to pass as props to the component
+const mapDispatchToProps = {
+	checkWebpSupport,
+	setThemeMode
+};
+
+function App({ darkMode, checkWebpSupport, setThemeMode }) {
+	// check the webp image support
+	useEffect(() => {
+		checkWebpSupport();
+	}, [checkWebpSupport]);
+
 	// setup the dark mode status hook
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+	// save the user theme
+	useEffect(() => {
+		setThemeMode(prefersDarkMode);
+	}, [prefersDarkMode, setThemeMode]);
 
 	// setup the app theme
 	const theme = useMemo(
 		() =>
 			createMuiTheme({
 				palette: {
-					type: prefersDarkMode ? 'dark' : 'light',
+					type: darkMode ? 'dark' : 'light',
 					primary: {
 						main: orange[500]
 					},
@@ -48,16 +77,19 @@ function App() {
 					}
 				}
 			}),
-		[prefersDarkMode]
+		[darkMode]
 	);
 
 	return (
-		<Provider store={store}>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-			</ThemeProvider>
-		</Provider>
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<BrowserRouter>
+				<NavContainer />
+				<Route />
+				<Footer />
+			</BrowserRouter>
+		</ThemeProvider>
 	);
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

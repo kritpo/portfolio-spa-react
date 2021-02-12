@@ -6,7 +6,10 @@ import * as Reducers from './reducers';
 
 // configure the root reducer by combining all reducers
 const rootReducer = combineReducers({
-	sample: Reducers.sample
+	resume: Reducers.resume,
+	navIntersection: Reducers.navIntersection,
+	darkMode: Reducers.darkMode,
+	webpSupport: Reducers.webpSupport
 });
 
 // create a redux store

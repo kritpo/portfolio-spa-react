@@ -18,6 +18,7 @@ import {
 
 import Header from './Header';
 import Loading from '../tools/Loading';
+import CustomLink from '../tools/CustomLink';
 
 // setup field name constants
 export const USERNAME = 'username';
@@ -165,14 +166,20 @@ function SignUp({ form, handleForm, isSending, error }) {
 									</Button>
 									<FormHelperText>{error}</FormHelperText>
 								</FormControl>
-								{isSending && (
-									<Box mt={2} textAlign="center">
-										<Loading size="32px" />
-										<Typography variant="body1">
-											Envoi en cours...
-										</Typography>
-									</Box>
-								)}
+								<Box mt={2} textAlign="center">
+									{isSending && (
+										<Box mb={2}>
+											<Loading size="32px" />
+											<Typography variant="body1">
+												Envoi en cours...
+											</Typography>
+										</Box>
+									)}
+									<CustomLink to={routes.SIGN_UP_CONFIRM}>
+										Déjà inscrit? Confirmez votre
+										inscription
+									</CustomLink>
+								</Box>
 							</form>
 						</Box>
 					</Paper>

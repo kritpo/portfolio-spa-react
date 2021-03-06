@@ -1,6 +1,10 @@
 import React, { useState, useMemo } from 'react';
 
+import { useHistory } from 'react-router-dom';
+
 import { Auth } from 'aws-amplify';
+
+import * as routes from '../routes';
 
 import SignUp, { USERNAME, EMAIL, PASSWORD, GDPR } from '../components/SignUp';
 
@@ -57,6 +61,9 @@ const checkField = (field, value) => {
 };
 
 function SignUpContainer({ ...props }) {
+	// setup the history hook
+	const history = useHistory();
+
 	// setup form states
 	const [form, setForm] = useState({
 		[USERNAME]: { value: '', error: '', triggered: false },
@@ -164,21 +171,25 @@ function SignUpContainer({ ...props }) {
 							email: form.email.value
 						}
 					})
-						.then(user => {
-							console.log(user);
+						.then(() => {
+							// redirect the user to the sign up confirmation page
+							history.push(routes.SIGN_UP_CONFIRM, {
+								username: form.username.value
+							});
 						})
 						.catch(() => {
+							// update error to show in the form
 							setError(
 								'Une erreur inattendue est survenue. Veuillez réessayer ultérieurement.'
 							);
-						})
-						.finally(() => {
+
+							// reset the loading state
 							setIsSending(false);
 						});
 				}
 			}
 		}),
-		[form]
+		[form, history]
 	);
 
 	return (

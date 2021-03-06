@@ -8,16 +8,16 @@ import { useInView } from 'react-intersection-observer';
 import { Box } from '@material-ui/core';
 
 // configure default props
-Portfolio.defaultProps = {
+AutoHashMatcher.defaultProps = {
 	hashText: ''
 };
 
 // configure the prop types validation
-Portfolio.propTypes = {
+AutoHashMatcher.propTypes = {
 	hashText: PropTypes.string.isRequired
 };
 
-function Portfolio({ children, hashText }) {
+function AutoHashMatcher({ children, hashText }) {
 	// retrieve the location hook
 	const location = useLocation();
 
@@ -64,4 +64,4 @@ function Portfolio({ children, hashText }) {
 	return <Box ref={finalRef}>{children}</Box>;
 }
 
-export default Portfolio;
+export default AutoHashMatcher;

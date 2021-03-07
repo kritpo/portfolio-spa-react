@@ -73,7 +73,7 @@ function Terms() {
 								cookies stockerons uniquement des données qui
 								sont relatif à l'usage de ce site par
 								l'internaute, tel que ses préférences, ses
-								identifiants de connection, etc... Ces derniers
+								identifiants de connexion, etc... Ces derniers
 								ne seront jamais utilisés à des fins
 								commerciales.
 								<br />

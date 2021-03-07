@@ -20,17 +20,17 @@ import CustomLink from '../utils/CustomLink';
 
 // setup field name constants
 export const USERNAME = 'username';
-export const CODE = 'code';
+export const PASSWORD = 'password';
 
 // configure the prop types validation
-SignUpConfirm.propTypes = {
+SignIn.propTypes = {
 	form: PropTypes.shape({
 		[USERNAME]: PropTypes.shape({
 			value: PropTypes.string.isRequired,
 			error: PropTypes.string.isRequired,
 			triggered: PropTypes.bool.isRequired
 		}).isRequired,
-		[CODE]: PropTypes.shape({
+		[PASSWORD]: PropTypes.shape({
 			value: PropTypes.string.isRequired,
 			error: PropTypes.string.isRequired,
 			triggered: PropTypes.bool.isRequired
@@ -42,29 +42,15 @@ SignUpConfirm.propTypes = {
 		onSubmit: PropTypes.func.isRequired
 	}).isRequired,
 	isSending: PropTypes.bool.isRequired,
-	error: PropTypes.string.isRequired,
-	resend: PropTypes.func.isRequired,
-	resendWaitMessage: PropTypes.string.isRequired,
-	resendErrorMessage: PropTypes.string.isRequired
+	error: PropTypes.string.isRequired
 };
 
-function SignUpConfirm({
-	form,
-	handleForm,
-	isSending,
-	error,
-	resend,
-	resendWaitMessage,
-	resendErrorMessage
-}) {
+function SignIn({ form, handleForm, isSending, error }) {
 	return (
 		<Fragment>
 			<Header
-				title="Confirmation d'inscription"
-				history={[
-					{ link: HOME, title: 'Accueil' },
-					{ link: SIGN_UP, title: 'Inscription' }
-				]}
+				title="Connexion"
+				history={[{ link: HOME, title: 'Accueil' }]}
 			/>
 			<Container component="main" fixed>
 				<Box
@@ -76,7 +62,7 @@ function SignUpConfirm({
 				>
 					<Paper>
 						<Typography component="h2" variant="h4">
-							Confirmation d'inscription
+							Connexion
 						</Typography>
 						<Box
 							display="flex"
@@ -97,44 +83,21 @@ function SignUpConfirm({
 										onChange={handleForm.onChange(USERNAME)}
 										onBlur={handleForm.onBlur(USERNAME)}
 										error={form[USERNAME].error !== ''}
-										InputProps={{
-											endAdornment: (
-												<Button
-													color="primary"
-													size="small"
-													onClick={resend}
-													disabled={
-														resendWaitMessage !== ''
-													}
-												>
-													{resendErrorMessage !==
-													'' ? (
-														<Typography color="error">
-															{resendErrorMessage}
-														</Typography>
-													) : resendWaitMessage !==
-													  '' ? (
-														resendWaitMessage
-													) : (
-														'Renvoyer'
-													)}
-												</Button>
-											)
-										}}
 										fullWidth
 										required
 									/>
 								</Box>
 								<Box mb={2}>
 									<TextField
-										id={CODE}
-										label="Code de vérification"
-										placeholder="123456"
-										value={form[CODE].value}
-										helperText={form[CODE].error}
-										onChange={handleForm.onChange(CODE)}
-										onBlur={handleForm.onBlur(CODE)}
-										error={form[CODE].error !== ''}
+										id={PASSWORD}
+										type="password"
+										label="Mot de passe"
+										placeholder="Mot de passe"
+										value={form[PASSWORD].value}
+										helperText={form[PASSWORD].error}
+										onChange={handleForm.onChange(PASSWORD)}
+										onBlur={handleForm.onBlur(PASSWORD)}
+										error={form[PASSWORD].error !== ''}
 										fullWidth
 										required
 									/>
@@ -146,7 +109,7 @@ function SignUpConfirm({
 										onClick={handleForm.onSubmit}
 										disabled={form.sending}
 									>
-										Confirmer
+										Connexion
 									</Button>
 									<FormHelperText>{error}</FormHelperText>
 								</FormControl>
@@ -159,8 +122,6 @@ function SignUpConfirm({
 											</Typography>
 										</Box>
 									)}
-
-									<br />
 									<CustomLink to={SIGN_UP}>
 										Pas encore inscrit ? Inscrivez-vous
 									</CustomLink>
@@ -174,4 +135,4 @@ function SignUpConfirm({
 	);
 }
 
-export default SignUpConfirm;
+export default SignIn;

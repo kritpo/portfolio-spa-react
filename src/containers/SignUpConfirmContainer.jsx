@@ -1,6 +1,10 @@
 import React, { useState, useCallback, useMemo } from 'react';
 
+import { useHistory } from 'react-router-dom';
+
 import { Auth } from 'aws-amplify';
+
+import { SIGN_IN } from '../routes';
 
 import useForm from '../utils/useForm';
 
@@ -32,6 +36,9 @@ const checkField = (field, value) => {
 };
 
 function SignUpConfirmContainer({ location: { state }, ...props }) {
+	// setup the history hook
+	const history = useHistory();
+
 	// setup the resend button messages hook
 	const [resendWaitMessage, setResendWaitMessage] = useState('');
 	const [resendErrorMessage, setResendErrorMessage] = useState('');
@@ -50,10 +57,13 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 		form =>
 			Auth.confirmSignUp(form[USERNAME].value, form[CODE].value).then(
 				() => {
-					console.log('confirmed');
+					// redirect the user to the sign in page
+					history.push(SIGN_IN, {
+						username: form[USERNAME].value
+					});
 				}
 			),
-		[]
+		[history]
 	);
 
 	// setup form hook

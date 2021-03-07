@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { HOME, SIGN_UP_CONFIRM } from '../routes';
+import { HOME, SIGN_IN, SIGN_UP_CONFIRM } from '../routes';
 
 import {
 	Container,
@@ -175,9 +175,14 @@ function SignUp({ form, handleForm, isSending, error }) {
 											</Typography>
 										</Box>
 									)}
+									Déjà inscrit ?
+									<br />
+									<CustomLink to={SIGN_IN}>
+										Connectez vous
+									</CustomLink>
+									<br />
 									<CustomLink to={SIGN_UP_CONFIRM}>
-										Déjà inscrit? Confirmez votre
-										inscription
+										Confirmez votre inscription
 									</CustomLink>
 								</Box>
 							</form>

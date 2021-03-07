@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import * as routes from '../routes';
+import { HOME, SIGN_UP_CONFIRM } from '../routes';
 
 import {
 	Container,
@@ -17,8 +17,8 @@ import {
 } from '@material-ui/core';
 
 import Header from './Header';
-import Loading from '../tools/Loading';
-import CustomLink from '../tools/CustomLink';
+import Loading from '../utils/Loading';
+import CustomLink from '../utils/CustomLink';
 
 // setup field name constants
 export const USERNAME = 'username';
@@ -64,7 +64,7 @@ function SignUp({ form, handleForm, isSending, error }) {
 		<Fragment>
 			<Header
 				title="Inscription"
-				history={[{ link: routes.HOME, title: 'Accueil' }]}
+				history={[{ link: HOME, title: 'Accueil' }]}
 			/>
 			<Container component="main" fixed>
 				<Box
@@ -175,7 +175,7 @@ function SignUp({ form, handleForm, isSending, error }) {
 											</Typography>
 										</Box>
 									)}
-									<CustomLink to={routes.SIGN_UP_CONFIRM}>
+									<CustomLink to={SIGN_UP_CONFIRM}>
 										Déjà inscrit? Confirmez votre
 										inscription
 									</CustomLink>

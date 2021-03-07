@@ -4,20 +4,15 @@ import routes from './routes';
 
 import { Switch, Route } from 'react-router-dom';
 
-import Loading from './tools/Loading';
+import Loading from './utils/Loading';
 import Error404 from './components/Error404';
 
-function Routes() {
-	// convert routes details to React component
-	const routesList = routes.map(route => (
-		<Route
-			path={route.path}
-			exact={route.exact}
-			component={route.component}
-			key={route.path}
-		/>
-	));
+// convert routes details to React component
+const routesList = routes.map(({ path, exact, component }) => (
+	<Route path={path} exact={exact} component={component} key={path} />
+));
 
+function Routes() {
 	return (
 		<Suspense fallback={<Loading size="50vh" />}>
 			<Switch>

@@ -7,9 +7,12 @@ import { fetchResume } from '../actions';
 import Portfolio from '../components/Portfolio';
 
 // configure the states to pass as props to the component
-const mapStateToProps = (state, ...props) => ({
-	resume: state.resume,
-	navIntersectionRef: state.navIntersection.ref,
+const mapStateToProps = (
+	{ resume, navIntersection: { ref: navIntersectionRef } },
+	...props
+) => ({
+	resume,
+	navIntersectionRef,
 	...props
 });
 

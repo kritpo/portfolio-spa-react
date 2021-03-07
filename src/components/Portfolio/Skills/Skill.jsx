@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import {
@@ -10,7 +10,35 @@ import {
 } from '@material-ui/core';
 import { ExpandMore, ExpandLess } from '@material-ui/icons';
 
-import CustomIcon from '../../../tools/icons/CustomIcon';
+import CustomIcon from '../../../utils/icons/CustomIcon';
+
+/**
+ * convert skills details to React component
+ * @param {array} skills the list of skills data
+ * @param {number} start the start index
+ * @param {number} end the end index
+ * @returns the components array
+ */
+const skillsList = (skills, start, end) =>
+	skills.slice(start, end).map(({ name, level }, index) => (
+		<Box display="flex" alignItems="center" mt={2} key={index}>
+			<CustomIcon technology={name} />
+			<Box ml={2} width="100%">
+				<LinearProgress
+					variant="determinate"
+					value={
+						level === 'Maîtrise'
+							? 98
+							: level === 'Avancé'
+							? 90
+							: level === 'Intermédiaire'
+							? 75
+							: 50
+					}
+				/>
+			</Box>
+		</Box>
+	));
 
 // configure the prop types validation
 Skill.propTypes = {
@@ -22,45 +50,18 @@ Skill.propTypes = {
 				keywords: PropTypes.arrayOf(PropTypes.string).isRequired
 			})
 		).isRequired
-	}).isRequired
+	}).isRequired,
+	openCollapse: PropTypes.bool.isRequired,
+	collapseToggle: PropTypes.func.isRequired
 };
 
-function Skill({ resume }) {
-	// setup the collapse status hook
-	const [openCollapse, setOpenCollapse] = useState(false);
-
-	// setup the toggle handler
-	const collapseToggle = () => {
-		setOpenCollapse(!openCollapse);
-	};
-
-	// convert skills details to React component
-	const skills = resume.skills.map((skill, index) => (
-		<Box display="flex" alignItems="center" mt={2} key={index}>
-			<CustomIcon technology={skill.name} />
-			<Box ml={2} width="100%">
-				<LinearProgress
-					variant="determinate"
-					value={
-						skill.level === 'Maîtrise'
-							? 98
-							: skill.level === 'Avancé'
-							? 90
-							: skill.level === 'Intermédiaire'
-							? 75
-							: 50
-					}
-				/>
-			</Box>
-		</Box>
-	));
-
+function Skill({ resume: { skills }, openCollapse, collapseToggle }) {
 	return (
 		<Fragment>
 			<Typography component="h3" variant="h4" gutterBottom>
 				Mes compétences
 			</Typography>
-			{skills.slice(0, 8)}
+			{skillsList(skills, 0, 8)}
 			{skills.length > 8 && (
 				<Fragment>
 					<Box textAlign="center">
@@ -69,7 +70,7 @@ function Skill({ resume }) {
 						</IconButton>
 					</Box>
 					<Collapse in={openCollapse} timeout="auto" unmountOnExit>
-						{skills.slice(8)}
+						{skillsList(skills, 8)}
 					</Collapse>
 				</Fragment>
 			)}

@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { Grid, Box } from '@material-ui/core';
 
-import Skill from './Skills/Skill';
+import SkillContainer from '../../containers/Portfolio/Skills/SkillContainer';
 import Languages from './Skills/Languages';
 import Hobbies from './Skills/Hobbies';
 
@@ -21,7 +21,7 @@ function Skills({ resume }) {
 		<Box textAlign="center" clone>
 			<Grid container spacing={4}>
 				<Grid item xs={12}>
-					<Skill resume={resume} />
+					<SkillContainer resume={resume} />
 				</Grid>
 				<Grid item xs={12} md={6}>
 					<Languages resume={resume} />

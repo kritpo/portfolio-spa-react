@@ -1,15 +1,9 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { useTheme } from '@material-ui/core/styles';
+import { WORK, EDUCATION, VOLUNTEER } from './Career/CareerItem';
 
-import {
-	Box,
-	Grid,
-	Button,
-	Typography,
-	useMediaQuery
-} from '@material-ui/core';
+import { Box, Grid, Button, Typography } from '@material-ui/core';
 import { ArrowUpward, Star } from '@material-ui/icons';
 import {
 	Timeline,
@@ -20,8 +14,18 @@ import {
 	TimelineDot
 } from '@material-ui/lab';
 
-import CustomLink from '../../tools/CustomLink';
-import CareerItem, { WORK, EDUCATION, VOLUNTEER } from './Career/CareerItem';
+import CustomLink from '../../utils/CustomLink';
+import CareerItemContainer from '../../containers/Portfolio/Career/CareerItemContainer';
+
+/**
+ * convert careers details to React component
+ * @param {array} careers the list of careers data
+ * @returns the components array
+ */
+const careerList = careers =>
+	careers.map(career => (
+		<CareerItemContainer career={career} id={career.id} key={career.id} />
+	));
 
 // configure the prop types validation
 Career.propTypes = {
@@ -30,40 +34,27 @@ Career.propTypes = {
 			type: PropTypes.oneOf([WORK, EDUCATION, VOLUNTEER]).isRequired
 		})
 	).isRequired,
-	showWork: PropTypes.bool.isRequired,
+	show: PropTypes.shape({
+		[WORK]: PropTypes.bool.isRequired,
+		[EDUCATION]: PropTypes.bool.isRequired,
+		[VOLUNTEER]: PropTypes.bool.isRequired
+	}).isRequired,
 	workToggle: PropTypes.func.isRequired,
-	showEducation: PropTypes.bool.isRequired,
 	educationToggle: PropTypes.func.isRequired,
-	showVolunteer: PropTypes.bool.isRequired,
-	volunteerToggle: PropTypes.func.isRequired
+	volunteerToggle: PropTypes.func.isRequired,
+	allToggle: PropTypes.func.isRequired,
+	isUpMd: PropTypes.bool.isRequired
 };
 
 function Career({
 	careers,
-	showWork,
+	show,
 	workToggle,
-	showEducation,
 	educationToggle,
-	showVolunteer,
-	volunteerToggle
+	volunteerToggle,
+	allToggle,
+	isUpMd
 }) {
-	// setup the breakpoints matchers hooks
-	const theme = useTheme();
-	const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
-
-	// convert careers details to React component
-	const careerList = careers.map(career => (
-		<CareerItem career={career} id={career.id} key={career.id} />
-	));
-
-	// setup the all toddle handlers
-	const allToggle = () => {
-		// toggle all elements
-		workToggle();
-		educationToggle();
-		volunteerToggle();
-	};
-
 	return (
 		<Fragment>
 			<Box textAlign="center" clone>
@@ -84,8 +75,8 @@ function Career({
 				<Grid item>
 					<Button
 						variant="contained"
-						color={showWork ? 'default' : 'primary'}
-						disableElevation={showWork}
+						color={show[WORK] ? 'default' : 'primary'}
+						disableElevation={show[WORK]}
 						onClick={workToggle}
 					>
 						Professionnel
@@ -94,8 +85,8 @@ function Career({
 				<Grid item>
 					<Button
 						variant="contained"
-						color={showEducation ? 'default' : 'primary'}
-						disableElevation={showEducation}
+						color={show[EDUCATION] ? 'default' : 'primary'}
+						disableElevation={show[EDUCATION]}
 						onClick={educationToggle}
 					>
 						Scolaire
@@ -104,8 +95,8 @@ function Career({
 				<Grid item>
 					<Button
 						variant="contained"
-						color={showVolunteer ? 'default' : 'primary'}
-						disableElevation={showVolunteer}
+						color={show[VOLUNTEER] ? 'default' : 'primary'}
+						disableElevation={show[VOLUNTEER]}
 						onClick={volunteerToggle}
 					>
 						Associatif
@@ -113,8 +104,8 @@ function Career({
 				</Grid>
 			</Grid>
 			<Timeline align={isUpMd ? 'alternate' : 'left'}>
-				{careerList.length > 0 ? (
-					careerList
+				{careers.length > 0 ? (
+					careerList(careers)
 				) : (
 					<TimelineItem>
 						<TimelineSeparator>

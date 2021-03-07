@@ -18,11 +18,11 @@ AutoHashMatcher.propTypes = {
 };
 
 function AutoHashMatcher({ children, hashText }) {
-	// retrieve the location hook
-	const location = useLocation();
-
 	// retrieve the history hook
 	const history = useHistory();
+
+	// retrieve the pathname hook
+	const { pathname } = useLocation();
 
 	// setup the in intersection observer hook
 	const { ref: inRef, inView: inInView } = useInView({
@@ -36,15 +36,15 @@ function AutoHashMatcher({ children, hashText }) {
 
 	// setup the hash updater
 	useEffect(() => {
-		// check if the section intersect the in and not the out
+		// check if the section intersect the in line
 		if (inInView) {
 			// push the hash into the history
-			history.push(`${location.pathname}#${hashText}`);
+			history.push(`${pathname}#${hashText}`);
 		}
 		// check if the section intersect the out line
 		else if (inOutView) {
 			// put the empty url into the history
-			history.push(location.pathname);
+			history.push(pathname);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inInView, inOutView]);

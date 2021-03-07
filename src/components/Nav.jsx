@@ -1,131 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { useLocation } from 'react-router-dom';
-
-import { useTheme } from '@material-ui/styles';
-
-import * as routes from '../routes';
-
-import {
-	Box,
-	MenuList,
-	FormControlLabel,
-	Switch,
-	useMediaQuery
-} from '@material-ui/core';
+import { Box, FormControlLabel, Switch } from '@material-ui/core';
 import { Brightness4 as Dark, Brightness7 as Light } from '@material-ui/icons';
 
-import BurgerMenu from '../tools/BurgerMenu';
-import NavBar from './Nav/NavBar';
-import NavHashItem from './Nav/NavHashItem';
+import NavBarContainer from '../containers/Nav/NavBarContainer';
+import NavBurger from './Nav/NavBurger';
 
-// setup the list of links
-const links = [
-	{
-		title: 'Présentation',
-		link: `${routes.HOME}#details`,
-		isHash: true
-	},
-	{
-		title: 'Parcours',
-		link: `${routes.HOME}#career`,
-		isHash: true
-	},
-	{
-		title: 'Compétences',
-		link: `${routes.HOME}#skills`,
-		isHash: true
-	},
-	{
-		title: 'Recommandations',
-		link: `${routes.HOME}#references`,
-		isHash: true
-	}
-];
-
-// convert links details to React component
-const linkItems = links.map(({ title, link, isHash = false }, index) =>
-	isHash ? (
-		<NavHashItem to={link} key={index}>
-			{title}
-		</NavHashItem>
-	) : null
+/**
+ * setup the dark mode menu
+ * @param {bool} darkMode the status of dark mode
+ * @param {function} darkModeToggle the dark mode toggler
+ * @returns the component
+ */
+const darkModeMenu = (darkMode, darkModeToggle) => (
+	<Box display="flex" justifyContent="center">
+		<FormControlLabel
+			control={<Switch checked={darkMode} onChange={darkModeToggle} />}
+			label={darkMode ? <Dark /> : <Light />}
+		/>
+	</Box>
 );
 
 // configure the prop types validation
 Nav.propTypes = {
-	inView: PropTypes.bool.isRequired,
+	links: PropTypes.arrayOf(
+		PropTypes.shape({
+			title: PropTypes.string.isRequired,
+			link: PropTypes.string.isRequired,
+			isHash: PropTypes.bool.isRequired
+		})
+	).isRequired,
 	darkMode: PropTypes.bool,
-	setToLightMode: PropTypes.func.isRequired,
-	setToDarkMode: PropTypes.func.isRequired
+	darkModeToggle: PropTypes.func.isRequired,
+	showBar: PropTypes.bool.isRequired
 };
 
-function Nav({ inView, darkMode, setToLightMode, setToDarkMode }) {
-	// setup the nav type hook
-	const [showBar, setShowBar] = useState(false);
-
-	// setup the breakpoints matchers hooks
-	const theme = useTheme();
-	const isUpSm = useMediaQuery(theme.breakpoints.up('sm'));
-
-	// retrieve the current route
-	const route = useLocation().pathname;
-
-	// setup the nav type updater
-	useEffect(() => {
-		setShowBar(isUpSm && (route !== routes.HOME || inView));
-	}, [inView, isUpSm, route]);
-
-	// setup the dark mode toggler
-	const darkModeToggle = () => {
-		// check if the dark mode is active
-		if (darkMode) {
-			setToLightMode();
-		} else {
-			setToDarkMode();
-		}
-	};
-
-	// setup the dark mode menu
-	const darkModeMenu = (
-		<Box display="flex" justifyContent="center">
-			<FormControlLabel
-				control={
-					<Switch checked={darkMode} onChange={darkModeToggle} />
-				}
-				label={darkMode ? <Dark /> : <Light />}
-			/>
-		</Box>
-	);
-
+function Nav({ links, darkMode, darkModeToggle, showBar }) {
 	return (
 		<Box component="nav">
 			{showBar ? (
-				<NavBar
-					darkModeMenu={
-						<Box display="flex" justifyContent="center">
-							<FormControlLabel
-								control={
-									<Switch
-										checked={darkMode}
-										onChange={darkModeToggle}
-									/>
-								}
-								label={darkMode ? <Dark /> : <Light />}
-							/>
-						</Box>
-					}
+				<NavBarContainer
+					darkModeMenu={darkModeMenu(darkMode, darkModeToggle)}
 				>
 					{links}
-				</NavBar>
+				</NavBarContainer>
 			) : (
-				<BurgerMenu top="1em" right="1em">
-					<MenuList>
-						{linkItems}
-						{darkModeMenu}
-					</MenuList>
-				</BurgerMenu>
+				<NavBurger
+					darkModeMenu={darkModeMenu(darkMode, darkModeToggle)}
+				>
+					{links}
+				</NavBurger>
 			)}
 		</Box>
 	);

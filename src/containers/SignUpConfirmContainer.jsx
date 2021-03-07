@@ -29,13 +29,14 @@ const checkField = (field, value) => {
 	return '';
 };
 
-function SignUpConfirmContainer({ location, ...props }) {
+function SignUpConfirmContainer({ location: { state }, ...props }) {
 	// initialize the default username
 	let defaultUsername = '';
+	
 	// check if the username state is defined in history
-	if (location.state !== undefined && location.state.username !== undefined) {
+	if (state !== undefined && state.username !== undefined) {
 		// define the default username
-		defaultUsername = location.state.username;
+		defaultUsername = state.username;
 	}
 
 	// setup form states
@@ -50,11 +51,9 @@ function SignUpConfirmContainer({ location, ...props }) {
 	const handleForm = useMemo(
 		() => ({
 			// handle field update
-			onChange: (field, isCheckbox = false) => event => {
+			onChange: (field, isCheckbox = false) => ({ target }) => {
 				// retrieve the value
-				const value = isCheckbox
-					? event.target.checked
-					: event.target.value;
+				const value = isCheckbox ? target.checked : target.value;
 
 				// update the form
 				setForm({
@@ -69,7 +68,7 @@ function SignUpConfirmContainer({ location, ...props }) {
 				});
 			},
 			// handle field blur
-			onBlur: field => event => {
+			onBlur: field => ({ target }) => {
 				// check if the field is already triggered
 				if (form[field].triggered) {
 					return;
@@ -80,7 +79,7 @@ function SignUpConfirmContainer({ location, ...props }) {
 					...form,
 					[field]: {
 						...form[field],
-						error: checkField(field, event.target.value),
+						error: checkField(field, target.value),
 						triggered: true
 					}
 				});
@@ -118,7 +117,7 @@ function SignUpConfirmContainer({ location, ...props }) {
 					setIsSending(true);
 
 					// confirm the user's sign up
-					Auth.confirmSignUp(form.username.value, form.code.value)
+					Auth.confirmSignUp(form[USERNAME].value, form[CODE].value)
 						.then(() => {
 							console.log('confirmed');
 						})

@@ -10,6 +10,7 @@ import Loading from '../Loading';
 /**
  * retrieve the icon or return the keyword
  * @param {object} props input keyword object
+ * @returns the icon or a keyword
  */
 const retrieveIcon = (social, career, technology, hobby, notExact = true) => {
 	// check if no props is defined
@@ -26,21 +27,21 @@ const retrieveIcon = (social, career, technology, hobby, notExact = true) => {
 	// retrieve the subset of icon infos which match the input request
 	const filteredIcons =
 		social !== undefined
-			? icons.filter(iconInfo => iconInfo.type === SOCIAL)
+			? icons.filter(({ type }) => type === SOCIAL)
 			: career !== undefined
-			? icons.filter(iconInfo => iconInfo.type === CAREER)
+			? icons.filter(({ type }) => type === CAREER)
 			: technology !== undefined
-			? icons.filter(iconInfo => iconInfo.type === TECHNOLOGY)
-			: icons.filter(iconInfo => iconInfo.type === HOBBY);
+			? icons.filter(({ type }) => type === TECHNOLOGY)
+			: icons.filter(({ type }) => type === HOBBY);
 
 	// retrieve and convert the keyword in lowercase for normalization
-	const keyword = (social || career || technology || hobby).toLowerCase();
+	const currKeyword = (social || career || technology || hobby).toLowerCase();
 
 	// find the icon corresponding to the keyword
-	const icon = filteredIcons.find(currIcon => {
+	const icon = filteredIcons.find(({ keyword }) => {
 		// find an keyword which match the input keyword
-		const finalKeyword = currIcon.keyword.find(key =>
-			notExact ? key === keyword : key.includes(keyword)
+		const finalKeyword = keyword.find(key =>
+			notExact ? key === currKeyword : key.includes(currKeyword)
 		);
 
 		// if a keyword is found, then the icon match the input request
@@ -53,7 +54,7 @@ const retrieveIcon = (social, career, technology, hobby, notExact = true) => {
 		return lazy(icon.loadIcon);
 	} else {
 		// otherwise return the input keyword
-		return keyword;
+		return currKeyword;
 	}
 };
 
@@ -63,13 +64,17 @@ const retrieveIcon = (social, career, technology, hobby, notExact = true) => {
  * @param {string} propName name of the checked prop
  * @param {string} componentName name of the component
  */
-const customValidator = (props, propName, componentName) => {
+const customValidator = (
+	{ social, career, technology, hobby },
+	propName,
+	componentName
+) => {
 	// check if at least one props was specified
 	if (
-		props.social === undefined &&
-		props.career === undefined &&
-		props.technology === undefined &&
-		props.hobby === undefined
+		social === undefined &&
+		career === undefined &&
+		technology === undefined &&
+		hobby === undefined
 	) {
 		return new Error(
 			`One of props \`social\` or \`career\` or \`technology\` or \`hobby\` was not specified in \`${componentName}\`.`
@@ -78,13 +83,13 @@ const customValidator = (props, propName, componentName) => {
 
 	// check if at most one props was specified
 	if (
-		(props.social !== undefined &&
-			(props.career !== undefined ||
-				props.technology !== undefined ||
-				props.hobby !== undefined)) ||
-		(props.career !== undefined &&
-			(props.technology !== undefined || props.hobby !== undefined)) ||
-		(props.technology !== undefined && props.hobby !== undefined)
+		(social !== undefined &&
+			(career !== undefined ||
+				technology !== undefined ||
+				hobby !== undefined)) ||
+		(career !== undefined &&
+			(technology !== undefined || hobby !== undefined)) ||
+		(technology !== undefined && hobby !== undefined)
 	) {
 		return new Error(
 			`More than one of props \`social\` or \`career\` or \`technology\` or \`hobby\` was specified in \`${componentName}\`.`

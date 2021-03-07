@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
@@ -26,8 +27,8 @@ import Footer from './components/Footer';
 import Route from './Route';
 
 // configure the states to pass as props to the component
-const mapStateToProps = (state, ...props) => ({
-	darkMode: state.darkMode,
+const mapStateToProps = ({ darkMode }, ...props) => ({
+	darkMode,
 	...props
 });
 
@@ -37,14 +38,21 @@ const mapDispatchToProps = {
 	setThemeMode
 };
 
+// configure the prop types validation
+App.propTypes = {
+	darkMode: PropTypes.bool.isRequired,
+	checkWebpSupport: PropTypes.func.isRequired,
+	setThemeMode: PropTypes.func.isRequired
+};
+
 function App({ darkMode, checkWebpSupport, setThemeMode }) {
+	// setup the dark mode status hook
+	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
 	// check the webp image support
 	useEffect(() => {
 		checkWebpSupport();
 	}, [checkWebpSupport]);
-
-	// setup the dark mode status hook
-	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
 	// save the user theme
 	useEffect(() => {

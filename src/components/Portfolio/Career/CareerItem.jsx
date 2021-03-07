@@ -1,16 +1,7 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { useTheme } from '@material-ui/core/styles';
-
-import {
-	Box,
-	Card,
-	CardContent,
-	Typography,
-	Hidden,
-	useMediaQuery
-} from '@material-ui/core';
+import { Box, Card, CardContent, Typography, Hidden } from '@material-ui/core';
 import {
 	TimelineItem,
 	TimelineContent,
@@ -20,14 +11,31 @@ import {
 	TimelineDot
 } from '@material-ui/lab';
 
-import CustomIcon from '../../../tools/icons/CustomIcon';
-import CustomLink from '../../../tools/CustomLink';
-import CareerItemButton from './CareerItemButton';
+import CustomIcon from '../../../utils/icons/CustomIcon';
+import CustomLink from '../../../utils/CustomLink';
+import CareerItemButtonContainer from '../../../containers/Portfolio/Career/CareerItemButtonContainer';
 
 // setup career types constants
-export const WORK = 'WORK';
-export const VOLUNTEER = 'VOLUNTEER';
-export const EDUCATION = 'EDUCATION';
+export const WORK = 'work';
+export const EDUCATION = 'education';
+export const VOLUNTEER = 'volunteer';
+
+/**
+ * retrieve the good icon
+ * @param {object} career the career object
+ * @returns the component
+ */
+const icon = ({ type, position }) => (
+	<CustomIcon
+		career={
+			type !== WORK
+				? type
+				: position.includes('Stage')
+				? 'Internship'
+				: WORK
+		}
+	/>
+);
 
 // configure the prop types validation
 CareerItem.propTypes = {
@@ -70,54 +78,25 @@ CareerItem.propTypes = {
 			type: PropTypes.oneOf([VOLUNTEER]).isRequired
 		})
 	]).isRequired,
-	id: PropTypes.number.isRequired
+	id: PropTypes.number.isRequired,
+	isUpSm: PropTypes.bool.isRequired,
+	startDate: PropTypes.string.isRequired,
+	endDate: PropTypes.string.isRequired,
+	careerTitle: PropTypes.string.isRequired,
+	entityName: PropTypes.string.isRequired,
+	careerHighlights: PropTypes.string.isRequired
 };
 
-function CareerItem({ career, id }) {
-	// setup the breakpoints matchers hooks
-	const theme = useTheme();
-	const isUpSm = useMediaQuery(theme.breakpoints.up('sm'));
-
-	// compute the dates
-	const startDate = new Date(career.startDate).toLocaleDateString();
-	const endDate =
-		career.endDate !== undefined
-			? new Date(career.endDate).toLocaleDateString()
-			: 'Présent';
-
-	// retrieve the good icon
-	const icon = (
-		<CustomIcon
-			career={
-				career.type !== WORK
-					? career.type
-					: career.position.includes('Stage')
-					? 'Internship'
-					: WORK
-			}
-		/>
-	);
-
-	// retrieve the title associated to the career item
-	const careerTitle =
-		career.type === EDUCATION
-			? career.studyType
-			: career.position.replace(/^\[.+?\]/, '');
-
-	// retrieve the name of the career reference entity
-	const entityName =
-		career.type === WORK
-			? career.company
-			: career.type === EDUCATION
-			? career.institution
-			: career.organization;
-
-	// retrieve the highlights elements associated to the career item
-	const careerHighlights =
-		career.type === EDUCATION
-			? `${career.area} - GPA: ${career.gpa}`
-			: career.highlights.join(' - ');
-
+function CareerItem({
+	career,
+	id,
+	isUpSm,
+	startDate,
+	endDate,
+	careerTitle,
+	entityName,
+	careerHighlights
+}) {
 	return (
 		<Box
 			flexDirection={isUpSm ? 'row' : 'column'}
@@ -144,7 +123,9 @@ function CareerItem({ career, id }) {
 				<Hidden xsDown>
 					<TimelineSeparator>
 						<CustomLink to="#career" hash smooth>
-							<TimelineDot color="secondary">{icon}</TimelineDot>
+							<TimelineDot color="secondary">
+								{icon(career)}
+							</TimelineDot>
 						</CustomLink>
 						<TimelineConnector />
 					</TimelineSeparator>
@@ -171,7 +152,7 @@ function CareerItem({ career, id }) {
 								</Box>
 							)}
 							<Box mt={2}>
-								<CareerItemButton
+								<CareerItemButtonContainer
 									link={career.website}
 									courses={career.courses}
 									id={id}
@@ -179,7 +160,7 @@ function CareerItem({ career, id }) {
 									{career.type === EDUCATION
 										? 'Voir les cours'
 										: 'Voir le site'}
-								</CareerItemButton>
+								</CareerItemButtonContainer>
 							</Box>
 						</CardContent>
 					</Card>

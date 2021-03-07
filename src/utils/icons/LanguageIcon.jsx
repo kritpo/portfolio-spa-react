@@ -15,18 +15,22 @@ function LanguageIcon({ language }) {
 	const lang = language.toLowerCase();
 
 	// retrieve the country code associated to the language
-	const finalLanguage = languages.find(currentLanguage => {
+	const finalLanguage = languages.find(({ keyword }) => {
 		// retrieve the language associated in keywords
-		const keyword = currentLanguage.keyword.find(key => lang.includes(key));
+		const foundedKeyword = keyword.find(key => lang.includes(key));
 
 		// return if a keyword is retrieved, which will mean that the current language is the one wanted
-		return keyword !== undefined;
+		return foundedKeyword !== undefined;
 	});
 
 	return (
 		<Fragment>
 			{finalLanguage !== undefined ? (
-				<ReactCountryFlag countryCode={finalLanguage.countryCode} />
+				<ReactCountryFlag
+					countryCode={finalLanguage.countryCode}
+					title={language}
+					svg
+				/>
 			) : (
 				language
 			)}

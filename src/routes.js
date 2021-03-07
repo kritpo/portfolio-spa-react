@@ -1,6 +1,6 @@
 import { matchPath } from 'react-router-dom';
 
-import impLoader from './tools/impLoader';
+import impLoader from './utils/impLoader';
 
 // load all components
 const PortfolioContainer = impLoader(() =>
@@ -28,17 +28,17 @@ const routes = [
 
 /**
  * setup the component preloader
- * @param {string} path the path of the component to preload
+ * @param {string} currentPath the path of the component to preload
  */
-export const routePreloadComponent = path => {
+export const routePreloadComponent = currentPath => {
 	// filter the path to remove hashes and queries
-	if (path.includes('#') || path.includes('?')) {
-		path = path.split('#')[0].split('?')[0];
+	if (currentPath.includes('#') || currentPath.includes('?')) {
+		currentPath = currentPath.split('#')[0].split('?')[0];
 	}
 
 	// find the associated route
-	const route = routes.find(route =>
-		matchPath(path, { path: route.path, exact: route.exact })
+	const route = routes.find(({ path, exact }) =>
+		matchPath(currentPath, { path, exact })
 	);
 
 	// check if the route is founded

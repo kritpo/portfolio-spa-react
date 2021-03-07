@@ -5,16 +5,25 @@ import { withStyles } from '@material-ui/styles';
 
 import { MenuItem } from '@material-ui/core';
 
-import CustomLink from '../../tools/CustomLink';
+import CustomLink from '../../utils/CustomLink';
 
-// define the style of the component
-const styles = theme => ({
+/**
+ * define the style of the component
+ * @param {object} theme the current applied theme
+ * @returns the style object
+ */
+const styles = ({
+	palette: {
+		text: { primary },
+		divider
+	}
+}) => ({
 	root: {
 		fontSize: '5vh',
 		padding: '0px 0px'
 	},
 	link: {
-		color: theme.palette.text.primary,
+		color: primary,
 		height: '100%',
 		padding: '6px 16px',
 		textDecoration: 'none',
@@ -25,25 +34,25 @@ const styles = theme => ({
 		}
 	},
 	active: {
-		backgroundColor: theme.palette.divider
+		backgroundColor: divider
 	}
 });
 
 // configure the prop types validation
 NavHashItem.propTypes = {
-	to: PropTypes.string.isRequired,
-	children: PropTypes.string.isRequired
+	children: PropTypes.string.isRequired,
+	to: PropTypes.string.isRequired
 };
 
-function NavHashItem({ classes, to, children }) {
+function NavHashItem({ classes: { root, link, active }, children, to }) {
 	return (
-		<MenuItem className={classes.root}>
+		<MenuItem className={root}>
 			<CustomLink
 				to={to}
 				nav
 				hash
-				className={classes.link}
-				activeClassName={classes.active}
+				className={link}
+				activeClassName={active}
 				smooth
 			>
 				{children}

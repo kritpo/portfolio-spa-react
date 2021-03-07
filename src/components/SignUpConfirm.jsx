@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import * as routes from '../routes';
+import { HOME, SIGN_UP } from '../routes';
 
 import {
 	Container,
@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 
 import Header from './Header';
-import Loading from '../tools/Loading';
+import Loading from '../utils/Loading';
 
 // setup field name constants
 export const USERNAME = 'username';
@@ -50,8 +50,8 @@ function SignUpConfirm({ form, handleForm, isSending, error }) {
 			<Header
 				title="Confirmation d'inscription"
 				history={[
-					{ link: routes.HOME, title: 'Accueil' },
-					{ link: routes.SIGN_UP, title: 'Inscription' }
+					{ link: HOME, title: 'Accueil' },
+					{ link: SIGN_UP, title: 'Inscription' }
 				]}
 			/>
 			<Container component="main" fixed>

@@ -4,10 +4,10 @@ import { PropTypes } from 'prop-types';
 import { Box, Container, Paper, IconButton } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
-import Loading from '../tools/Loading';
-import Error from '../tools/Error';
-import CustomLink from '../tools/CustomLink';
-import AutoHashMatcher from '../tools/AutoHashMatcher';
+import Loading from '../utils/Loading';
+import Error from '../utils/Error';
+import CustomLink from '../utils/CustomLink';
+import AutoHashMatcher from '../utils/AutoHashMatcher';
 import HeroContainer from '../containers/Portfolio/HeroContainer';
 
 // import components in lazy mode
@@ -34,7 +34,7 @@ Portfolio.propTypes = {
 	navIntersectionRef: PropTypes.func
 };
 
-function Portfolio({ resume, navIntersectionRef }) {
+function Portfolio({ resume: { isLoading, error }, navIntersectionRef }) {
 	return (
 		<Fragment>
 			<HeroContainer />
@@ -49,9 +49,9 @@ function Portfolio({ resume, navIntersectionRef }) {
 									</IconButton>
 								</CustomLink>
 							</Box>
-							{resume.isLoading ? (
+							{isLoading ? (
 								<Loading size="40vh" />
-							) : resume.error !== null ? (
+							) : error !== null ? (
 								<Error size="40vh">
 									Impossible de charger les données
 								</Error>

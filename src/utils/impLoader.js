@@ -3,6 +3,7 @@ import { lazy } from 'react';
 /**
  * setup the component loader
  * @param {function} imp the import statement
+ * @returns the component lazy loaded
  */
 const impLoader = imp => {
 	// setup the dynamic import

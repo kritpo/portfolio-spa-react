@@ -21,8 +21,16 @@ import webpHero3768w from '../../assets/hero/hero-3768w.webp';
 
 import { Box, Container, Typography } from '@material-ui/core';
 
-// define the style of the component
-const styles = theme => ({
+/**
+ * define the style of the component
+ * @param {object} theme the current applied theme
+ * @returns the style object
+ */
+const styles = ({
+	palette: {
+		background: { default: defaultBG }
+	}
+}) => ({
 	root: {
 		backgroundImage: ({ webpSupport }) =>
 			webpSupport ? `url(${webpHero800w})` : `url(${hero800w})`,
@@ -62,7 +70,7 @@ const styles = theme => ({
 	},
 	// filter the hero background to match the theme
 	filter: {
-		backgroundColor: `${theme.palette.background.default}66`
+		backgroundColor: `${defaultBG}66`
 	}
 });
 
@@ -74,15 +82,16 @@ Hero.propTypes = {
 	descriptionCursor: PropTypes.string.isRequired
 };
 
-function Hero({ classes, title, titleCursor, description, descriptionCursor }) {
+function Hero({
+	classes: { root, filter },
+	title,
+	titleCursor,
+	description,
+	descriptionCursor
+}) {
 	return (
-		<Box
-			component="header"
-			width="100%"
-			height="100vh"
-			className={classes.root}
-		>
-			<Box width="100%" height="100%" className={classes.filter}>
+		<Box component="header" width="100%" height="100vh" className={root}>
+			<Box width="100%" height="100%" className={filter}>
 				<Container fixed>
 					<Box
 						display="flex"

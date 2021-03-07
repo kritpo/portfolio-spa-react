@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
@@ -97,13 +98,27 @@ const writingAnimation = (setState, setCursorState, text, isTitle) => {
 };
 
 // configure the states to pass as props to the component
-const mapStateToProps = (state, ...props) => ({
-	resume: state.resume,
-	webpSupport: state.webpSupport,
+const mapStateToProps = ({ resume, webpSupport }, ...props) => ({
+	resume,
+	webpSupport,
 	...props
 });
 
-function HeroContainer({ resume, ...props }) {
+// configure the prop types validation
+HeroContainer.propTypes = {
+	resume: PropTypes.shape({
+		resume: PropTypes.shape({
+			basics: PropTypes.shape({
+				name: PropTypes.string.isRequired,
+				label: PropTypes.string.isRequired
+			})
+		}).isRequired,
+		isLoading: PropTypes.bool.isRequired,
+		error: PropTypes.string
+	}).isRequired
+};
+
+function HeroContainer({ resume: { resume, isLoading, error }, ...props }) {
 	// setup the title state hook
 	const [title, setTitle] = useState('');
 	const [titleCursor, setTitleCursor] = useState('|');
@@ -116,14 +131,14 @@ function HeroContainer({ resume, ...props }) {
 	useEffect(() => {
 		// retrieve the final title
 		const finalTitle =
-			!resume.isLoading && resume.error === null
-				? `<${resume.resume.basics.name} />`
+			!isLoading && error === null
+				? `<${resume.basics.name} />`
 				: '<Jimmy Weng />';
 
 		// retrieve the final description
 		const finalDescription =
-			!resume.isLoading && resume.error === null
-				? resume.resume.basics.label
+			!isLoading && error === null
+				? resume.basics.label
 				: 'Développeur Full-Stack';
 
 		// start the writing animation
@@ -140,7 +155,7 @@ function HeroContainer({ resume, ...props }) {
 			clearTimeout(titleTimeout);
 			clearTimeout(descriptionTimeout);
 		};
-	}, [resume]);
+	}, [error, isLoading, resume]);
 
 	return (
 		<Hero

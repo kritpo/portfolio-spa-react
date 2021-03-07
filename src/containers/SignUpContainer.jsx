@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Auth } from 'aws-amplify';
 
-import * as routes from '../routes';
+import { SIGN_UP_CONFIRM } from '../routes';
 
 import SignUp, { USERNAME, EMAIL, PASSWORD, GDPR } from '../components/SignUp';
 
@@ -78,11 +78,9 @@ function SignUpContainer({ ...props }) {
 	const handleForm = useMemo(
 		() => ({
 			// handle field update
-			onChange: (field, isCheckbox = false) => event => {
+			onChange: (field, isCheckbox = false) => ({ target }) => {
 				// retrieve the value
-				const value = isCheckbox
-					? event.target.checked
-					: event.target.value;
+				const value = isCheckbox ? target.checked : target.value;
 
 				// update the form
 				setForm({
@@ -97,7 +95,7 @@ function SignUpContainer({ ...props }) {
 				});
 			},
 			// handle field blur
-			onBlur: field => event => {
+			onBlur: field => ({ target }) => {
 				// check if the field is already triggered
 				if (form[field].triggered) {
 					return;
@@ -108,7 +106,7 @@ function SignUpContainer({ ...props }) {
 					...form,
 					[field]: {
 						...form[field],
-						error: checkField(field, event.target.value),
+						error: checkField(field, target.value),
 						triggered: true
 					}
 				});
@@ -165,16 +163,16 @@ function SignUpContainer({ ...props }) {
 
 					// sign up the user
 					Auth.signUp({
-						username: form.username.value,
-						password: form.password.value,
+						username: form[USERNAME].value,
+						password: form[PASSWORD].value,
 						attributes: {
-							email: form.email.value
+							email: form[EMAIL].value
 						}
 					})
 						.then(() => {
 							// redirect the user to the sign up confirmation page
-							history.push(routes.SIGN_UP_CONFIRM, {
-								username: form.username.value
+							history.push(SIGN_UP_CONFIRM, {
+								username: form[USERNAME].value
 							});
 						})
 						.catch(() => {

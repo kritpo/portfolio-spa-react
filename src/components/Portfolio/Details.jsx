@@ -10,7 +10,30 @@ import {
 	Avatar
 } from '@material-ui/core';
 
-import CustomIcon from '../../tools/icons/CustomIcon';
+import CustomIcon from '../../utils/icons/CustomIcon';
+
+/**
+ * convert profiles details to React component
+ * @param {array} profiles the list of profiles data
+ * @returns the components array
+ */
+const socialNetwork = profiles =>
+	profiles.map(({ url, network, username }, index) => (
+		<Grid item xs={6} sm={4} key={index}>
+			<Button href={url} target="_blank">
+				<Box display="flex" flexDirection="column" alignItems="center">
+					<CustomIcon social={network} />
+					<Typography
+						variant="body1"
+						style={{ textTransform: 'none' }}
+						noWrap
+					>
+						{username}
+					</Typography>
+				</Box>
+			</Button>
+		</Grid>
+	));
 
 // configure the prop types validation
 Details.propTypes = {
@@ -40,25 +63,19 @@ Details.propTypes = {
 	}).isRequired
 };
 
-function Details({ resume }) {
-	// convert profiles details to React component
-	const socialNetwork = resume.basics.profiles.map((profile, index) => (
-		<Grid item xs={6} sm={4} key={index}>
-			<Button href={profile.url} target="_blank">
-				<Box display="flex" flexDirection="column" alignItems="center">
-					<CustomIcon social={profile.network} />
-					<Typography
-						variant="body1"
-						style={{ textTransform: 'none' }}
-						noWrap
-					>
-						{profile.username}
-					</Typography>
-				</Box>
-			</Button>
-		</Grid>
-	));
-
+function Details({
+	resume: {
+		basics: {
+			name,
+			picture,
+			email,
+			phone,
+			location: { address, postalCode, city, region, countryCode },
+			profiles,
+			summary
+		}
+	}
+}) {
 	return (
 		<Fragment>
 			<Box textAlign="center" clone>
@@ -78,34 +95,26 @@ function Details({ resume }) {
 					>
 						<Box mb={2} clone>
 							<Avatar
-								alt={`Portfolio de ${resume.basics.name}`}
-								src={resume.basics.picture}
-								style={{height:'20vh',width:'20vh'}}
+								alt={`Portfolio de ${name}`}
+								src={picture}
+								style={{ height: '20vh', width: '20vh' }}
 							/>
 						</Box>
 						<Box mb={2}>
-							<Typography variant="h5">
-								{resume.basics.name}
-							</Typography>
+							<Typography variant="h5">{name}</Typography>
 						</Box>
 						<Box mb={2}>
-							<Typography variant="body1">
-								{resume.basics.email}
-							</Typography>
-							<Typography variant="body1">
-								{resume.basics.phone}
-							</Typography>
+							<Typography variant="body1">{email}</Typography>
+							<Typography variant="body1">{phone}</Typography>
 						</Box>
 						<Box mb={2}>
+							<Typography variant="body1">{address}</Typography>
 							<Typography variant="body1">
-								{resume.basics.location.address}
-							</Typography>
-							<Typography variant="body1">
-								{`${resume.basics.location.postalCode}, ${resume.basics.location.city}, ${resume.basics.location.region}, ${resume.basics.location.countryCode}`}
+								{`${postalCode}, ${city}, ${region}, ${countryCode}`}
 							</Typography>
 						</Box>
 						<Grid container spacing={2} justify="center">
-							{socialNetwork}
+							{socialNetwork(profiles)}
 						</Grid>
 					</Box>
 				</Grid>
@@ -114,7 +123,7 @@ function Details({ resume }) {
 						<Paper elevation={4}>
 							<Box whiteSpace="pre-line" clone>
 								<Typography variant="body2">
-									{resume.basics.summary}
+									{summary}
 								</Typography>
 							</Box>
 						</Paper>

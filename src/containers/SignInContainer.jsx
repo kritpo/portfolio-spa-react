@@ -2,8 +2,11 @@ import React, { useCallback, useMemo } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+
 import { Auth } from 'aws-amplify';
 
+import { login } from '../actions';
 import { HOME } from '../routes';
 
 import useForm from '../utils/useForm';
@@ -35,7 +38,12 @@ const checkField = (field, value) => {
 	return '';
 };
 
-function SignInContainer({ location: { state }, ...props }) {
+// configure the actions to pass as props to the component
+const mapDispatchToProps = {
+	login
+};
+
+function SignInContainer({ location: { state }, login, ...props }) {
 	// setup the history hook
 	const history = useHistory();
 
@@ -55,10 +63,13 @@ function SignInContainer({ location: { state }, ...props }) {
 				username: form[USERNAME].value,
 				password: form[PASSWORD].value
 			}).then(() => {
+				// login the user
+				login(form[USERNAME].value);
+
 				// redirect the user to the home page
 				history.push(HOME);
 			}),
-		[history]
+		[history, login]
 	);
 
 	// setup form hook
@@ -84,4 +95,4 @@ function SignInContainer({ location: { state }, ...props }) {
 	);
 }
 
-export default SignInContainer;
+export default connect(null, mapDispatchToProps)(SignInContainer);

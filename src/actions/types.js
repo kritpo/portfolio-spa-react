@@ -13,3 +13,7 @@ export const SET_DARK_MODE = 'SET_DARK_MODE';
 
 // webp actions constants
 export const SET_WEBP_SUPPORT = 'SET_WEBP_SUPPORT';
+
+// username actions constants
+export const SET_USERNAME = 'SET_USERNAME';
+export const RESET_USERNAME = 'RESET_USERNAME';

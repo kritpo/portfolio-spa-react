@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
+import { PropTypes } from 'prop-types';
 
 import { useHistory } from 'react-router-dom';
 
@@ -41,6 +42,14 @@ const checkField = (field, value) => {
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
 	login
+};
+
+// configure the prop types validation
+SignInContainer.propTypes = {
+	location: PropTypes.shape({
+		state: PropTypes.object
+	}).isRequired,
+	login: PropTypes.func.isRequired
 };
 
 function SignInContainer({ location: { state }, login, ...props }) {

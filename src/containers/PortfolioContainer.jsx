@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
@@ -19,6 +20,11 @@ const mapStateToProps = (
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
 	fetchResume
+};
+
+// configure the prop types validation
+PortfolioContainer.propTypes = {
+	fetchResume: PropTypes.func.isRequired
 };
 
 function PortfolioContainer({ fetchResume, ...props }) {

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
+import { PropTypes } from 'prop-types';
 
 import { useHistory } from 'react-router-dom';
 
@@ -33,6 +34,13 @@ const checkField = (field, value) => {
 	}
 
 	return '';
+};
+
+// configure the prop types validation
+SignUpConfirmContainer.propTypes = {
+	location: PropTypes.shape({
+		state: PropTypes.object
+	}).isRequired
 };
 
 function SignUpConfirmContainer({ location: { state }, ...props }) {

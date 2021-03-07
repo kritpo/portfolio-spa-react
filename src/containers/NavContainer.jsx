@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
@@ -57,6 +58,14 @@ const mapDispatchToProps = {
 	updateNavIntersection,
 	setToLightMode,
 	setToDarkMode
+};
+
+// configure the prop types validation
+NavContainer.propTypes = {
+	updateNavIntersection: PropTypes.func.isRequired,
+	setToLightMode: PropTypes.func.isRequired,
+	setToDarkMode: PropTypes.func.isRequired,
+	darkMode: PropTypes.bool.isRequired
 };
 
 function NavContainer({

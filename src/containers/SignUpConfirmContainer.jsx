@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 
 import { Auth } from 'aws-amplify';
 
@@ -32,6 +32,10 @@ const checkField = (field, value) => {
 };
 
 function SignUpConfirmContainer({ location: { state }, ...props }) {
+	// setup the resend button messages hook
+	const [resendWaitMessage, setResendWaitMessage] = useState('');
+	const [resendErrorMessage, setResendErrorMessage] = useState('');
+
 	// retrieve the default username
 	let defaultUsername = useMemo(
 		() =>
@@ -64,12 +68,56 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 			'Une erreur inattendue est survenue. Vérifiez le code, sinon veuillez réessayer ultérieurement.'
 	});
 
+	// setup the resend callback
+	const resend = useCallback(
+		() =>
+			Auth.resendSignUp(form[USERNAME].value)
+				.then(() => {
+					// setup a interval to lock the update
+					let waitLeft = 60;
+					const interval = setInterval(() => {
+						// decrement the wait time
+						waitLeft--;
+
+						// check if the wait time is null
+						if (waitLeft === 0) {
+							// clear the interval
+							clearInterval(interval);
+
+							// clear the wait message
+							setResendWaitMessage('');
+
+							return;
+						}
+
+						// update the wait message
+						setResendWaitMessage(`Attendez ${waitLeft}s`);
+					}, 1000);
+
+					console.log('re sended');
+				})
+				.catch(() => {
+					// lock the resend button
+					setResendErrorMessage('Erreur');
+
+					// setup a timeout to unlock the resend button
+					setTimeout(() => {
+						// unlock the button
+						setResendErrorMessage('');
+					}, 1000);
+				}),
+		[form]
+	);
+
 	return (
 		<SignUpConfirm
 			form={form}
 			handleForm={handleForm}
 			isSending={isSending}
 			error={error}
+			resend={resend}
+			resendWaitMessage={resendWaitMessage}
+			resendErrorMessage={resendErrorMessage}
 			{...props}
 		/>
 	);

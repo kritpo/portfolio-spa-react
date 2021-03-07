@@ -41,10 +41,21 @@ SignUpConfirm.propTypes = {
 		onSubmit: PropTypes.func.isRequired
 	}).isRequired,
 	isSending: PropTypes.bool.isRequired,
-	error: PropTypes.string.isRequired
+	error: PropTypes.string.isRequired,
+	resend: PropTypes.func.isRequired,
+	resendWaitMessage: PropTypes.string.isRequired,
+	resendErrorMessage: PropTypes.string.isRequired
 };
 
-function SignUpConfirm({ form, handleForm, isSending, error }) {
+function SignUpConfirm({
+	form,
+	handleForm,
+	isSending,
+	error,
+	resend,
+	resendWaitMessage,
+	resendErrorMessage
+}) {
 	return (
 		<Fragment>
 			<Header
@@ -85,6 +96,30 @@ function SignUpConfirm({ form, handleForm, isSending, error }) {
 										onChange={handleForm.onChange(USERNAME)}
 										onBlur={handleForm.onBlur(USERNAME)}
 										error={form[USERNAME].error !== ''}
+										InputProps={{
+											endAdornment: (
+												<Button
+													color="primary"
+													size="small"
+													onClick={resend}
+													disabled={
+														resendWaitMessage !== ''
+													}
+												>
+													{resendErrorMessage !==
+													'' ? (
+														<Typography color="error">
+															{resendErrorMessage}
+														</Typography>
+													) : resendWaitMessage !==
+													  '' ? (
+														resendWaitMessage
+													) : (
+														'Renvoyer'
+													)}
+												</Button>
+											)
+										}}
 										fullWidth
 										required
 									/>

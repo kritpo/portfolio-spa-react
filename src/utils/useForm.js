@@ -1,0 +1,109 @@
+import { useState, useMemo } from 'react';
+
+/**
+ * setup the component loader
+ * @param {object} params the list of params
+ * @returns the component lazy loaded
+ */
+const useForm = ({ fields, checkField, onSubmit, errorMessage }) => {
+	// setup the initial form state
+	const initialForm = {};
+	fields.forEach(({ name, defaultValue }) => {
+		// add the current field to the initial state
+		initialForm[name] = {
+			value: defaultValue,
+			error: '',
+			triggered: false
+		};
+	});
+
+	// setup form states
+	const [form, setForm] = useState(initialForm);
+	const [isSending, setIsSending] = useState(false);
+	const [error, setError] = useState('');
+
+	// setup form handler
+	const handleForm = useMemo(
+		() => ({
+			// handle field update
+			onChange: (field, isCheckbox = false) => ({ target }) => {
+				// retrieve the value
+				const value = isCheckbox ? target.checked : target.value;
+
+				// update the form
+				setForm({
+					...form,
+					[field]: {
+						...form[field],
+						value,
+						error: form[field].triggered
+							? checkField(field, value)
+							: ''
+					}
+				});
+			},
+			// handle field blur
+			onBlur: field => ({ target }) => {
+				// check if the field is already triggered
+				if (form[field].triggered) {
+					return;
+				}
+
+				// update the form
+				setForm({
+					...form,
+					[field]: {
+						...form[field],
+						error: checkField(field, target.value),
+						triggered: true
+					}
+				});
+			},
+			// handle form submit
+			onSubmit: () => {
+				// reset the error message
+				setError('');
+
+				// retrieve a copy of the form
+				const formCopy = { ...form };
+
+				// check all fields
+				const fieldsError = [];
+				fields.forEach(({ name }) => {
+					// check for error
+					const error = checkField(name, form[name].value);
+
+					// add the error to the error list
+					fieldsError.push(error);
+					formCopy[name] = { ...form[name], error, triggered: true };
+				});
+
+				// update the form with the checking
+				setForm(formCopy);
+
+				// check if the form is correct
+				if (fieldsError.join('') === '') {
+					// lock the form
+					setIsSending(true);
+
+					// setup the form unlock
+					const unlockForm = () => setIsSending(false);
+
+					// resolve the form submit promise
+					onSubmit(form, unlockForm).catch(() => {
+						// update the error message
+						setError(errorMessage);
+
+						// unlock the form
+						unlockForm();
+					});
+				}
+			}
+		}),
+		[checkField, errorMessage, fields, form, onSubmit]
+	);
+
+	return { form, handleForm, isSending, error };
+};
+
+export default useForm;

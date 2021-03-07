@@ -1,10 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useCallback } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
 import { Auth } from 'aws-amplify';
 
 import { SIGN_UP_CONFIRM } from '../routes';
+
+import useForm from '../utils/useForm';
 
 import SignUp, { USERNAME, EMAIL, PASSWORD, GDPR } from '../components/SignUp';
 
@@ -64,131 +66,37 @@ function SignUpContainer({ ...props }) {
 	// setup the history hook
 	const history = useHistory();
 
-	// setup form states
-	const [form, setForm] = useState({
-		[USERNAME]: { value: '', error: '', triggered: false },
-		[EMAIL]: { value: '', error: '', triggered: false },
-		[PASSWORD]: { value: '', error: '', triggered: false },
-		[GDPR]: { value: false, error: '', triggered: false }
-	});
-	const [isSending, setIsSending] = useState(false);
-	const [error, setError] = useState('');
-
-	// setup form handler
-	const handleForm = useMemo(
-		() => ({
-			// handle field update
-			onChange: (field, isCheckbox = false) => ({ target }) => {
-				// retrieve the value
-				const value = isCheckbox ? target.checked : target.value;
-
-				// update the form
-				setForm({
-					...form,
-					[field]: {
-						...form[field],
-						value,
-						error: form[field].triggered
-							? checkField(field, value)
-							: ''
-					}
-				});
-			},
-			// handle field blur
-			onBlur: field => ({ target }) => {
-				// check if the field is already triggered
-				if (form[field].triggered) {
-					return;
+	// setup the onSubmit callback
+	const onSubmit = useCallback(
+		form =>
+			Auth.signUp({
+				username: form[USERNAME].value,
+				password: form[PASSWORD].value,
+				attributes: {
+					email: form[EMAIL].value
 				}
-
-				// update the form
-				setForm({
-					...form,
-					[field]: {
-						...form[field],
-						error: checkField(field, target.value),
-						triggered: true
-					}
+			}).then(() => {
+				// redirect the user to the sign up confirmation page
+				history.push(SIGN_UP_CONFIRM, {
+					username: form[USERNAME].value
 				});
-			},
-			// handle form submit
-			onSubmit: () => {
-				// reset the error message
-				setError('');
-
-				// check all fields
-				const usernameError = checkField(
-					USERNAME,
-					form[USERNAME].value
-				);
-				const emailError = checkField(EMAIL, form[EMAIL].value);
-				const passwordError = checkField(
-					PASSWORD,
-					form[PASSWORD].value
-				);
-				const gdprError = checkField(GDPR, form[GDPR].value);
-
-				// update the form with the checking
-				setForm({
-					...form,
-					[USERNAME]: {
-						...form[USERNAME],
-						error: usernameError,
-						triggered: true
-					},
-					[EMAIL]: {
-						...form[EMAIL],
-						error: emailError,
-						triggered: true
-					},
-					[PASSWORD]: {
-						...form[PASSWORD],
-						error: passwordError,
-						triggered: true
-					},
-					[GDPR]: {
-						...form[GDPR],
-						error: gdprError,
-						triggered: true
-					}
-				});
-
-				// check if the form is correct
-				if (
-					usernameError + emailError + passwordError + gdprError ===
-					''
-				) {
-					// change the state to be as loading
-					setIsSending(true);
-
-					// sign up the user
-					Auth.signUp({
-						username: form[USERNAME].value,
-						password: form[PASSWORD].value,
-						attributes: {
-							email: form[EMAIL].value
-						}
-					})
-						.then(() => {
-							// redirect the user to the sign up confirmation page
-							history.push(SIGN_UP_CONFIRM, {
-								username: form[USERNAME].value
-							});
-						})
-						.catch(() => {
-							// update error to show in the form
-							setError(
-								'Une erreur inattendue est survenue. Veuillez réessayer ultérieurement.'
-							);
-
-							// reset the loading state
-							setIsSending(false);
-						});
-				}
-			}
-		}),
-		[form, history]
+			}),
+		[history]
 	);
+
+	// setup form hook
+	const { form, handleForm, isSending, error } = useForm({
+		fields: [
+			{ name: USERNAME, defaultValue: '' },
+			{ name: EMAIL, defaultValue: '' },
+			{ name: PASSWORD, defaultValue: '' },
+			{ name: GDPR, defaultValue: false }
+		],
+		checkField,
+		onSubmit,
+		errorMessage:
+			'Une erreur inattendue est survenue. Veuillez réessayer ultérieurement.'
+	});
 
 	return (
 		<SignUp

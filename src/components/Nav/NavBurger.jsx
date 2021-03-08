@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { withStyles } from '@material-ui/styles';
 
-import { MenuList } from '@material-ui/core';
+import { Box, MenuList } from '@material-ui/core';
 
 import BurgerMenu from '../../utils/BurgerMenu';
 import NavHashItem from './NavHashItem';
@@ -42,16 +42,20 @@ NavBurger.propTypes = {
 			isHash: PropTypes.bool
 		})
 	).isRequired,
-	darkModeMenu: PropTypes.element.isRequired
+	darkModeMenu: PropTypes.element.isRequired,
+	top: PropTypes.element,
+	bottom: PropTypes.element
 };
 
-function NavBurger({ children, darkModeMenu }) {
+function NavBurger({ children, darkModeMenu, top, bottom }) {
 	return (
 		<BurgerMenu top="1em" right="1em">
-			<MenuList>
-				{links(children)}
+			<Box display="flex" flexDirection="column" alignItems="center">
+				{top}
+				<MenuList>{links(children)}</MenuList>
+				{bottom}
 				{darkModeMenu}
-			</MenuList>
+			</Box>
 		</BurgerMenu>
 	);
 }

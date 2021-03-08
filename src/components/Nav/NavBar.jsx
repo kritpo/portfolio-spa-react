@@ -21,7 +21,7 @@ const styles = ({ palette: { divider } }) => ({
 /**
  * convert links details to React component
  * @param {array} children the list of links data
- * @param {object} active the active classe
+ * @param {object} active the active class
  * @returns the components array
  */
 const links = (children, active) =>
@@ -57,7 +57,9 @@ NavBar.propTypes = {
 			}).isRequired
 		}).isRequired
 	}).isRequired,
-	darkModeMenu: PropTypes.element.isRequired
+	darkModeMenu: PropTypes.element.isRequired,
+	left: PropTypes.element,
+	right: PropTypes.element
 };
 
 function NavBar({
@@ -66,7 +68,9 @@ function NavBar({
 	theme: {
 		palette: { primary, type }
 	},
-	darkModeMenu
+	darkModeMenu,
+	left,
+	right
 }) {
 	return (
 		<Box
@@ -84,9 +88,11 @@ function NavBar({
 					backgroundColor: primary[type]
 				}}
 			>
+				{left}
 				<Grid container spacing={2} justify="center">
 					{links(children, active)}
 				</Grid>
+				{right}
 				{darkModeMenu}
 			</Paper>
 		</Box>

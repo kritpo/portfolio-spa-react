@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -13,7 +13,8 @@ import { useTheme } from '@material-ui/styles';
 import {
 	updateNavIntersection,
 	setToLightMode,
-	setToDarkMode
+	setToDarkMode,
+	logout
 } from '../actions';
 import { HOME } from '../routes';
 
@@ -44,12 +45,9 @@ const links = [
 ];
 
 // configure the states to pass as props to the component
-const mapStateToProps = (
-	{ navIntersection: { inView }, darkMode },
-	...props
-) => ({
-	inView,
+const mapStateToProps = ({ darkMode, username }, ...props) => ({
 	darkMode,
+	username,
 	...props
 });
 
@@ -57,7 +55,8 @@ const mapStateToProps = (
 const mapDispatchToProps = {
 	updateNavIntersection,
 	setToLightMode,
-	setToDarkMode
+	setToDarkMode,
+	logout
 };
 
 // configure the prop types validation
@@ -100,6 +99,14 @@ function NavContainer({
 		}
 	}, [darkMode, setToDarkMode, setToLightMode]);
 
+	// setup the logout function
+	const logoutCallback = useCallback(() => {
+		logout();
+	}, []);
+
+	// setup the home test hook
+	const isHome = useMemo(() => pathname === HOME, [pathname]);
+
 	// setup the nav intersection observer updater hook
 	useEffect(() => {
 		// update the nav intersection observer at the loading of the component
@@ -108,8 +115,8 @@ function NavContainer({
 
 	// setup the nav type updater
 	useEffect(() => {
-		setShowBar(isUpSm && (pathname !== HOME || inViewObject.inView));
-	}, [inViewObject, isUpSm, pathname]);
+		setShowBar(isUpSm && (!isHome || inViewObject.inView));
+	}, [inViewObject, isHome, isUpSm]);
 
 	return (
 		<Nav
@@ -117,6 +124,8 @@ function NavContainer({
 			darkMode={darkMode}
 			darkModeToggle={darkModeToggle}
 			showBar={showBar}
+			isHome={isHome}
+			logout={logoutCallback}
 			{...props}
 		/>
 	);

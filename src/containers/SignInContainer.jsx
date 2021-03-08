@@ -59,7 +59,9 @@ function SignInContainer({ location: { state }, login, ...props }) {
 	// retrieve the default username
 	let defaultUsername = useMemo(
 		() =>
-			state !== undefined && state.username !== undefined
+			state !== undefined &&
+			state !== null &&
+			state.username !== undefined
 				? state.username
 				: '',
 		[state]

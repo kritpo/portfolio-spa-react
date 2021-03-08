@@ -3,6 +3,22 @@ import { Auth } from 'aws-amplify';
 import { SET_USERNAME, RESET_USERNAME } from './types';
 
 /**
+ * auto-login the user
+ */
+export const autoLogin = () => dispatch => {
+	// retrieve the current user if exists
+	return (
+		Auth.currentUserInfo()
+			// update the username
+			.then(({ username }) => {
+				dispatch(login(username));
+			})
+			// otherwise, do nothing
+			.catch(() => {})
+	);
+};
+
+/**
  * logout the user
  */
 export const logout = () => dispatch => {
@@ -14,9 +30,7 @@ export const logout = () => dispatch => {
 				dispatch(resetUsername());
 			})
 			// otherwise, log the error
-			.catch(err => {
-				console.log(err);
-			})
+			.catch(() => {})
 	);
 };
 

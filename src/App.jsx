@@ -14,7 +14,7 @@ import {
 	red
 } from '@material-ui/core/colors';
 
-import { checkWebpSupport, setThemeMode } from './actions';
+import { checkWebpSupport, setThemeMode, autoLogin } from './actions';
 
 import { BrowserRouter } from 'react-router-dom';
 
@@ -35,7 +35,8 @@ const mapStateToProps = ({ darkMode }, ...props) => ({
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
 	checkWebpSupport,
-	setThemeMode
+	setThemeMode,
+	autoLogin
 };
 
 // configure the prop types validation
@@ -45,7 +46,7 @@ App.propTypes = {
 	setThemeMode: PropTypes.func.isRequired
 };
 
-function App({ darkMode, checkWebpSupport, setThemeMode }) {
+function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {
 	// setup the dark mode status hook
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
@@ -58,6 +59,11 @@ function App({ darkMode, checkWebpSupport, setThemeMode }) {
 	useEffect(() => {
 		setThemeMode(prefersDarkMode);
 	}, [prefersDarkMode, setThemeMode]);
+
+	// try to auto login the user
+	useEffect(() => {
+		autoLogin();
+	}, [autoLogin]);
 
 	// setup the app theme
 	const theme = useMemo(

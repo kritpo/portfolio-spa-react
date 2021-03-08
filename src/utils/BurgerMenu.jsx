@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { withStyles } from '@material-ui/styles';
@@ -150,10 +150,10 @@ function BurgerMenu({
 	const [isOpen, setIsOpen] = useState(false);
 
 	// setup the open menu handler
-	const openMenu = () => setIsOpen(true);
+	const openMenu = useCallback(() => setIsOpen(true), []);
 
 	// setup the clone menu handler
-	const closeMenu = () => setIsOpen(false);
+	const closeMenu = useCallback(() => setIsOpen(false), []);
 
 	return (
 		<Box className={`${root} ${isOpen ? 'open' : ''}`}>

@@ -6,19 +6,20 @@ import { useState, useMemo } from 'react';
  * @returns the component lazy loaded
  */
 const useForm = ({ fields, checkField, onSubmit, errorMessage }) => {
-	// setup the initial form state
-	const initialForm = {};
-	fields.forEach(({ name, defaultValue }) => {
-		// add the current field to the initial state
-		initialForm[name] = {
-			value: defaultValue,
-			error: '',
-			triggered: false
-		};
-	});
-
 	// setup form states
-	const [form, setForm] = useState(initialForm);
+	const [form, setForm] = useState(
+		fields.reduce(
+			(object, { name, defaultValue }) => ({
+				...object,
+				[name]: {
+					value: defaultValue,
+					error: '',
+					triggered: false
+				}
+			}),
+			{}
+		)
+	);
 	const [isSending, setIsSending] = useState(false);
 	const [error, setError] = useState('');
 

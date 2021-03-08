@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { routePreloadComponent } from '../routes';
@@ -23,7 +23,10 @@ CustomLink.propTypes = {
 
 function CustomLink({ children, to, nav, hash, ...props }) {
 	// setup the route component preloader
-	const preloadRoutedComponent = () => routePreloadComponent(to);
+	const preloadRoutedComponent = useCallback(
+		() => routePreloadComponent(to),
+		[to]
+	);
 
 	return (
 		<Link

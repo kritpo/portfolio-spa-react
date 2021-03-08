@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { useMemo, lazy, Suspense } from 'react';
 import { PropTypes } from 'prop-types';
 
 import icons, { SOCIAL, CAREER, TECHNOLOGY, HOBBY } from './icons';
@@ -114,10 +114,15 @@ CustomIcon.propTypes = {
 
 function CustomIcon({ social, career, technology, hobby, notExact }) {
 	// retrieve the icon
-	const Icon = retrieveIcon(social, career, technology, hobby, notExact);
+	const Icon = useMemo(
+		() => retrieveIcon(social, career, technology, hobby, notExact),
+		[career, hobby, notExact, social, technology]
+	);
 
 	// setup the text container if the icon is a plain text
-	const text = typeof Icon === 'string' ? Icon : undefined;
+	const text = useMemo(() => (typeof Icon === 'string' ? Icon : undefined), [
+		Icon
+	]);
 
 	return (
 		<Suspense

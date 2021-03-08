@@ -43,7 +43,8 @@ const mapDispatchToProps = {
 App.propTypes = {
 	darkMode: PropTypes.bool.isRequired,
 	checkWebpSupport: PropTypes.func.isRequired,
-	setThemeMode: PropTypes.func.isRequired
+	setThemeMode: PropTypes.func.isRequired,
+	autoLogin: PropTypes.func.isRequired
 };
 
 function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {

@@ -9,7 +9,7 @@ const PortfolioContainer = impLoader(() =>
 const Terms = impLoader(() => import('./components/Terms'));
 const SignIn = impLoader(() => import('./containers/SignInContainer'));
 const SignUp = impLoader(() => import('./containers/SignUpContainer'));
-const SignUpConfirm = impLoader(() =>
+const SignUpConf = impLoader(() =>
 	import('./containers/SignUpConfirmContainer')
 );
 
@@ -24,9 +24,9 @@ export const SIGN_UP_CONFIRM = '/inscription/confirmation';
 const routes = [
 	{ path: HOME, exact: true, component: PortfolioContainer },
 	{ path: TERMS, exact: true, component: Terms },
-	{ path: SIGN_IN, exact: true, component: SignIn },
-	{ path: SIGN_UP, exact: true, component: SignUp },
-	{ path: SIGN_UP_CONFIRM, exact: true, component: SignUpConfirm }
+	{ path: SIGN_IN, exact: true, component: SignIn, logged: false },
+	{ path: SIGN_UP, exact: true, component: SignUp, logged: false },
+	{ path: SIGN_UP_CONFIRM, exact: true, component: SignUpConf, logged: false }
 ];
 
 /**

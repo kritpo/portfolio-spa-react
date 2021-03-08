@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 
 import {
@@ -25,12 +25,14 @@ export const CHECKBOX = 'checkbox';
  * @param {object} field the field data
  * @param {object} form the list of fields data in real time, for controlled components
  * @param {object} handleForm the list of form methods, for controlled components
+ * @param {function} autoSubmit the callback to auto submit the form
  * @returns the field component
  */
 const transformToField = (
 	{ name, type, label, ...field },
 	form,
-	handleForm
+	handleForm,
+	autoSubmit
 ) => {
 	// check the type of the field
 	switch (type) {
@@ -49,6 +51,7 @@ const transformToField = (
 					onChange={handleForm.onChange(name)}
 					onBlur={handleForm.onBlur(name)}
 					error={form[name].error !== ''}
+					onKeyPress={autoSubmit}
 					fullWidth
 					required
 					{...field}
@@ -65,6 +68,7 @@ const transformToField = (
 								color="primary"
 								checked={form[name].value}
 								onChange={handleForm.onChange(name, true)}
+								onKeyPress={autoSubmit}
 								required
 							/>
 						}
@@ -114,12 +118,28 @@ function Form({
 	error,
 	isSending
 }) {
+	// setup the form auto submit callback
+	const autoSubmit = useCallback(
+		({ key }) => {
+			// check if the form is active and the entered key is `Enter`
+			if (!isSending && key === 'Enter') {
+				// submit the form
+				handleForm.onSubmit();
+			}
+		},
+		[handleForm, isSending]
+	);
+
 	// retrieve all fields
-	const fieldsList = fields.map((field, index) => (
-		<Box mb={2} key={index}>
-			{transformToField(field, form, handleForm)}
-		</Box>
-	));
+	const fieldsList = useMemo(
+		() =>
+			fields.map((field, index) => (
+				<Box mb={2} key={index}>
+					{transformToField(field, form, handleForm, autoSubmit)}
+				</Box>
+			)),
+		[autoSubmit, fields, form, handleForm]
+	);
 
 	return (
 		<Box

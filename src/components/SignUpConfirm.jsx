@@ -14,8 +14,9 @@ import {
 	Button
 } from '@material-ui/core';
 
-import Header from './Header';
+import Form, { TEXT } from '../utils/Form';
 import Loading from '../utils/Loading';
+import Header from './Header';
 import CustomLink from '../utils/CustomLink';
 
 // setup field name constants
@@ -78,95 +79,53 @@ function SignUpConfirm({
 						<Typography component="h2" variant="h4">
 							Confirmation d'inscription
 						</Typography>
-						<Box
-							display="flex"
-							flexDirection="column"
-							width="75%"
-							minWidth="250px"
-							maxWidth="400px"
-							clone
+						<Form
+							fields={[
+								{
+									name: USERNAME,
+									type: TEXT,
+									label: 'Pseudo',
+									placeholder: 'dupont',
+									InputProps: {
+										endAdornment: (
+											<Button
+												color="primary"
+												size="small"
+												onClick={resend}
+												disabled={
+													resendWaitMessage !== ''
+												}
+											>
+												{resendErrorMessage !== '' ? (
+													<Typography color="error">
+														{resendErrorMessage}
+													</Typography>
+												) : resendWaitMessage !== '' ? (
+													resendWaitMessage
+												) : (
+													'Renvoyer'
+												)}
+											</Button>
+										)
+									}
+								},
+								{
+									name: CODE,
+									type: TEXT,
+									label: 'Code de vérification',
+									placeholder: '123456'
+								}
+							]}
+							form={form}
+							handleForm={handleForm}
+							action="test"
+							error={error}
+							isSending={isSending}
 						>
-							<form noValidate autoComplete="off">
-								<Box mb={2}>
-									<TextField
-										id={USERNAME}
-										label="Pseudo"
-										placeholder="dupont"
-										value={form[USERNAME].value}
-										helperText={form[USERNAME].error}
-										onChange={handleForm.onChange(USERNAME)}
-										onBlur={handleForm.onBlur(USERNAME)}
-										error={form[USERNAME].error !== ''}
-										InputProps={{
-											endAdornment: (
-												<Button
-													color="primary"
-													size="small"
-													onClick={resend}
-													disabled={
-														resendWaitMessage !== ''
-													}
-												>
-													{resendErrorMessage !==
-													'' ? (
-														<Typography color="error">
-															{resendErrorMessage}
-														</Typography>
-													) : resendWaitMessage !==
-													  '' ? (
-														resendWaitMessage
-													) : (
-														'Renvoyer'
-													)}
-												</Button>
-											)
-										}}
-										fullWidth
-										required
-									/>
-								</Box>
-								<Box mb={2}>
-									<TextField
-										id={CODE}
-										label="Code de vérification"
-										placeholder="123456"
-										value={form[CODE].value}
-										helperText={form[CODE].error}
-										onChange={handleForm.onChange(CODE)}
-										onBlur={handleForm.onBlur(CODE)}
-										error={form[CODE].error !== ''}
-										fullWidth
-										required
-									/>
-								</Box>
-								<FormControl error={error !== ''}>
-									<Button
-										variant="contained"
-										color="primary"
-										onClick={handleForm.onSubmit}
-										disabled={form.sending}
-									>
-										Confirmer
-									</Button>
-									<FormHelperText>{error}</FormHelperText>
-								</FormControl>
-								<Box mt={2} textAlign="center">
-									{isSending && (
-										<Box mb={2}>
-											<Loading size="32px" />
-											<Typography variant="body1">
-												Envoi en cours...
-											</Typography>
-										</Box>
-									)}
-
-									<br />
-									<CustomLink to={SIGN_UP}>
-										Pas encore inscrit ? Inscrivez-vous
-									</CustomLink>
-								</Box>
-							</form>
-						</Box>
+							<CustomLink to={SIGN_UP}>
+								Pas encore inscrit ? Inscrivez-vous
+							</CustomLink>
+						</Form>
 					</Paper>
 				</Box>
 			</Container>

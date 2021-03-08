@@ -3,21 +3,15 @@ import { PropTypes } from 'prop-types';
 
 import { HOME, SIGN_IN, SIGN_UP_CONFIRM } from '../routes';
 
-import {
-	Container,
-	Box,
-	Paper,
-	Typography,
-	TextField,
-	FormControl,
-	FormControlLabel,
-	FormHelperText,
-	Checkbox,
-	Button
-} from '@material-ui/core';
+import { Container, Box, Paper, Typography } from '@material-ui/core';
 
+import Form, {
+	TEXT,
+	EMAIL as EMAIL_TYPE,
+	PASSWORD as PASSWORD_TYPE,
+	CHECKBOX
+} from '../utils/Form';
 import Header from './Header';
-import Loading from '../utils/Loading';
 import CustomLink from '../utils/CustomLink';
 
 // setup field name constants
@@ -78,115 +72,47 @@ function SignUp({ form, handleForm, isSending, error }) {
 						<Typography component="h2" variant="h4">
 							Inscription
 						</Typography>
-						<Box
-							display="flex"
-							flexDirection="column"
-							width="75%"
-							minWidth="250px"
-							maxWidth="400px"
-							clone
+						<Form
+							fields={[
+								{
+									name: USERNAME,
+									type: TEXT,
+									label: 'Pseudo',
+									placeholder: 'dupont'
+								},
+								{
+									name: EMAIL,
+									type: EMAIL_TYPE,
+									label: 'Adresse mail',
+									placeholder: 'dupont@gmail.com'
+								},
+								{
+									name: PASSWORD,
+									type: PASSWORD_TYPE,
+									label: 'Mot de passe',
+									placeholder: 'Mot de passe'
+								},
+								{
+									name: GDPR,
+									type: CHECKBOX,
+									label:
+										"J'ai pris connaissance et j'accepte sans réserves le traitement de mes données personnelles tel qu'énoncé dans les mentions légales."
+								}
+							]}
+							form={form}
+							handleForm={handleForm}
+							action="Inscription"
+							error={error}
+							isSending={isSending}
 						>
-							<form noValidate autoComplete="off">
-								<Box mb={2}>
-									<TextField
-										id={USERNAME}
-										label="Pseudo"
-										placeholder="dupont"
-										value={form[USERNAME].value}
-										helperText={form[USERNAME].error}
-										onChange={handleForm.onChange(USERNAME)}
-										onBlur={handleForm.onBlur(USERNAME)}
-										error={form[USERNAME].error !== ''}
-										fullWidth
-										required
-									/>
-								</Box>
-								<Box mb={2}>
-									<TextField
-										id={EMAIL}
-										type="email"
-										label="Adresse mail"
-										placeholder="dupont@gmail.com"
-										value={form[EMAIL].value}
-										helperText={form[EMAIL].error}
-										onChange={handleForm.onChange(EMAIL)}
-										onBlur={handleForm.onBlur(EMAIL)}
-										error={form[EMAIL].error !== ''}
-										fullWidth
-										required
-									/>
-								</Box>
-								<Box mb={2}>
-									<TextField
-										id={PASSWORD}
-										type="password"
-										label="Mot de passe"
-										placeholder="Mot de passe"
-										value={form[PASSWORD].value}
-										helperText={form[PASSWORD].error}
-										onChange={handleForm.onChange(PASSWORD)}
-										onBlur={handleForm.onBlur(PASSWORD)}
-										error={form[PASSWORD].error !== ''}
-										fullWidth
-										required
-									/>
-								</Box>
-								<Box mb={2}>
-									<FormControl
-										error={form[GDPR].error !== ''}
-										required
-									>
-										<FormControlLabel
-											control={
-												<Checkbox
-													color="primary"
-													checked={form[GDPR].value}
-													onChange={handleForm.onChange(
-														GDPR,
-														true
-													)}
-													required
-												/>
-											}
-											label="J'ai pris connaissance et j'accepte sans réserves le traitement de mes données personnelles tel qu'énoncé dans les mentions légales."
-										/>
-										<FormHelperText>
-											{form[GDPR].error}
-										</FormHelperText>
-									</FormControl>
-								</Box>
-								<FormControl error={error !== ''}>
-									<Button
-										variant="contained"
-										color="primary"
-										onClick={handleForm.onSubmit}
-										disabled={form.sending}
-									>
-										Inscription
-									</Button>
-									<FormHelperText>{error}</FormHelperText>
-								</FormControl>
-								<Box mt={2} textAlign="center">
-									{isSending && (
-										<Box mb={2}>
-											<Loading size="32px" />
-											<Typography variant="body1">
-												Envoi en cours...
-											</Typography>
-										</Box>
-									)}
-									Déjà inscrit ?
-									<br />
-									<CustomLink to={SIGN_IN}>
-										Connectez vous
-									</CustomLink>
-									<br />
-									<CustomLink to={SIGN_UP_CONFIRM}>
-										Confirmez votre inscription
-									</CustomLink>
-								</Box>
-							</form>
-						</Box>
+							Déjà inscrit ?
+							<br />
+							<CustomLink to={SIGN_IN}>Connectez vous</CustomLink>
+							<br />
+							<CustomLink to={SIGN_UP_CONFIRM}>
+								Confirmez votre inscription
+							</CustomLink>
+						</Form>
 					</Paper>
 				</Box>
 			</Container>

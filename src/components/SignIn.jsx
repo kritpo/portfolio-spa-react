@@ -3,19 +3,10 @@ import { PropTypes } from 'prop-types';
 
 import { HOME, SIGN_UP } from '../routes';
 
-import {
-	Container,
-	Box,
-	Paper,
-	Typography,
-	TextField,
-	FormControl,
-	FormHelperText,
-	Button
-} from '@material-ui/core';
+import { Container, Box, Paper, Typography } from '@material-ui/core';
 
+import Form, { TEXT, PASSWORD as PASSWORD_TYPE } from '../utils/Form';
 import Header from './Header';
-import Loading from '../utils/Loading';
 import CustomLink from '../utils/CustomLink';
 
 // setup field name constants
@@ -64,70 +55,31 @@ function SignIn({ form, handleForm, isSending, error }) {
 						<Typography component="h2" variant="h4">
 							Connexion
 						</Typography>
-						<Box
-							display="flex"
-							flexDirection="column"
-							width="75%"
-							minWidth="250px"
-							maxWidth="400px"
-							clone
+						<Form
+							fields={[
+								{
+									name: USERNAME,
+									type: TEXT,
+									label: 'Pseudo',
+									placeholder: 'dupont'
+								},
+								{
+									name: PASSWORD,
+									type: PASSWORD_TYPE,
+									label: 'Mot de passe',
+									placeholder: 'Mot de passe'
+								}
+							]}
+							form={form}
+							handleForm={handleForm}
+							action="Connexion"
+							error={error}
+							isSending={isSending}
 						>
-							<form noValidate autoComplete="off">
-								<Box mb={2}>
-									<TextField
-										id={USERNAME}
-										label="Pseudo"
-										placeholder="dupont"
-										value={form[USERNAME].value}
-										helperText={form[USERNAME].error}
-										onChange={handleForm.onChange(USERNAME)}
-										onBlur={handleForm.onBlur(USERNAME)}
-										error={form[USERNAME].error !== ''}
-										fullWidth
-										required
-									/>
-								</Box>
-								<Box mb={2}>
-									<TextField
-										id={PASSWORD}
-										type="password"
-										label="Mot de passe"
-										placeholder="Mot de passe"
-										value={form[PASSWORD].value}
-										helperText={form[PASSWORD].error}
-										onChange={handleForm.onChange(PASSWORD)}
-										onBlur={handleForm.onBlur(PASSWORD)}
-										error={form[PASSWORD].error !== ''}
-										fullWidth
-										required
-									/>
-								</Box>
-								<FormControl error={error !== ''}>
-									<Button
-										variant="contained"
-										color="primary"
-										onClick={handleForm.onSubmit}
-										disabled={form.sending}
-									>
-										Connexion
-									</Button>
-									<FormHelperText>{error}</FormHelperText>
-								</FormControl>
-								<Box mt={2} textAlign="center">
-									{isSending && (
-										<Box mb={2}>
-											<Loading size="32px" />
-											<Typography variant="body1">
-												Envoi en cours...
-											</Typography>
-										</Box>
-									)}
-									<CustomLink to={SIGN_UP}>
-										Pas encore inscrit ? Inscrivez-vous
-									</CustomLink>
-								</Box>
-							</form>
-						</Box>
+							<CustomLink to={SIGN_UP}>
+								Pas encore inscrit ? Inscrivez-vous
+							</CustomLink>
+						</Form>
 					</Paper>
 				</Box>
 			</Container>

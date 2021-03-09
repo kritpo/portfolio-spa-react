@@ -23,6 +23,12 @@ Install dependencies:
 npm install
 ```
 
+Deploy Amplify Backend:
+
+```sh
+amplify push --y
+```
+
 ## Usage
 
 ### Run the application on your computer locally

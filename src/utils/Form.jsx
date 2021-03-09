@@ -45,7 +45,6 @@ const transformToField = (
 					id={name}
 					type={type}
 					label={label}
-					placeholder={field.placeholder}
 					value={form[name].value}
 					helperText={form[name].error}
 					onChange={handleForm.onChange(name)}
@@ -133,8 +132,8 @@ function Form({
 	// retrieve all fields
 	const fieldsList = useMemo(
 		() =>
-			fields.map((field, index) => (
-				<Box mb={2} key={index}>
+			fields.map(field => (
+				<Box mb={2} key={field.name}>
 					{transformToField(field, form, handleForm, autoSubmit)}
 				</Box>
 			)),

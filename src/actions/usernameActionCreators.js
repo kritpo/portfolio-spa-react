@@ -29,7 +29,7 @@ export const logout = () => dispatch => {
 			.then(() => {
 				dispatch(resetUsername());
 			})
-			// otherwise, log the error
+			// otherwise, do nothing
 			.catch(() => {})
 	);
 };

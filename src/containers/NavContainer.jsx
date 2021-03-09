@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -104,8 +104,8 @@ function NavContainer({
 		logout();
 	}, []);
 
-	// setup the home test hook
-	const isHome = useMemo(() => pathname === HOME, [pathname]);
+	// setup the home test
+	const isHome = pathname === HOME;
 
 	// setup the nav intersection observer updater hook
 	useEffect(() => {

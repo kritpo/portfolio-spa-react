@@ -130,9 +130,9 @@ BurgerMenu.defaultProps = {
 
 // configure the prop types validation
 BurgerMenu.propTypes = {
-	top: PropTypes.string,
+	top: PropTypes.string.isRequired,
 	bottom: PropTypes.string,
-	left: PropTypes.string,
+	left: PropTypes.string.isRequired,
 	right: PropTypes.string,
 	customXAxisValidator,
 	customYAxisValidator

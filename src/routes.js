@@ -1,5 +1,3 @@
-import { matchPath } from 'react-router-dom';
-
 import impLoader from './utils/impLoader';
 
 // load all components
@@ -28,27 +26,5 @@ const routes = [
 	{ path: SIGN_UP, exact: true, component: SignUp, logged: false },
 	{ path: SIGN_UP_CONFIRM, exact: true, component: SignUpConf, logged: false }
 ];
-
-/**
- * setup the component preloader
- * @param {string} currentPath the path of the component to preload
- */
-export const routePreloadComponent = currentPath => {
-	// filter the path to remove hashes and queries
-	if (currentPath.includes('#') || currentPath.includes('?')) {
-		currentPath = currentPath.split('#')[0].split('?')[0];
-	}
-
-	// find the associated route
-	const route = routes.find(({ path, exact }) =>
-		matchPath(currentPath, { path, exact })
-	);
-
-	// check if the route is founded
-	if (route !== undefined) {
-		// preload the component
-		route.component.preload();
-	}
-};
 
 export default routes;

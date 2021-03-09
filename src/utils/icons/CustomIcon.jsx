@@ -109,7 +109,7 @@ CustomIcon.propTypes = {
 	technology: PropTypes.string,
 	hobby: PropTypes.string,
 	customValidator,
-	notExact: PropTypes.bool
+	notExact: PropTypes.bool.isRequired
 };
 
 function CustomIcon({ social, career, technology, hobby, notExact }) {
@@ -119,11 +119,6 @@ function CustomIcon({ social, career, technology, hobby, notExact }) {
 		[career, hobby, notExact, social, technology]
 	);
 
-	// setup the text container if the icon is a plain text
-	const text = useMemo(() => (typeof Icon === 'string' ? Icon : undefined), [
-		Icon
-	]);
-
 	return (
 		<Suspense
 			fallback={
@@ -132,7 +127,7 @@ function CustomIcon({ social, career, technology, hobby, notExact }) {
 				</Box>
 			}
 		>
-			{text === undefined ? <Icon /> : text}
+			{typeof Icon === 'string' ? Icon : <Icon />}
 		</Suspense>
 	);
 }

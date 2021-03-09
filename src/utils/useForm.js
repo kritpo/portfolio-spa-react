@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 
 /**
- * setup the component loader
- * @param {object} params the list of params
- * @returns the component lazy loaded
+ * setup the form hook
+ * @param {object} params the list of form params
+ * @returns the hook variables
  */
 const useForm = ({ fields, checkField, onSubmit, errorMessage }) => {
 	// setup form states

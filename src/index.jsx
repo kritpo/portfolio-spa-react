@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import store from './store';
 
 import Amplify from 'aws-amplify';
+
 import config from './aws-exports';
 
 import { Provider } from 'react-redux';

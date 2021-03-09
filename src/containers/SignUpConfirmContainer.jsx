@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { useHistory } from 'react-router-dom';
@@ -52,13 +52,10 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 	const [resendErrorMessage, setResendErrorMessage] = useState('');
 
 	// retrieve the default username
-	let defaultUsername = useMemo(
-		() =>
-			state !== undefined && state.username !== undefined
-				? state.username
-				: '',
-		[state]
-	);
+	let defaultUsername =
+		state !== undefined && state.username !== undefined
+			? state.username
+			: '';
 
 	// setup the onSubmit callback
 	const onSubmit = useCallback(

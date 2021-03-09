@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { useHistory } from 'react-router-dom';
@@ -57,15 +57,10 @@ function SignInContainer({ location: { state }, login, ...props }) {
 	const history = useHistory();
 
 	// retrieve the default username
-	let defaultUsername = useMemo(
-		() =>
-			state !== undefined &&
-			state !== null &&
-			state.username !== undefined
-				? state.username
-				: '',
-		[state]
-	);
+	let defaultUsername =
+		state !== undefined && state !== null && state.username !== undefined
+			? state.username
+			: '';
 
 	// setup the onSubmit callback
 	const onSubmit = useCallback(

@@ -3,19 +3,9 @@ import { PropTypes } from 'prop-types';
 
 import { HOME, SIGN_UP } from '../routes';
 
-import {
-	Container,
-	Box,
-	Paper,
-	Typography,
-	TextField,
-	FormControl,
-	FormHelperText,
-	Button
-} from '@material-ui/core';
+import { Container, Box, Paper, Typography, Button } from '@material-ui/core';
 
 import Form, { TEXT } from '../utils/Form';
-import Loading from '../utils/Loading';
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
 

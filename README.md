@@ -23,13 +23,31 @@ Install dependencies:
 npm install
 ```
 
+Repeat the dependencies installation in both `amplify\backend\function\portfoliospareactd30404bdPreAuthentication\src` and `amplify\backend\function\portfoliospareactd30404bdPreSignup\src`.
+
 Deploy Amplify Backend:
 
 ```sh
 amplify push --y
 ```
 
+You must provide a `.env` file at the root of both `portfoliospareactd30404bdPreAuthentication` and `portfoliospareactd30404bdPreSignup` lambda functions:
+
+```env
+# google recaptcha
+GOOGLE_RECAPTCHA_SECRET=[YOUR_GOOGLE_RECAPTCHA_SECRET]
+```
+
 ## Usage
+
+### Configuration
+
+You must provide a `.env` file at the root of the application:
+
+```env
+# google recaptcha
+REACT_APP_GOOGLE_RECAPTCHA_KEY=[YOUR_GOOGLE_RECAPTCHA_KEY]
+```
 
 ### Run the application on your computer locally
 

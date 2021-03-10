@@ -68,19 +68,24 @@ function SignUpContainer({ ...props }) {
 
 	// setup the onSubmit callback
 	const onSubmit = useCallback(
-		form =>
-			Auth.signUp({
-				username: form[USERNAME].value,
-				password: form[PASSWORD].value,
-				attributes: {
-					email: form[EMAIL].value
-				}
-			}).then(() => {
-				// redirect the user to the sign up confirmation page
-				history.push(SIGN_UP_CONFIRM, {
-					username: form[USERNAME].value
-				});
-			}),
+		(form, reCaptchaToken) =>
+			reCaptchaToken.then(token =>
+				Auth.signUp({
+					username: form[USERNAME].value,
+					password: form[PASSWORD].value,
+					attributes: {
+						email: form[EMAIL].value
+					},
+					clientMetadata: {
+						recaptchaToken: token
+					}
+				}).then(() => {
+					// redirect the user to the sign up confirmation page
+					history.push(SIGN_UP_CONFIRM, {
+						username: form[USERNAME].value
+					});
+				})
+			),
 		[history]
 	);
 

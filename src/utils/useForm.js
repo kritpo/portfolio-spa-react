@@ -1,11 +1,16 @@
 import { useState, useMemo } from 'react';
 
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+
 /**
  * setup the form hook
  * @param {object} params the list of form params
  * @returns the hook variables
  */
 const useForm = ({ fields, checkField, onSubmit, errorMessage }) => {
+	// setup a recaptcha hook
+	const { executeRecaptcha } = useGoogleReCaptcha();
+
 	// setup form states
 	const [form, setForm] = useState(
 		fields.reduce(
@@ -91,7 +96,7 @@ const useForm = ({ fields, checkField, onSubmit, errorMessage }) => {
 					const unlockForm = () => setIsSending(false);
 
 					// resolve the form submit promise
-					onSubmit(form, unlockForm).catch(() => {
+					onSubmit(form, executeRecaptcha(), unlockForm).catch(() => {
 						// update the error message
 						setError(errorMessage);
 
@@ -101,7 +106,7 @@ const useForm = ({ fields, checkField, onSubmit, errorMessage }) => {
 				}
 			}
 		}),
-		[checkField, errorMessage, fields, form, onSubmit]
+		[checkField, errorMessage, executeRecaptcha, fields, form, onSubmit]
 	);
 
 	return { form, handleForm, isSending, error };

@@ -64,17 +64,25 @@ function SignInContainer({ location: { state }, login, ...props }) {
 
 	// setup the onSubmit callback
 	const onSubmit = useCallback(
-		form =>
-			Auth.signIn({
-				username: form[USERNAME].value,
-				password: form[PASSWORD].value
-			}).then(() => {
-				// login the user
-				login(form[USERNAME].value);
+		(form, reCaptchaToken) =>
+			reCaptchaToken.then(token =>
+				Auth.signIn(
+					{
+						username: form[USERNAME].value,
+						password: form[PASSWORD].value
+					},
+					undefined,
+					{
+						recaptchaToken: token
+					}
+				).then(() => {
+					// login the user
+					login(form[USERNAME].value);
 
-				// redirect the user to the home page
-				history.push(HOME);
-			}),
+					// redirect the user to the home page
+					history.push(HOME);
+				})
+			),
 		[history, login]
 	);
 

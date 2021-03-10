@@ -215,3 +215,4 @@ amplifytools.xcconfig
 .secret-*
 
 amplify/team-provider-info.json
+function-parameters.json

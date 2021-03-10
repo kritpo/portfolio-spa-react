@@ -108,7 +108,7 @@ function SignUpConfirm({
 							]}
 							form={form}
 							handleForm={handleForm}
-							action="test"
+							action="Confirmer"
 							error={error}
 							isSending={isSending}
 						>

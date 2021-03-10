@@ -156,7 +156,7 @@ function Form({
 						variant="contained"
 						color="primary"
 						onClick={handleForm.onSubmit}
-						disabled={form.sending}
+						disabled={isSending}
 					>
 						{action}
 					</Button>

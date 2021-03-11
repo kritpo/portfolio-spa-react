@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import { useCookies } from 'react-cookie';
+
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
@@ -47,6 +49,9 @@ App.propTypes = {
 };
 
 function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {
+	// setup the cookies hook
+	const [cookies, setCookies] = useCookies(['darkMode']);
+
 	// setup the dark mode status hook
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
@@ -58,8 +63,16 @@ function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {
 
 	// save the user theme
 	useEffect(() => {
-		setThemeMode(prefersDarkMode);
-	}, [prefersDarkMode, setThemeMode]);
+		// check if the cookie is not defined
+		if (cookies.darkMode === undefined) {
+			setCookies('darkMode', prefersDarkMode ? 'true' : 'false', {
+				path: '/'
+			});
+		}
+
+		// update the user theme
+		setThemeMode(cookies.darkMode === 'true');
+	}, [cookies, prefersDarkMode, setCookies, setThemeMode]);
 
 	// setup the app theme
 	const theme = useMemo(

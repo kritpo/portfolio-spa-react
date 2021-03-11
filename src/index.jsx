@@ -9,6 +9,8 @@ import config from './aws-exports';
 
 import { Provider } from 'react-redux';
 
+import { CookiesProvider } from 'react-cookie';
+
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
 import App from './App';
@@ -34,16 +36,18 @@ Amplify.configure({
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<GoogleReCaptchaProvider
-				reCaptchaKey={process.env.REACT_APP_GOOGLE_RECAPTCHA_KEY}
-				language="fr"
-				scriptProps={{
-					defer: true,
-					appendTo: 'body'
-				}}
-			>
-				<App />
-			</GoogleReCaptchaProvider>
+			<CookiesProvider>
+				<GoogleReCaptchaProvider
+					reCaptchaKey={process.env.REACT_APP_GOOGLE_RECAPTCHA_KEY}
+					language="fr"
+					scriptProps={{
+						defer: true,
+						appendTo: 'body'
+					}}
+				>
+					<App />
+				</GoogleReCaptchaProvider>
+			</CookiesProvider>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')

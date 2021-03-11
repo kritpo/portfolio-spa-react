@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import { useCookies } from 'react-cookie';
+
 import { useLocation } from 'react-router-dom';
 
 import { useInView } from 'react-intersection-observer';
@@ -84,6 +86,9 @@ function NavContainer({
 	darkMode,
 	...props
 }) {
+	// setup the cookies hook
+	const [, setCookies] = useCookies(['darkMode']);
+
 	// setup the nav type hook
 	const [showBar, setShowBar] = useState(false);
 
@@ -101,13 +106,8 @@ function NavContainer({
 
 	// setup the dark mode toggler
 	const darkModeToggle = useCallback(() => {
-		// check if the dark mode is active
-		if (darkMode) {
-			setToLightMode();
-		} else {
-			setToDarkMode();
-		}
-	}, [darkMode, setToDarkMode, setToLightMode]);
+		setCookies('darkMode', darkMode ? 'false' : 'true', { path: '/' });
+	}, [darkMode, setCookies]);
 
 	// setup the logout function
 	const logoutCallback = useCallback(() => {

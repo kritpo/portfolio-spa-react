@@ -17,6 +17,9 @@ const DetailsContainer = lazy(() =>
 const CareerContainer = lazy(() =>
 	import('../containers/Portfolio/CareerContainer')
 );
+const ProjectsContainer = lazy(() =>
+	import('../containers/Portfolio/ProjectsContainer')
+);
 const SkillsContainer = lazy(() =>
 	import('../containers/Portfolio/SkillsContainer')
 );
@@ -85,6 +88,22 @@ function Portfolio({ resume: { isLoading, error }, navIntersectionRef }) {
 												}
 											>
 												<CareerContainer />
+											</Suspense>
+										</Box>
+									</AutoHashMatcher>
+									<AutoHashMatcher hashText="projects">
+										<Box mb={4}>
+											<Box
+												position="relative"
+												top="-4em"
+												id="projects"
+											/>
+											<Suspense
+												fallback={
+													<Loading size="40vh" />
+												}
+											>
+												<ProjectsContainer />
 											</Suspense>
 										</Box>
 									</AutoHashMatcher>

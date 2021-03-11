@@ -33,6 +33,11 @@ const links = [
 		isHash: true
 	},
 	{
+		title: 'Projets',
+		link: `${HOME}#projects`,
+		isHash: true
+	},
+	{
 		title: 'Compétences',
 		link: `${HOME}#skills`,
 		isHash: true

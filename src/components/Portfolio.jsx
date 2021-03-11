@@ -26,16 +26,21 @@ Portfolio.propTypes = {
 		isLoading: PropTypes.bool.isRequired,
 		error: PropTypes.string
 	}).isRequired,
-	navIntersectionRef: PropTypes.func
+	navIntersectionRef: PropTypes.func,
+	isMain: PropTypes.bool.isRequired
 };
 
 function Portfolio({
 	resume: { resume, isLoading, error },
-	navIntersectionRef
+	navIntersectionRef,
+	isMain
 }) {
 	return (
 		<Fragment>
-			<HeroContainer resume={{ resume, isLoading, error }} />
+			<HeroContainer
+				resume={{ resume, isLoading, error }}
+				isMain={isMain}
+			/>
 			<Box component="main" mt={-8} p={2}>
 				<Container fixed>
 					<Box px={2} pb={2} clone>

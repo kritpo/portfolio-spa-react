@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import { useRouteMatch } from 'react-router-dom';
+
 import { fetchResume } from '../actions';
 
 import Portfolio from '../components/Portfolio';
@@ -28,13 +30,18 @@ PortfolioContainer.propTypes = {
 };
 
 function PortfolioContainer({ fetchResume, ...props }) {
+	// retrieve the username from the match hook
+	const {
+		params: { username }
+	} = useRouteMatch();
+
 	// setup the resume fetching hook
 	useEffect(() => {
 		// fetch the resume at the loading of the component
-		fetchResume(false);
-	}, [fetchResume]);
+		fetchResume(false, username);
+	}, [fetchResume, username]);
 
-	return <Portfolio {...props} />;
+	return <Portfolio isMain={false} {...props} />;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);

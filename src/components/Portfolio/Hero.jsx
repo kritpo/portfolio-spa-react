@@ -90,7 +90,13 @@ function Hero({
 	descriptionCursor
 }) {
 	return (
-		<Box component="header" width="100%" height="100vh" className={root}>
+		<Box
+			component="header"
+			width="100%"
+			height="100vh"
+			overflow="hidden"
+			className={root}
+		>
 			<Box width="100%" height="100%" className={filter}>
 				<Container fixed>
 					<Box

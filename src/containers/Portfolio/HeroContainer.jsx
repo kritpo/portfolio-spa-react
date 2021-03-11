@@ -114,10 +114,15 @@ HeroContainer.propTypes = {
 		}).isRequired,
 		isLoading: PropTypes.bool.isRequired,
 		error: PropTypes.string
-	}).isRequired
+	}).isRequired,
+	isMain: PropTypes.bool.isRequired
 };
 
-function HeroContainer({ resume: { resume, isLoading, error }, ...props }) {
+function HeroContainer({
+	resume: { resume, isLoading, error },
+	isMain,
+	...props
+}) {
 	// setup the title state hook
 	const [title, setTitle] = useState('');
 	const [titleCursor, setTitleCursor] = useState('|');
@@ -132,13 +137,21 @@ function HeroContainer({ resume: { resume, isLoading, error }, ...props }) {
 		const finalTitle =
 			!isLoading && error === null
 				? `<${resume.basics.name} />`
-				: '<Jimmy Weng />';
+				: isMain
+				? '<Jimmy Weng />'
+				: isLoading
+				? 'En chargement...'
+				: 'Erreur de chargement';
 
 		// retrieve the final description
 		const finalDescription =
 			!isLoading && error === null
 				? resume.basics.label
-				: 'Développeur Full-Stack';
+				: isMain
+				? 'Développeur Full-Stack'
+				: isLoading
+				? 'Patientez un moment...'
+				: "Le CV n'existe pas";
 
 		// start the writing animation
 		writingAnimation(setTitle, setTitleCursor, finalTitle, true);
@@ -154,7 +167,7 @@ function HeroContainer({ resume: { resume, isLoading, error }, ...props }) {
 			clearTimeout(titleTimeout);
 			clearTimeout(descriptionTimeout);
 		};
-	}, [error, isLoading, resume]);
+	}, [error, isLoading, isMain, resume]);
 
 	return (
 		<Hero

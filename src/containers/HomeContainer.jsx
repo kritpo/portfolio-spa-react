@@ -34,7 +34,7 @@ function HomeContainer({ fetchResume, ...props }) {
 		fetchResume();
 	}, [fetchResume]);
 
-	return <Portfolio {...props} />;
+	return <Portfolio isMain={true} {...props} />;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

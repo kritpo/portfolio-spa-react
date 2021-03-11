@@ -16,35 +16,40 @@ import {
 	setToDarkMode,
 	logout
 } from '../actions';
-import { HOME } from '../routes';
+import { HOME, CV } from '../routes';
 
 import Nav from '../components/Nav';
 
-// setup the list of links
-const links = [
+/**
+ * setup the list of links
+ * @param {boolean} isCV if the path is a CV path
+ * @param {string} pathname the current pathname
+ * @returns the list of links
+ */
+const links = (isCV, pathname) => [
 	{
 		title: 'Présentation',
-		link: `${HOME}#details`,
+		link: `${isCV ? pathname : HOME}#details`,
 		isHash: true
 	},
 	{
 		title: 'Parcours',
-		link: `${HOME}#career`,
+		link: `${isCV ? pathname : HOME}#career`,
 		isHash: true
 	},
 	{
 		title: 'Projets',
-		link: `${HOME}#projects`,
+		link: `${isCV ? pathname : HOME}#projects`,
 		isHash: true
 	},
 	{
 		title: 'Compétences',
-		link: `${HOME}#skills`,
+		link: `${isCV ? pathname : HOME}#skills`,
 		isHash: true
 	},
 	{
 		title: 'Recommandations',
-		link: `${HOME}#references`,
+		link: `${isCV ? pathname : HOME}#references`,
 		isHash: true
 	}
 ];
@@ -112,6 +117,9 @@ function NavContainer({
 	// setup the home test
 	const isHome = pathname === HOME;
 
+	// setup the cv test
+	const isCV = pathname.includes(CV.split(':')[0]);
+
 	// setup the nav intersection observer updater hook
 	useEffect(() => {
 		// update the nav intersection observer at the loading of the component
@@ -120,12 +128,12 @@ function NavContainer({
 
 	// setup the nav type updater
 	useEffect(() => {
-		setShowBar(isUpSm && (!isHome || inViewObject.inView));
-	}, [inViewObject, isHome, isUpSm]);
+		setShowBar(isUpSm && (!(isHome || isCV) || inViewObject.inView));
+	}, [inViewObject, isCV, isHome, isUpSm]);
 
 	return (
 		<Nav
-			links={links}
+			links={links(isCV, pathname)}
 			darkMode={darkMode}
 			darkModeToggle={darkModeToggle}
 			showBar={showBar}

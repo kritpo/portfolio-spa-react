@@ -97,7 +97,7 @@ function NavContainer({
 
 	// setup the breakpoints matchers hooks
 	const { breakpoints } = useTheme();
-	const isUpSm = useMediaQuery(breakpoints.up('sm'));
+	const isMdSm = useMediaQuery(breakpoints.up('md'));
 
 	// setup the nav intersection observer
 	const inViewObject = useInView({
@@ -128,8 +128,8 @@ function NavContainer({
 
 	// setup the nav type updater
 	useEffect(() => {
-		setShowBar(isUpSm && (!(isHome || isCV) || inViewObject.inView));
-	}, [inViewObject, isCV, isHome, isUpSm]);
+		setShowBar(isMdSm && (!(isHome || isCV) || inViewObject.inView));
+	}, [inViewObject, isCV, isHome, isMdSm]);
 
 	return (
 		<Nav

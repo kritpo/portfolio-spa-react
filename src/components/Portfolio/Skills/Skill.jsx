@@ -1,16 +1,10 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import {
-	Box,
-	Collapse,
-	LinearProgress,
-	Typography,
-	IconButton
-} from '@material-ui/core';
+import { Box, Collapse, Typography, IconButton } from '@material-ui/core';
 import { ExpandMore, ExpandLess } from '@material-ui/icons';
 
-import CustomIcon from '../../../utils/icons/CustomIcon';
+import SkillItem from './Skill/SkillItem';
 
 /**
  * convert skills details to React component
@@ -20,25 +14,9 @@ import CustomIcon from '../../../utils/icons/CustomIcon';
  * @returns the components array
  */
 const skillsList = (skills, start, end) =>
-	skills.slice(start, end).map(({ name, level }, index) => (
-		<Box display="flex" alignItems="center" mt={2} key={index}>
-			<CustomIcon technology={name} />
-			<Box ml={2} width="100%">
-				<LinearProgress
-					variant="determinate"
-					value={
-						level === 'Maîtrise'
-							? 98
-							: level === 'Avancé'
-							? 90
-							: level === 'Intermédiaire'
-							? 75
-							: 50
-					}
-				/>
-			</Box>
-		</Box>
-	));
+	skills
+		.slice(start, end)
+		.map((skill, index) => <SkillItem skill={skill} key={index} />);
 
 // configure the prop types validation
 Skill.propTypes = {

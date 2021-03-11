@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
-import LanguageIcon from '../../../utils/icons/LanguageIcon';
+import LanguageItem from './Languages/LanguageItem';
 
 /**
  * convert languages details to React component
@@ -11,16 +11,8 @@ import LanguageIcon from '../../../utils/icons/LanguageIcon';
  * @returns the components array
  */
 const languagesList = languages =>
-	languages.map(({ language, fluency }, index) => (
-		<Box fontSize="2em" clone key={index}>
-			<Grid item xs={12} sm={6} lg={4} xl={3}>
-				<LanguageIcon language={language} />
-				<Typography variant="body1">{language}</Typography>
-				<Typography variant="body2" color="textSecondary">
-					{fluency}
-				</Typography>
-			</Grid>
-		</Box>
+	languages.map((language, index) => (
+		<LanguageItem language={language} key={index} />
 	));
 
 // configure the prop types validation

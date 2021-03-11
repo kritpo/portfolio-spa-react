@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/styles';
 
 import { MenuItem } from '@material-ui/core';
 
-import CustomLink from '../../utils/CustomLink';
+import CustomLink from '../../../utils/CustomLink';
 
 /**
  * define the style of the component

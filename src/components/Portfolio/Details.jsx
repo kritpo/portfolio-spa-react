@@ -1,16 +1,9 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import {
-	Box,
-	Grid,
-	Paper,
-	Button,
-	Typography,
-	Avatar
-} from '@material-ui/core';
+import { Box, Grid, Paper, Typography, Avatar } from '@material-ui/core';
 
-import CustomIcon from '../../utils/icons/CustomIcon';
+import SocialNetwork from './Details/SocialNetwork';
 
 /**
  * convert profiles details to React component
@@ -18,21 +11,8 @@ import CustomIcon from '../../utils/icons/CustomIcon';
  * @returns the components array
  */
 const socialNetwork = profiles =>
-	profiles.map(({ url, network, username }, index) => (
-		<Grid item xs={6} sm={4} key={index}>
-			<Button href={url} target="_blank">
-				<Box display="flex" flexDirection="column" alignItems="center">
-					<CustomIcon social={network} />
-					<Typography
-						variant="body1"
-						style={{ textTransform: 'none' }}
-						noWrap
-					>
-						{username}
-					</Typography>
-				</Box>
-			</Button>
-		</Grid>
+	profiles.map((profile, index) => (
+		<SocialNetwork profile={profile} key={index} />
 	));
 
 // configure the prop types validation

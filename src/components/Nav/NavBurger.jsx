@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/styles';
 import { Box, MenuList } from '@material-ui/core';
 
 import BurgerMenu from '../../utils/BurgerMenu';
-import NavHashItem from './NavHashItem';
+import NavHashItem from './NavBurger/NavHashItem';
 
 /**
  * define the style of the component

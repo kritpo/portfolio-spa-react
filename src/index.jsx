@@ -14,7 +14,21 @@ import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import App from './App';
 
 // configure Amplify
-Amplify.configure(config);
+Amplify.configure({
+	Auth: {
+		region: config['aws_cognito_region'],
+		userPoolId: config['aws_user_pools_id'],
+		userPoolWebClientId: config['aws_user_pools_web_client_id']
+	},
+	API: {
+		endpoints: [
+			{
+				name: 'PortfolioAPIServerless',
+				endpoint: process.env.REACT_APP_API_DOMAIN_NAME
+			}
+		]
+	}
+});
 
 // render the React app in the #root DOM element
 ReactDOM.render(

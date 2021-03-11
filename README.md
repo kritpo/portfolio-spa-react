@@ -47,6 +47,9 @@ You must provide a `.env` file at the root of the application:
 ```env
 # google recaptcha
 REACT_APP_GOOGLE_RECAPTCHA_KEY=[YOUR_GOOGLE_RECAPTCHA_KEY]
+
+# api domain name
+REACT_APP_API_DOMAIN_NAME=[YOUR_API_DOMAIN_NAME]
 ```
 
 ### Run the application on your computer locally

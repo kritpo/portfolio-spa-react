@@ -41,8 +41,12 @@ function Languages({ resume: { languages } }) {
 			<Typography component="h3" variant="h4" gutterBottom>
 				Langues
 			</Typography>
-			<Grid container spacing={2} alignItems="center">
-				{languagesList(languages)}
+			<Grid container spacing={2} justify="center" alignItems="center">
+				{languages.length > 0 ? (
+					languagesList(languages)
+				) : (
+					<Typography variant="body1">Aucune langue</Typography>
+				)}
 			</Grid>
 		</Fragment>
 	);

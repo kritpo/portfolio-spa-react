@@ -47,7 +47,13 @@ function Hobbies({ resume: { interests } }) {
 				Centres d'intérêts
 			</Typography>
 			<Grid container spacing={2} justify="center" alignItems="center">
-				{hobbies(interests)}
+				{interests.length > 0 ? (
+					hobbies(interests)
+				) : (
+					<Typography variant="body1">
+						Aucun centre d'intérêts
+					</Typography>
+				)}
 			</Grid>
 		</Fragment>
 	);

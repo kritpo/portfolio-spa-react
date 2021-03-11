@@ -49,7 +49,11 @@ function References({ resume: { references } }) {
 			<Typography component="h3" variant="h4" gutterBottom>
 				Mes recommandations
 			</Typography>
-			{referencesList(references)}
+			{references.length > 0 ? (
+				referencesList(references)
+			) : (
+				<Typography variant="body1">Aucune référence</Typography>
+			)}
 		</Box>
 	);
 }

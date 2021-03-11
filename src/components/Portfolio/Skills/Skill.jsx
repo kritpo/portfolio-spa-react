@@ -60,18 +60,32 @@ function Skill({ resume: { skills }, openCollapse, collapseToggle }) {
 			<Typography component="h3" variant="h4" gutterBottom>
 				Mes compétences
 			</Typography>
-			{skillsList(skills, 0, 8)}
-			{skills.length > 8 && (
+			{skills.length > 0 ? (
 				<Fragment>
-					<Box textAlign="center">
-						<IconButton onClick={collapseToggle}>
-							{openCollapse ? <ExpandLess /> : <ExpandMore />}
-						</IconButton>
-					</Box>
-					<Collapse in={openCollapse} timeout="auto" unmountOnExit>
-						{skillsList(skills, 8)}
-					</Collapse>
+					{skillsList(skills, 0, 8)}
+					{skills.length > 8 && (
+						<Fragment>
+							<Box textAlign="center">
+								<IconButton onClick={collapseToggle}>
+									{openCollapse ? (
+										<ExpandLess />
+									) : (
+										<ExpandMore />
+									)}
+								</IconButton>
+							</Box>
+							<Collapse
+								in={openCollapse}
+								timeout="auto"
+								unmountOnExit
+							>
+								{skillsList(skills, 8)}
+							</Collapse>
+						</Fragment>
+					)}
 				</Fragment>
+			) : (
+				<Typography variant="body1">Aucune compétences</Typography>
 			)}
 		</Fragment>
 	);

@@ -25,15 +25,9 @@ export const VOLUNTEER = 'volunteer';
  * @param {object} career the career object
  * @returns the component
  */
-const icon = ({ type, position }) => (
+const icon = ({ type, isInternship }) => (
 	<CustomIcon
-		career={
-			type !== WORK
-				? type
-				: position.includes('Stage')
-				? 'Internship'
-				: WORK
-		}
+		career={type !== WORK ? type : isInternship ? 'Internship' : WORK}
 	/>
 );
 
@@ -42,6 +36,7 @@ CareerItem.propTypes = {
 	career: PropTypes.oneOfType([
 		// work career object shape
 		PropTypes.shape({
+			isInternship: PropTypes.bool,
 			company: PropTypes.string.isRequired,
 			position: PropTypes.string.isRequired,
 			website: PropTypes.string.isRequired,
@@ -61,7 +56,12 @@ CareerItem.propTypes = {
 			startDate: PropTypes.string.isRequired,
 			endDate: PropTypes.string,
 			gpa: PropTypes.string.isRequired,
-			courses: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+			courses: PropTypes.arrayOf(
+				PropTypes.shape({
+					category: PropTypes.string.isRequired,
+					courses: PropTypes.arrayOf(PropTypes.string).isRequired
+				})
+			).isRequired,
 			type: PropTypes.oneOf([EDUCATION]).isRequired
 		}),
 

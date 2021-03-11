@@ -20,7 +20,7 @@ export const NO_CATEGORY = 'NO_CATEGORY';
  * @returns the components array
  */
 const coursesList = courses =>
-	courses.map(({ index, course }) => (
+	courses.map((course, index) => (
 		<Typography variant="body1" key={index}>
 			{course}
 		</Typography>
@@ -75,12 +75,7 @@ CareerItemButton.propTypes = {
 	isEducation: PropTypes.bool.isRequired,
 	customValidator,
 	category: PropTypes.shape({
-		courses: PropTypes.arrayOf(
-			PropTypes.shape({
-				index: PropTypes.number.isRequired,
-				course: PropTypes.string.isRequired
-			})
-		).isRequired,
+		courses: PropTypes.arrayOf(PropTypes.string).isRequired,
 		buttons: PropTypes.arrayOf(
 			PropTypes.shape({
 				name: PropTypes.string.isRequired,

@@ -1,3 +1,5 @@
+import { API } from 'aws-amplify';
+
 import { RESUME_LOADING, RESUME_LOADED, RESUME_FAILED } from './types';
 
 /**
@@ -9,27 +11,8 @@ export const fetchResume = () => dispatch => {
 
 	// fetch data on GitHub Gist
 	return (
-		fetch('https://api.github.com/gists/e0cfbc503fd33fb9b3a5be073510afa8')
-			.then(response => {
-				// check if no error occurred
-				if (response.ok) {
-					// return the response to continue
-					return response;
-				} else {
-					// otherwise raise an exception with HTTP error
-					throw new Error(
-						'Error ' + response.status + ': ' + response.statusText
-					);
-				}
-			})
-			// parse the response as JSON
-			.then(response => response.json())
-			.then(response => {
-				// retrieve the resume in JSON format
-				const resume = JSON.parse(
-					response.files['resume.json'].content
-				);
-
+		API.get('PortfolioAPIServerless', '/resumes/jimmy', {})
+			.then(resume => {
 				// FIXME temporary fix by attributing id to career items
 				let i = 0;
 				resume.work = resume.work.map(workItem => ({

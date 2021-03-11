@@ -21,7 +21,7 @@ import Career from '../../components/Portfolio/Career';
  */
 const careerAntiChronoComparator = (
 	{ startDate: startDateA, endDate: endDateA },
-	{ startDateB, endDateB }
+	{ startDate: startDateB, endDate: endDateB }
 ) => {
 	// check if either the end dates of A or B is specified
 	if (endDateA !== undefined || endDateB !== undefined) {
@@ -144,8 +144,12 @@ CareerContainer.propTypes = {
 				startDate: PropTypes.string.isRequired,
 				endDate: PropTypes.string,
 				gpa: PropTypes.string.isRequired,
-				courses: PropTypes.arrayOf(PropTypes.string.isRequired)
-					.isRequired
+				courses: PropTypes.arrayOf(
+					PropTypes.shape({
+						category: PropTypes.string.isRequired,
+						courses: PropTypes.arrayOf(PropTypes.string).isRequired
+					})
+				).isRequired
 			})
 		).isRequired,
 		volunteer: PropTypes.arrayOf(

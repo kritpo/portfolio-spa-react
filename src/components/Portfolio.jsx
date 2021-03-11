@@ -74,6 +74,7 @@ function Portfolio({
 											>
 												<Details
 													basics={resume.basics}
+													isMain={isMain}
 												/>
 											</Suspense>
 										</Box>

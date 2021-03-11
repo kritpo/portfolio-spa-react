@@ -1,7 +1,14 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Box, Grid, Paper, Typography, Avatar } from '@material-ui/core';
+import {
+	Box,
+	Grid,
+	Paper,
+	Typography,
+	Avatar,
+	Button
+} from '@material-ui/core';
 
 import SocialNetwork from './Details/SocialNetwork';
 
@@ -22,7 +29,6 @@ Details.propTypes = {
 		picture: PropTypes.string.isRequired,
 		email: PropTypes.string.isRequired,
 		phone: PropTypes.string.isRequired,
-		website: PropTypes.string.isRequired,
 		location: PropTypes.shape({
 			address: PropTypes.string.isRequired,
 			postalCode: PropTypes.string.isRequired,
@@ -31,8 +37,10 @@ Details.propTypes = {
 			countryCode: PropTypes.string.isRequired
 		}).isRequired,
 		profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
-		summary: PropTypes.string.isRequired
-	}).isRequired
+		summary: PropTypes.string.isRequired,
+		website: PropTypes.string.isRequired
+	}).isRequired,
+	isMain: PropTypes.bool.isRequired
 };
 
 function Details({
@@ -43,8 +51,10 @@ function Details({
 		phone,
 		location: { address, postalCode, city, region, countryCode },
 		profiles,
-		summary
-	}
+		summary,
+		website
+	},
+	isMain
 }) {
 	return (
 		<Fragment>
@@ -96,6 +106,17 @@ function Details({
 									{summary}
 								</Typography>
 							</Box>
+							{!isMain && website && website !== '' && (
+								<Box mt={2}>
+									<Button
+										size="large"
+										href={website}
+										target="_blank"
+									>
+										Aller sur son site
+									</Button>
+								</Box>
+							)}
 						</Paper>
 					</Box>
 				</Grid>

@@ -11,8 +11,6 @@ export const UPDATE_NAV_INTERSECTION = 'UPDATE_NAV_INTERSECTION';
 
 // dark theme actions constants
 export const SET_THEME_MODE = 'SET_THEME_MODE';
-export const SET_LIGHT_MODE = 'SET_LIGHT_MODE';
-export const SET_DARK_MODE = 'SET_DARK_MODE';
 
 // webp actions constants
 export const SET_WEBP_SUPPORT = 'SET_WEBP_SUPPORT';

@@ -12,12 +12,7 @@ import { useInView } from 'react-intersection-observer';
 import { useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 
-import {
-	updateNavIntersection,
-	setToLightMode,
-	setToDarkMode,
-	logout
-} from '../actions';
+import { updateNavIntersection, logout } from '../actions';
 import { HOME, CV } from '../routes';
 
 import Nav from '../components/Nav';
@@ -66,26 +61,16 @@ const mapStateToProps = ({ darkMode, username }, ...props) => ({
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
 	updateNavIntersection,
-	setToLightMode,
-	setToDarkMode,
 	logout
 };
 
 // configure the prop types validation
 NavContainer.propTypes = {
 	updateNavIntersection: PropTypes.func.isRequired,
-	setToLightMode: PropTypes.func.isRequired,
-	setToDarkMode: PropTypes.func.isRequired,
 	darkMode: PropTypes.bool.isRequired
 };
 
-function NavContainer({
-	updateNavIntersection,
-	setToLightMode,
-	setToDarkMode,
-	darkMode,
-	...props
-}) {
+function NavContainer({ updateNavIntersection, darkMode, ...props }) {
 	// setup the cookies hook
 	const [, setCookies] = useCookies(['darkMode']);
 

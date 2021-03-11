@@ -63,16 +63,16 @@ function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {
 
 	// save the user theme
 	useEffect(() => {
-		// check if the cookie is not defined
+		// check if the cookie if not defined
 		if (cookies.darkMode === undefined) {
 			setCookies('darkMode', prefersDarkMode ? 'true' : 'false', {
 				path: '/'
 			});
+			setThemeMode(prefersDarkMode);
+		} else {
+			setThemeMode(cookies.darkMode === 'true');
 		}
-
-		// update the user theme
-		setThemeMode(cookies.darkMode === 'true');
-	}, [cookies, prefersDarkMode, setCookies, setThemeMode]);
+	}, [cookies.darkMode, prefersDarkMode, setCookies, setThemeMode]);
 
 	// setup the app theme
 	const theme = useMemo(

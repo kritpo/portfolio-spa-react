@@ -1,7 +1,5 @@
 import {
-	SET_THEME_MODE,
-	SET_LIGHT_MODE,
-	SET_DARK_MODE
+	SET_THEME_MODE
 } from '../actions/types';
 
 // configure initial state
@@ -19,14 +17,6 @@ export const darkMode = (state = initialState, { type, payload }) => {
 		// check if asking to set the theme mode
 		case SET_THEME_MODE:
 			return payload;
-
-		// check if asking to set to light mode
-		case SET_LIGHT_MODE:
-			return false;
-
-		// check if asking to set to dark mode
-		case SET_DARK_MODE:
-			return true;
 
 		default:
 			return state;

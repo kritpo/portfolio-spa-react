@@ -36,6 +36,11 @@ ReactDOM.render(
 		<Provider store={store}>
 			<GoogleReCaptchaProvider
 				reCaptchaKey={process.env.REACT_APP_GOOGLE_RECAPTCHA_KEY}
+				language="fr"
+				scriptProps={{
+					defer: true,
+					appendTo: 'body'
+				}}
 			>
 				<App />
 			</GoogleReCaptchaProvider>

@@ -169,7 +169,7 @@ Nav.propTypes = {
 			isHash: PropTypes.bool.isRequired
 		})
 	).isRequired,
-	darkMode: PropTypes.bool,
+	darkMode: PropTypes.bool.isRequired,
 	darkModeToggle: PropTypes.func.isRequired,
 	showBar: PropTypes.bool.isRequired,
 	isHome: PropTypes.bool.isRequired,

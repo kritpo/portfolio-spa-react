@@ -28,7 +28,6 @@ const ReferencesContainer = lazy(() =>
 Portfolio.propTypes = {
 	resume: PropTypes.shape({
 		isLoading: PropTypes.bool.isRequired,
-		resume: PropTypes.object,
 		error: PropTypes.string
 	}).isRequired,
 	navIntersectionRef: PropTypes.func

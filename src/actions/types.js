@@ -2,6 +2,9 @@
 export const RESUME_LOADING = 'RESUME_LOADING';
 export const RESUME_LOADED = 'RESUME_LOADED';
 export const RESUME_FAILED = 'RESUME_FAILED';
+export const MAIN_RESUME_LOADING = 'MAIN_RESUME_LOADING';
+export const MAIN_RESUME_LOADED = 'MAIN_RESUME_LOADED';
+export const MAIN_RESUME_FAILED = 'MAIN_RESUME_FAILED';
 
 // nav intersection observer actions constants
 export const UPDATE_NAV_INTERSECTION = 'UPDATE_NAV_INTERSECTION';

@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 
 import {
 	resume,
+	mainResume,
 	navIntersection,
 	darkMode,
 	webpSupport,
@@ -13,6 +14,7 @@ import {
 // configure the root reducer by combining all reducers
 const rootReducer = combineReducers({
 	resume,
+	mainResume,
 	navIntersection,
 	darkMode,
 	webpSupport,

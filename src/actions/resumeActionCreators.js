@@ -1,19 +1,29 @@
 import { API } from 'aws-amplify';
 
-import { RESUME_LOADING, RESUME_LOADED, RESUME_FAILED } from './types';
+import {
+	RESUME_LOADING,
+	RESUME_LOADED,
+	RESUME_FAILED,
+	MAIN_RESUME_LOADING,
+	MAIN_RESUME_LOADED,
+	MAIN_RESUME_FAILED
+} from './types';
 
 /**
- * fetch the resume on GitHub Gist
+ * fetch the resume on portfolio-api-serverless
+ * @param {boolean} isMain if the resume fetching is to hydrate the main resume
+ * @param {string} username the username to fetch
+ * @returns the final promise
  */
-export const fetchResume = () => dispatch => {
+export const fetchResume = (isMain = true, username = 'kritpo') => dispatch => {
 	// update status of the state as loading
-	dispatch(resumeLoading());
+	dispatch(resumeLoading(isMain));
 
 	// fetch data on GitHub Gist
 	return (
-		API.get('PortfolioAPIServerless', '/resumes/jimmy', {})
+		API.get('PortfolioAPIServerless', '/resumes/' + username, {})
 			.then(resume => {
-				// FIXME temporary fix by attributing id to career items
+				// setup an unique id for the life of the state
 				let i = 0;
 				resume.work = resume.work.map(workItem => ({
 					...workItem,
@@ -29,39 +39,42 @@ export const fetchResume = () => dispatch => {
 				}));
 
 				// update state with fetched data
-				dispatch(resumeLoaded(resume));
+				dispatch(resumeLoaded(resume, isMain));
 			})
 			// update status of the state as failed with the error message
 			.catch(({ message }) => {
-				dispatch(resumeFailed(message));
+				dispatch(resumeFailed(message, isMain));
 			})
 	);
 };
 
 /**
  * redux action: set the redux state to loading
+ * @param {boolean} isMain if the resume fetching is to hydrate the main resume
  * @returns the action
  */
-export const resumeLoading = () => ({
-	type: RESUME_LOADING
+export const resumeLoading = isMain => ({
+	type: isMain ? MAIN_RESUME_LOADING : RESUME_LOADING
 });
 
 /**
  * redux action: set the redux state to loaded
  * @param {object} payload data to load into the state
+ * @param {boolean} isMain if the resume fetching is to hydrate the main resume
  * @returns the action
  */
-export const resumeLoaded = payload => ({
-	type: RESUME_LOADED,
+export const resumeLoaded = (payload, isMain) => ({
+	type: isMain ? MAIN_RESUME_LOADED : RESUME_LOADED,
 	payload
 });
 
 /**
  * redux action: set the redux state to failed
  * @param {string} payload error message
+ * @param {boolean} isMain if the resume fetching is to hydrate the main resume
  * @returns the action
  */
-export const resumeFailed = payload => ({
-	type: RESUME_FAILED,
+export const resumeFailed = (payload, isMain) => ({
+	type: isMain ? MAIN_RESUME_FAILED : RESUME_FAILED,
 	payload
 });

@@ -9,10 +9,10 @@ import Portfolio from '../components/Portfolio';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (
-	{ resume, navIntersection: { ref: navIntersectionRef } },
+	{ mainResume, navIntersection: { ref: navIntersectionRef } },
 	...props
 ) => ({
-	resume,
+	resume: mainResume,
 	navIntersectionRef,
 	...props
 });
@@ -23,18 +23,18 @@ const mapDispatchToProps = {
 };
 
 // configure the prop types validation
-PortfolioContainer.propTypes = {
+HomeContainer.propTypes = {
 	fetchResume: PropTypes.func.isRequired
 };
 
-function PortfolioContainer({ fetchResume, ...props }) {
-	// setup the resume fetching hook
+function HomeContainer({ fetchResume, ...props }) {
+	// setup the main resume fetching hook
 	useEffect(() => {
-		// fetch the resume at the loading of the component
-		fetchResume(false);
+		// fetch the main resume at the loading of the component
+		fetchResume();
 	}, [fetchResume]);
 
 	return <Portfolio {...props} />;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

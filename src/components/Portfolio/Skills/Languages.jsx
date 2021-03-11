@@ -17,12 +17,7 @@ const languagesList = languages =>
 
 // configure the prop types validation
 Languages.propTypes = {
-	languages: PropTypes.arrayOf(
-		PropTypes.shape({
-			language: PropTypes.string.isRequired,
-			fluency: PropTypes.string.isRequired
-		})
-	).isRequired
+	languages: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 function Languages({ languages }) {

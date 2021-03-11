@@ -29,11 +29,7 @@ const careerList = careers =>
 
 // configure the prop types validation
 Career.propTypes = {
-	careers: PropTypes.arrayOf(
-		PropTypes.shape({
-			type: PropTypes.oneOf([WORK, EDUCATION, VOLUNTEER]).isRequired
-		})
-	).isRequired,
+	careers: PropTypes.arrayOf(PropTypes.object).isRequired,
 	show: PropTypes.shape({
 		[WORK]: PropTypes.bool.isRequired,
 		[EDUCATION]: PropTypes.bool.isRequired,

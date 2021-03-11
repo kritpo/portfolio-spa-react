@@ -162,13 +162,7 @@ const userMenu = (username, logout, active, circle, isBurger = false) => (
 
 // configure the prop types validation
 Nav.propTypes = {
-	links: PropTypes.arrayOf(
-		PropTypes.shape({
-			title: PropTypes.string.isRequired,
-			link: PropTypes.string.isRequired,
-			isHash: PropTypes.bool.isRequired
-		})
-	).isRequired,
+	links: PropTypes.array.isRequired,
 	darkMode: PropTypes.bool.isRequired,
 	darkModeToggle: PropTypes.func.isRequired,
 	showBar: PropTypes.bool.isRequired,

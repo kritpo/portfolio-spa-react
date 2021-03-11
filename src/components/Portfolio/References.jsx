@@ -17,12 +17,7 @@ const referencesList = references =>
 
 // configure the prop types validation
 References.propTypes = {
-	references: PropTypes.arrayOf(
-		PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			reference: PropTypes.string.isRequired
-		})
-	).isRequired
+	references: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 function References({ references }) {

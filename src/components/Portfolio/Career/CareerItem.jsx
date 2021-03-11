@@ -37,14 +37,8 @@ CareerItem.propTypes = {
 		// work career object shape
 		PropTypes.shape({
 			isInternship: PropTypes.bool,
-			company: PropTypes.string.isRequired,
-			position: PropTypes.string.isRequired,
 			website: PropTypes.string.isRequired,
-			startDate: PropTypes.string.isRequired,
-			endDate: PropTypes.string,
 			summary: PropTypes.string.isRequired,
-			highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
-				.isRequired,
 			type: PropTypes.oneOf([WORK]).isRequired
 		}),
 
@@ -53,8 +47,6 @@ CareerItem.propTypes = {
 			institution: PropTypes.string.isRequired,
 			area: PropTypes.string.isRequired,
 			studyType: PropTypes.string.isRequired,
-			startDate: PropTypes.string.isRequired,
-			endDate: PropTypes.string,
 			gpa: PropTypes.string.isRequired,
 			courses: PropTypes.arrayOf(
 				PropTypes.shape({
@@ -68,13 +60,8 @@ CareerItem.propTypes = {
 		// volunteer career object shape
 		PropTypes.shape({
 			organization: PropTypes.string.isRequired,
-			position: PropTypes.string.isRequired,
 			website: PropTypes.string.isRequired,
-			startDate: PropTypes.string.isRequired,
-			endDate: PropTypes.string,
 			summary: PropTypes.string.isRequired,
-			highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
-				.isRequired,
 			type: PropTypes.oneOf([VOLUNTEER]).isRequired
 		})
 	]).isRequired,

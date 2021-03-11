@@ -17,12 +17,7 @@ const hobbies = interests =>
 
 // configure the prop types validation
 Hobbies.propTypes = {
-	interests: PropTypes.arrayOf(
-		PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			keywords: PropTypes.arrayOf(PropTypes.string).isRequired
-		})
-	).isRequired
+	interests: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 function Hobbies({ interests }) {

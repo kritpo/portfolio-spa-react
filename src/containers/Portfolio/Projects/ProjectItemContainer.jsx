@@ -6,13 +6,8 @@ import ProjectItem from '../../../components/Portfolio/Projects/ProjectItem';
 // configure the prop types validation
 ProjectItemContainer.propTypes = {
 	project: PropTypes.shape({
-		name: PropTypes.string.isRequired,
-		summary: PropTypes.string.isRequired,
 		startDate: PropTypes.string.isRequired,
-		endDate: PropTypes.string.isRequired,
-		picture: PropTypes.string.isRequired,
-		url: PropTypes.string.isRequired,
-		technologies: PropTypes.arrayOf(PropTypes.string).isRequired
+		endDate: PropTypes.string
 	}).isRequired
 };
 

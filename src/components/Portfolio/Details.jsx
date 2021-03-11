@@ -23,15 +23,15 @@ Details.propTypes = {
 		email: PropTypes.string.isRequired,
 		phone: PropTypes.string.isRequired,
 		website: PropTypes.string.isRequired,
-		summary: PropTypes.string.isRequired,
 		location: PropTypes.shape({
 			address: PropTypes.string.isRequired,
 			postalCode: PropTypes.string.isRequired,
 			city: PropTypes.string.isRequired,
-			countryCode: PropTypes.string.isRequired,
-			region: PropTypes.string.isRequired
+			region: PropTypes.string.isRequired,
+			countryCode: PropTypes.string.isRequired
 		}).isRequired,
-		profiles: PropTypes.arrayOf(PropTypes.object).isRequired
+		profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
+		summary: PropTypes.string.isRequired
 	}).isRequired
 };
 

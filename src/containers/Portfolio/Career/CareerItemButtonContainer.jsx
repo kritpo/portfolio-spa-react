@@ -7,8 +7,7 @@ import CareerItemButton from '../../../components/Portfolio/Career/CareerItemBut
 CareerItemButtonContainer.propTypes = {
 	courses: PropTypes.arrayOf(
 		PropTypes.shape({
-			category: PropTypes.string.isRequired,
-			courses: PropTypes.arrayOf(PropTypes.string).isRequired
+			category: PropTypes.string.isRequired
 		})
 	)
 };

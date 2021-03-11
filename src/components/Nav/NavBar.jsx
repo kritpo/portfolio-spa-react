@@ -25,14 +25,14 @@ const styles = ({ palette: { divider } }) => ({
  * @returns the components array
  */
 const links = (children, active) =>
-	children.map(({ title, link, isHash = false }, index) => (
+	children.map(({ title, link, isHash = false }) => (
 		<CustomLink
 			to={link}
 			nav
 			hash={isHash}
 			activeClassName={active}
 			smooth={isHash}
-			key={index}
+			key={link}
 		>
 			<Button>{title}</Button>
 		</CustomLink>
@@ -49,12 +49,12 @@ NavBar.propTypes = {
 	).isRequired,
 	theme: PropTypes.shape({
 		palette: PropTypes.shape({
-			type: PropTypes.string.isRequired,
 			primary: PropTypes.shape({
 				light: PropTypes.string.isRequired,
 				main: PropTypes.string.isRequired,
 				dark: PropTypes.string.isRequired
-			}).isRequired
+			}).isRequired,
+			type: PropTypes.string.isRequired
 		}).isRequired
 	}).isRequired,
 	darkModeMenu: PropTypes.element.isRequired,

@@ -15,13 +15,10 @@ CareerItemContainer.propTypes = {
 	career: PropTypes.oneOfType([
 		// work career object shape
 		PropTypes.shape({
-			isInternship: PropTypes.bool,
 			company: PropTypes.string.isRequired,
 			position: PropTypes.string.isRequired,
-			website: PropTypes.string.isRequired,
 			startDate: PropTypes.string.isRequired,
 			endDate: PropTypes.string,
-			summary: PropTypes.string.isRequired,
 			highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
 				.isRequired,
 			type: PropTypes.oneOf([WORK]).isRequired
@@ -35,12 +32,6 @@ CareerItemContainer.propTypes = {
 			startDate: PropTypes.string.isRequired,
 			endDate: PropTypes.string,
 			gpa: PropTypes.string.isRequired,
-			courses: PropTypes.arrayOf(
-				PropTypes.shape({
-					category: PropTypes.string.isRequired,
-					courses: PropTypes.arrayOf(PropTypes.string).isRequired
-				})
-			).isRequired,
 			type: PropTypes.oneOf([EDUCATION]).isRequired
 		}),
 
@@ -48,10 +39,8 @@ CareerItemContainer.propTypes = {
 		PropTypes.shape({
 			organization: PropTypes.string.isRequired,
 			position: PropTypes.string.isRequired,
-			website: PropTypes.string.isRequired,
 			startDate: PropTypes.string.isRequired,
 			endDate: PropTypes.string,
-			summary: PropTypes.string.isRequired,
 			highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
 				.isRequired,
 			type: PropTypes.oneOf([VOLUNTEER]).isRequired

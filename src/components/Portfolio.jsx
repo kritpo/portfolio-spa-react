@@ -11,35 +11,31 @@ import AutoHashMatcher from '../utils/AutoHashMatcher';
 import HeroContainer from '../containers/Portfolio/HeroContainer';
 
 // import components in lazy mode
-const DetailsContainer = lazy(() =>
-	import('../containers/Portfolio/DetailsContainer')
-);
+const Details = lazy(() => import('./Portfolio/Details'));
 const CareerContainer = lazy(() =>
 	import('../containers/Portfolio/CareerContainer')
 );
-const ProjectsContainer = lazy(() =>
-	import('../containers/Portfolio/ProjectsContainer')
-);
-const SkillsContainer = lazy(() =>
-	import('../containers/Portfolio/SkillsContainer')
-);
-const ReferencesContainer = lazy(() =>
-	import('../containers/Portfolio/ReferencesContainer')
-);
+const Projects = lazy(() => import('./Portfolio/Projects'));
+const Skills = lazy(() => import('./Portfolio/Skills'));
+const References = lazy(() => import('./Portfolio/References'));
 
 // configure the prop types validation
 Portfolio.propTypes = {
 	resume: PropTypes.shape({
+		resume: PropTypes.object.isRequired,
 		isLoading: PropTypes.bool.isRequired,
 		error: PropTypes.string
 	}).isRequired,
 	navIntersectionRef: PropTypes.func
 };
 
-function Portfolio({ resume: { isLoading, error }, navIntersectionRef }) {
+function Portfolio({
+	resume: { resume, isLoading, error },
+	navIntersectionRef
+}) {
 	return (
 		<Fragment>
-			<HeroContainer />
+			<HeroContainer resume={{ resume, isLoading, error }} />
 			<Box component="main" mt={-8} p={2}>
 				<Container fixed>
 					<Box px={2} pb={2} clone>
@@ -71,7 +67,9 @@ function Portfolio({ resume: { isLoading, error }, navIntersectionRef }) {
 													<Loading size="40vh" />
 												}
 											>
-												<DetailsContainer />
+												<Details
+													basics={resume.basics}
+												/>
 											</Suspense>
 										</Box>
 									</AutoHashMatcher>
@@ -87,7 +85,11 @@ function Portfolio({ resume: { isLoading, error }, navIntersectionRef }) {
 													<Loading size="40vh" />
 												}
 											>
-												<CareerContainer />
+												<CareerContainer
+													work={resume.work}
+													education={resume.education}
+													volunteer={resume.volunteer}
+												/>
 											</Suspense>
 										</Box>
 									</AutoHashMatcher>
@@ -103,7 +105,9 @@ function Portfolio({ resume: { isLoading, error }, navIntersectionRef }) {
 													<Loading size="40vh" />
 												}
 											>
-												<ProjectsContainer />
+												<Projects
+													projects={resume.projects}
+												/>
 											</Suspense>
 										</Box>
 									</AutoHashMatcher>
@@ -119,7 +123,11 @@ function Portfolio({ resume: { isLoading, error }, navIntersectionRef }) {
 													<Loading size="40vh" />
 												}
 											>
-												<SkillsContainer />
+												<Skills
+													skills={resume.skills}
+													languages={resume.languages}
+													interests={resume.interests}
+												/>
 											</Suspense>
 										</Box>
 									</AutoHashMatcher>
@@ -135,7 +143,11 @@ function Portfolio({ resume: { isLoading, error }, navIntersectionRef }) {
 													<Loading size="40vh" />
 												}
 											>
-												<ReferencesContainer />
+												<References
+													references={
+														resume.references
+													}
+												/>
 											</Suspense>
 										</Box>
 									</AutoHashMatcher>

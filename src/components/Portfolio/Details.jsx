@@ -17,43 +17,33 @@ const socialNetwork = profiles =>
 
 // configure the prop types validation
 Details.propTypes = {
-	resume: PropTypes.shape({
-		basics: PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			picture: PropTypes.string.isRequired,
-			email: PropTypes.string.isRequired,
-			phone: PropTypes.string.isRequired,
-			website: PropTypes.string.isRequired,
-			summary: PropTypes.string.isRequired,
-			location: PropTypes.shape({
-				address: PropTypes.string.isRequired,
-				postalCode: PropTypes.string.isRequired,
-				city: PropTypes.string.isRequired,
-				countryCode: PropTypes.string.isRequired,
-				region: PropTypes.string.isRequired
-			}).isRequired,
-			profiles: PropTypes.arrayOf(
-				PropTypes.shape({
-					network: PropTypes.string.isRequired,
-					username: PropTypes.string.isRequired,
-					url: PropTypes.string.isRequired
-				})
-			).isRequired
-		}).isRequired
+	basics: PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		picture: PropTypes.string.isRequired,
+		email: PropTypes.string.isRequired,
+		phone: PropTypes.string.isRequired,
+		website: PropTypes.string.isRequired,
+		summary: PropTypes.string.isRequired,
+		location: PropTypes.shape({
+			address: PropTypes.string.isRequired,
+			postalCode: PropTypes.string.isRequired,
+			city: PropTypes.string.isRequired,
+			countryCode: PropTypes.string.isRequired,
+			region: PropTypes.string.isRequired
+		}).isRequired,
+		profiles: PropTypes.arrayOf(PropTypes.object).isRequired
 	}).isRequired
 };
 
 function Details({
-	resume: {
-		basics: {
-			name,
-			picture,
-			email,
-			phone,
-			location: { address, postalCode, city, region, countryCode },
-			profiles,
-			summary
-		}
+	basics: {
+		name,
+		picture,
+		email,
+		phone,
+		location: { address, postalCode, city, region, countryCode },
+		profiles,
+		summary
 	}
 }) {
 	return (

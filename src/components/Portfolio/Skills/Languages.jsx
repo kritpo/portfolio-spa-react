@@ -17,17 +17,15 @@ const languagesList = languages =>
 
 // configure the prop types validation
 Languages.propTypes = {
-	resume: PropTypes.shape({
-		languages: PropTypes.arrayOf(
-			PropTypes.shape({
-				language: PropTypes.string.isRequired,
-				fluency: PropTypes.string.isRequired
-			})
-		).isRequired
-	}).isRequired
+	languages: PropTypes.arrayOf(
+		PropTypes.shape({
+			language: PropTypes.string.isRequired,
+			fluency: PropTypes.string.isRequired
+		})
+	).isRequired
 };
 
-function Languages({ resume: { languages } }) {
+function Languages({ languages }) {
 	return (
 		<Fragment>
 			<Typography component="h3" variant="h4" gutterBottom>

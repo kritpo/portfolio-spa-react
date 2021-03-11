@@ -1,8 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { connect } from 'react-redux';
-
 import { useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
@@ -115,59 +113,51 @@ const loadCareer = (work, education, volunteer) => {
 	return career;
 };
 
-// configure the states to pass as props to the component
-const mapStateToProps = ({ resume: { resume } }, props) => ({
-	resume,
-	...props
-});
-
 // configure the prop types validation
 CareerContainer.propTypes = {
-	resume: PropTypes.shape({
-		work: PropTypes.arrayOf(
-			PropTypes.shape({
-				company: PropTypes.string.isRequired,
-				position: PropTypes.string.isRequired,
-				website: PropTypes.string.isRequired,
-				startDate: PropTypes.string.isRequired,
-				endDate: PropTypes.string,
-				summary: PropTypes.string.isRequired,
-				highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
-					.isRequired
-			})
-		).isRequired,
-		education: PropTypes.arrayOf(
-			PropTypes.shape({
-				institution: PropTypes.string.isRequired,
-				area: PropTypes.string.isRequired,
-				studyType: PropTypes.string.isRequired,
-				startDate: PropTypes.string.isRequired,
-				endDate: PropTypes.string,
-				gpa: PropTypes.string.isRequired,
-				courses: PropTypes.arrayOf(
-					PropTypes.shape({
-						category: PropTypes.string.isRequired,
-						courses: PropTypes.arrayOf(PropTypes.string).isRequired
-					})
-				).isRequired
-			})
-		).isRequired,
-		volunteer: PropTypes.arrayOf(
-			PropTypes.shape({
-				organization: PropTypes.string.isRequired,
-				position: PropTypes.string.isRequired,
-				website: PropTypes.string.isRequired,
-				startDate: PropTypes.string.isRequired,
-				endDate: PropTypes.string,
-				summary: PropTypes.string.isRequired,
-				highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
-					.isRequired
-			})
-		).isRequired
-	}).isRequired
+	work: PropTypes.arrayOf(
+		PropTypes.shape({
+			company: PropTypes.string.isRequired,
+			position: PropTypes.string.isRequired,
+			website: PropTypes.string.isRequired,
+			startDate: PropTypes.string.isRequired,
+			endDate: PropTypes.string,
+			summary: PropTypes.string.isRequired,
+			highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
+				.isRequired
+		})
+	).isRequired,
+	education: PropTypes.arrayOf(
+		PropTypes.shape({
+			institution: PropTypes.string.isRequired,
+			area: PropTypes.string.isRequired,
+			studyType: PropTypes.string.isRequired,
+			startDate: PropTypes.string.isRequired,
+			endDate: PropTypes.string,
+			gpa: PropTypes.string.isRequired,
+			courses: PropTypes.arrayOf(
+				PropTypes.shape({
+					category: PropTypes.string.isRequired,
+					courses: PropTypes.arrayOf(PropTypes.string).isRequired
+				})
+			).isRequired
+		})
+	).isRequired,
+	volunteer: PropTypes.arrayOf(
+		PropTypes.shape({
+			organization: PropTypes.string.isRequired,
+			position: PropTypes.string.isRequired,
+			website: PropTypes.string.isRequired,
+			startDate: PropTypes.string.isRequired,
+			endDate: PropTypes.string,
+			summary: PropTypes.string.isRequired,
+			highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
+				.isRequired
+		})
+	).isRequired
 };
 
-function CareerContainer({ resume: { work, education, volunteer }, ...props }) {
+function CareerContainer({ work, education, volunteer, ...props }) {
 	// setup the show career items hooks
 	const [show, setShow] = useState({
 		[WORK]: true,
@@ -221,4 +211,4 @@ function CareerContainer({ resume: { work, education, volunteer }, ...props }) {
 	);
 }
 
-export default connect(mapStateToProps)(CareerContainer);
+export default CareerContainer;

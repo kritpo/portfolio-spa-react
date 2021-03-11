@@ -20,19 +20,17 @@ const skillsList = (skills, start, end) =>
 
 // configure the prop types validation
 Skill.propTypes = {
-	resume: PropTypes.shape({
-		skills: PropTypes.arrayOf(
-			PropTypes.shape({
-				name: PropTypes.string.isRequired,
-				level: PropTypes.string.isRequired
-			})
-		).isRequired
-	}).isRequired,
+	skills: PropTypes.arrayOf(
+		PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			level: PropTypes.string.isRequired
+		})
+	).isRequired,
 	openCollapse: PropTypes.bool.isRequired,
 	collapseToggle: PropTypes.func.isRequired
 };
 
-function Skill({ resume: { skills }, openCollapse, collapseToggle }) {
+function Skill({ skills, openCollapse, collapseToggle }) {
 	return (
 		<Fragment>
 			<Typography component="h3" variant="h4" gutterBottom>

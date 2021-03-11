@@ -98,8 +98,7 @@ const writingAnimation = (setState, setCursorState, text, isTitle) => {
 };
 
 // configure the states to pass as props to the component
-const mapStateToProps = ({ resume, webpSupport }, ...props) => ({
-	resume,
+const mapStateToProps = ({ webpSupport }, ...props) => ({
 	webpSupport,
 	...props
 });

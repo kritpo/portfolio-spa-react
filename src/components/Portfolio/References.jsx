@@ -17,17 +17,15 @@ const referencesList = references =>
 
 // configure the prop types validation
 References.propTypes = {
-	resume: PropTypes.shape({
-		references: PropTypes.arrayOf(
-			PropTypes.shape({
-				name: PropTypes.string.isRequired,
-				reference: PropTypes.string.isRequired
-			})
-		).isRequired
-	}).isRequired
+	references: PropTypes.arrayOf(
+		PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			reference: PropTypes.string.isRequired
+		})
+	).isRequired
 };
 
-function References({ resume: { references } }) {
+function References({ references }) {
 	return (
 		<Box textAlign="center">
 			<Typography component="h3" variant="h4" gutterBottom>

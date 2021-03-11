@@ -17,12 +17,10 @@ const projectsList = projects =>
 
 // configure the prop types validation
 Projects.propTypes = {
-	resume: PropTypes.shape({
-		projects: PropTypes.arrayOf(PropTypes.object).isRequired
-	}).isRequired
+	projects: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-function Projects({ resume: { projects } }) {
+function Projects({ projects }) {
 	return (
 		<Box textAlign="center">
 			<Typography component="h3" variant="h4" gutterBottom>

@@ -17,17 +17,15 @@ const hobbies = interests =>
 
 // configure the prop types validation
 Hobbies.propTypes = {
-	resume: PropTypes.shape({
-		interests: PropTypes.arrayOf(
-			PropTypes.shape({
-				name: PropTypes.string.isRequired,
-				keywords: PropTypes.arrayOf(PropTypes.string).isRequired
-			})
-		).isRequired
-	}).isRequired
+	interests: PropTypes.arrayOf(
+		PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			keywords: PropTypes.arrayOf(PropTypes.string).isRequired
+		})
+	).isRequired
 };
 
-function Hobbies({ resume: { interests } }) {
+function Hobbies({ interests }) {
 	return (
 		<Fragment>
 			<Typography component="h3" variant="h4" gutterBottom>

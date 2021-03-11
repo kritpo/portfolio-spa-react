@@ -9,25 +9,23 @@ import Hobbies from './Skills/Hobbies';
 
 // configure the prop types validation
 Skills.propTypes = {
-	resume: PropTypes.shape({
-		skills: PropTypes.arrayOf(PropTypes.object).isRequired,
-		languages: PropTypes.arrayOf(PropTypes.object).isRequired,
-		interests: PropTypes.arrayOf(PropTypes.object).isRequired
-	}).isRequired
+	skills: PropTypes.arrayOf(PropTypes.object).isRequired,
+	languages: PropTypes.arrayOf(PropTypes.object).isRequired,
+	interests: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-function Skills({ resume }) {
+function Skills({ skills, languages, interests }) {
 	return (
 		<Box textAlign="center" clone>
 			<Grid container spacing={4}>
 				<Grid item xs={12}>
-					<SkillContainer resume={resume} />
+					<SkillContainer skills={skills} />
 				</Grid>
 				<Grid item xs={12} md={6}>
-					<Languages resume={resume} />
+					<Languages languages={languages} />
 				</Grid>
 				<Grid item xs={12} md={6}>
-					<Hobbies resume={resume} />
+					<Hobbies interests={interests} />
 				</Grid>
 			</Grid>
 		</Box>

@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { withStyles } from '@material-ui/styles';
 
-import { HOME, SIGN_UP, SIGN_IN } from '../routes';
+import { HOME, SIGN_UP, SIGN_IN, USER } from '../routes';
 
 import {
 	Box,
@@ -91,6 +91,7 @@ const userMenu = (username, logout, active, circle, isBurger = false) => (
 	<Box
 		display="flex"
 		flexDirection={isBurger ? 'column' : 'row'}
+		alignItems="center"
 		mr={!isBurger ? 2 : undefined}
 		width={isBurger ? '100%' : undefined}
 	>
@@ -133,17 +134,23 @@ const userMenu = (username, logout, active, circle, isBurger = false) => (
 			</Fragment>
 		) : (
 			<Fragment>
-				<Button
-					startIcon={isBurger ? <User /> : undefined}
-					endIcon={!isBurger ? <User /> : undefined}
-					fullWidth={isBurger}
+				<CustomLink
+					to={USER}
+					nav
+					activeClassName={active}
 				>
-					<Typography component="div" color="textPrimary">
-						<Box fontSize={isBurger ? '5vh' : undefined}>
-							{username}
-						</Box>
-					</Typography>
-				</Button>
+					<Button
+						startIcon={isBurger ? <User /> : undefined}
+						endIcon={!isBurger ? <User /> : undefined}
+						fullWidth={isBurger}
+					>
+						<Typography component="div" color="textPrimary">
+							<Box fontSize={isBurger ? '5vh' : undefined}>
+								{username}
+							</Box>
+						</Typography>
+					</Button>
+				</CustomLink>
 				{isBurger ? (
 					<Button startIcon={<SignOut />} onClick={logout} fullWidth>
 						<Typography component="div" color="textPrimary">

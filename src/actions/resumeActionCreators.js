@@ -20,7 +20,21 @@ export const fetchResume = (
 	isMain = true,
 	username = 'kritpo',
 	languageCode
-) => dispatch => {
+) => (dispatch, getState) => {
+	// retrieve the current resumes
+	const { mainResume, resume } = getState();
+	const currentResume = isMain ? mainResume : resume;
+
+	// check if the requested resume is the one loaded
+	if (
+		currentResume.username === username &&
+		(languageCode === undefined ||
+			currentResume.languageCode === languageCode)
+	) {
+		// end the function here, as the resume is already loaded
+		return;
+	}
+
 	// update status of the state as loading
 	dispatch(resumeLoading(isMain));
 

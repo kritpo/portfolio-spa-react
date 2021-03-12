@@ -1,6 +1,6 @@
 {
 	"name": "portfolio-spa-react",
-	"version": "1.20.0",
+	"version": "1.20.1",
 	"private": true,
 	"dependencies": {
 		"@material-ui/core": "^4.11.3",

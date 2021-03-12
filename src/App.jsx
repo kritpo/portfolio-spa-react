@@ -65,9 +65,6 @@ function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {
 	useEffect(() => {
 		// check if the cookie if not defined
 		if (cookies.darkMode === undefined) {
-			setCookies('darkMode', prefersDarkMode ? 'true' : 'false', {
-				path: '/'
-			});
 			setThemeMode(prefersDarkMode);
 		} else {
 			setThemeMode(cookies.darkMode === 'true');

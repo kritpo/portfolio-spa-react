@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { useCookies } from 'react-cookie';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import { useInView } from 'react-intersection-observer';
 
@@ -70,7 +70,10 @@ NavContainer.propTypes = {
 	darkMode: PropTypes.bool.isRequired
 };
 
-function NavContainer({ updateNavIntersection, darkMode, ...props }) {
+function NavContainer({ updateNavIntersection, logout, darkMode, ...props }) {
+	// setup the history hook
+	const history = useHistory();
+
 	// setup the cookies hook
 	const [, setCookies] = useCookies(['darkMode']);
 
@@ -96,8 +99,12 @@ function NavContainer({ updateNavIntersection, darkMode, ...props }) {
 
 	// setup the logout function
 	const logoutCallback = useCallback(() => {
+		// logout the user
 		logout();
-	}, []);
+
+		// redirect the user to the home page
+		history.push(HOME);
+	}, [history, logout]);
 
 	// setup the home test
 	const isHome = pathname === HOME;

@@ -13,15 +13,28 @@ import {
  * fetch the resume on portfolio-api-serverless
  * @param {boolean} isMain if the resume fetching is to hydrate the main resume
  * @param {string} username the username to fetch
+ * @param {string} languageCode the language to fetch
  * @returns the final promise
  */
-export const fetchResume = (isMain = true, username = 'kritpo') => dispatch => {
+export const fetchResume = (
+	isMain = true,
+	username = 'kritpo',
+	languageCode
+) => dispatch => {
 	// update status of the state as loading
 	dispatch(resumeLoading(isMain));
 
-	// fetch data on GitHub Gist
+	// fetch the resume on the API
 	return (
-		API.get('PortfolioAPIServerless', '/resumes/' + username, {})
+		API.get(
+			'PortfolioAPIServerless',
+			'/resumes/' +
+				username +
+				(languageCode !== undefined
+					? '?languageCode=' + languageCode
+					: ''),
+			{}
+		)
 			.then(resume => {
 				// setup an unique id for the life of the state
 				let i = 0;
@@ -38,8 +51,18 @@ export const fetchResume = (isMain = true, username = 'kritpo') => dispatch => {
 					id: i++
 				}));
 
-				// update state with fetched data
-				dispatch(resumeLoaded(resume, isMain));
+				// fetch languages linked to the resume
+				return API.get(
+					'PortfolioAPIServerless',
+					'/resumes/' + username + '/languages',
+					{}
+				).then(languages => {
+					// add the languages to the final resume object
+					resume.resumeLanguages = languages;
+
+					// update state with fetched data
+					dispatch(resumeLoaded(resume, isMain));
+				});
 			})
 			// update status of the state as failed with the error message
 			.catch(({ message }) => {

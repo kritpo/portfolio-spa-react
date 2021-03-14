@@ -1,16 +1,17 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { HOME, SIGN_IN, SIGN_UP_CONFIRM } from '../routes';
-
-import { Container, Box, Paper, Typography } from '@material-ui/core';
-
-import Form, {
+import {
 	TEXT,
 	EMAIL as EMAIL_TYPE,
 	PASSWORD as PASSWORD_TYPE,
 	CHECKBOX
-} from '../utils/Form';
+} from '../utils/Fields';
+import { HOME, SIGN_IN, SIGN_UP_CONFIRM } from '../routes';
+
+import { Container, Box, Paper, Typography } from '@material-ui/core';
+
+import Form from '../utils/Form';
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
 

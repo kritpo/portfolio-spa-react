@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
+import { TEXT } from '../utils/Fields';
 import { HOME, SIGN_UP } from '../routes';
 
 import { Container, Box, Paper, Typography, Button } from '@material-ui/core';
 
-import Form, { TEXT } from '../utils/Form';
+import Form from '../utils/Form';
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
 

@@ -90,7 +90,7 @@ function SignUpContainer({ ...props }) {
 	);
 
 	// setup form hook
-	const { form, handleForm, isSending, error } = useForm({
+	const { form, handleForm, handleSubmit, isSending, error } = useForm({
 		fields: [
 			{ name: USERNAME, defaultValue: '' },
 			{ name: EMAIL, defaultValue: '' },
@@ -107,6 +107,7 @@ function SignUpContainer({ ...props }) {
 		<SignUp
 			form={form}
 			handleForm={handleForm}
+			handleSubmit={handleSubmit}
 			isSending={isSending}
 			error={error}
 			{...props}

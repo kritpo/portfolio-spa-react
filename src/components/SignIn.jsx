@@ -29,14 +29,14 @@ SignIn.propTypes = {
 	}).isRequired,
 	handleForm: PropTypes.shape({
 		onChange: PropTypes.func.isRequired,
-		onBlur: PropTypes.func.isRequired,
-		onSubmit: PropTypes.func.isRequired
+		onBlur: PropTypes.func.isRequired
 	}).isRequired,
+	handleSubmit: PropTypes.func.isRequired,
 	isSending: PropTypes.bool.isRequired,
 	error: PropTypes.string.isRequired
 };
 
-function SignIn({ form, handleForm, isSending, error }) {
+function SignIn({ form, handleForm, handleSubmit, isSending, error }) {
 	return (
 		<Fragment>
 			<Header
@@ -72,6 +72,7 @@ function SignIn({ form, handleForm, isSending, error }) {
 							]}
 							form={form}
 							handleForm={handleForm}
+							handleSubmit={handleSubmit}
 							action="Connexion"
 							error={error}
 							isSending={isSending}

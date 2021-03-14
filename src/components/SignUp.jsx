@@ -46,14 +46,14 @@ SignUp.propTypes = {
 	}).isRequired,
 	handleForm: PropTypes.shape({
 		onChange: PropTypes.func.isRequired,
-		onBlur: PropTypes.func.isRequired,
-		onSubmit: PropTypes.func.isRequired
+		onBlur: PropTypes.func.isRequired
 	}).isRequired,
+	handleSubmit: PropTypes.func.isRequired,
 	isSending: PropTypes.bool.isRequired,
 	error: PropTypes.string.isRequired
 };
 
-function SignUp({ form, handleForm, isSending, error }) {
+function SignUp({ form, handleForm, handleSubmit, isSending, error }) {
 	return (
 		<Fragment>
 			<Header
@@ -101,6 +101,7 @@ function SignUp({ form, handleForm, isSending, error }) {
 							]}
 							form={form}
 							handleForm={handleForm}
+							handleSubmit={handleSubmit}
 							action="Inscription"
 							error={error}
 							isSending={isSending}

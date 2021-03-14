@@ -72,7 +72,7 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 	);
 
 	// setup form hook
-	const { form, handleForm, isSending, error } = useForm({
+	const { form, handleForm, handleSubmit, isSending, error } = useForm({
 		fields: [
 			{ name: USERNAME, defaultValue: defaultUsername },
 			{ name: CODE, defaultValue: '' }
@@ -128,6 +128,7 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 		<SignUpConfirm
 			form={form}
 			handleForm={handleForm}
+			handleSubmit={handleSubmit}
 			isSending={isSending}
 			error={error}
 			resend={resend}

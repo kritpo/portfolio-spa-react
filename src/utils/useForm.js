@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
@@ -64,52 +64,53 @@ const useForm = ({ fields, checkField, onSubmit, errorMessage }) => {
 						triggered: true
 					}
 				});
-			},
-			// handle form submit
-			onSubmit: () => {
-				// reset the error message
-				setError('');
-
-				// retrieve a copy of the form
-				const formCopy = { ...form };
-
-				// check all fields
-				const fieldsError = [];
-				fields.forEach(({ name }) => {
-					// check for error
-					const error = checkField(name, form[name].value);
-
-					// add the error to the error list
-					fieldsError.push(error);
-					formCopy[name] = { ...form[name], error, triggered: true };
-				});
-
-				// update the form with the checking
-				setForm(formCopy);
-
-				// check if the form is correct
-				if (fieldsError.join('') === '') {
-					// lock the form
-					setIsSending(true);
-
-					// setup the form unlock
-					const unlockForm = () => setIsSending(false);
-
-					// resolve the form submit promise
-					onSubmit(form, executeRecaptcha(), unlockForm).catch(() => {
-						// update the error message
-						setError(errorMessage);
-
-						// unlock the form
-						unlockForm();
-					});
-				}
 			}
 		}),
-		[checkField, errorMessage, executeRecaptcha, fields, form, onSubmit]
+		[checkField, form]
 	);
 
-	return { form, handleForm, isSending, error };
+	// setup the form submit handler
+	const handleSubmit = useCallback(() => {
+		// reset the error message
+		setError('');
+
+		// retrieve a copy of the form
+		const formCopy = { ...form };
+
+		// check all fields
+		const fieldsError = [];
+		fields.forEach(({ name }) => {
+			// check for error
+			const error = checkField(name, form[name].value);
+
+			// add the error to the error list
+			fieldsError.push(error);
+			formCopy[name] = { ...form[name], error, triggered: true };
+		});
+
+		// update the form with the checking
+		setForm(formCopy);
+
+		// check if the form is correct
+		if (fieldsError.join('') === '') {
+			// lock the form
+			setIsSending(true);
+
+			// setup the form unlock
+			const unlockForm = () => setIsSending(false);
+
+			// resolve the form submit promise
+			onSubmit(form, executeRecaptcha(), unlockForm).catch(() => {
+				// update the error message
+				setError(errorMessage);
+
+				// unlock the form
+				unlockForm();
+			});
+		}
+	}, [checkField, errorMessage, executeRecaptcha, fields, form, onSubmit]);
+
+	return { form, handleForm, handleSubmit, isSending, error };
 };
 
 export default useForm;

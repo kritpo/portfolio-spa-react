@@ -87,7 +87,7 @@ function SignInContainer({ location: { state }, login, ...props }) {
 	);
 
 	// setup form hook
-	const { form, handleForm, isSending, error } = useForm({
+	const { form, handleForm, handleSubmit, isSending, error } = useForm({
 		fields: [
 			{ name: USERNAME, defaultValue: defaultUsername },
 			{ name: PASSWORD, defaultValue: '' }
@@ -102,6 +102,7 @@ function SignInContainer({ location: { state }, login, ...props }) {
 		<SignIn
 			form={form}
 			handleForm={handleForm}
+			handleSubmit={handleSubmit}
 			isSending={isSending}
 			error={error}
 			{...props}

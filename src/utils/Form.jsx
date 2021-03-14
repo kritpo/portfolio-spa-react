@@ -99,9 +99,9 @@ Form.propTypes = {
 	).isRequired,
 	handleForm: PropTypes.shape({
 		onChange: PropTypes.func.isRequired,
-		onBlur: PropTypes.func.isRequired,
-		onSubmit: PropTypes.func.isRequired
+		onBlur: PropTypes.func.isRequired
 	}).isRequired,
+	handleSubmit: PropTypes.func.isRequired,
 	action: PropTypes.string.isRequired,
 	error: PropTypes.string.isRequired,
 	isSending: PropTypes.bool.isRequired
@@ -112,6 +112,7 @@ function Form({
 	fields,
 	form,
 	handleForm,
+	handleSubmit,
 	action,
 	error,
 	isSending
@@ -122,10 +123,10 @@ function Form({
 			// check if the form is active and the entered key is `Enter`
 			if (!isSending && key === 'Enter') {
 				// submit the form
-				handleForm.onSubmit();
+				handleSubmit();
 			}
 		},
-		[handleForm, isSending]
+		[isSending, handleSubmit]
 	);
 
 	// retrieve all fields
@@ -154,7 +155,7 @@ function Form({
 					<Button
 						variant="contained"
 						color="primary"
-						onClick={handleForm.onSubmit}
+						onClick={handleSubmit}
 						disabled={isSending}
 					>
 						{action}

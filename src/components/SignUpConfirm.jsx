@@ -29,9 +29,9 @@ SignUpConfirm.propTypes = {
 	}).isRequired,
 	handleForm: PropTypes.shape({
 		onChange: PropTypes.func.isRequired,
-		onBlur: PropTypes.func.isRequired,
-		onSubmit: PropTypes.func.isRequired
+		onBlur: PropTypes.func.isRequired
 	}).isRequired,
+	handleSubmit: PropTypes.func.isRequired,
 	isSending: PropTypes.bool.isRequired,
 	error: PropTypes.string.isRequired,
 	resend: PropTypes.func.isRequired,
@@ -42,6 +42,7 @@ SignUpConfirm.propTypes = {
 function SignUpConfirm({
 	form,
 	handleForm,
+	handleSubmit,
 	isSending,
 	error,
 	resend,
@@ -108,6 +109,7 @@ function SignUpConfirm({
 							]}
 							form={form}
 							handleForm={handleForm}
+							handleSubmit={handleSubmit}
 							action="Confirmer"
 							error={error}
 							isSending={isSending}

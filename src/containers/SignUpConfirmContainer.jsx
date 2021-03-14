@@ -6,31 +6,33 @@ import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
 import { SIGN_IN } from '../routes';
-
-import useForm from '../utils/useForm';
+import { TEXT } from '../utils/forms/Field';
 
 import SignUpConfirm, { USERNAME, CODE } from '../components/SignUpConfirm';
 
 /**
- * check the correctness of the field
- * @param {string} field the field name
+ * check the correctness of the username
  * @param {any} value the value to check
  * @returns
  */
-const checkField = (field, value) => {
-	// check if the field is the username
-	if (field === USERNAME) {
-		// check if the username is empty
-		if (value === '') {
-			return "Le nom d'utilisateur doit être précisé.";
-		}
+const checkUsername = value => {
+	// check if the username is empty
+	if (value === '') {
+		return "Le nom d'utilisateur doit être précisé.";
 	}
-	// check if the field is the email
-	else if (field === CODE) {
-		// check if the code is empty
-		if (value === '') {
-			return 'Le code doit être précisée.';
-		}
+
+	return '';
+};
+
+/**
+ * check the correctness of the code
+ * @param {any} value the value to check
+ * @returns
+ */
+const checkCode = (field, value) => {
+	// check if the code is empty
+	if (value === '') {
+		return 'Le code doit être précisée.';
 	}
 
 	return '';
@@ -51,11 +53,40 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 	const [resendWaitMessage, setResendWaitMessage] = useState('');
 	const [resendErrorMessage, setResendErrorMessage] = useState('');
 
-	// retrieve the default username
-	let defaultUsername =
+	// setup username hook
+	const [username, setUsername] = useState(
 		state !== undefined && state.username !== undefined
 			? state.username
-			: '';
+			: ''
+	);
+
+	// setup the fields data retriever
+	const fields = waitComponent => [
+		{
+			name: USERNAME,
+			payload: username,
+			checkField: checkUsername,
+			fieldParam: {
+				type: TEXT,
+				label: 'Pseudo',
+				placeholder: 'dupont',
+				InputProps: {
+					endAdornment: waitComponent
+				}
+			},
+			setter: setUsername
+		},
+		{
+			name: CODE,
+			payload: '',
+			checkField: checkCode,
+			fieldParam: {
+				type: TEXT,
+				label: 'Code de vérification',
+				placeholder: '123456'
+			}
+		}
+	];
 
 	// setup the onSubmit callback
 	const onSubmit = useCallback(
@@ -71,22 +102,10 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 		[history]
 	);
 
-	// setup form hook
-	const { form, handleForm, handleSubmit, isSending, error } = useForm({
-		fields: [
-			{ name: USERNAME, defaultValue: defaultUsername },
-			{ name: CODE, defaultValue: '' }
-		],
-		checkField,
-		onSubmit,
-		errorMessage:
-			'Une erreur inattendue est survenue. Vérifiez le code, sinon veuillez réessayer ultérieurement.'
-	});
-
 	// setup the resend callback
 	const resend = useCallback(
 		() =>
-			Auth.resendSignUp(form[USERNAME].value)
+			Auth.resendSignUp(username)
 				.then(() => {
 					// setup a interval to lock the update
 					let waitLeft = 60;
@@ -121,16 +140,13 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 						setResendErrorMessage('');
 					}, 1000);
 				}),
-		[form]
+		[username]
 	);
 
 	return (
 		<SignUpConfirm
-			form={form}
-			handleForm={handleForm}
-			handleSubmit={handleSubmit}
-			isSending={isSending}
-			error={error}
+			fields={fields}
+			onSubmit={onSubmit}
 			resend={resend}
 			resendWaitMessage={resendWaitMessage}
 			resendErrorMessage={resendErrorMessage}

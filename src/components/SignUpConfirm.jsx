@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { TEXT } from '../utils/Fields';
 import { HOME, SIGN_UP } from '../routes';
 
 import { Container, Box, Paper, Typography, Button } from '@material-ui/core';
 
-import Form from '../utils/Form';
+import Form from '../utils/forms/Form';
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
 
@@ -16,36 +15,16 @@ export const CODE = 'code';
 
 // configure the prop types validation
 SignUpConfirm.propTypes = {
-	form: PropTypes.shape({
-		[USERNAME]: PropTypes.shape({
-			value: PropTypes.string.isRequired,
-			error: PropTypes.string.isRequired,
-			triggered: PropTypes.bool.isRequired
-		}).isRequired,
-		[CODE]: PropTypes.shape({
-			value: PropTypes.string.isRequired,
-			error: PropTypes.string.isRequired,
-			triggered: PropTypes.bool.isRequired
-		}).isRequired
-	}).isRequired,
-	handleForm: PropTypes.shape({
-		onChange: PropTypes.func.isRequired,
-		onBlur: PropTypes.func.isRequired
-	}).isRequired,
-	handleSubmit: PropTypes.func.isRequired,
-	isSending: PropTypes.bool.isRequired,
-	error: PropTypes.string.isRequired,
+	fields: PropTypes.func.isRequired,
+	onSubmit: PropTypes.func.isRequired,
 	resend: PropTypes.func.isRequired,
 	resendWaitMessage: PropTypes.string.isRequired,
 	resendErrorMessage: PropTypes.string.isRequired
 };
 
 function SignUpConfirm({
-	form,
-	handleForm,
-	handleSubmit,
-	isSending,
-	error,
+	fields,
+	onSubmit,
 	resend,
 	resendWaitMessage,
 	resendErrorMessage
@@ -72,48 +51,27 @@ function SignUpConfirm({
 							Confirmation d'inscription
 						</Typography>
 						<Form
-							fields={[
-								{
-									name: USERNAME,
-									type: TEXT,
-									label: 'Pseudo',
-									placeholder: 'dupont',
-									InputProps: {
-										endAdornment: (
-											<Button
-												color="primary"
-												size="small"
-												onClick={resend}
-												disabled={
-													resendWaitMessage !== ''
-												}
-											>
-												{resendErrorMessage !== '' ? (
-													<Typography color="error">
-														{resendErrorMessage}
-													</Typography>
-												) : resendWaitMessage !== '' ? (
-													resendWaitMessage
-												) : (
-													'Renvoyer'
-												)}
-											</Button>
-										)
-									}
-								},
-								{
-									name: CODE,
-									type: TEXT,
-									label: 'Code de vérification',
-									placeholder: '123456'
-								}
-							]}
-							form={form}
-							handleForm={handleForm}
-							handleSubmit={handleSubmit}
+							fields={fields(
+								<Button
+									color="primary"
+									size="small"
+									onClick={resend}
+									disabled={resendWaitMessage !== ''}
+								>
+									{resendErrorMessage !== '' ? (
+										<Typography color="error">
+											{resendErrorMessage}
+										</Typography>
+									) : resendWaitMessage !== '' ? (
+										resendWaitMessage
+									) : (
+										'Renvoyer'
+									)}
+								</Button>
+							)}
+							onSubmit={onSubmit}
+							errorMessage="Une erreur inattendue est survenue. Vérifiez le code, sinon veuillez réessayer ultérieurement."
 							action="Confirmer"
-							error={error}
-							isSending={isSending}
 						>
 							<CustomLink to={SIGN_UP}>
 								Pas encore inscrit ? Inscrivez-vous

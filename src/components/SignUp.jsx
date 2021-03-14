@@ -1,17 +1,11 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import {
-	TEXT,
-	EMAIL as EMAIL_TYPE,
-	PASSWORD as PASSWORD_TYPE,
-	CHECKBOX
-} from '../utils/Fields';
 import { HOME, SIGN_IN, SIGN_UP_CONFIRM } from '../routes';
 
 import { Container, Box, Paper, Typography } from '@material-ui/core';
 
-import Form from '../utils/Form';
+import Form from '../utils/forms/Form';
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
 
@@ -23,38 +17,11 @@ export const GDPR = 'gdpr';
 
 // configure the prop types validation
 SignUp.propTypes = {
-	form: PropTypes.shape({
-		[USERNAME]: PropTypes.shape({
-			value: PropTypes.string.isRequired,
-			error: PropTypes.string.isRequired,
-			triggered: PropTypes.bool.isRequired
-		}).isRequired,
-		[EMAIL]: PropTypes.shape({
-			value: PropTypes.string.isRequired,
-			error: PropTypes.string.isRequired,
-			triggered: PropTypes.bool.isRequired
-		}).isRequired,
-		[PASSWORD]: PropTypes.shape({
-			value: PropTypes.string.isRequired,
-			error: PropTypes.string.isRequired,
-			triggered: PropTypes.bool.isRequired
-		}).isRequired,
-		[GDPR]: PropTypes.shape({
-			value: PropTypes.bool.isRequired,
-			error: PropTypes.string.isRequired,
-			triggered: PropTypes.bool.isRequired
-		}).isRequired
-	}).isRequired,
-	handleForm: PropTypes.shape({
-		onChange: PropTypes.func.isRequired,
-		onBlur: PropTypes.func.isRequired
-	}).isRequired,
-	handleSubmit: PropTypes.func.isRequired,
-	isSending: PropTypes.bool.isRequired,
-	error: PropTypes.string.isRequired
+	fields: PropTypes.array.isRequired,
+	onSubmit: PropTypes.func.isRequired
 };
 
-function SignUp({ form, handleForm, handleSubmit, isSending, error }) {
+function SignUp({ fields, onSubmit }) {
 	return (
 		<Fragment>
 			<Header
@@ -74,38 +41,10 @@ function SignUp({ form, handleForm, handleSubmit, isSending, error }) {
 							Inscription
 						</Typography>
 						<Form
-							fields={[
-								{
-									name: USERNAME,
-									type: TEXT,
-									label: 'Pseudo',
-									placeholder: 'dupont'
-								},
-								{
-									name: EMAIL,
-									type: EMAIL_TYPE,
-									label: 'Adresse mail',
-									placeholder: 'dupont@gmail.com'
-								},
-								{
-									name: PASSWORD,
-									type: PASSWORD_TYPE,
-									label: 'Mot de passe',
-									placeholder: 'Mot de passe'
-								},
-								{
-									name: GDPR,
-									type: CHECKBOX,
-									label:
-										"J'ai pris connaissance et j'accepte sans réserves le traitement de mes données personnelles tel qu'énoncé dans les mentions légales."
-								}
-							]}
-							form={form}
-							handleForm={handleForm}
-							handleSubmit={handleSubmit}
+							fields={fields}
+							onSubmit={onSubmit}
+							errorMessage="Une erreur inattendue est survenue. Veuillez réessayer ultérieurement."
 							action="Inscription"
-							error={error}
-							isSending={isSending}
 						>
 							Déjà inscrit ?
 							<br />

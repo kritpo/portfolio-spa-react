@@ -9,31 +9,33 @@ import { Auth } from 'aws-amplify';
 
 import { login } from '../actions';
 import { HOME } from '../routes';
-
-import useForm from '../utils/useForm';
+import { TEXT, PASSWORD as PASSWORD_TYPE } from '../utils/forms/Field';
 
 import SignIn, { USERNAME, PASSWORD } from '../components/SignIn';
 
 /**
- * check the correctness of the field
- * @param {string} field the field name
+ * check the correctness of the username
  * @param {any} value the value to check
  * @returns
  */
-const checkField = (field, value) => {
-	// check if the field is the username
-	if (field === USERNAME) {
-		// check if the username is empty
-		if (value === '') {
-			return "Le nom d'utilisateur doit être précisé.";
-		}
+const checkUsername = value => {
+	// check if the username is empty
+	if (value === '') {
+		return "Le nom d'utilisateur doit être précisé.";
 	}
-	// check if the field is the password
-	else if (field === PASSWORD) {
-		// check if the password is empty
-		if (value === '') {
-			return 'Le mot de passe doit être précisé.';
-		}
+
+	return '';
+};
+
+/**
+ * check the correctness of the username
+ * @param {any} value the value to check
+ * @returns
+ */
+const checkPassword = value => {
+	// check if the password is empty
+	if (value === '') {
+		return 'Le mot de passe doit être précisé.';
 	}
 
 	return '';
@@ -62,6 +64,30 @@ function SignInContainer({ location: { state }, login, ...props }) {
 			? state.username
 			: '';
 
+	// setup the fields data
+	const fields = [
+		{
+			name: USERNAME,
+			payload: defaultUsername,
+			checkField: checkUsername,
+			fieldParam: {
+				type: TEXT,
+				label: 'Pseudo',
+				placeholder: 'dupont'
+			}
+		},
+		{
+			name: PASSWORD,
+			payload: '',
+			checkField: checkPassword,
+			fieldParam: {
+				type: PASSWORD_TYPE,
+				label: 'Mot de passe',
+				placeholder: 'Mot de passe'
+			}
+		}
+	];
+
 	// setup the onSubmit callback
 	const onSubmit = useCallback(
 		(form, reCaptchaToken) =>
@@ -86,28 +112,7 @@ function SignInContainer({ location: { state }, login, ...props }) {
 		[history, login]
 	);
 
-	// setup form hook
-	const { form, handleForm, handleSubmit, isSending, error } = useForm({
-		fields: [
-			{ name: USERNAME, defaultValue: defaultUsername },
-			{ name: PASSWORD, defaultValue: '' }
-		],
-		checkField,
-		onSubmit,
-		errorMessage:
-			'Une erreur inattendue est survenue. Vérifiez vos identifiants, sinon veuillez réessayer ultérieurement.'
-	});
-
-	return (
-		<SignIn
-			form={form}
-			handleForm={handleForm}
-			handleSubmit={handleSubmit}
-			isSending={isSending}
-			error={error}
-			{...props}
-		/>
-	);
+	return <SignIn fields={fields} onSubmit={onSubmit} {...props} />;
 }
 
 export default connect(null, mapDispatchToProps)(SignInContainer);

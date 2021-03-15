@@ -9,6 +9,7 @@ import { Auth } from 'aws-amplify';
 
 import { login } from '../actions';
 import { HOME } from '../routes';
+import checkField, { checkMinLength } from '../utils/forms/checkField';
 import { TEXT, PASSWORD as PASSWORD_TYPE } from '../utils/forms/Field';
 
 import SignIn from '../components/SignIn';
@@ -16,34 +17,6 @@ import SignIn from '../components/SignIn';
 // setup field name constants
 const USERNAME = 'username';
 const PASSWORD = 'password';
-
-/**
- * check the correctness of the username
- * @param {any} value the value to check
- * @returns
- */
-const checkUsername = value => {
-	// check if the username is empty
-	if (value === '') {
-		return "Le nom d'utilisateur doit être précisé.";
-	}
-
-	return '';
-};
-
-/**
- * check the correctness of the username
- * @param {any} value the value to check
- * @returns
- */
-const checkPassword = value => {
-	// check if the password is empty
-	if (value === '') {
-		return 'Le mot de passe doit être précisé.';
-	}
-
-	return '';
-};
 
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
@@ -85,7 +58,7 @@ function SignInContainer({ location: { state }, login, ...props }) {
 		[USERNAME]: {
 			type: TEXT,
 			label: 'Pseudo',
-			checkField: checkUsername,
+			checkField: checkField([checkMinLength(3)]),
 			inputParam: {
 				placeholder: 'dupont'
 			}
@@ -93,7 +66,7 @@ function SignInContainer({ location: { state }, login, ...props }) {
 		[PASSWORD]: {
 			type: PASSWORD_TYPE,
 			label: 'Mot de passe',
-			checkField: checkPassword,
+			checkField: checkField([checkMinLength(1)]),
 			inputParam: {
 				placeholder: 'Mot de passe'
 			}

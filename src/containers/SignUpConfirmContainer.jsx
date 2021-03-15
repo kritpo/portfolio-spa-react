@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
 import { SIGN_IN } from '../routes';
+import checkField, { checkMinLength } from '../utils/forms/checkField';
 import { TEXT } from '../utils/forms/Field';
 
 import SignUpConfirm from '../components/SignUpConfirm';
@@ -13,34 +14,6 @@ import SignUpConfirm from '../components/SignUpConfirm';
 // setup field name constants
 const USERNAME = 'username';
 const CODE = 'code';
-
-/**
- * check the correctness of the username
- * @param {any} value the value to check
- * @returns
- */
-const checkUsername = value => {
-	// check if the username is empty
-	if (value === '') {
-		return "Le nom d'utilisateur doit être précisé.";
-	}
-
-	return '';
-};
-
-/**
- * check the correctness of the code
- * @param {any} value the value to check
- * @returns
- */
-const checkCode = (field, value) => {
-	// check if the code is empty
-	if (value === '') {
-		return 'Le code doit être précisée.';
-	}
-
-	return '';
-};
 
 // configure the prop types validation
 SignUpConfirmContainer.propTypes = {
@@ -83,7 +56,7 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 		[USERNAME]: {
 			type: TEXT,
 			label: 'Pseudo',
-			checkField: checkUsername,
+			checkField: checkField([checkMinLength(3)]),
 			inputParam: {
 				placeholder: 'dupont',
 				InputProps: {
@@ -94,7 +67,7 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 		[CODE]: {
 			type: TEXT,
 			label: 'Code de vérification',
-			checkField: checkCode,
+			checkField: checkField([checkMinLength(6)]),
 			inputParam: {
 				placeholder: '123456'
 			}

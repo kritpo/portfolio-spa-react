@@ -5,6 +5,12 @@ import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
 import { SIGN_UP_CONFIRM } from '../routes';
+import checkField, {
+	checkMinLength,
+	checkContains,
+	checkCharType,
+	checkValue
+} from '../utils/forms/checkField';
 import {
 	TEXT,
 	EMAIL as EMAIL_TYPE,
@@ -19,75 +25,6 @@ const USERNAME = 'username';
 const EMAIL = 'email';
 const PASSWORD = 'password';
 const GDPR = 'gdpr';
-
-/**
- * check the correctness of the username
- * @param {any} value the value to check
- * @returns
- */
-const checkUsername = value => {
-	// check if the username is empty
-	if (value === '') {
-		return "Le nom d'utilisateur doit être précisé.";
-	}
-
-	return '';
-};
-
-/**
- * check the correctness of the email
- * @param {any} value the value to check
- * @returns
- */
-const checkEmail = value => {
-	// check if the email is empty
-	if (value === '') {
-		return "L'adresse mail doit être précisée.";
-	}
-	// check if the email includes a `@`
-	else if (!value.includes('@')) {
-		return "L'adresse mail doit être valide.";
-	}
-
-	return '';
-};
-
-/**
- * check the correctness of the password
- * @param {any} value the value to check
- * @returns
- */
-const checkPassword = value => {
-	// check if the password is lesser than 8 characters
-	if (value.length < 8) {
-		return 'Le mot de passe doit contenir plus de 8 caractères.';
-	}
-	// check if the password includes all types of characters
-	else if (
-		!value.match(
-			// eslint-disable-next-line no-useless-escape
-			/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[=+\-^$*.[\]{}()?"!@#%&\/\\,><':;|_~`])/
-		)
-	) {
-		return 'Le mot de passe doit contenir des minuscules, majuscules, chiffres et caractères spéciaux.';
-	}
-
-	return '';
-};
-
-/**
- * check the correctness of the gdpr
- * @param {any} value the value to check
- * @returns
- */
-const checkGDPR = value => {
-	// check if the gdpr is not checked
-	if (!value) {
-		return 'Vous devez accepter le traitement de vos données personnelles.';
-	}
-
-	return '';
-};
 
 function SignUpContainer({ ...props }) {
 	// setup the history hook
@@ -117,24 +54,32 @@ function SignUpContainer({ ...props }) {
 	const template = {
 		[USERNAME]: {
 			type: TEXT,
-			label: 'Adresse mail',
-			checkField: checkUsername,
+			label: 'Pseudo',
+			checkField: checkField([checkMinLength(3)]),
 			inputParam: {
-				placeholder: 'dupont@gmail.com'
+				placeholder: 'dupont'
 			}
 		},
 		[EMAIL]: {
 			type: EMAIL_TYPE,
-			label: 'Pseudo',
-			checkField: checkEmail,
+			label: 'Adresse mail',
+			checkField: checkField([checkMinLength(3), checkContains('@')]),
 			inputParam: {
-				placeholder: 'dupont'
+				placeholder: 'dupont@gmail.com'
 			}
 		},
 		[PASSWORD]: {
 			type: PASSWORD_TYPE,
 			label: 'Mot de passe',
-			checkField: checkPassword,
+			checkField: checkField([
+				checkMinLength(8),
+				checkCharType({
+					lowercase: true,
+					uppercase: true,
+					number: true,
+					symbols: true
+				})
+			]),
 			inputParam: {
 				placeholder: 'Mot de passe'
 			}
@@ -143,7 +88,7 @@ function SignUpContainer({ ...props }) {
 			type: CHECKBOX,
 			label:
 				"J'ai pris connaissance et j'accepte sans réserves le traitement de mes données personnelles tel qu'énoncé dans les mentions légales.",
-			checkField: checkGDPR
+			checkField: checkField([checkValue(true)])
 		}
 	};
 

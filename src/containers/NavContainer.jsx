@@ -94,7 +94,10 @@ function NavContainer({ updateNavIntersection, logout, darkMode, ...props }) {
 
 	// setup the dark mode toggler
 	const darkModeToggle = useCallback(() => {
-		setCookies('darkMode', darkMode ? 'false' : 'true', { path: '/' });
+		setCookies('darkMode', darkMode ? 'false' : 'true', {
+			path: '/',
+			sameSite: true
+		});
 	}, [darkMode, setCookies]);
 
 	// setup the logout function

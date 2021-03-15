@@ -50,7 +50,7 @@ App.propTypes = {
 
 function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {
 	// setup the cookies hook
-	const [cookies, setCookies] = useCookies(['darkMode']);
+	const [cookies] = useCookies(['darkMode']);
 
 	// setup the dark mode status hook
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -69,7 +69,7 @@ function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {
 		} else {
 			setThemeMode(cookies.darkMode === 'true');
 		}
-	}, [cookies.darkMode, prefersDarkMode, setCookies, setThemeMode]);
+	}, [cookies.darkMode, prefersDarkMode, setThemeMode]);
 
 	// setup the app theme
 	const theme = useMemo(

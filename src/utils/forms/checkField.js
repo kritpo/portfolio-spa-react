@@ -76,6 +76,18 @@ export const checkValue = valueRef => value => {
 };
 
 /**
+ * setup the date checker
+ * @returns the field checker
+ */
+export const checkDate = () => value => {
+	if (!(value instanceof Date && !isNaN(value))) {
+		return `La date n'est pas correcte.`;
+	}
+
+	return '';
+};
+
+/**
  * setup the field checker
  * @param {array} checkers the list of field checkers
  * @returns the final field checker

@@ -73,7 +73,7 @@ Field.propTypes = {
 	form: PropTypes.objectOf(
 		PropTypes.oneOfType([
 			PropTypes.shape({
-				value: PropTypes.any.isRequired,
+				value: PropTypes.any,
 				error: PropTypes.string.isRequired
 			}),
 			PropTypes.array
@@ -191,6 +191,7 @@ function Field({
 						}${name}`}
 						value={form[name].value}
 						onChange={onChange(name)}
+						onBlur={onBlur(name)}
 						onKeyPress={autoSubmit}
 						required
 					>
@@ -208,8 +209,16 @@ function Field({
 		case DATE:
 		case DATE_MASKABLE:
 			// setup local onChange
-			const dateOnChange = date =>
-				onChange(name)({ target: { value: date } });
+			const dateOnChange = date => {
+				// check if the field is not triggered
+				if (!form[name].triggered) {
+					// trigger the blur event
+					onBlur(name)({ target: { value: date } });
+				} else {
+					// otherwise, trigger the change event
+					onChange(name)({ target: { value: date } });
+				}
+			};
 
 			// retrieve fields
 			const {
@@ -291,6 +300,8 @@ function Field({
 									: new Date('2100-01-01')
 							}
 							disabled={type === DATE_MASKABLE && !show}
+							error={form[name].error !== ''}
+							required
 						/>
 					</MuiPickersUtilsProvider>
 					{type === DATE_MASKABLE && (

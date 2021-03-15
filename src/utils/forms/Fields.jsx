@@ -13,7 +13,7 @@ Fields.propTypes = {
 	form: PropTypes.objectOf(
 		PropTypes.oneOfType([
 			PropTypes.shape({
-				value: PropTypes.any.isRequired,
+				value: PropTypes.any,
 				error: PropTypes.string.isRequired,
 				triggered: PropTypes.bool.isRequired
 			}),

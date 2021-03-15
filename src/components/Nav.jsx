@@ -37,6 +37,9 @@ const styles = ({ palette: { divider } }) => ({
 	},
 	circle: {
 		borderRadius: '50%'
+	},
+	fullWidth: {
+		width: '100%'
 	}
 });
 
@@ -84,10 +87,18 @@ const homeMenu = (isBurger = false) => (
  * @param {function} logout the logout function
  * @param {object} active the active class
  * @param {object} circle the circle class
+ * @param {object} fullWidth the full width class
  * @param {bool} isBurger the type of menu
  * @returns the component
  */
-const userMenu = (username, logout, active, circle, isBurger = false) => (
+const userMenu = (
+	username,
+	logout,
+	active,
+	circle,
+	fullWidth,
+	isBurger = false
+) => (
 	<Box
 		display="flex"
 		flexDirection={isBurger ? 'column' : 'row'}
@@ -101,6 +112,7 @@ const userMenu = (username, logout, active, circle, isBurger = false) => (
 					to={SIGN_IN}
 					nav
 					activeClassName={`${active} ${!isBurger ? circle : ''}`}
+					className={isBurger ? fullWidth : undefined}
 				>
 					{isBurger ? (
 						<Button startIcon={<User />} fullWidth>
@@ -118,6 +130,7 @@ const userMenu = (username, logout, active, circle, isBurger = false) => (
 					to={SIGN_UP}
 					nav
 					activeClassName={`${active} ${!isBurger ? circle : ''}`}
+					className={isBurger ? fullWidth : undefined}
 				>
 					{isBurger ? (
 						<Button startIcon={<SignUp />} fullWidth>
@@ -138,6 +151,7 @@ const userMenu = (username, logout, active, circle, isBurger = false) => (
 					to={USER}
 					nav
 					activeClassName={active}
+					className={isBurger ? fullWidth : undefined}
 				>
 					<Button
 						startIcon={isBurger ? <User /> : undefined}
@@ -179,7 +193,7 @@ Nav.propTypes = {
 };
 
 function Nav({
-	classes: { active, circle },
+	classes: { active, circle, fullWidth },
 	links,
 	darkMode,
 	darkModeToggle,
@@ -194,7 +208,13 @@ function Nav({
 				<NavBarContainer
 					darkModeMenu={darkModeMenu(darkMode, darkModeToggle)}
 					left={!isHome ? homeMenu() : null}
-					right={userMenu(username, logout, active, circle)}
+					right={userMenu(
+						username,
+						logout,
+						active,
+						circle,
+						fullWidth
+					)}
 				>
 					{links}
 				</NavBarContainer>
@@ -202,7 +222,14 @@ function Nav({
 				<NavBurger
 					darkModeMenu={darkModeMenu(darkMode, darkModeToggle)}
 					top={!isHome ? homeMenu(true) : null}
-					bottom={userMenu(username, logout, active, circle, true)}
+					bottom={userMenu(
+						username,
+						logout,
+						active,
+						circle,
+						fullWidth,
+						true
+					)}
 				>
 					{links}
 				</NavBurger>

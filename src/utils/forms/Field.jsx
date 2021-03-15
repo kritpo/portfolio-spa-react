@@ -17,28 +17,32 @@ export const CHECKBOX = 'checkbox';
 
 // configure the prop types validation
 Field.propTypes = {
-	field: PropTypes.shape({
+	form: PropTypes.objectOf(
+		PropTypes.oneOfType([
+			PropTypes.shape({
+				value: PropTypes.any.isRequired,
+				error: PropTypes.string.isRequired
+			}),
+			PropTypes.array
+		])
+	).isRequired,
+	template: PropTypes.shape({
 		name: PropTypes.string.isRequired,
 		type: PropTypes.string.isRequired,
-		label: PropTypes.string.isRequired
+		label: PropTypes.string.isRequired,
+		inputParam: PropTypes.object
 	}).isRequired,
-	form: PropTypes.objectOf(
-		PropTypes.shape({
-			value: PropTypes.isRequired,
-			error: PropTypes.string.isRequired
-		})
-	).isRequired,
 	handleForm: PropTypes.shape({
 		onChange: PropTypes.func.isRequired,
 		onBlur: PropTypes.func.isRequired
 	}).isRequired,
 	autoSubmit: PropTypes.func.isRequired,
-	preName: PropTypes.string.isRequired
+	preName: PropTypes.string
 };
 
 function Field({
-	field: { name, type, label, ...field },
 	form,
+	template: { name, type, label, inputParam },
 	handleForm: { onChange, onBlur },
 	autoSubmit,
 	preName
@@ -51,7 +55,7 @@ function Field({
 		case PASSWORD:
 			return (
 				<TextField
-					id={`${preName}_${name}`}
+					id={`${preName !== undefined ? `${preName}_` : ''}${name}`}
 					type={type}
 					label={label}
 					value={form[name].value}
@@ -62,7 +66,7 @@ function Field({
 					onKeyPress={autoSubmit}
 					fullWidth
 					required
-					{...field}
+					{...inputParam}
 				/>
 			);
 

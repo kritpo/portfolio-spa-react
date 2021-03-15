@@ -15,63 +15,146 @@ import Loading from '../Loading';
 import Fields from './Fields';
 
 /**
+ * reduce data into a form data
+ * @param {array} data the default data
+ * @returns the final form
+ */
+const setupForm = formData =>
+	formData.reduce(
+		(object, { name, payload }) => ({
+			...object,
+			[name]:
+				typeof payload !== 'object'
+					? {
+							value: payload,
+							error: '',
+							triggered: false
+					  }
+					: Array.isArray(payload)
+					? payload.map(subformData => setupForm(subformData))
+					: undefined
+		}),
+		{}
+	);
+
+/**
  * check if a form contains errors
  * @param {object} form the form to check
+ * @param {object} template the form template
+ * @param {function} setForm the form setter
  * @returns if the form contains errors
  */
-const checkError = form => {
+const checkError = (form, template, setForm) => {
 	// initialize the error status
 	let errors = false;
 
-	// loop all fields
-	for (const fieldName in form) {
-		// retrieve the current field
-		const field = form[fieldName];
+	// retrieve a copy of the form
+	const formCopy = { ...form };
 
-		// check if the field contains a field checker
-		if (field.checkField !== undefined) {
+	// loop all fields
+	for (const fieldName in formCopy) {
+		// retrieve the current field
+		const field = formCopy[fieldName];
+
+		// check if the field is not an array
+		if (!Array.isArray(field)) {
+			// retrieve the error
+			const error = template[fieldName].checkField(field.value);
+
 			// check if the field is correct
-			errors = errors || field.checkField(field.value) !== '';
+			errors = errors || error !== '';
+
+			// update the form
+			field.error = error;
+			field.triggered = true;
 		} else {
 			// otherwise check the sub form
-			for (const subForm of field) {
+			for (let i = 0; i < field.length; i++) {
+				// setup the subform setter
+				const setSubform = newSubform => {
+					// update the form copy
+					field[i] = newSubform;
+				};
+
 				// check if the subform is correct
-				errors = errors || checkError(subForm);
+				const nextErrors = checkError(
+					field[i],
+					template[fieldName].subform,
+					setSubform
+				);
+				errors = errors || nextErrors;
 			}
 		}
 	}
+
+	// replace the form by the updated copy with errors
+	setForm(formCopy);
 
 	return errors;
 };
 
 // configure the prop types validation
 Form.propTypes = {
-	fields: PropTypes.array.isRequired,
+	data: PropTypes.arrayOf(
+		PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			payload: PropTypes.any.isRequired
+		})
+	).isRequired,
+	template: PropTypes.objectOf(
+		PropTypes.oneOfType([
+			PropTypes.shape({
+				checkField: PropTypes.func.isRequired
+			}),
+			PropTypes.shape({
+				subform: PropTypes.object.isRequired
+			})
+		])
+	).isRequired,
 	onSubmit: PropTypes.func.isRequired,
 	errorMessage: PropTypes.string.isRequired,
-	action: PropTypes.string.isRequired
+	action: PropTypes.string.isRequired,
+	setForm: PropTypes.func
 };
 
-function Form({ children, fields, onSubmit, errorMessage, action }) {
+function Form({
+	children,
+	data,
+	template,
+	onSubmit,
+	errorMessage,
+	action,
+	setForm: setExtForm
+}) {
 	// setup a recaptcha hook
 	const { executeRecaptcha } = useGoogleReCaptcha();
 
 	// setup form states
-	const [form, setForm] = useState({});
-	const [trigger, setTrigger] = useState(false);
+	const [form, setIntForm] = useState(setupForm(data));
 	const [isSending, setIsSending] = useState(false);
 	const [error, setError] = useState('');
+
+	// setup the form setter
+	const setForm = useCallback(
+		newForm => {
+			// set the inner form
+			setIntForm(newForm);
+
+			// set the extern form
+			if (setExtForm !== undefined) {
+				setExtForm(newForm);
+			}
+		},
+		[setExtForm]
+	);
 
 	// setup the form submit handler
 	const handleSubmit = useCallback(() => {
 		// reset the error message
 		setError('');
 
-		// trigger the form
-		setTrigger(true);
-
 		// check if the form is correct
-		if (!checkError(form)) {
+		if (!checkError(form, template, setIntForm)) {
 			// lock the form
 			setIsSending(true);
 
@@ -87,7 +170,7 @@ function Form({ children, fields, onSubmit, errorMessage, action }) {
 				unlockForm();
 			});
 		}
-	}, [errorMessage, executeRecaptcha, form, onSubmit]);
+	}, [errorMessage, executeRecaptcha, form, onSubmit, template]);
 
 	// setup the form auto submit callback
 	const autoSubmit = useCallback(
@@ -112,10 +195,10 @@ function Form({ children, fields, onSubmit, errorMessage, action }) {
 		>
 			<form noValidate autoComplete="off">
 				<Fields
-					fields={fields}
-					autoSubmit={autoSubmit}
-					trigger={trigger}
+					form={form}
 					setForm={setForm}
+					template={template}
+					autoSubmit={autoSubmit}
 				/>
 				<FormControl error={error !== ''}>
 					<Button

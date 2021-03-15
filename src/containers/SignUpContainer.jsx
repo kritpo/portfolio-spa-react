@@ -12,7 +12,13 @@ import {
 	CHECKBOX
 } from '../utils/forms/Field';
 
-import SignUp, { USERNAME, EMAIL, PASSWORD, GDPR } from '../components/SignUp';
+import SignUp from '../components/SignUp';
+
+// setup field name constants
+const USERNAME = 'username';
+const EMAIL = 'email';
+const PASSWORD = 'password';
+const GDPR = 'gdpr';
 
 /**
  * check the correctness of the username
@@ -88,48 +94,58 @@ function SignUpContainer({ ...props }) {
 	const history = useHistory();
 
 	// setup the fields data
-	const fields = [
+	const data = [
 		{
 			name: USERNAME,
-			payload: '',
-			checkField: checkUsername,
-			fieldParam: {
-				type: TEXT,
-				label: 'Pseudo',
-				placeholder: 'dupont'
-			}
+			payload: ''
 		},
 		{
 			name: EMAIL,
-			payload: '',
-			checkField: checkEmail,
-			fieldParam: {
-				type: EMAIL_TYPE,
-				label: 'Adresse mail',
-				placeholder: 'dupont@gmail.com'
-			}
+			payload: ''
 		},
 		{
 			name: PASSWORD,
-			payload: '',
-			checkField: checkPassword,
-			fieldParam: {
-				type: PASSWORD_TYPE,
-				label: 'Mot de passe',
-				placeholder: 'Mot de passe'
-			}
+			payload: ''
 		},
 		{
 			name: GDPR,
-			payload: false,
-			checkField: checkGDPR,
-			fieldParam: {
-				type: CHECKBOX,
-				label:
-					"J'ai pris connaissance et j'accepte sans réserves le traitement de mes données personnelles tel qu'énoncé dans les mentions légales."
-			}
+			payload: false
 		}
 	];
+
+	// setup the form template
+	const template = {
+		[USERNAME]: {
+			type: TEXT,
+			label: 'Adresse mail',
+			checkField: checkUsername,
+			inputParam: {
+				placeholder: 'dupont@gmail.com'
+			}
+		},
+		[EMAIL]: {
+			type: EMAIL_TYPE,
+			label: 'Pseudo',
+			checkField: checkEmail,
+			inputParam: {
+				placeholder: 'dupont'
+			}
+		},
+		[PASSWORD]: {
+			type: PASSWORD_TYPE,
+			label: 'Mot de passe',
+			checkField: checkPassword,
+			inputParam: {
+				placeholder: 'Mot de passe'
+			}
+		},
+		[GDPR]: {
+			type: CHECKBOX,
+			label:
+				"J'ai pris connaissance et j'accepte sans réserves le traitement de mes données personnelles tel qu'énoncé dans les mentions légales.",
+			checkField: checkGDPR
+		}
+	};
 
 	// setup the onSubmit callback
 	const onSubmit = useCallback(
@@ -154,7 +170,14 @@ function SignUpContainer({ ...props }) {
 		[history]
 	);
 
-	return <SignUp fields={fields} onSubmit={onSubmit} {...props} />;
+	return (
+		<SignUp
+			data={data}
+			template={template}
+			onSubmit={onSubmit}
+			{...props}
+		/>
+	);
 }
 
 export default SignUpContainer;

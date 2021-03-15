@@ -1,63 +1,65 @@
-import React, { useState, useMemo, useEffect, Fragment } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Box } from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
+
+import { Box, Button, Paper } from '@material-ui/core';
+import { Add, Remove } from '@material-ui/icons';
 
 import Field from './Field';
 
 // configure the prop types validation
 Fields.propTypes = {
-	fields: PropTypes.arrayOf(
-		PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			payload: PropTypes.any.isRequired,
-			checkField: PropTypes.func.isRequired,
-			fieldParam: PropTypes.object
-		})
+	form: PropTypes.objectOf(
+		PropTypes.oneOfType([
+			PropTypes.shape({
+				value: PropTypes.any.isRequired,
+				error: PropTypes.string.isRequired,
+				triggered: PropTypes.bool.isRequired
+			}),
+			PropTypes.array
+		])
+	).isRequired,
+	setForm: PropTypes.func.isRequired,
+	template: PropTypes.objectOf(
+		PropTypes.oneOfType([
+			PropTypes.shape({
+				checkField: PropTypes.func.isRequired
+			}),
+			PropTypes.shape({
+				subform: PropTypes.object.isRequired,
+				addLabel: PropTypes.string.isRequired,
+				removeLabel: PropTypes.string.isRequired
+			})
+		])
 	).isRequired,
 	autoSubmit: PropTypes.func.isRequired,
-	trigger: PropTypes.bool.isRequired,
-	setForm: PropTypes.func.isRequired,
 	currentFieldsName: PropTypes.string,
 	currentFieldsIndex: PropTypes.number
 };
 
 function Fields({
-	fields,
+	form,
+	setForm,
+	template,
 	autoSubmit,
-	trigger,
-	setForm: setParentForm,
 	currentFieldsName,
 	currentFieldsIndex
 }) {
-	// setup form states
-	const [form, setForm] = useState(
-		fields.reduce(
-			(object, { name, payload, checkField, setter }) => ({
-				...object,
-				[name]:
-					typeof payload !== 'object'
-						? {
-								value: payload,
-								error: '',
-								triggered: false,
-								currentErrorMessage: '',
-								checkField,
-								setter: setter // could be undefined
-						  }
-						: []
-			}),
-			{}
-		)
-	);
+	// setup the background color hooks
+	const {
+		palette: {
+			background: { default: defaultBG }
+		}
+	} = useTheme();
 
 	// setup form handler
 	const handleForm = useMemo(
 		() => ({
 			// handle field update
 			onChange: (field, isCheckbox = false) => ({ target }) => {
-				// check if the field checker is not defined
-				if (form[field].checkField === undefined) {
+				// check if the field is an array
+				if (Array.isArray(form[field]) === undefined) {
 					return;
 				}
 
@@ -65,7 +67,7 @@ function Fields({
 				const value = isCheckbox ? target.checked : target.value;
 
 				// retrieve the error message
-				const error = form[field].checkField(value);
+				const error = template[field].checkField(value);
 
 				// update the form
 				setForm({
@@ -73,24 +75,14 @@ function Fields({
 					[field]: {
 						...form[field],
 						value,
-						error: form[field].triggered ? error : '',
-						currentErrorMessage: error
+						error: form[field].triggered ? error : ''
 					}
 				});
-
-				// check if a setter is defined
-				if (form[field].setter !== undefined) {
-					// set the data
-					form[field].setter(value);
-				}
 			},
 			// handle field blur
 			onBlur: field => ({ target }) => {
-				// check if the field trigger is not defined or if the field is already triggered
-				if (
-					form[field].triggered === undefined ||
-					form[field].triggered
-				) {
+				// check if the field is an array or if the field is already triggered
+				if (Array.isArray(form[field]) || form[field].triggered) {
 					return;
 				}
 
@@ -99,92 +91,145 @@ function Fields({
 					...form,
 					[field]: {
 						...form[field],
-						error: form[field].checkField(target.value),
+						error: template[field].checkField(target.value),
 						triggered: true
 					}
 				});
 			}
 		}),
-		[form]
+		[form, setForm, template]
 	);
 
-	// setup the error message and the trigger status
-	useEffect(() => {
-		// retrieve a copy of the form
-		const formCopy = { ...form };
-
-		// loop all fields
-		for (const fieldName in formCopy) {
-			// retrieve the current field
-			const field = formCopy[fieldName];
-
-			// check if the field contains a field checker
-			if (field.checkField !== undefined) {
-				// retrieve the error message
-				const error = field.checkField(field.value);
+	// setup the subform setter
+	const setSubform = useCallback(
+		(field, index) => newSubform => {
+			// update the field with the new subform
+			setForm(prev => {
+				// retrieve a copy of the form
+				const formCopy = { ...prev };
 
 				// update the form copy
-				field.error = trigger ? error : '';
-				field.triggered = trigger;
-				field.currentErrorMessage = error;
-			}
-		}
+				formCopy[field][index] =
+					typeof newSubform === 'object'
+						? newSubform
+						: newSubform(formCopy[field][index]);
 
-		// update the form
-		setForm(formCopy);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [trigger]);
+				return formCopy;
+			});
+		},
+		[setForm]
+	);
 
-	// update the parent form
-	useEffect(() => {
-		// check if the parent field name is not defined
-		if (currentFieldsName === undefined) {
-			setParentForm(form);
+	// setup the add subform callback
+	const addSubform = useCallback(
+		field => () => {
+			// create a new subform
+			const subform = {};
 
-			return;
-		}
+			// check the template to hydrate the subform
+			Object.entries(template[field].subform).forEach(
+				([key, { subform: fieldSubform, defaultValue }]) => {
+					// check if the field has a subform
+					if (fieldSubform !== undefined) {
+						// affect a empty array
+						subform[key] = [];
+					} else {
+						// otherwise create a new field
+						subform[key] = {
+							value:
+								defaultValue !== undefined ? defaultValue : '',
+							error: '',
+							triggered: false
+						};
+					}
+				}
+			);
 
-		setParentForm(prev => {
-			// retrieve a copy of the form
-			const formCopy = { ...prev };
+			// update the form
+			setForm(prev => {
+				// retrieve a copy of the form
+				const formCopy = { ...prev };
 
-			// update the current form
-			formCopy[currentFieldsName][currentFieldsIndex] = form;
+				// add the subform to the field
+				formCopy[field].push(subform);
 
-			// return the updated copy
-			return formCopy;
-		});
-	}, [currentFieldsIndex, form, currentFieldsName, setParentForm]);
+				return formCopy;
+			});
+		},
+		[setForm, template]
+	);
 
-	return fields.map(field =>
-		typeof field.payload !== 'object' ? (
-			<Box mb={2} key={field.name}>
+	// setup the remove subform callback
+	const removeSubform = useCallback(
+		(field, index) => () => {
+			// update the form
+			setForm(prev => {
+				// retrieve a copy of the form
+				const formCopy = { ...prev };
+
+				// remove the subform from the field
+				formCopy[field].splice(index, 1);
+
+				return formCopy;
+			});
+		},
+		[setForm]
+	);
+
+	return Object.entries(form).map(([key, field]) =>
+		!Array.isArray(field) ? (
+			<Box mb={2} key={key}>
 				<Field
-					field={{ name: field.name, ...field.fieldParam }}
 					form={form}
+					template={{ name: key, ...template[key] }}
 					handleForm={handleForm}
 					autoSubmit={autoSubmit}
 					preName={
 						currentFieldsName !== undefined
 							? `${currentFieldsName}_${currentFieldsIndex}`
-							: ''
+							: undefined
 					}
 				/>
 			</Box>
 		) : (
-			<Fragment key={field.name}>
-				{field.payload.map((subFields, index) => (
-					<Fields
-						fields={subFields}
-						autoSubmit={autoSubmit}
-						trigger={trigger}
-						setForm={setForm}
-						currentFieldsName={field.name}
-						currentFieldsIndex={index}
-						key={index}
-					/>
-				))}
-			</Fragment>
+			<Box mb={2} p={1} bgcolor={defaultBG} clone key={key}>
+				<Paper elevation={4}>
+					{field.map((subForm, index) => (
+						<Box mb={2} p={1} clone key={index}>
+							<Paper elevation={2}>
+								<Button
+									variant="contained"
+									color="secondary"
+									startIcon={<Remove />}
+									onClick={removeSubform(key, index)}
+								>
+									{template[key].removeLabel}
+								</Button>
+								<Fields
+									form={subForm}
+									setForm={setSubform(key, index)}
+									template={template[key].subform}
+									autoSubmit={autoSubmit}
+									currentFieldsName={`${
+										currentFieldsName !== undefined
+											? `${currentFieldsName}_${currentFieldsIndex}_`
+											: ''
+									}${key}`}
+									currentFieldsIndex={index}
+								/>
+							</Paper>
+						</Box>
+					))}
+					<Button
+						variant="contained"
+						color="secondary"
+						startIcon={<Add />}
+						onClick={addSubform(key)}
+					>
+						{template[key].addLabel}
+					</Button>
+				</Paper>
+			</Box>
 		)
 	);
 }

@@ -8,7 +8,11 @@ import { Auth } from 'aws-amplify';
 import { SIGN_IN } from '../routes';
 import { TEXT } from '../utils/forms/Field';
 
-import SignUpConfirm, { USERNAME, CODE } from '../components/SignUpConfirm';
+import SignUpConfirm from '../components/SignUpConfirm';
+
+// setup field name constants
+const USERNAME = 'username';
+const CODE = 'code';
 
 /**
  * check the correctness of the username
@@ -49,44 +53,53 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 	// setup the history hook
 	const history = useHistory();
 
+	// setup the form hook
+	const [form, setForm] = useState({});
+
+	// retrieve the default username
+	let defaultUsername =
+		state !== undefined && state !== null && state.username !== undefined
+			? state.username
+			: '';
+
 	// setup the resend button messages hook
 	const [resendWaitMessage, setResendWaitMessage] = useState('');
 	const [resendErrorMessage, setResendErrorMessage] = useState('');
 
-	// setup username hook
-	const [username, setUsername] = useState(
-		state !== undefined && state.username !== undefined
-			? state.username
-			: ''
-	);
-
-	// setup the fields data retriever
-	const fields = waitComponent => [
+	// setup the fields data
+	const data = [
 		{
 			name: USERNAME,
-			payload: username,
+			payload: defaultUsername
+		},
+		{
+			name: CODE,
+			payload: ''
+		}
+	];
+
+	// setup the form template
+	const template = waitComponent => ({
+		[USERNAME]: {
+			type: TEXT,
+			label: 'Pseudo',
 			checkField: checkUsername,
-			fieldParam: {
-				type: TEXT,
-				label: 'Pseudo',
+			inputParam: {
 				placeholder: 'dupont',
 				InputProps: {
 					endAdornment: waitComponent
 				}
-			},
-			setter: setUsername
+			}
 		},
-		{
-			name: CODE,
-			payload: '',
+		[CODE]: {
+			type: TEXT,
+			label: 'Code de vérification',
 			checkField: checkCode,
-			fieldParam: {
-				type: TEXT,
-				label: 'Code de vérification',
+			inputParam: {
 				placeholder: '123456'
 			}
 		}
-	];
+	});
 
 	// setup the onSubmit callback
 	const onSubmit = useCallback(
@@ -105,7 +118,9 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 	// setup the resend callback
 	const resend = useCallback(
 		() =>
-			Auth.resendSignUp(username)
+			Auth.resendSignUp(
+				form[USERNAME] !== undefined ? form[USERNAME].value : ''
+			)
 				.then(() => {
 					// setup a interval to lock the update
 					let waitLeft = 60;
@@ -127,8 +142,6 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 						// update the wait message
 						setResendWaitMessage(`Attendez ${waitLeft}s`);
 					}, 1000);
-
-					console.log('re sended');
 				})
 				.catch(() => {
 					// lock the resend button
@@ -140,13 +153,15 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 						setResendErrorMessage('');
 					}, 1000);
 				}),
-		[username]
+		[form]
 	);
 
 	return (
 		<SignUpConfirm
-			fields={fields}
+			data={data}
+			template={template}
 			onSubmit={onSubmit}
+			setForm={setForm}
 			resend={resend}
 			resendWaitMessage={resendWaitMessage}
 			resendErrorMessage={resendErrorMessage}

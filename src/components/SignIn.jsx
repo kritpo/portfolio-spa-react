@@ -9,17 +9,14 @@ import Form from '../utils/forms/Form';
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
 
-// setup field name constants
-export const USERNAME = 'username';
-export const PASSWORD = 'password';
-
 // configure the prop types validation
 SignIn.propTypes = {
-	fields: PropTypes.array.isRequired,
+	data: PropTypes.array.isRequired,
+	template: PropTypes.object.isRequired,
 	onSubmit: PropTypes.func.isRequired
 };
 
-function SignIn({ fields, onSubmit }) {
+function SignIn({ data, template, onSubmit }) {
 	return (
 		<Fragment>
 			<Header
@@ -39,7 +36,8 @@ function SignIn({ fields, onSubmit }) {
 							Connexion
 						</Typography>
 						<Form
-							fields={fields}
+							data={data}
+							template={template}
 							onSubmit={onSubmit}
 							errorMessage="Une erreur inattendue est survenue. Vérifiez vos identifiants, sinon veuillez réessayer ultérieurement."
 							action="Connexion"

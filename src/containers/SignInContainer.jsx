@@ -11,7 +11,11 @@ import { login } from '../actions';
 import { HOME } from '../routes';
 import { TEXT, PASSWORD as PASSWORD_TYPE } from '../utils/forms/Field';
 
-import SignIn, { USERNAME, PASSWORD } from '../components/SignIn';
+import SignIn from '../components/SignIn';
+
+// setup field name constants
+const USERNAME = 'username';
+const PASSWORD = 'password';
 
 /**
  * check the correctness of the username
@@ -65,28 +69,36 @@ function SignInContainer({ location: { state }, login, ...props }) {
 			: '';
 
 	// setup the fields data
-	const fields = [
+	const data = [
 		{
 			name: USERNAME,
-			payload: defaultUsername,
-			checkField: checkUsername,
-			fieldParam: {
-				type: TEXT,
-				label: 'Pseudo',
-				placeholder: 'dupont'
-			}
+			payload: defaultUsername
 		},
 		{
 			name: PASSWORD,
-			payload: '',
+			payload: ''
+		}
+	];
+
+	// setup the form template
+	const template = {
+		[USERNAME]: {
+			type: TEXT,
+			label: 'Pseudo',
+			checkField: checkUsername,
+			inputParam: {
+				placeholder: 'dupont'
+			}
+		},
+		[PASSWORD]: {
+			type: PASSWORD_TYPE,
+			label: 'Mot de passe',
 			checkField: checkPassword,
-			fieldParam: {
-				type: PASSWORD_TYPE,
-				label: 'Mot de passe',
+			inputParam: {
 				placeholder: 'Mot de passe'
 			}
 		}
-	];
+	};
 
 	// setup the onSubmit callback
 	const onSubmit = useCallback(
@@ -112,7 +124,14 @@ function SignInContainer({ location: { state }, login, ...props }) {
 		[history, login]
 	);
 
-	return <SignIn fields={fields} onSubmit={onSubmit} {...props} />;
+	return (
+		<SignIn
+			data={data}
+			template={template}
+			onSubmit={onSubmit}
+			{...props}
+		/>
+	);
 }
 
 export default connect(null, mapDispatchToProps)(SignInContainer);

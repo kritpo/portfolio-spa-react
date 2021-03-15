@@ -9,19 +9,14 @@ import Form from '../utils/forms/Form';
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
 
-// setup field name constants
-export const USERNAME = 'username';
-export const EMAIL = 'email';
-export const PASSWORD = 'password';
-export const GDPR = 'gdpr';
-
 // configure the prop types validation
 SignUp.propTypes = {
-	fields: PropTypes.array.isRequired,
+	data: PropTypes.array.isRequired,
+	template: PropTypes.object.isRequired,
 	onSubmit: PropTypes.func.isRequired
 };
 
-function SignUp({ fields, onSubmit }) {
+function SignUp({ data, template, onSubmit }) {
 	return (
 		<Fragment>
 			<Header
@@ -41,7 +36,8 @@ function SignUp({ fields, onSubmit }) {
 							Inscription
 						</Typography>
 						<Form
-							fields={fields}
+							data={data}
+							template={template}
 							onSubmit={onSubmit}
 							errorMessage="Une erreur inattendue est survenue. Veuillez réessayer ultérieurement."
 							action="Inscription"

@@ -9,22 +9,22 @@ import Form from '../utils/forms/Form';
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
 
-// setup field name constants
-export const USERNAME = 'username';
-export const CODE = 'code';
-
 // configure the prop types validation
 SignUpConfirm.propTypes = {
-	fields: PropTypes.func.isRequired,
+	data: PropTypes.array.isRequired,
+	template: PropTypes.func.isRequired,
 	onSubmit: PropTypes.func.isRequired,
+	setForm: PropTypes.func.isRequired,
 	resend: PropTypes.func.isRequired,
 	resendWaitMessage: PropTypes.string.isRequired,
 	resendErrorMessage: PropTypes.string.isRequired
 };
 
 function SignUpConfirm({
-	fields,
+	data,
+	template,
 	onSubmit,
+	setForm,
 	resend,
 	resendWaitMessage,
 	resendErrorMessage
@@ -51,7 +51,8 @@ function SignUpConfirm({
 							Confirmation d'inscription
 						</Typography>
 						<Form
-							fields={fields(
+							data={data}
+							template={template(
 								<Button
 									color="primary"
 									size="small"
@@ -72,6 +73,7 @@ function SignUpConfirm({
 							onSubmit={onSubmit}
 							errorMessage="Une erreur inattendue est survenue. Vérifiez le code, sinon veuillez réessayer ultérieurement."
 							action="Confirmer"
+							setForm={setForm}
 						>
 							<CustomLink to={SIGN_UP}>
 								Pas encore inscrit ? Inscrivez-vous

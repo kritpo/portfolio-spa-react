@@ -24,7 +24,7 @@ const setupForm = formData =>
 		(object, { name, payload }) => ({
 			...object,
 			[name]:
-				typeof payload !== 'object'
+				typeof payload !== 'object' || payload instanceof Date
 					? {
 							value: payload,
 							error: '',

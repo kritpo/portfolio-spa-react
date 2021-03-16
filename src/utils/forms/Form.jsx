@@ -15,6 +15,29 @@ import Loading from '../Loading';
 import Fields from './Fields';
 
 /**
+ * decrypt form to extract data
+ * @param {object} form the form to decrypt
+ * @returns the extracted data
+ */
+export const decryptForm = form =>
+	Object.entries(form).reduce(
+		(array, [name, payload]) => [
+			...array,
+			typeof payload === 'object'
+				? !Array.isArray(payload)
+					? { name, payload: payload.value }
+					: {
+							name,
+							payload: payload.map(subform =>
+								decryptForm(subform)
+							)
+					  }
+				: undefined
+		],
+		[]
+	);
+
+/**
  * reduce data into a form data
  * @param {array} data the default data
  * @returns the final form

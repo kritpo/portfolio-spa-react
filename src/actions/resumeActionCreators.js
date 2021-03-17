@@ -27,12 +27,11 @@ export const fetchResume = (
 
 	// check if the requested resume is the one loaded
 	if (
-		currentResume.username === username &&
-		(languageCode === undefined ||
-			currentResume.languageCode === languageCode)
+		currentResume.resume.username === username &&
+		currentResume.resume.languageCode === languageCode
 	) {
-		// end the function here, as the resume is already loaded
-		return;
+		// return an auto-resolved promise
+		return new Promise(resolve => resolve());
 	}
 
 	// update status of the state as loading

@@ -95,6 +95,22 @@ function Fields({
 						triggered: true
 					}
 				}));
+			},
+			// handle field error trigger
+			onError: field => error => {
+				// check if the field error is already triggered or if the error is already setted
+				if (form[field].error !== '' || form[field].error === error) {
+					return;
+				}
+
+				// update the form
+				setForm(prev => ({
+					...prev,
+					[field]: {
+						...prev[field],
+						error
+					}
+				}));
 			}
 		}),
 		[form, setForm, template]

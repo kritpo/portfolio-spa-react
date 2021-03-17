@@ -92,7 +92,8 @@ Field.propTypes = {
 	}).isRequired,
 	handleForm: PropTypes.shape({
 		onChange: PropTypes.func.isRequired,
-		onBlur: PropTypes.func.isRequired
+		onBlur: PropTypes.func.isRequired,
+		onError: PropTypes.func.isRequired
 	}).isRequired,
 	autoSubmit: PropTypes.func.isRequired,
 	preName: PropTypes.string
@@ -101,7 +102,7 @@ Field.propTypes = {
 function Field({
 	form,
 	template: { name, type, label, inputParam = {}, configParam = {} },
-	handleForm: { onChange, onBlur },
+	handleForm: { onChange, onBlur, onError },
 	autoSubmit,
 	preName
 }) {
@@ -260,6 +261,7 @@ function Field({
 							label={label}
 							value={currentValue}
 							onChange={dateOnChange}
+							onError={onError(name)}
 							onKeyPress={autoSubmit}
 							format="dd/MM/yyyy"
 							minDateMessage={

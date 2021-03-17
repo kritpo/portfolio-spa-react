@@ -85,7 +85,7 @@ const checkError = (form, template, setForm) => {
 			const error = template[fieldName].checkField(field.value);
 
 			// check if the field is correct
-			errors = errors || error !== '';
+			errors = errors || error !== '' || field.error !== '';
 
 			// update the form
 			field.error = error;

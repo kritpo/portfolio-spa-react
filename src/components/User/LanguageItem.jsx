@@ -45,15 +45,17 @@ function LanguageItem({ defaultLanguage, languageCode, language }) {
 						Supprimer
 					</Button>
 				</Box>
-				<Box m={2} clone>
-					<Button
-						variant="contained"
-						color="secondary"
-						startIcon={<FirstPage />}
-					>
-						Mettre par défaut
-					</Button>
-				</Box>
+				{defaultLanguage.languageCode !== languageCode && (
+					<Box m={2} clone>
+						<Button
+							variant="contained"
+							color="secondary"
+							startIcon={<FirstPage />}
+						>
+							Mettre par défaut
+						</Button>
+					</Box>
+				)}
 			</TableCell>
 		</TableRow>
 	);

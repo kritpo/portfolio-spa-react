@@ -12,13 +12,13 @@ export const checkMinLength = length => value => {
 };
 
 /**
- * setup the contains checker
- * @param {string} str the string to check if it is contained
+ * setup the regex checker
+ * @param {Regex} rgx the regex to compare to
  * @returns the field checker
  */
-export const checkContains = str => value => {
-	if (!value.includes(str)) {
-		return `Le champ doit contenir \`${str}\`.`;
+export const checkRegex = rgx => value => {
+	if (!rgx.test(value)) {
+		return `Le champ doit être dans le format \`${rgx}\`.`;
 	}
 
 	return '';

@@ -7,7 +7,7 @@ import { Auth } from 'aws-amplify';
 import { SIGN_UP_CONFIRM } from '../routes';
 import checkField, {
 	checkMinLength,
-	checkContains,
+	checkRegex,
 	checkCharType,
 	checkValue
 } from '../utils/forms/checkField';
@@ -63,7 +63,10 @@ function SignUpContainer({ ...props }) {
 		[EMAIL]: {
 			type: EMAIL_TYPE,
 			label: 'Adresse mail',
-			checkField: checkField([checkMinLength(3), checkContains('@')]),
+			checkField: checkField([
+				checkMinLength(3),
+				checkRegex(/^[a-z0-9.\-_]+@[a-z0-9.\-_]+\.[a-z0-9]{2,}$/)
+			]),
 			inputParam: {
 				placeholder: 'dupont@gmail.com'
 			}

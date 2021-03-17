@@ -42,7 +42,7 @@ export const decryptForm = form =>
  * @param {array} data the default data
  * @returns the final form
  */
-const setupForm = formData =>
+export const setupForm = formData =>
 	formData.reduce(
 		(object, { name, payload }) => ({
 			...object,

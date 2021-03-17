@@ -70,14 +70,14 @@ function Fields({
 				const error = template[field].checkField(value);
 
 				// update the form
-				setForm({
-					...form,
+				setForm(prev => ({
+					...prev,
 					[field]: {
-						...form[field],
+						...prev[field],
 						value,
-						error: form[field].triggered ? error : ''
+						error: prev[field].triggered ? error : ''
 					}
-				});
+				}));
 			},
 			// handle field blur
 			onBlur: field => ({ target }) => {
@@ -87,14 +87,14 @@ function Fields({
 				}
 
 				// update the form
-				setForm({
-					...form,
+				setForm(prev => ({
+					...prev,
 					[field]: {
-						...form[field],
+						...prev[field],
 						error: template[field].checkField(target.value),
 						triggered: true
 					}
-				});
+				}));
 			}
 		}),
 		[form, setForm, template]

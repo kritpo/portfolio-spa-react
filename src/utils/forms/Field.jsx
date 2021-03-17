@@ -34,6 +34,10 @@ export const SELECT = 'select';
 export const DATE = 'date';
 export const DATE_MASKABLE = 'date_maskable';
 
+// setup data constant
+export const MIN_DATE = new Date('1900-01-01');
+export const MAX_DATE = new Date('2100-01-01');
+
 // setup the mask array
 const maskInput = {
 	[NUMBER_2]: {
@@ -101,9 +105,6 @@ function Field({
 	autoSubmit,
 	preName
 }) {
-	// setup the hidden/show hook
-	const [show, setShow] = useState(true);
-
 	// check the type of the field
 	switch (type) {
 		// if the field must be a text, a textarea, a email, a password, a number, a link, a phone number or a country code field
@@ -214,10 +215,10 @@ function Field({
 				if (!form[name].triggered) {
 					// trigger the blur event
 					onBlur(name)({ target: { value: date } });
-				} else {
-					// otherwise, trigger the change event
-					onChange(name)({ target: { value: date } });
 				}
+
+				// trigger the change event
+				onChange(name)({ target: { value: date } });
 			};
 
 			// retrieve fields
@@ -233,26 +234,20 @@ function Field({
 			// initialize the date value
 			let currentValue = new Date();
 
-			// check if the date value is not current
-			if (form[name].value !== 'current') {
+			// check if the date value is not maximum === show date
+			if (form[name].value !== MAX_DATE) {
 				// update the date value
 				currentValue = form[name].value;
 			}
 
 			// setup the date toggler
 			const toggleCurrent = () => {
-				// retrieve the next status
-				const nextStatus = !show;
-
-				// check if the status is to show
-				if (nextStatus) {
-					dateOnChange('current');
+				// check if the date is not maximum === show date
+				if (form[name].value !== MAX_DATE) {
+					dateOnChange(MAX_DATE);
 				} else {
 					dateOnChange(new Date());
 				}
-
-				// update the show status
-				setShow(nextStatus);
 			};
 
 			return (
@@ -281,7 +276,7 @@ function Field({
 											? form[minDateField].value
 											: minDate
 										: minDate
-									: new Date('1900-01-01')
+									: MIN_DATE
 							}
 							maxDateMessage={
 								maxDateMessage !== undefined
@@ -297,9 +292,12 @@ function Field({
 											? form[maxDateField].value
 											: maxDate
 										: maxDate
-									: new Date('2100-01-01')
+									: MAX_DATE
 							}
-							disabled={type === DATE_MASKABLE && !show}
+							disabled={
+								type === DATE_MASKABLE &&
+								form[name].value === MAX_DATE
+							}
 							error={form[name].error !== ''}
 							required
 						/>
@@ -309,7 +307,7 @@ function Field({
 							control={
 								<Checkbox
 									color="primary"
-									checked={!show}
+									checked={form[name].value === MAX_DATE}
 									onChange={toggleCurrent}
 								/>
 							}

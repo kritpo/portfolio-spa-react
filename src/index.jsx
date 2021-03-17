@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import store from './store';
 
-import Amplify from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
 
 import config from './aws-exports';
 
@@ -26,7 +26,14 @@ Amplify.configure({
 		endpoints: [
 			{
 				name: 'PortfolioAPIServerless',
-				endpoint: process.env.REACT_APP_API_DOMAIN_NAME
+				endpoint: process.env.REACT_APP_API_DOMAIN_NAME,
+				custom_header: async () => {
+					return {
+						Authorization: `Bearer ${(await Auth.currentSession())
+							.getIdToken()
+							.getJwtToken()}`
+					};
+				}
 			}
 		]
 	}

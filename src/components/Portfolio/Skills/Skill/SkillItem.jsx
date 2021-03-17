@@ -4,6 +4,9 @@ import { PropTypes } from 'prop-types';
 import { Box, LinearProgress } from '@material-ui/core';
 import CustomIcon from '../../../../utils/icons/CustomIcon';
 
+// setup skill level constants
+export const LEVEL = ['Novice', 'Intermédiaire', 'Avancé', 'Maîtrise'];
+
 // configure the prop types validation
 SkillItem.propTypes = {
 	skill: PropTypes.shape({
@@ -20,11 +23,11 @@ function SkillItem({ skill: { name, level } }) {
 				<LinearProgress
 					variant="determinate"
 					value={
-						level === 'Maîtrise'
+						level === LEVEL[3]
 							? 98
-							: level === 'Avancé'
+							: level === LEVEL[2]
 							? 90
-							: level === 'Intermédiaire'
+							: level === LEVEL[1]
 							? 75
 							: 50
 					}

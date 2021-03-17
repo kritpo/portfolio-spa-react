@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { HOME, CV } from '../routes';
+import { HOME, CV, CV_CREATE } from '../routes';
 
 import {
 	Container,
@@ -101,15 +101,17 @@ function User({ languages: { defaultLanguage, languages }, username }) {
 							</Table>
 						</TableContainer>
 						<Box>
-							<Box m={2} clone>
-								<Button
-									variant="contained"
-									color="secondary"
-									startIcon={<Add />}
-								>
-									Créer
-								</Button>
-							</Box>
+							<CustomLink to={CV_CREATE}>
+								<Box m={2} clone>
+									<Button
+										variant="contained"
+										color="secondary"
+										startIcon={<Add />}
+									>
+										Créer
+									</Button>
+								</Box>
+							</CustomLink>
 							{languages.length > 0 && (
 								<CustomLink
 									to={CV.replace(':username', username)}

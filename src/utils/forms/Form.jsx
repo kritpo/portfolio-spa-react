@@ -38,11 +38,11 @@ export const decryptForm = form =>
 	);
 
 /**
- * reduce data into a form data
+ * encrypt data into a form
  * @param {array} data the default data
  * @returns the final form
  */
-export const setupForm = formData =>
+export const encryptForm = formData =>
 	formData.reduce(
 		(object, { name, payload }) => ({
 			...object,
@@ -54,7 +54,7 @@ export const setupForm = formData =>
 							triggered: false
 					  }
 					: Array.isArray(payload)
-					? payload.map(subformData => setupForm(subformData))
+					? payload.map(subformData => encryptForm(subformData))
 					: undefined
 		}),
 		{}
@@ -153,7 +153,7 @@ function Form({
 	const { executeRecaptcha } = useGoogleReCaptcha();
 
 	// setup form states
-	const [form, setIntForm] = useState(setupForm(data));
+	const [form, setIntForm] = useState(encryptForm(data));
 	const [isSending, setIsSending] = useState(false);
 	const [error, setError] = useState('');
 

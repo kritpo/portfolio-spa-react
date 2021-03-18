@@ -1,9 +1,13 @@
 import React, { useCallback, useState } from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
 
 import { API } from 'aws-amplify';
 
+import { fetchResumeLanguages } from '../actions';
 import {
 	NAME,
 	LABEL,
@@ -39,7 +43,24 @@ import CVCreate from '../components/CVCreate';
 // setup field name constants
 const LANGUAGE_CODE = 'language_code';
 
-function CVCreateContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ username }, ...props) => ({
+	username,
+	...props
+});
+
+// configure the actions to pass as props to the component
+const mapDispatchToProps = {
+	fetchResumeLanguages
+};
+
+// configure the prop types validation
+CVCreateContainer.propTypes = {
+	username: PropTypes.string.isRequired,
+	fetchResumeLanguages: PropTypes.func.isRequired
+};
+
+function CVCreateContainer({ username, fetchResumeLanguages, ...props }) {
 	// setup the history hook
 	const history = useHistory();
 
@@ -148,11 +169,14 @@ function CVCreateContainer({ ...props }) {
 			return API.post('PortfolioAPIServerless', '/resumes/', {
 				body
 			}).then(() => {
+				// reload the resume languages
+				fetchResumeLanguages(false, username);
+
 				// redirect the user to the CVs page
 				history.push(CV_LIST);
 			});
 		},
-		[data, history]
+		[data, fetchResumeLanguages, history, username]
 	);
 
 	return (
@@ -169,4 +193,4 @@ function CVCreateContainer({ ...props }) {
 	);
 }
 
-export default CVCreateContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(CVCreateContainer);

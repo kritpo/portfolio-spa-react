@@ -19,6 +19,8 @@ import {
 import { Add, Visibility } from '@material-ui/icons';
 
 import Header from './Header';
+import Loading from '../utils/Loading';
+import Error from '../utils/Error';
 import CustomLink from '../utils/CustomLink';
 import LanguageItemContainer from '../containers/CVList/LanguageItemContainer';
 
@@ -40,19 +42,18 @@ const languagesList = (languages, defaultLanguage) =>
 
 // configure the prop types validation
 User.propTypes = {
-	languages: PropTypes.shape({
-		defaultLanguage: PropTypes.object.isRequired,
-		languages: PropTypes.arrayOf(
-			PropTypes.shape({
-				languageCode: PropTypes.string.isRequired,
-				language: PropTypes.string.isRequired
-			})
-		).isRequired
+	resumeLanguages: PropTypes.shape({
+		isLoading: PropTypes.bool.isRequired,
+		resumeLanguages: PropTypes.object.isRequired,
+		error: PropTypes.string
 	}).isRequired,
 	username: PropTypes.string.isRequired
 };
 
-function User({ languages: { defaultLanguage, languages }, username }) {
+function User({
+	resumeLanguages: { isLoading, resumeLanguages, error },
+	username
+}) {
 	return (
 		<Fragment>
 			<Header title="CVs" history={[{ link: HOME, title: 'Accueil' }]} />
@@ -68,69 +69,82 @@ function User({ languages: { defaultLanguage, languages }, username }) {
 						<Typography component="h2" variant="h4">
 							CVs
 						</Typography>
-						<TableContainer component={Paper}>
-							<Table>
-								<TableHead>
-									<TableRow>
-										<TableCell>Code langue</TableCell>
-										<TableCell align="center">
-											Langue
-										</TableCell>
-										<TableCell align="center">
-											Actions
-										</TableCell>
-									</TableRow>
-								</TableHead>
-								<TableBody>
-									{languages.length > 0 ? (
-										languagesList(
-											languages,
-											defaultLanguage
-										)
-									) : (
-										<TableRow>
-											<TableCell
-												align="center"
-												colSpan={3}
+						{isLoading ? (
+							<Loading size="40vh" />
+						) : error !== null ? (
+							<Error size="40vh">
+								Impossible de charger les données
+							</Error>
+						) : (
+							<Fragment>
+								<TableContainer component={Paper}>
+									<Table>
+										<TableHead>
+											<TableRow>
+												<TableCell>
+													Code langue
+												</TableCell>
+												<TableCell align="center">
+													Langue
+												</TableCell>
+												<TableCell align="center">
+													Actions
+												</TableCell>
+											</TableRow>
+										</TableHead>
+										<TableBody>
+											{resumeLanguages.languages.length >
+											0 ? (
+												languagesList(
+													resumeLanguages.languages,
+													resumeLanguages.defaultLanguage
+												)
+											) : (
+												<TableRow>
+													<TableCell
+														align="center"
+														colSpan={3}
+													>
+														Aucun CV
+													</TableCell>
+												</TableRow>
+											)}
+										</TableBody>
+									</Table>
+								</TableContainer>
+								<Box>
+									<CustomLink to={CV_CREATE}>
+										<Box m={2} clone>
+											<Button
+												variant="contained"
+												color="secondary"
+												startIcon={<Add />}
 											>
-												Aucun CV
-											</TableCell>
-										</TableRow>
-									)}
-								</TableBody>
-							</Table>
-						</TableContainer>
-						<Box>
-							<CustomLink to={CV_CREATE}>
-								<Box m={2} clone>
-									<Button
-										variant="contained"
-										color="secondary"
-										startIcon={<Add />}
-									>
-										Créer
-									</Button>
-								</Box>
-							</CustomLink>
-							{languages.length > 0 && (
-								<CustomLink
-									to={PORTFOLIO.replace(
-										':username',
-										username
-									)}
-								>
-									<Box m={2} clone>
-										<Button
-											variant="contained"
-											color="secondary"
-											startIcon={<Visibility />}
+												Créer
+											</Button>
+										</Box>
+									</CustomLink>
+									{resumeLanguages.languages.length > 0 && (
+										<CustomLink
+											to={PORTFOLIO.replace(
+												':username',
+												username
+											)}
 										>
-											Voir
-										</Button>
-									</Box>
-								</CustomLink>
-							)}
-						</Box>
+											<Box m={2} clone>
+												<Button
+													variant="contained"
+													color="secondary"
+													startIcon={<Visibility />}
+												>
+													Voir
+												</Button>
+											</Box>
+										</CustomLink>
+									)}
+								</Box>
+							</Fragment>
+						)}
 					</Paper>
 				</Box>
 			</Container>

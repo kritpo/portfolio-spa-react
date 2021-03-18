@@ -1,44 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import { API } from 'aws-amplify';
+import { fetchResumeLanguages } from '../actions';
 
-import CVS from '../components/CVList';
+import CVList from '../components/CVList';
 
 // configure the states to pass as props to the component
-const mapStateToProps = ({ username }, ...props) => ({
+const mapStateToProps = ({ username, resumeLanguages }, ...props) => ({
 	username,
+	resumeLanguages,
 	...props
 });
 
-// configure the prop types validation
-UserContainer.propTypes = {
-	username: PropTypes.string.isRequired
+// configure the actions to pass as props to the component
+const mapDispatchToProps = {
+	fetchResumeLanguages
 };
 
-function UserContainer({ username, ...props }) {
-	// initialize the languages hook
-	const [languages, setLanguages] = useState({
-		defaultLanguage: {},
-		languages: []
-	});
+// configure the prop types validation
+UserContainer.propTypes = {
+	username: PropTypes.string.isRequired,
+	fetchResumeLanguages: PropTypes.func.isRequired
+};
 
-	// retrieve the languages list
+function UserContainer({ username, fetchResumeLanguages, ...props }) {
+	// setup the resume languages fetching hook
 	useEffect(() => {
-		API.get(
-			'PortfolioAPIServerless',
-			'/resumes/' + username + '/languages',
-			{}
-		)
-			.then(resumeLanguages => {
-				setLanguages(resumeLanguages);
-			})
-			.catch(() => {});
-	}, [username]);
+		// fetch the resume languages at the loading of the component
+		fetchResumeLanguages(false, username);
+	}, [fetchResumeLanguages, username]);
 
-	return <CVS languages={languages} username={username} {...props} />;
+	return <CVList username={username} {...props} />;
 }
 
-export default connect(mapStateToProps)(UserContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(UserContainer);

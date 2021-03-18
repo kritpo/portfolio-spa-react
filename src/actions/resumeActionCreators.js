@@ -1,5 +1,7 @@
 import { API } from 'aws-amplify';
 
+import { fetchResumeLanguages } from './resumeLanguagesActionCreators';
+
 import {
 	RESUME_LOADING,
 	RESUME_LOADED,
@@ -39,6 +41,9 @@ export const fetchResume = (
 	// update status of the state as loading
 	dispatch(resumeLoading(isMain));
 
+	// fetch the resume languages as well
+	fetchResumeLanguages(isMain, username)(dispatch);
+
 	// fetch the resume on the API
 	return (
 		API.get(
@@ -66,18 +71,8 @@ export const fetchResume = (
 					id: i++
 				}));
 
-				// fetch languages linked to the resume
-				return API.get(
-					'PortfolioAPIServerless',
-					'/resumes/' + username + '/languages',
-					{}
-				).then(languages => {
-					// add the languages to the final resume object
-					resume.resumeLanguages = languages;
-
-					// update state with fetched data
-					dispatch(resumeLoaded(resume, isMain));
-				});
+				// update state with fetched data
+				dispatch(resumeLoaded(resume, isMain));
 			})
 			// update status of the state as failed with the error message
 			.catch(({ message }) => {
@@ -131,18 +126,23 @@ export const deleteResume = languageCode => (dispatch, getState) => {
 		'PortfolioAPIServerless',
 		'/resumes/' + username + '?languageCode=' + languageCode,
 		{}
-	).then(() => {
-		// check if a resume is correctly loaded and if the loaded resume is wanted to delete one
-		if (
-			!resume.isLoading &&
-			resume.error === null &&
-			resume.resume.username === username &&
-			resume.resume.languageCode === languageCode
-		) {
-			// update state with data
-			dispatch(resumeDeleted());
-		}
-	});
+	)
+		.then(() => {
+			// check if a resume is correctly loaded and if the loaded resume is wanted to delete one
+			if (
+				!resume.isLoading &&
+				resume.error === null &&
+				resume.resume.username === username &&
+				resume.resume.languageCode === languageCode
+			) {
+				// update state with data
+				dispatch(resumeDeleted());
+			}
+		})
+		.finally(() => {
+			// fetch the new resume languages as well
+			fetchResumeLanguages(false, username)(dispatch);
+		});
 };
 
 /**

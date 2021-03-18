@@ -4,7 +4,9 @@ import thunk from 'redux-thunk';
 
 import {
 	resume,
+	resumeLanguages,
 	mainResume,
+	mainResumeLanguages,
 	navIntersection,
 	darkMode,
 	webpSupport,
@@ -14,7 +16,9 @@ import {
 // configure the root reducer by combining all reducers
 const rootReducer = combineReducers({
 	resume,
+	resumeLanguages,
 	mainResume,
+	mainResumeLanguages,
 	navIntersection,
 	darkMode,
 	webpSupport,

@@ -93,7 +93,7 @@ function LanguageItem({
 					aria-describedby={`alert-dialog-description-${languageCode}`}
 				>
 					<DialogTitle id={`alert-dialog-title-${languageCode}`}>
-						Supprimer le CV
+						Supprimer le CV {language}
 					</DialogTitle>
 					<DialogContent>
 						<DialogContentText

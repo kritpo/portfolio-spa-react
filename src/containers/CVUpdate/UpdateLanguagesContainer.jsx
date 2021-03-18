@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import { CVS } from '../../routes';
 import { updateResume } from '../../actions';
 import * as cvUtils from '../../utils/cvUtils';
 
@@ -11,6 +12,7 @@ import LanguagesContainer, {
 	LANGUAGE,
 	FLUENCY
 } from '../CV/LanguagesContainer';
+import CustomLink from '../../utils/CustomLink';
 
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
@@ -59,7 +61,9 @@ function UpdateLanguagesContainer({ languages, updateResume, setForm }) {
 			onSubmit={onSubmit}
 			action="Modifier"
 			setForm={setForm}
-		/>
+		>
+			<CustomLink to={CVS}>Revenir à la liste des CVs</CustomLink>
+		</LanguagesContainer>
 	);
 }
 

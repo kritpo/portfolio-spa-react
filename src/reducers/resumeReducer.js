@@ -1,4 +1,9 @@
-import { RESUME_LOADING, RESUME_LOADED, RESUME_FAILED } from '../actions/types';
+import {
+	RESUME_LOADING,
+	RESUME_LOADED,
+	RESUME_FAILED,
+	UPDATE_RESUME
+} from '../actions/types';
 
 // configure initial state
 const initialState = {
@@ -27,6 +32,15 @@ export const resume = (state = initialState, { type, payload }) => {
 		// check if the fetching of the resume has failed
 		case RESUME_FAILED:
 			return { ...state, isLoading: false, resume: {}, error: payload };
+
+		// check if the asking to update the resume
+		case UPDATE_RESUME:
+			return {
+				...state,
+				isLoading: false,
+				resume: { ...state.resume, ...payload },
+				error: null
+			};
 
 		default:
 			return state;

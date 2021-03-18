@@ -6,7 +6,8 @@ import {
 	RESUME_FAILED,
 	MAIN_RESUME_LOADING,
 	MAIN_RESUME_LOADED,
-	MAIN_RESUME_FAILED
+	MAIN_RESUME_FAILED,
+	UPDATE_RESUME
 } from './types';
 
 /**
@@ -85,6 +86,37 @@ export const fetchResume = (
 };
 
 /**
+ * update the resume on portfolio-api-serverless
+ * @param {object} resumePart the part of the resume to update
+ * @returns the final promise
+ */
+export const updateResume = resumePart => (dispatch, getState) => {
+	// retrieve the current resume
+	const { resume, username } = getState();
+
+	// check if the resume is not correctly loaded
+	if (resume.isLoading || resume.error !== null) {
+		// return an auto-resolved promise
+		return new Promise(resolve => resolve());
+	}
+
+	// retrieve the final body
+	const body = {
+		isPartial: true,
+		languageCode: resume.resume.languageCode,
+		...resumePart
+	};
+
+	// update the resume on the API
+	return API.put('PortfolioAPIServerless', '/resumes/' + username, {
+		body
+	}).then(() => {
+		// update state with data
+		dispatch(resumeUpdated(resumePart));
+	});
+};
+
+/**
  * redux action: set the redux state to loading
  * @param {boolean} isMain if the resume fetching is to hydrate the main resume
  * @returns the action
@@ -112,5 +144,15 @@ export const resumeLoaded = (payload, isMain) => ({
  */
 export const resumeFailed = (payload, isMain) => ({
 	type: isMain ? MAIN_RESUME_FAILED : RESUME_FAILED,
+	payload
+});
+
+/**
+ * redux action: update the resume
+ * @param {object} payload the new sub part of resume
+ * @returns the action
+ */
+export const resumeUpdated = payload => ({
+	type: UPDATE_RESUME,
 	payload
 });

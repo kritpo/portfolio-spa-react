@@ -1,8 +1,12 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
+import { CV_UPDATE } from '../../routes';
+
 import { Box, TableRow, TableCell, Button, Chip } from '@material-ui/core';
 import { Create, Delete, FirstPage } from '@material-ui/icons';
+
+import CustomLink from '../../utils/CustomLink';
 
 // configure the prop types validation
 LanguageItem.propTypes = {
@@ -27,15 +31,19 @@ function LanguageItem({ defaultLanguage, languageCode, language }) {
 			</TableCell>
 			<TableCell align="center">{language}</TableCell>
 			<TableCell align="center">
-				<Box m={2} clone>
-					<Button
-						variant="contained"
-						color="secondary"
-						startIcon={<Create />}
-					>
-						Modifier
-					</Button>
-				</Box>
+				<CustomLink to={`${CV_UPDATE}?languageCode=${languageCode}`}>
+					<Box m={2} clone>
+						<Box m={2} clone>
+							<Button
+								variant="contained"
+								color="secondary"
+								startIcon={<Create />}
+							>
+								Modifier
+							</Button>
+						</Box>
+					</Box>
+				</CustomLink>
 				<Box m={2} clone>
 					<Button
 						variant="contained"

@@ -31,7 +31,7 @@ import { REFERENCES } from '../containers/CV/ReferencesContainer';
 import { encryptForm, decryptForm } from '../utils/forms/Form';
 import checkField, { checkMinLength } from '../utils/forms/checkField';
 import { TEXT } from '../utils/forms/Field';
-import { USER } from '../routes';
+import { CVS } from '../routes';
 import * as cvUtils from '../utils/cvUtils';
 
 import CVCreate from '../components/CVCreate';
@@ -149,7 +149,7 @@ function CVCreateContainer({ ...props }) {
 				body
 			}).then(() => {
 				// redirect the user to the CVs page
-				history.push(USER);
+				history.push(CVS);
 			});
 		},
 		[data, history]

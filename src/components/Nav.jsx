@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { withStyles } from '@material-ui/styles';
 
-import { HOME, SIGN_UP, SIGN_IN, USER } from '../routes';
+import { HOME, SIGN_UP, SIGN_IN, CVS } from '../routes';
 
 import {
 	Box,
@@ -148,7 +148,7 @@ const userMenu = (
 		) : (
 			<Fragment>
 				<CustomLink
-					to={USER}
+					to={CVS}
 					nav
 					activeClassName={active}
 					className={isBurger ? fullWidth : undefined}

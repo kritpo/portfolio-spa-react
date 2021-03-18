@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import { CVS } from '../../routes';
+import { CV_LIST } from '../../routes';
 import { updateResume } from '../../actions';
 import * as cvUtils from '../../utils/cvUtils';
 
@@ -97,7 +97,7 @@ function UpdateWorkContainer({ work, updateResume, setForm }) {
 			action="Modifier"
 			setForm={setForm}
 		>
-			<CustomLink to={CVS}>Revenir à la liste des CVs</CustomLink>
+			<CustomLink to={CV_LIST}>Revenir à la liste des CVs</CustomLink>
 		</WorkContainer>
 	);
 }

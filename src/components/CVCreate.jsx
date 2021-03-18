@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { HOME, CVS } from '../routes';
+import { HOME, CV_LIST } from '../routes';
 
 import {
 	Container,
@@ -162,7 +162,7 @@ function CVCreate({
 				title="Créer un CV"
 				history={[
 					{ link: HOME, title: 'Accueil' },
-					{ link: CVS, title: 'CVs' }
+					{ link: CV_LIST, title: 'CVs' }
 				]}
 			/>
 			<Container component="main" fixed>

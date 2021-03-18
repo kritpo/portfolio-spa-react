@@ -20,7 +20,7 @@ import { Add, Visibility } from '@material-ui/icons';
 
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
-import LanguageItem from './CVS/LanguageItem';
+import LanguageItem from './CVList/LanguageItem';
 
 /**
  * convert languages details to React component

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { API } from 'aws-amplify';
 
-import CVS from '../components/CVS';
+import CVS from '../components/CVList';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ username }, ...props) => ({

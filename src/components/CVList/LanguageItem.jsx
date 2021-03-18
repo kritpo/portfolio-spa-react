@@ -57,7 +57,7 @@ function LanguageItem({
 			<TableCell align="center">{language}</TableCell>
 			<TableCell align="center">
 				<CustomLink to={`${CV_UPDATE}?languageCode=${languageCode}`}>
-					<Box mx={2} clone>
+					<Box mx={2} my={1} clone>
 						<Button
 							variant="contained"
 							color="secondary"
@@ -67,7 +67,7 @@ function LanguageItem({
 						</Button>
 					</Box>
 				</CustomLink>
-				<Box mx={2} clone>
+				<Box mx={2} my={1} clone>
 					<Button
 						variant="contained"
 						color="secondary"
@@ -78,7 +78,7 @@ function LanguageItem({
 					</Button>
 				</Box>
 				{defaultLanguage.languageCode !== languageCode && (
-					<Box mx={2} clone>
+					<Box mx={2} my={1} clone>
 						<Button
 							variant="contained"
 							color="secondary"

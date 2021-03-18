@@ -87,7 +87,7 @@ export const fetchResume = (
  * @returns the final promise
  */
 export const updateResume = resumePart => (dispatch, getState) => {
-	// retrieve the current resume
+	// retrieve the current resume and user
 	const { resume, username } = getState();
 
 	// check if the resume is not correctly loaded
@@ -118,7 +118,7 @@ export const updateResume = resumePart => (dispatch, getState) => {
  * @returns the final promise
  */
 export const deleteResume = languageCode => (dispatch, getState) => {
-	// retrieve the current resume
+	// retrieve the current resume and user
 	const { resume, username } = getState();
 
 	// delete the resume on the API

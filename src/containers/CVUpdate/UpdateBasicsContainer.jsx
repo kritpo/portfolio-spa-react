@@ -105,11 +105,14 @@ function UpdateBasicsContainer({
 		(form, reCaptchaToken, unlock) =>
 			updateResume({ basics: cvUtils.mapBasicsFormToObject(form) }).then(
 				() => {
+					// call setForm to change the update status to false
+					setForm();
+
 					// unlock the form
 					unlock();
 				}
 			),
-		[updateResume]
+		[setForm, updateResume]
 	);
 
 	return (

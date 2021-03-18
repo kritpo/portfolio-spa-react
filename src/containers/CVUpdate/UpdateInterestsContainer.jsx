@@ -55,10 +55,13 @@ function UpdateInterestsContainer({ interests, updateResume, setForm }) {
 			updateResume({
 				interests: cvUtils.mapInterestsFormToObject(form)
 			}).then(() => {
+				// call setForm to change the update status to false
+				setForm();
+
 				// unlock the form
 				unlock();
 			}),
-		[updateResume]
+		[setForm, updateResume]
 	);
 
 	return (

@@ -93,10 +93,13 @@ function UpdateEducationContainer({ education, updateResume, setForm }) {
 			updateResume({
 				education: cvUtils.mapEducationFormToObject(form)
 			}).then(() => {
+				// call setForm to change the update status to false
+				setForm();
+
 				// unlock the form
 				unlock();
 			}),
-		[updateResume]
+		[setForm, updateResume]
 	);
 
 	return (

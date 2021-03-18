@@ -89,9 +89,15 @@ function CVUpdateContainer({ username, fetchResume, ...props }) {
 	}, [handleClose, nextTab]);
 
 	// setup the set form handler
-	const setForm = useCallback(() => {
-		// update the update status
-		setUpdate(true);
+	const setForm = useCallback(newForm => {
+		// check if the new form is defined
+		if (newForm !== undefined) {
+			// update the update status to true
+			setUpdate(true);
+		} else {
+			// otherwise, update the update status to false
+			setUpdate(false);
+		}
 	}, []);
 
 	return (

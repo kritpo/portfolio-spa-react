@@ -49,10 +49,13 @@ function UpdateReferencesContainer({ references, updateResume, setForm }) {
 			updateResume({
 				references: cvUtils.mapReferencesFormToObject(form)
 			}).then(() => {
+				// call setForm to change the update status to false
+				setForm();
+
 				// unlock the form
 				unlock();
 			}),
-		[updateResume]
+		[setForm, updateResume]
 	);
 
 	return (

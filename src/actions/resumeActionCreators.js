@@ -126,20 +126,16 @@ export const deleteResume = languageCode => (dispatch, getState) => {
 	// retrieve the current resume
 	const { resume, username } = getState();
 
-	// check if the resume is not correctly loaded
-	if (resume.isLoading || resume.error !== null) {
-		// return an auto-resolved promise
-		return new Promise(resolve => resolve());
-	}
-
 	// delete the resume on the API
 	return API.del(
 		'PortfolioAPIServerless',
 		'/resumes/' + username + '?languageCode=' + languageCode,
 		{}
 	).then(() => {
-		// check if the loaded resume is wanted to delete one
+		// check if a resume is correctly loaded and if the loaded resume is wanted to delete one
 		if (
+			!resume.isLoading &&
+			resume.error === null &&
 			resume.resume.username === username &&
 			resume.resume.languageCode === languageCode
 		) {

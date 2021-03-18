@@ -28,10 +28,14 @@ Amplify.configure({
 				name: 'PortfolioAPIServerless',
 				endpoint: process.env.REACT_APP_API_DOMAIN_NAME,
 				custom_header: async () => {
+					// retrieve the user token
+					const jwtToken = await Auth.currentSession()
+						.then(session => session.getIdToken().getJwtToken())
+						.catch(() => null);
+
 					return {
-						Authorization: `Bearer ${(await Auth.currentSession())
-							.getIdToken()
-							.getJwtToken()}`
+						Authorization:
+							jwtToken !== null ? `Bearer ${jwtToken}` : undefined
 					};
 				}
 			}

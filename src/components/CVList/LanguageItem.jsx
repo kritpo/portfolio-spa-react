@@ -3,7 +3,18 @@ import { PropTypes } from 'prop-types';
 
 import { CV_UPDATE } from '../../routes';
 
-import { Box, TableRow, TableCell, Button, Chip } from '@material-ui/core';
+import {
+	Box,
+	TableRow,
+	TableCell,
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	DialogContentText,
+	DialogActions,
+	Button,
+	Chip
+} from '@material-ui/core';
 import { Create, Delete, FirstPage } from '@material-ui/icons';
 
 import CustomLink from '../../utils/CustomLink';
@@ -15,10 +26,22 @@ LanguageItem.propTypes = {
 		language: PropTypes.string.isRequired
 	}).isRequired,
 	languageCode: PropTypes.string.isRequired,
-	language: PropTypes.string.isRequired
+	language: PropTypes.string.isRequired,
+	deletePending: PropTypes.bool.isRequired,
+	handleClose: PropTypes.func.isRequired,
+	onDeletePending: PropTypes.func.isRequired,
+	onDelete: PropTypes.func.isRequired
 };
 
-function LanguageItem({ defaultLanguage, languageCode, language }) {
+function LanguageItem({
+	defaultLanguage,
+	languageCode,
+	language,
+	deletePending,
+	handleClose,
+	onDeletePending,
+	onDelete
+}) {
 	return (
 		<TableRow key={languageCode}>
 			<TableCell component="th" scope="row">
@@ -32,29 +55,28 @@ function LanguageItem({ defaultLanguage, languageCode, language }) {
 			<TableCell align="center">{language}</TableCell>
 			<TableCell align="center">
 				<CustomLink to={`${CV_UPDATE}?languageCode=${languageCode}`}>
-					<Box m={2} clone>
-						<Box m={2} clone>
-							<Button
-								variant="contained"
-								color="secondary"
-								startIcon={<Create />}
-							>
-								Modifier
-							</Button>
-						</Box>
+					<Box mx={2} clone>
+						<Button
+							variant="contained"
+							color="secondary"
+							startIcon={<Create />}
+						>
+							Modifier
+						</Button>
 					</Box>
 				</CustomLink>
-				<Box m={2} clone>
+				<Box mx={2} clone>
 					<Button
 						variant="contained"
 						color="secondary"
 						startIcon={<Delete />}
+						onClick={onDeletePending}
 					>
 						Supprimer
 					</Button>
 				</Box>
 				{defaultLanguage.languageCode !== languageCode && (
-					<Box m={2} clone>
+					<Box mx={2} clone>
 						<Button
 							variant="contained"
 							color="secondary"
@@ -64,6 +86,32 @@ function LanguageItem({ defaultLanguage, languageCode, language }) {
 						</Button>
 					</Box>
 				)}
+				<Dialog
+					open={deletePending}
+					onClose={handleClose}
+					aria-labelledby={`alert-dialog-title-${languageCode}`}
+					aria-describedby={`alert-dialog-description-${languageCode}`}
+				>
+					<DialogTitle id={`alert-dialog-title-${languageCode}`}>
+						Supprimer le CV
+					</DialogTitle>
+					<DialogContent>
+						<DialogContentText
+							id={`alert-dialog-description-${languageCode}`}
+						>
+							Souhaitez-vous réellement supprimer le CV {language}
+							? Cette action est irreversible!
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleClose} color="primary" autoFocus>
+							Annuler
+						</Button>
+						<Button onClick={onDelete} color="primary">
+							Confirmer
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</TableCell>
 		</TableRow>
 	);

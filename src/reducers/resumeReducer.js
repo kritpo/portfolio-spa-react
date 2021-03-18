@@ -2,7 +2,8 @@ import {
 	RESUME_LOADING,
 	RESUME_LOADED,
 	RESUME_FAILED,
-	UPDATE_RESUME
+	UPDATE_RESUME,
+	DELETE_RESUME
 } from '../actions/types';
 
 // configure initial state
@@ -41,6 +42,10 @@ export const resume = (state = initialState, { type, payload }) => {
 				resume: { ...state.resume, ...payload },
 				error: null
 			};
+
+		// check if the asking to delete the resume
+		case DELETE_RESUME:
+			return initialState;
 
 		default:
 			return state;

@@ -7,7 +7,8 @@ import {
 	MAIN_RESUME_LOADING,
 	MAIN_RESUME_LOADED,
 	MAIN_RESUME_FAILED,
-	UPDATE_RESUME
+	UPDATE_RESUME,
+	DELETE_RESUME
 } from './types';
 
 /**
@@ -117,6 +118,38 @@ export const updateResume = resumePart => (dispatch, getState) => {
 };
 
 /**
+ * delete the resume on portfolio-api-serverless
+ * @param languageCode the language code of the resume to delete
+ * @returns the final promise
+ */
+export const deleteResume = languageCode => (dispatch, getState) => {
+	// retrieve the current resume
+	const { resume, username } = getState();
+
+	// check if the resume is not correctly loaded
+	if (resume.isLoading || resume.error !== null) {
+		// return an auto-resolved promise
+		return new Promise(resolve => resolve());
+	}
+
+	// delete the resume on the API
+	return API.del(
+		'PortfolioAPIServerless',
+		'/resumes/' + username + '?languageCode=' + languageCode,
+		{}
+	).then(() => {
+		// check if the loaded resume is wanted to delete one
+		if (
+			resume.resume.username === username &&
+			resume.resume.languageCode === languageCode
+		) {
+			// update state with data
+			dispatch(resumeDeleted());
+		}
+	});
+};
+
+/**
  * redux action: set the redux state to loading
  * @param {boolean} isMain if the resume fetching is to hydrate the main resume
  * @returns the action
@@ -155,4 +188,12 @@ export const resumeFailed = (payload, isMain) => ({
 export const resumeUpdated = payload => ({
 	type: UPDATE_RESUME,
 	payload
+});
+
+/**
+ * redux action: delete the resume
+ * @returns the action
+ */
+export const resumeDeleted = () => ({
+	type: DELETE_RESUME
 });

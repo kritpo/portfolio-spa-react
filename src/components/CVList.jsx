@@ -20,7 +20,7 @@ import { Add, Visibility } from '@material-ui/icons';
 
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
-import LanguageItem from './CVList/LanguageItem';
+import LanguageItemContainer from '../containers/CVList/LanguageItemContainer';
 
 /**
  * convert languages details to React component
@@ -30,7 +30,7 @@ import LanguageItem from './CVList/LanguageItem';
  */
 const languagesList = (languages, defaultLanguage) =>
 	languages.map(({ languageCode, language }, index) => (
-		<LanguageItem
+		<LanguageItemContainer
 			defaultLanguage={defaultLanguage}
 			languageCode={languageCode}
 			language={language}
@@ -114,7 +114,10 @@ function User({ languages: { defaultLanguage, languages }, username }) {
 							</CustomLink>
 							{languages.length > 0 && (
 								<CustomLink
-									to={PORTFOLIO.replace(':username', username)}
+									to={PORTFOLIO.replace(
+										':username',
+										username
+									)}
 								>
 									<Box m={2} clone>
 										<Button

@@ -60,8 +60,8 @@ function UpdateVolunteerContainer({ volunteer, updateResume, setForm }) {
 					{ name: ORGANIZATION, payload: organization },
 					{ name: POSITION, payload: position },
 					{ name: WEBSITE, payload: website },
-					{ name: START_DATE, payload: startDate },
-					{ name: END_DATE, payload: endDate },
+					{ name: START_DATE, payload: new Date(startDate) },
+					{ name: END_DATE, payload: new Date(endDate) },
 					{ name: SUMMARY, payload: summary },
 					{
 						name: HIGHLIGHTS,

@@ -59,8 +59,8 @@ function UpdateProjectsContainer({ projects, updateResume, setForm }) {
 				}) => [
 					{ name: NAME, payload: name },
 					{ name: SUMMARY, payload: summary },
-					{ name: START_DATE, payload: startDate },
-					{ name: END_DATE, payload: endDate },
+					{ name: START_DATE, payload: new Date(startDate) },
+					{ name: END_DATE, payload: new Date(endDate) },
 					{ name: PICTURE, payload: picture },
 					{ name: URL, payload: url },
 					{

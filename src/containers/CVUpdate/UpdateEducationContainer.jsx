@@ -67,8 +67,8 @@ function UpdateEducationContainer({ education, updateResume, setForm }) {
 					{ name: INSTITUTION, payload: institution },
 					{ name: AREA, payload: area },
 					{ name: STUDY_TYPE, payload: studyType },
-					{ name: START_DATE, payload: startDate },
-					{ name: END_DATE, payload: endDate },
+					{ name: START_DATE, payload: new Date(startDate) },
+					{ name: END_DATE, payload: new Date(endDate) },
 					{ name: GPA, payload: gpa },
 					{
 						name: COURSES,

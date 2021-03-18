@@ -18,7 +18,7 @@ export const checkMinLength = length => value => {
  */
 export const checkRegex = rgx => value => {
 	if (!rgx.test(value)) {
-		return `Le champ doit être dans le format \`${rgx}\`.`;
+		return `Le champ doit être dans le bon format.`;
 	}
 
 	return '';

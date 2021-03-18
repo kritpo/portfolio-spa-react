@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { API } from 'aws-amplify';
 
-import User from '../components/User';
+import CVS from '../components/CVS';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ username }, ...props) => ({
@@ -38,7 +38,7 @@ function UserContainer({ username, ...props }) {
 			.catch(() => {});
 	}, [username]);
 
-	return <User languages={languages} username={username} {...props} />;
+	return <CVS languages={languages} username={username} {...props} />;
 }
 
 export default connect(mapStateToProps)(UserContainer);

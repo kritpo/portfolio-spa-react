@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { HOME, CV, CV_CREATE } from '../routes';
+import { HOME, PORTFOLIO, CV_CREATE } from '../routes';
 
 import {
 	Container,
@@ -20,7 +20,7 @@ import { Add, Visibility } from '@material-ui/icons';
 
 import Header from './Header';
 import CustomLink from '../utils/CustomLink';
-import LanguageItem from './User/LanguageItem';
+import LanguageItem from './CVS/LanguageItem';
 
 /**
  * convert languages details to React component
@@ -114,7 +114,7 @@ function User({ languages: { defaultLanguage, languages }, username }) {
 							</CustomLink>
 							{languages.length > 0 && (
 								<CustomLink
-									to={CV.replace(':username', username)}
+									to={PORTFOLIO.replace(':username', username)}
 								>
 									<Box m={2} clone>
 										<Button

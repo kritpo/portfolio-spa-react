@@ -13,7 +13,7 @@ import { useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 
 import { updateNavIntersection, logout } from '../actions';
-import { HOME, CV } from '../routes';
+import { HOME, PORTFOLIO } from '../routes';
 
 import Nav from '../components/Nav';
 
@@ -113,7 +113,7 @@ function NavContainer({ updateNavIntersection, logout, darkMode, ...props }) {
 	const isHome = pathname === HOME;
 
 	// setup the cv test
-	const isCV = pathname.includes(CV.split(':')[0]);
+	const isCV = pathname.includes(PORTFOLIO.split(':')[0]);
 
 	// setup the nav intersection observer updater hook
 	useEffect(() => {

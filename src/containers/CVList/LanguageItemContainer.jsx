@@ -3,22 +3,29 @@ import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import { deleteResume } from '../../actions';
+import { deleteResume, updateResumeDefaultLanguage } from '../../actions';
 
 import LanguageItem from '../../components/CVList/LanguageItem';
 
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
-	deleteResume
+	deleteResume,
+	updateResumeDefaultLanguage
 };
 
 // configure the prop types validation
 LanguageItemContainer.propTypes = {
 	languageCode: PropTypes.string.isRequired,
-	deleteResume: PropTypes.func.isRequired
+	deleteResume: PropTypes.func.isRequired,
+	updateResumeDefaultLanguage: PropTypes.func.isRequired
 };
 
-function LanguageItemContainer({ languageCode, deleteResume, ...props }) {
+function LanguageItemContainer({
+	languageCode,
+	deleteResume,
+	updateResumeDefaultLanguage,
+	...props
+}) {
 	// setup the delete pending status
 	const [deletePending, setDeletePending] = useState(false);
 
@@ -41,6 +48,15 @@ function LanguageItemContainer({ languageCode, deleteResume, ...props }) {
 		handleClose();
 	}, [deleteResume, handleClose, languageCode]);
 
+	// setup the default language updater
+	const setDefault = useCallback(
+		languageCode => () => {
+			// update the default language
+			updateResumeDefaultLanguage(languageCode);
+		},
+		[]
+	);
+
 	return (
 		<LanguageItem
 			languageCode={languageCode}
@@ -48,6 +64,7 @@ function LanguageItemContainer({ languageCode, deleteResume, ...props }) {
 			handleClose={handleClose}
 			onDeletePending={onDeletePending}
 			onDelete={onDelete}
+			setDefault={setDefault}
 			{...props}
 		/>
 	);

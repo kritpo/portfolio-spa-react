@@ -30,7 +30,8 @@ LanguageItem.propTypes = {
 	deletePending: PropTypes.bool.isRequired,
 	handleClose: PropTypes.func.isRequired,
 	onDeletePending: PropTypes.func.isRequired,
-	onDelete: PropTypes.func.isRequired
+	onDelete: PropTypes.func.isRequired,
+	setDefault: PropTypes.func.isRequired
 };
 
 function LanguageItem({
@@ -40,7 +41,8 @@ function LanguageItem({
 	deletePending,
 	handleClose,
 	onDeletePending,
-	onDelete
+	onDelete,
+	setDefault
 }) {
 	return (
 		<TableRow key={languageCode}>
@@ -81,6 +83,7 @@ function LanguageItem({
 							variant="contained"
 							color="secondary"
 							startIcon={<FirstPage />}
+							onClick={setDefault(languageCode)}
 						>
 							Mettre par défaut
 						</Button>

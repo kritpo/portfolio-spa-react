@@ -1,7 +1,8 @@
 import {
 	RESUME_LANGUAGES_LOADING,
 	RESUME_LANGUAGES_LOADED,
-	RESUME_LANGUAGES_FAILED
+	RESUME_LANGUAGES_FAILED,
+	UPDATE_RESUME_DEFAULT_LANGUAGE
 } from '../actions/types';
 
 // configure initial state
@@ -45,6 +46,18 @@ export const resumeLanguages = (state = initialState, { type, payload }) => {
 				isLoading: false,
 				resumeLanguages: {},
 				error: payload
+			};
+
+		// check if ask to update the default language
+		case UPDATE_RESUME_DEFAULT_LANGUAGE:
+			return {
+				...state,
+				isLoading: false,
+				resumeLanguages: {
+					...state.resumeLanguages,
+					defaultLanguage: payload
+				},
+				error: null
 			};
 
 		default:

@@ -85,7 +85,8 @@ function NavContainer({ updateNavIntersection, logout, darkMode, ...props }) {
 
 	// setup the breakpoints matchers hooks
 	const { breakpoints } = useTheme();
-	const isMdSm = useMediaQuery(breakpoints.up('md'));
+	const showBarBreakpoint = useMediaQuery(breakpoints.up('md'));
+	const showTextBreakpoint = useMediaQuery(breakpoints.up('lg'));
 
 	// setup the nav intersection observer
 	const inViewObject = useInView({
@@ -123,8 +124,10 @@ function NavContainer({ updateNavIntersection, logout, darkMode, ...props }) {
 
 	// setup the nav type updater
 	useEffect(() => {
-		setShowBar(isMdSm && (!(isHome || isCV) || inViewObject.inView));
-	}, [inViewObject, isCV, isHome, isMdSm]);
+		setShowBar(
+			showBarBreakpoint && (!(isHome || isCV) || inViewObject.inView)
+		);
+	}, [inViewObject, isCV, isHome, showBarBreakpoint]);
 
 	return (
 		<Nav
@@ -134,6 +137,7 @@ function NavContainer({ updateNavIntersection, logout, darkMode, ...props }) {
 			showBar={showBar}
 			isHome={isHome}
 			logout={logoutCallback}
+			showTextBreakpoint={showTextBreakpoint}
 			{...props}
 		/>
 	);

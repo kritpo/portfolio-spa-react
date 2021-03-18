@@ -60,10 +60,11 @@ const darkModeMenu = (darkMode, darkModeToggle) => (
 
 /**
  * setup the home menu
+ * @param {bool} showTextBreakpoint if need to show the text
  * @param {bool} isBurger the type of menu
  * @returns the component
  */
-const homeMenu = (isBurger = false) => (
+const homeMenu = (showTextBreakpoint, isBurger = false) => (
 	<Box width={isBurger ? '100%' : null}>
 		<CustomLink to={HOME}>
 			{isBurger ? (
@@ -71,6 +72,10 @@ const homeMenu = (isBurger = false) => (
 					<Typography component="div" color="textPrimary">
 						<Box fontSize="5vh">Accueil</Box>
 					</Typography>
+				</Button>
+			) : showTextBreakpoint ? (
+				<Button variant="text" color="default" startIcon={<Home />}>
+					Accueil
 				</Button>
 			) : (
 				<IconButton>
@@ -88,6 +93,7 @@ const homeMenu = (isBurger = false) => (
  * @param {object} active the active class
  * @param {object} circle the circle class
  * @param {object} fullWidth the full width class
+ * @param {bool} showTextBreakpoint if need to show the text
  * @param {bool} isBurger the type of menu
  * @returns the component
  */
@@ -97,6 +103,7 @@ const userMenu = (
 	active,
 	circle,
 	fullWidth,
+	showTextBreakpoint,
 	isBurger = false
 ) => (
 	<Box
@@ -111,7 +118,9 @@ const userMenu = (
 				<CustomLink
 					to={SIGN_IN}
 					nav
-					activeClassName={`${active} ${!isBurger ? circle : ''}`}
+					activeClassName={`${active} ${
+						!(isBurger || showTextBreakpoint) ? circle : ''
+					}`}
 					className={isBurger ? fullWidth : undefined}
 				>
 					{isBurger ? (
@@ -120,6 +129,8 @@ const userMenu = (
 								<Box fontSize="5vh">Connexion</Box>
 							</Typography>
 						</Button>
+					) : showTextBreakpoint ? (
+						<Button endIcon={<User />}>Connexion</Button>
 					) : (
 						<IconButton>
 							<User />
@@ -129,7 +140,9 @@ const userMenu = (
 				<CustomLink
 					to={SIGN_UP}
 					nav
-					activeClassName={`${active} ${!isBurger ? circle : ''}`}
+					activeClassName={`${active} ${
+						!(isBurger || showTextBreakpoint) ? circle : ''
+					}`}
 					className={isBurger ? fullWidth : undefined}
 				>
 					{isBurger ? (
@@ -138,6 +151,8 @@ const userMenu = (
 								<Box fontSize="5vh">Inscription</Box>
 							</Typography>
 						</Button>
+					) : showTextBreakpoint ? (
+						<Button endIcon={<SignUp />}>Inscription</Button>
 					) : (
 						<IconButton>
 							<SignUp />
@@ -171,6 +186,10 @@ const userMenu = (
 							<Box fontSize="5vh">Déconnexion</Box>
 						</Typography>
 					</Button>
+				) : showTextBreakpoint ? (
+					<Button endIcon={<SignOut />} onClick={logout}>
+						Déconnexion
+					</Button>
 				) : (
 					<IconButton onClick={logout}>
 						<SignOut />
@@ -189,7 +208,8 @@ Nav.propTypes = {
 	showBar: PropTypes.bool.isRequired,
 	isHome: PropTypes.bool.isRequired,
 	username: PropTypes.string.isRequired,
-	logout: PropTypes.func.isRequired
+	logout: PropTypes.func.isRequired,
+	showTextBreakpoint: PropTypes.bool.isRequired
 };
 
 function Nav({
@@ -200,20 +220,22 @@ function Nav({
 	showBar,
 	isHome,
 	username,
-	logout
+	logout,
+	showTextBreakpoint
 }) {
 	return (
 		<Box component="nav">
 			{showBar ? (
 				<NavBarContainer
 					darkModeMenu={darkModeMenu(darkMode, darkModeToggle)}
-					left={!isHome ? homeMenu() : null}
+					left={!isHome ? homeMenu(showTextBreakpoint) : null}
 					right={userMenu(
 						username,
 						logout,
 						active,
 						circle,
-						fullWidth
+						fullWidth,
+						showTextBreakpoint
 					)}
 				>
 					{links}
@@ -221,13 +243,14 @@ function Nav({
 			) : (
 				<NavBurger
 					darkModeMenu={darkModeMenu(darkMode, darkModeToggle)}
-					top={!isHome ? homeMenu(true) : null}
+					top={!isHome ? homeMenu(showTextBreakpoint, true) : null}
 					bottom={userMenu(
 						username,
 						logout,
 						active,
 						circle,
 						fullWidth,
+						showTextBreakpoint,
 						true
 					)}
 				>

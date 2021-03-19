@@ -1,18 +1,16 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import { useCookies } from 'react-cookie';
-
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { useInView } from 'react-intersection-observer';
 
 import { useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 
-import { updateNavIntersection, logout } from '../actions';
+import { updateNavIntersection } from '../actions';
 import { HOME, PORTFOLIO } from '../routes';
 
 import Nav from '../components/Nav';
@@ -51,32 +49,17 @@ const links = (isCV, pathname) => [
 	}
 ];
 
-// configure the states to pass as props to the component
-const mapStateToProps = ({ darkMode, username }, ...props) => ({
-	darkMode,
-	username,
-	...props
-});
-
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
-	updateNavIntersection,
-	logout
+	updateNavIntersection
 };
 
 // configure the prop types validation
 NavContainer.propTypes = {
-	updateNavIntersection: PropTypes.func.isRequired,
-	darkMode: PropTypes.bool.isRequired
+	updateNavIntersection: PropTypes.func.isRequired
 };
 
-function NavContainer({ updateNavIntersection, logout, darkMode, ...props }) {
-	// setup the history hook
-	const history = useHistory();
-
-	// setup the cookies hook
-	const [, setCookies] = useCookies(['darkMode']);
-
+function NavContainer({ updateNavIntersection, ...props }) {
 	// setup the nav type hook
 	const [showBar, setShowBar] = useState(false);
 
@@ -92,23 +75,6 @@ function NavContainer({ updateNavIntersection, logout, darkMode, ...props }) {
 	const inViewObject = useInView({
 		rootMargin: '0% 0% -100% 0%'
 	});
-
-	// setup the dark mode toggler
-	const darkModeToggle = useCallback(() => {
-		setCookies('darkMode', darkMode ? 'false' : 'true', {
-			path: '/',
-			sameSite: true
-		});
-	}, [darkMode, setCookies]);
-
-	// setup the logout function
-	const logoutCallback = useCallback(() => {
-		// logout the user
-		logout();
-
-		// redirect the user to the home page
-		history.push(HOME);
-	}, [history, logout]);
 
 	// setup the home test
 	const isHome = pathname === HOME;
@@ -132,15 +98,12 @@ function NavContainer({ updateNavIntersection, logout, darkMode, ...props }) {
 	return (
 		<Nav
 			links={links(isCV, pathname)}
-			darkMode={darkMode}
-			darkModeToggle={darkModeToggle}
 			showBar={showBar}
 			isHome={isHome}
-			logout={logoutCallback}
 			showTextBreakpoint={showTextBreakpoint}
 			{...props}
 		/>
 	);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavContainer);
+export default connect(null, mapDispatchToProps)(NavContainer);

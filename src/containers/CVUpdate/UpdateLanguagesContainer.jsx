@@ -9,6 +9,7 @@ import * as cvUtils from '../../utils/cvUtils';
 
 import LanguagesContainer, {
 	LANGUAGES,
+	COUNTRY_CODE,
 	LANGUAGE,
 	FLUENCY
 } from '../CV/LanguagesContainer';
@@ -23,6 +24,7 @@ const mapDispatchToProps = {
 UpdateLanguagesContainer.propTypes = {
 	languages: PropTypes.arrayOf(
 		PropTypes.shape({
+			countryCode: PropTypes.string.isRequired,
 			language: PropTypes.string.isRequired,
 			fluency: PropTypes.string.isRequired
 		})
@@ -36,7 +38,8 @@ function UpdateLanguagesContainer({ languages, updateResume, setForm }) {
 	const data = [
 		{
 			name: LANGUAGES,
-			payload: languages.map(({ language, fluency }) => [
+			payload: languages.map(({ countryCode, language, fluency }) => [
+				{ name: COUNTRY_CODE, payload: countryCode },
 				{ name: LANGUAGE, payload: language },
 				{ name: FLUENCY, payload: fluency }
 			])

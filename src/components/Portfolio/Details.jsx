@@ -10,6 +10,8 @@ import {
 	Button
 } from '@material-ui/core';
 
+import ReactCountryFlag from 'react-country-flag';
+
 import SocialNetwork from './Details/SocialNetwork';
 
 /**
@@ -90,7 +92,12 @@ function Details({
 						<Box mb={2}>
 							<Typography variant="body1">{address}</Typography>
 							<Typography variant="body1">
-								{`${postalCode}, ${city}, ${region}, ${countryCode}`}
+								{`${postalCode}, ${city}, ${region}, `}
+								<ReactCountryFlag
+									countryCode={countryCode}
+									svg
+								/>
+								{` ${countryCode}`}
 							</Typography>
 						</Box>
 						<Grid container spacing={2} justify="center">

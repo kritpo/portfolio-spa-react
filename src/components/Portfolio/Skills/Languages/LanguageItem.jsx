@@ -3,21 +3,26 @@ import { PropTypes } from 'prop-types';
 
 import { Box, Grid, Typography } from '@material-ui/core';
 
-import LanguageIcon from '../../../../utils/icons/LanguageIcon';
+import ReactCountryFlag from 'react-country-flag';
 
 // configure the prop types validation
 LanguageItem.propTypes = {
 	language: PropTypes.shape({
 		language: PropTypes.string.isRequired,
-		fluency: PropTypes.string.isRequired
+		fluency: PropTypes.string.isRequired,
+		countryCode: PropTypes.string.isRequired
 	}).isRequired
 };
 
-function LanguageItem({ language: { language, fluency } }) {
+function LanguageItem({ language: { language, fluency, countryCode } }) {
 	return (
 		<Box fontSize="2em" clone>
 			<Grid item xs={12} sm={6} lg={4} xl={3}>
-				<LanguageIcon language={language} />
+				<ReactCountryFlag
+					countryCode={countryCode}
+					title={language}
+					svg
+				/>
 				<Typography variant="body1">{language}</Typography>
 				<Typography variant="body2" color="textSecondary">
 					{fluency}

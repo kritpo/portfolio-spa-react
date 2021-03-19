@@ -54,7 +54,7 @@ function LanguageItemContainer({
 			// update the default language
 			updateResumeDefaultLanguage(languageCode);
 		},
-		[]
+		[updateResumeDefaultLanguage]
 	);
 
 	return (

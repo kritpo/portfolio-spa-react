@@ -2,6 +2,7 @@ import React from 'react';
 
 import checkField, {
 	checkMinLength,
+	checkExactLength,
 	checkRegex
 } from '../../utils/forms/checkField';
 import {
@@ -134,7 +135,7 @@ function BasicsContainer({ ...props }) {
 		[COUNTRY_CODE]: {
 			type: COUNTRY_CODE_TYPE,
 			label: 'Code pays',
-			checkField: checkField([checkMinLength(2)]),
+			checkField: checkField([checkExactLength(2)]),
 			inputParam: {
 				placeholder: 'FR'
 			}

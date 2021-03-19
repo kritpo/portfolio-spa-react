@@ -157,6 +157,7 @@ export const mapSkillsFormToObject = form =>
  */
 export const mapLanguagesFormToObject = form =>
 	form[LANGUAGES.LANGUAGES].map(languagesSubform => ({
+		countryCode: languagesSubform[LANGUAGES.COUNTRY_CODE].value,
 		language: languagesSubform[LANGUAGES.LANGUAGE].value,
 		fluency: languagesSubform[LANGUAGES.FLUENCY].value
 	}));

@@ -1,11 +1,24 @@
 /**
- * setup the length checker
+ * setup the minlength checker
  * @param {string} length the minimum length
  * @returns the field checker
  */
 export const checkMinLength = length => value => {
 	if (value.length < length) {
 		return `Le champ doit contenir au moins ${length} caractères.`;
+	}
+
+	return '';
+};
+
+/**
+ * setup the exact length checker
+ * @param {string} length the exact length
+ * @returns the field checker
+ */
+export const checkExactLength = length => value => {
+	if (value.length !== length) {
+		return `Le champ doit contenir exactement ${length} caractères.`;
 	}
 
 	return '';

@@ -10,7 +10,8 @@ import {
 	navIntersection,
 	darkMode,
 	webpSupport,
-	username
+	username,
+	language
 } from './reducers';
 
 // configure the root reducer by combining all reducers
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
 	navIntersection,
 	darkMode,
 	webpSupport,
-	username
+	username,
+	language
 });
 
 // create a redux store

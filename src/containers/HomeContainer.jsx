@@ -3,15 +3,18 @@ import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import { useCookies } from 'react-cookie';
+
 import { fetchResume } from '../actions';
 
 import Portfolio from '../components/Portfolio';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (
-	{ mainResume, navIntersection: { ref: navIntersectionRef } },
+	{ language, mainResume, navIntersection: { ref: navIntersectionRef } },
 	...props
 ) => ({
+	language,
 	resume: mainResume,
 	navIntersectionRef,
 	...props
@@ -24,15 +27,34 @@ const mapDispatchToProps = {
 
 // configure the prop types validation
 HomeContainer.propTypes = {
-	fetchResume: PropTypes.func.isRequired
+	fetchResume: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		resumeLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function HomeContainer({ fetchResume, ...props }) {
+function HomeContainer({
+	fetchResume,
+	language: { resumeLanguageCode },
+	...props
+}) {
+	// setup the cookies hook
+	const [, setCookies] = useCookies(['languageCode']);
+
 	// setup the main resume fetching hook
 	useEffect(() => {
 		// fetch the main resume at the loading of the component
-		fetchResume();
-	}, [fetchResume]);
+		fetchResume(true, 'kritpo', resumeLanguageCode).then(resume => {
+			// check if the resume is defined
+			if (resume !== undefined) {
+				// update the language code cookie
+				setCookies('languageCode', resume.languageCode, {
+					path: '/',
+					sameSite: true
+				});
+			}
+		});
+	}, [fetchResume, resumeLanguageCode, setCookies]);
 
 	return <Portfolio isMain={true} {...props} />;
 }

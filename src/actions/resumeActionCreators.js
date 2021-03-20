@@ -73,6 +73,8 @@ export const fetchResume = (
 
 				// update state with fetched data
 				dispatch(resumeLoaded(resume, isMain));
+
+				return resume;
 			})
 			// update status of the state as failed with the error message
 			.catch(({ message }) => {

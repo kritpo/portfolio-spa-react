@@ -5,15 +5,18 @@ import { connect } from 'react-redux';
 
 import { useRouteMatch } from 'react-router-dom';
 
+import { useCookies } from 'react-cookie';
+
 import { fetchResume } from '../actions';
 
 import Portfolio from '../components/Portfolio';
 
 // configure the states to pass as props to the component
 const mapStateToProps = (
-	{ resume, navIntersection: { ref: navIntersectionRef } },
+	{ language, resume, navIntersection: { ref: navIntersectionRef } },
 	...props
 ) => ({
+	language,
 	resume,
 	navIntersectionRef,
 	...props
@@ -26,10 +29,20 @@ const mapDispatchToProps = {
 
 // configure the prop types validation
 PortfolioContainer.propTypes = {
-	fetchResume: PropTypes.func.isRequired
+	fetchResume: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		resumeLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function PortfolioContainer({ fetchResume, ...props }) {
+function PortfolioContainer({
+	fetchResume,
+	language: { resumeLanguageCode },
+	...props
+}) {
+	// setup the cookies hook
+	const [, setCookies] = useCookies(['languageCode']);
+
 	// retrieve the username from the match hook
 	const {
 		params: { username }
@@ -38,8 +51,17 @@ function PortfolioContainer({ fetchResume, ...props }) {
 	// setup the resume fetching hook
 	useEffect(() => {
 		// fetch the resume at the loading of the component
-		fetchResume(false, username);
-	}, [fetchResume, username]);
+		fetchResume(false, username, resumeLanguageCode).then(resume => {
+			// check if the resume is defined
+			if (resume !== undefined) {
+				// update the language code cookie
+				setCookies('languageCode', resume.languageCode, {
+					path: '/',
+					sameSite: true
+				});
+			}
+		});
+	}, [fetchResume, resumeLanguageCode, setCookies, username]);
 
 	return <Portfolio isMain={false} {...props} />;
 }

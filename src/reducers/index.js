@@ -6,3 +6,4 @@ export * from './navIntersectionReducer';
 export * from './darkModeReducer';
 export * from './webpSupportReducer';
 export * from './usernameReducer';
+export * from './languageReducer';

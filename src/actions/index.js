@@ -4,3 +4,4 @@ export * from './navIntersectionActionCreators';
 export * from './darkModeActionCreators';
 export * from './webpSupportActionCreators';
 export * from './usernameActionCreators';
+export * from './languageActionCreators';

@@ -16,7 +16,12 @@ import {
 	red
 } from '@material-ui/core/colors';
 
-import { checkWebpSupport, setThemeMode, autoLogin } from './actions';
+import {
+	checkWebpSupport,
+	setThemeMode,
+	autoLogin,
+	setLanguage
+} from './actions';
 
 import { BrowserRouter } from 'react-router-dom';
 
@@ -37,7 +42,8 @@ const mapStateToProps = ({ darkMode }, ...props) => ({
 const mapDispatchToProps = {
 	checkWebpSupport,
 	setThemeMode,
-	autoLogin
+	autoLogin,
+	setLanguage
 };
 
 // configure the prop types validation
@@ -45,12 +51,19 @@ App.propTypes = {
 	darkMode: PropTypes.bool.isRequired,
 	checkWebpSupport: PropTypes.func.isRequired,
 	setThemeMode: PropTypes.func.isRequired,
-	autoLogin: PropTypes.func.isRequired
+	autoLogin: PropTypes.func.isRequired,
+	setLanguage: PropTypes.func.isRequired
 };
 
-function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {
+function App({
+	darkMode,
+	checkWebpSupport,
+	setThemeMode,
+	autoLogin,
+	setLanguage
+}) {
 	// setup the cookies hook
-	const [cookies] = useCookies(['darkMode']);
+	const [cookies] = useCookies(['darkMode', 'languageCode']);
 
 	// setup the dark mode status hook
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -70,6 +83,22 @@ function App({ darkMode, checkWebpSupport, setThemeMode, autoLogin }) {
 			setThemeMode(cookies.darkMode === 'true');
 		}
 	}, [cookies.darkMode, prefersDarkMode, setThemeMode]);
+
+	// save the user language
+	useEffect(() => {
+		// check if the cookie if not defined
+		if (cookies.languageCode === undefined) {
+			setLanguage(
+				(
+					(navigator.languages && navigator.languages[0]) ||
+					navigator.language ||
+					navigator.userLanguage
+				).substr(0, 2)
+			);
+		} else {
+			setLanguage(cookies.languageCode);
+		}
+	}, [cookies.languageCode, setLanguage]);
 
 	// setup the app theme
 	const theme = useMemo(

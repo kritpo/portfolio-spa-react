@@ -7,7 +7,7 @@ import {
 // configure initial state
 const initialState = {
 	isLoading: true,
-	resumeLanguages: {},
+	mainResumeLanguages: {},
 	error: null
 };
 
@@ -28,7 +28,7 @@ export const mainResumeLanguages = (
 			return {
 				...state,
 				isLoading: true,
-				resumeLanguages: {},
+				mainResumeLanguages: {},
 				error: null
 			};
 
@@ -37,7 +37,7 @@ export const mainResumeLanguages = (
 			return {
 				...state,
 				isLoading: false,
-				resumeLanguages: payload,
+				mainResumeLanguages: payload,
 				error: null
 			};
 
@@ -46,7 +46,7 @@ export const mainResumeLanguages = (
 			return {
 				...state,
 				isLoading: false,
-				resumeLanguages: {},
+				mainResumeLanguages: {},
 				error: payload
 			};
 

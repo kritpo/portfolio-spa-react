@@ -14,15 +14,18 @@ Nav.propTypes = {
 	links: PropTypes.array.isRequired,
 	showBar: PropTypes.bool.isRequired,
 	isHome: PropTypes.bool.isRequired,
+	isCV: PropTypes.bool.isRequired,
 	showTextBreakpoint: PropTypes.bool.isRequired
 };
 
-function Nav({ links, showBar, isHome, showTextBreakpoint }) {
+function Nav({ links, showBar, isHome, isCV, showTextBreakpoint }) {
 	return (
 		<Box component="nav">
 			{showBar ? (
 				<NavBarContainer
-					darkModeMenu={<PreferenceContainerMenu />}
+					darkModeMenu={
+						<PreferenceContainerMenu isHome={isHome} isCV={isCV} />
+					}
 					left={
 						!isHome ? (
 							<HomeMenu showTextBreakpoint={showTextBreakpoint} />
@@ -38,7 +41,9 @@ function Nav({ links, showBar, isHome, showTextBreakpoint }) {
 				</NavBarContainer>
 			) : (
 				<NavBurger
-					darkModeMenu={<PreferenceContainerMenu />}
+					darkModeMenu={
+						<PreferenceContainerMenu isHome={isHome} isCV={isCV} />
+					}
 					top={
 						!isHome ? (
 							<HomeMenu

@@ -100,6 +100,7 @@ function NavContainer({ updateNavIntersection, ...props }) {
 			links={links(isCV, pathname)}
 			showBar={showBar}
 			isHome={isHome}
+			isCV={isCV}
 			showTextBreakpoint={showTextBreakpoint}
 			{...props}
 		/>

@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { PropTypes } from 'prop-types';
 
+import { connect } from 'react-redux';
+
 import { useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
@@ -113,6 +115,12 @@ const loadCareer = (work, education, volunteer) => {
 	return career;
 };
 
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
 // configure the prop types validation
 CareerContainer.propTypes = {
 	work: PropTypes.arrayOf(
@@ -211,4 +219,4 @@ function CareerContainer({ work, education, volunteer, ...props }) {
 	);
 }
 
-export default CareerContainer;
+export default connect(mapStateToProps)(CareerContainer);

@@ -1,13 +1,16 @@
 import React, { useState, useCallback } from 'react';
 import { PropTypes } from 'prop-types';
 
+import { connect } from 'react-redux';
+
 import { useHistory } from 'react-router-dom';
 
 import { Auth } from 'aws-amplify';
 
 import { SIGN_IN } from '../routes';
 import checkField, { checkMinLength } from '../utils/forms/checkField';
-import { TEXT } from '../utils/forms/Field';
+import { TEXT } from '../utils/forms/Field/TextField';
+import languages from '../utils/languages';
 
 import SignUpConfirm from '../components/SignUpConfirm';
 
@@ -15,14 +18,27 @@ import SignUpConfirm from '../components/SignUpConfirm';
 const USERNAME = 'username';
 const CODE = 'code';
 
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
 // configure the prop types validation
 SignUpConfirmContainer.propTypes = {
 	location: PropTypes.shape({
 		state: PropTypes.object
+	}).isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
 	}).isRequired
 };
 
-function SignUpConfirmContainer({ location: { state }, ...props }) {
+function SignUpConfirmContainer({
+	location: { state },
+	language: { systemLanguageCode },
+	...props
+}) {
 	// setup the history hook
 	const history = useHistory();
 
@@ -55,10 +71,18 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 	const template = waitComponent => ({
 		[USERNAME]: {
 			type: TEXT,
-			label: 'Pseudo',
-			checkField: checkField([checkMinLength(3)]),
+			label: languages[systemLanguageCode].signUpConfirm.username.label,
+			checkField: checkField([
+				checkMinLength(
+					3,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'dupont',
+				placeholder:
+					languages[systemLanguageCode].signUpConfirm.username
+						.placeholder,
 				InputProps: {
 					endAdornment: waitComponent
 				}
@@ -66,10 +90,17 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 		},
 		[CODE]: {
 			type: TEXT,
-			label: 'Code de vérification',
-			checkField: checkField([checkMinLength(6)]),
+			label: languages[systemLanguageCode].signUpConfirm.code.label,
+			checkField: checkField([
+				checkMinLength(
+					6,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: '123456'
+				placeholder:
+					languages[systemLanguageCode].signUpConfirm.code.placeholder
 			}
 		}
 	});
@@ -113,12 +144,19 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 						}
 
 						// update the wait message
-						setResendWaitMessage(`Attendez ${waitLeft}s`);
+						setResendWaitMessage(
+							languages[
+								systemLanguageCode
+							].signUpConfirm.resendCode.waitingMessage(waitLeft)
+						);
 					}, 1000);
 				})
 				.catch(() => {
 					// lock the resend button
-					setResendErrorMessage('Erreur');
+					setResendErrorMessage(
+						languages[systemLanguageCode].signUpConfirm.resendCode
+							.error
+					);
 
 					// setup a timeout to unlock the resend button
 					setTimeout(() => {
@@ -126,7 +164,7 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 						setResendErrorMessage('');
 					}, 1000);
 				}),
-		[form]
+		[form, systemLanguageCode]
 	);
 
 	return (
@@ -138,9 +176,10 @@ function SignUpConfirmContainer({ location: { state }, ...props }) {
 			resend={resend}
 			resendWaitMessage={resendWaitMessage}
 			resendErrorMessage={resendErrorMessage}
+			language={{ systemLanguageCode }}
 			{...props}
 		/>
 	);
 }
 
-export default SignUpConfirmContainer;
+export default connect(mapStateToProps)(SignUpConfirmContainer);

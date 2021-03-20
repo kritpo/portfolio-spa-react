@@ -8,9 +8,13 @@ import { fetchResumeLanguages } from '../actions';
 import CVList from '../components/CVList';
 
 // configure the states to pass as props to the component
-const mapStateToProps = ({ username, resumeLanguages }, ...props) => ({
+const mapStateToProps = (
+	{ username, resumeLanguages, language },
+	...props
+) => ({
 	username,
 	resumeLanguages,
+	language,
 	...props
 });
 

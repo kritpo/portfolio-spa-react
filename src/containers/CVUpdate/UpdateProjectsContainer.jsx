@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { CV_LIST } from '../../routes';
 import { updateResume } from '../../actions';
 import * as cvUtils from '../../utils/cvUtils';
+import languages from '../../utils/languages';
 
 import ProjectsContainer, {
 	PROJECTS,
@@ -19,6 +20,12 @@ import ProjectsContainer, {
 	TECHNOLOGY
 } from '../CV/ProjectsContainer';
 import CustomLink from '../../utils/CustomLink';
+
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
 
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
@@ -39,10 +46,18 @@ UpdateProjectsContainer.propTypes = {
 		})
 	).isRequired,
 	updateResume: PropTypes.func.isRequired,
-	setForm: PropTypes.func.isRequired
+	setForm: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function UpdateProjectsContainer({ projects, updateResume, setForm }) {
+function UpdateProjectsContainer({
+	projects,
+	updateResume,
+	setForm,
+	language: { systemLanguageCode }
+}) {
 	// setup the fields data
 	const data = [
 		{
@@ -93,12 +108,17 @@ function UpdateProjectsContainer({ projects, updateResume, setForm }) {
 		<ProjectsContainer
 			data={data}
 			onSubmit={onSubmit}
-			action="Modifier"
+			action={languages[systemLanguageCode].cvUpdate.action}
 			setForm={setForm}
 		>
-			<CustomLink to={CV_LIST}>Revenir à la liste des CVs</CustomLink>
+			<CustomLink to={CV_LIST}>
+				{languages[systemLanguageCode].cv.goToCVList}
+			</CustomLink>
 		</ProjectsContainer>
 	);
 }
 
-export default connect(null, mapDispatchToProps)(UpdateProjectsContainer);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(UpdateProjectsContainer);

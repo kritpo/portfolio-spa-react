@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { HOME, CV_LIST } from '../routes';
+import languages from '../utils/languages';
 
 import {
 	Container,
@@ -37,73 +38,62 @@ import InterestsContainer, {
 import ReferencesContainer, {
 	REFERENCES
 } from '../containers/CV/ReferencesContainer';
+import CustomLink from '../utils/CustomLink';
 
 import Form from '../utils/forms/Form';
-
-// setup the labels list
-const labels = [
-	'Détails',
-	'Expérience professionnelle',
-	'Expérience associative',
-	'Formation',
-	'Projets',
-	'Compétences',
-	'Langues',
-	"Centre d'intérêts",
-	'Références'
-];
 
 /**
  * setup the components list
  * @param {object} data the list of data
  * @param {function} handleNext the forms submit function, to go to next step
+ * @param {string} nextButton the text of next button
  * @returns the components array
  */
-const components = (data, handleNext) => [
+const components = (data, handleNext, nextButton) => [
 	<BasicsContainer
 		data={data[BASICS]}
 		onSubmit={handleNext(BASICS)}
-		action="Suivant"
+		action={nextButton}
 	/>,
 	<WorkContainer
 		data={data[WORK]}
 		onSubmit={handleNext(WORK)}
-		action="Suivant"
+		action={nextButton}
 	/>,
 	<VolunteerContainer
 		data={data[VOLUNTEER]}
 		onSubmit={handleNext(VOLUNTEER)}
-		action="Suivant"
+		action={nextButton}
 	/>,
 	<EducationContainer
 		data={data[EDUCATION]}
 		onSubmit={handleNext(EDUCATION)}
-		action="Suivant"
+		action={nextButton}
 	/>,
 	<ProjectsContainer
 		data={data[PROJECTS]}
 		onSubmit={handleNext(PROJECTS)}
-		action="Suivant"
+		action={nextButton}
 	/>,
 	<SkillsContainer
 		data={data[SKILLS]}
 		onSubmit={handleNext(SKILLS)}
-		action="Suivant"
+		action={nextButton}
 	/>,
 	<LanguagesContainer
 		data={data[LANGUAGES]}
 		onSubmit={handleNext(LANGUAGES)}
-		action="Suivant"
+		action={nextButton}
 	/>,
 	<InterestsContainer
 		data={data[INTERESTS]}
 		onSubmit={handleNext(INTERESTS)}
-		action="Suivant"
+		action={nextButton}
 	/>,
 	<ReferencesContainer
 		data={data[REFERENCES]}
 		onSubmit={handleNext(REFERENCES)}
-		action="Suivant"
+		action={nextButton}
 	/>
 ];
 
@@ -112,9 +102,10 @@ const components = (data, handleNext) => [
  * @param {int} currentStep the current step index
  * @param {function} handleSetStep the update step function
  * @param {array} components the list of components
+ * @param {array} labels the list of labels
  * @returns the list of steps
  */
-const steps = (currentStep, handleSetStep, components) =>
+const steps = (currentStep, handleSetStep, components, labels) =>
 	labels.map(
 		(label, index) =>
 			components[index] && (
@@ -144,7 +135,10 @@ CVCreate.propTypes = {
 	data: PropTypes.objectOf(PropTypes.array).isRequired,
 	languageCodeData: PropTypes.array.isRequired,
 	languageCodeTemplate: PropTypes.object.isRequired,
-	onSubmit: PropTypes.func.isRequired
+	onSubmit: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function CVCreate({
@@ -154,15 +148,22 @@ function CVCreate({
 	data,
 	languageCodeData,
 	languageCodeTemplate,
-	onSubmit
+	onSubmit,
+	language: { systemLanguageCode }
 }) {
 	return (
 		<Fragment>
 			<Header
-				title="Créer un CV"
+				title={languages[systemLanguageCode].pages.cvCreate}
 				history={[
-					{ link: HOME, title: 'Accueil' },
-					{ link: CV_LIST, title: 'CVs' }
+					{
+						link: HOME,
+						title: languages[systemLanguageCode].pages.home
+					},
+					{
+						link: CV_LIST,
+						title: languages[systemLanguageCode].pages.cvList
+					}
 				]}
 			/>
 			<Container component="main" fixed>
@@ -175,7 +176,7 @@ function CVCreate({
 				>
 					<Paper>
 						<Typography component="h2" variant="h4">
-							Créer un CV
+							{languages[systemLanguageCode].pages.cvCreate}
 						</Typography>
 						<Box width="100%" maxWidth="650px" mx="auto" clone>
 							<Stepper
@@ -185,10 +186,22 @@ function CVCreate({
 								{steps(
 									currentStep,
 									handleSetStep,
-									components(data, handleNext)
+									components(
+										data,
+										handleNext,
+										languages[systemLanguageCode].cvCreate
+											.nextButton
+									),
+									languages[systemLanguageCode].cvCreate
+										.labels
 								)}
 								<Step>
-									<StepLabel>Langue du CV</StepLabel>
+									<StepLabel>
+										{
+											languages[systemLanguageCode]
+												.cvCreate.languageCodeLabel
+										}
+									</StepLabel>
 									<StepContent>
 										<Box
 											display="flex"
@@ -198,13 +211,31 @@ function CVCreate({
 												data={languageCodeData}
 												template={languageCodeTemplate}
 												onSubmit={onSubmit}
-												action="Créer"
-												errorMessage="Une erreur inconnue est survenue, veuillez réessayer ultérieurement."
+												action={
+													languages[
+														systemLanguageCode
+													].cvCreate.action
+												}
+												errorMessage={
+													languages[
+														systemLanguageCode
+													].cvCreate.error
+												}
+												sendingMessage={
+													languages[
+														systemLanguageCode
+													].generic.sendingMessage
+												}
 											/>
 										</Box>
 									</StepContent>
 								</Step>
 							</Stepper>
+						</Box>
+						<Box mt={2} textAlign="center">
+							<CustomLink to={CV_LIST}>
+								{languages[systemLanguageCode].cv.goToCVList}
+							</CustomLink>
 						</Box>
 					</Paper>
 				</Box>

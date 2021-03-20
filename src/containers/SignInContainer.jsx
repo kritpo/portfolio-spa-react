@@ -10,13 +10,23 @@ import { Auth } from 'aws-amplify';
 import { login } from '../actions';
 import { HOME } from '../routes';
 import checkField, { checkMinLength } from '../utils/forms/checkField';
-import { TEXT, PASSWORD as PASSWORD_TYPE } from '../utils/forms/Field';
+import {
+	TEXT,
+	PASSWORD as PASSWORD_TYPE
+} from '../utils/forms/Field/TextField';
+import languages from '../utils/languages';
 
 import SignIn from '../components/SignIn';
 
 // setup field name constants
 const USERNAME = 'username';
 const PASSWORD = 'password';
+
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
 
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
@@ -28,10 +38,18 @@ SignInContainer.propTypes = {
 	location: PropTypes.shape({
 		state: PropTypes.object
 	}).isRequired,
-	login: PropTypes.func.isRequired
+	login: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function SignInContainer({ location: { state }, login, ...props }) {
+function SignInContainer({
+	location: { state },
+	login,
+	language: { systemLanguageCode },
+	...props
+}) {
 	// setup the history hook
 	const history = useHistory();
 
@@ -57,18 +75,32 @@ function SignInContainer({ location: { state }, login, ...props }) {
 	const template = {
 		[USERNAME]: {
 			type: TEXT,
-			label: 'Pseudo',
-			checkField: checkField([checkMinLength(3)]),
+			label: languages[systemLanguageCode].signIn.username.label,
+			checkField: checkField([
+				checkMinLength(
+					3,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'dupont'
+				placeholder:
+					languages[systemLanguageCode].signIn.username.placeholder
 			}
 		},
 		[PASSWORD]: {
 			type: PASSWORD_TYPE,
-			label: 'Mot de passe',
-			checkField: checkField([checkMinLength(1)]),
+			label: languages[systemLanguageCode].signIn.password.label,
+			checkField: checkField([
+				checkMinLength(
+					1,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'Mot de passe'
+				placeholder:
+					languages[systemLanguageCode].signIn.password.placeholder
 			}
 		}
 	};
@@ -102,9 +134,10 @@ function SignInContainer({ location: { state }, login, ...props }) {
 			data={data}
 			template={template}
 			onSubmit={onSubmit}
+			language={{ systemLanguageCode }}
 			{...props}
 		/>
 	);
 }
 
-export default connect(null, mapDispatchToProps)(SignInContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer);

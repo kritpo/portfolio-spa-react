@@ -1,16 +1,15 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import checkField, {
 	checkMinLength,
 	checkDate
 } from '../../utils/forms/checkField';
-import {
-	TEXT,
-	TEXTAREA,
-	URL,
-	DATE,
-	DATE_MASKABLE
-} from '../../utils/forms/Field';
+import { TEXT, TEXTAREA, URL } from '../../utils/forms/Field/TextField';
+import { DATE, DATE_MASKABLE } from '../../utils/forms/Field/DateField';
+import languages from '../../utils/languages';
 
 import Form from '../../utils/forms/Form';
 
@@ -25,93 +24,191 @@ export const SUMMARY = 'summary';
 export const HIGHLIGHTS = 'highlights';
 export const HIGHLIGHT = 'highlight';
 
-function VolunteerContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+VolunteerContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function VolunteerContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the form template
 	const template = {
 		[VOLUNTEER]: {
 			subform: {
 				[ORGANIZATION]: {
 					type: TEXT,
-					label: 'Association',
+					label:
+						languages[systemLanguageCode].cv.volunteer.organization
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Association'
+						placeholder:
+							languages[systemLanguageCode].cv.volunteer
+								.organization.placeholder
 					}
 				},
 				[POSITION]: {
 					type: TEXT,
-					label: 'Poste',
+					label:
+						languages[systemLanguageCode].cv.volunteer.position
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Responsable technique'
+						placeholder:
+							languages[systemLanguageCode].cv.volunteer.position
+								.placeholder
 					}
 				},
 				[WEBSITE]: {
 					type: URL,
-					label: 'Site internet',
+					label:
+						languages[systemLanguageCode].cv.volunteer.website
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(8)]),
+					checkField: checkField([
+						checkMinLength(
+							8,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'https://association.fr/'
+						placeholder:
+							languages[systemLanguageCode].cv.volunteer.website
+								.placeholder
 					}
 				},
 				[START_DATE]: {
 					type: DATE,
-					label: 'Date de début',
+					label:
+						languages[systemLanguageCode].cv.volunteer.startDate
+							.label,
 					defaultValue: new Date(),
-					checkField: checkField([checkDate()]),
+					checkField: checkField([
+						checkDate(
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.date
+						)
+					]),
 					configParam: {
 						maxDate: new Date(),
 						maxDateField: END_DATE,
 						maxDateMessage:
-							'La date de début devrait être avant la date de fin'
+							languages[systemLanguageCode].cv.maxDateMessage,
+						dateFormat: languages[systemLanguageCode].cv.dateFormat,
+						invalidDateMessage:
+							languages[systemLanguageCode].cv.invalidDateMessage
 					}
 				},
 				[END_DATE]: {
 					type: DATE_MASKABLE,
-					label: 'Date de fin',
+					label:
+						languages[systemLanguageCode].cv.volunteer.endDate
+							.label,
 					defaultValue: new Date(),
-					checkField: checkField([checkDate()]),
+					checkField: checkField([
+						checkDate(
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.date
+						)
+					]),
 					configParam: {
 						minDateField: START_DATE,
 						minDateMessage:
-							'La date de fin devrait être après la date de début'
+							languages[systemLanguageCode].cv.minDateMessage,
+						dateFormat: languages[systemLanguageCode].cv.dateFormat,
+						invalidDateMessage:
+							languages[systemLanguageCode].cv.invalidDateMessage,
+						currentLabel:
+							languages[systemLanguageCode].cv.currentLabel
 					}
 				},
 				[SUMMARY]: {
 					type: TEXTAREA,
-					label: 'Résumé',
+					label:
+						languages[systemLanguageCode].cv.volunteer.summary
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: "Une petite description de l'expérience"
+						placeholder:
+							languages[systemLanguageCode].cv.volunteer.summary
+								.placeholder
 					}
 				},
 				[HIGHLIGHTS]: {
 					subform: {
 						[HIGHLIGHT]: {
 							type: TEXT,
-							label: 'Réalisation',
+							label:
+								languages[systemLanguageCode].cv.volunteer
+									.highlight.label,
 							defaultValue: '',
-							checkField: checkField([checkMinLength(3)]),
+							checkField: checkField([
+								checkMinLength(
+									3,
+									languages[systemLanguageCode]
+										.checkFieldErrorMessage.minLength
+								)
+							]),
 							inputParam: {
 								placeholder:
-									"Réalisation du site de l'association"
+									languages[systemLanguageCode].cv.volunteer
+										.highlight.placeholder
 							}
 						}
 					},
-					addLabel: 'Ajouter une réalisation',
-					removeLabel: 'Supprimer la réalisation'
+					addLabel:
+						languages[systemLanguageCode].cv.volunteer
+							.addHighlights,
+					removeLabel:
+						languages[systemLanguageCode].cv.volunteer
+							.removeHighlights
 				}
 			},
-			addLabel: 'Ajouter une expérience associative',
-			removeLabel: "Supprimer l'expérience"
+			addLabel: languages[systemLanguageCode].cv.volunteer.addVolunteer,
+			removeLabel:
+				languages[systemLanguageCode].cv.volunteer.removeVolunteer
 		}
 	};
 
-	return <Form template={template} errorMessage="Erreur" {...props} />;
+	return (
+		<Form
+			template={template}
+			errorMessage={languages[systemLanguageCode].cv.error}
+			sendingMessage={
+				languages[systemLanguageCode].generic.sendingMessage
+			}
+			{...props}
+		/>
+	);
 }
 
-export default VolunteerContainer;
+export default connect(mapStateToProps)(VolunteerContainer);

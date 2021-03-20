@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
+import languages from '../../../utils/languages';
+
 import { Box, Card, CardContent, Typography, Hidden } from '@material-ui/core';
 import {
 	TimelineItem,
@@ -71,7 +73,10 @@ CareerItem.propTypes = {
 	endDate: PropTypes.string.isRequired,
 	careerTitle: PropTypes.string.isRequired,
 	entityName: PropTypes.string.isRequired,
-	careerHighlights: PropTypes.string.isRequired
+	careerHighlights: PropTypes.string.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function CareerItem({
@@ -82,7 +87,8 @@ function CareerItem({
 	endDate,
 	careerTitle,
 	entityName,
-	careerHighlights
+	careerHighlights,
+	language: { systemLanguageCode }
 }) {
 	return (
 		<Box
@@ -145,8 +151,12 @@ function CareerItem({
 									id={id}
 								>
 									{career.type === EDUCATION
-										? 'Voir les cours'
-										: 'Voir le site'}
+										? languages[systemLanguageCode]
+												.portfolio.career.menu
+												.showCourses
+										: languages[systemLanguageCode]
+												.portfolio.career.menu
+												.goToWebsite}
 								</CareerItemButtonContainer>
 							</Box>
 						</CardContent>

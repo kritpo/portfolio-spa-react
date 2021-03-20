@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
+import languages from '../../../utils/languages';
+
 import { Box, Collapse, Typography, IconButton } from '@material-ui/core';
 import { ExpandMore, ExpandLess } from '@material-ui/icons';
 
-import SkillItem from './Skill/SkillItem';
+import SkillItemContainer from '../../../containers/Portfolio/Skills/Skill/SkillItemContainer';
 
 /**
  * convert skills details to React component
@@ -16,20 +18,30 @@ import SkillItem from './Skill/SkillItem';
 const skillsList = (skills, start, end) =>
 	skills
 		.slice(start, end)
-		.map((skill, index) => <SkillItem skill={skill} key={index} />);
+		.map((skill, index) => (
+			<SkillItemContainer skill={skill} key={index} />
+		));
 
 // configure the prop types validation
 Skill.propTypes = {
 	skills: PropTypes.arrayOf(PropTypes.object).isRequired,
 	openCollapse: PropTypes.bool.isRequired,
-	collapseToggle: PropTypes.func.isRequired
+	collapseToggle: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function Skill({ skills, openCollapse, collapseToggle }) {
+function Skill({
+	skills,
+	openCollapse,
+	collapseToggle,
+	language: { systemLanguageCode }
+}) {
 	return (
 		<Fragment>
 			<Typography component="h3" variant="h4" gutterBottom>
-				Mes compétences
+				{languages[systemLanguageCode].portfolio.skills.title}
 			</Typography>
 			{skills.length > 0 ? (
 				<Fragment>
@@ -56,7 +68,9 @@ function Skill({ skills, openCollapse, collapseToggle }) {
 					)}
 				</Fragment>
 			) : (
-				<Typography variant="body1">Aucune compétences</Typography>
+				<Typography variant="body1">
+					{languages[systemLanguageCode].portfolio.skills.noElements}
+				</Typography>
 			)}
 		</Fragment>
 	);

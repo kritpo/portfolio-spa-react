@@ -1,11 +1,16 @@
 /**
  * setup the minlength checker
  * @param {string} length the minimum length
+ * @param {function} errorMessage the error message generator
  * @returns the field checker
  */
-export const checkMinLength = length => value => {
+export const checkMinLength = (
+	length,
+	errorMessage = length =>
+		`The field must contains at least ${length} characters.`
+) => value => {
 	if (value.length < length) {
-		return `Le champ doit contenir au moins ${length} caractères.`;
+		return errorMessage(length);
 	}
 
 	return '';
@@ -14,11 +19,16 @@ export const checkMinLength = length => value => {
 /**
  * setup the exact length checker
  * @param {string} length the exact length
+ * @param {function} errorMessage the error message generator
  * @returns the field checker
  */
-export const checkExactLength = length => value => {
+export const checkExactLength = (
+	length,
+	errorMessage = length =>
+		`The field must contains exactly ${length} characters.`
+) => value => {
 	if (value.length !== length) {
-		return `Le champ doit contenir exactement ${length} caractères.`;
+		return errorMessage(length);
 	}
 
 	return '';
@@ -27,11 +37,15 @@ export const checkExactLength = length => value => {
 /**
  * setup the regex checker
  * @param {Regex} rgx the regex to compare to
+ * @param {function} errorMessage the error message generator
  * @returns the field checker
  */
-export const checkRegex = rgx => value => {
+export const checkRegex = (
+	rgx,
+	errorMessage = rgx => `The field must be on ${rgx} regex format.`
+) => value => {
 	if (!rgx.test(value)) {
-		return `Le champ doit être dans le bon format.`;
+		return errorMessage(rgx);
 	}
 
 	return '';
@@ -40,14 +54,16 @@ export const checkRegex = rgx => value => {
 /**
  * setup the character type checker
  * @param {object} type the list of types to check
+ * @param {function} errorMessage the error message generator
  * @returns the field checker
  */
-export const checkCharType = ({
-	lowercase = true,
-	uppercase = true,
-	number = true,
-	symbols = true
-}) => value => {
+export const checkCharType = (
+	{ lowercase = true, uppercase = true, number = true, symbols = true },
+	errorMessage = type =>
+		`The field must contains at leat${lowercase ? ' - 1 lowercase' : ''}${
+			uppercase ? ' - 1 uppercase' : ''
+		}${number ? ' - 1 number' : ''}${symbols ? ' - 1 symbols' : ''}.`
+) => value => {
 	if (
 		!new RegExp(
 			`${lowercase ? '(?=.*[a-z])' : ''}${
@@ -59,11 +75,7 @@ export const checkCharType = ({
 			}`
 		).test(value)
 	) {
-		return `Le champ doit contenir au moins${
-			lowercase ? ' - 1 minuscule' : ''
-		}${uppercase ? ' - 1 majuscule' : ''}${number ? ' - 1 chiffre' : ''}${
-			symbols ? ' - 1 caractère spécial' : ''
-		}.`;
+		return errorMessage({ lowercase, uppercase, number, symbols });
 	}
 
 	return '';
@@ -72,17 +84,15 @@ export const checkCharType = ({
 /**
  * setup the value checker
  * @param {any} valueRef the reference value
+ * @param {function} errorMessage the error message generator
  * @returns the field checker
  */
-export const checkValue = valueRef => value => {
+export const checkValue = (
+	valueRef,
+	errorMessage = valueRef => `The field must match to ${valueRef}.`
+) => value => {
 	if (valueRef !== value) {
-		return `Le champ doit correspondre à ${
-			typeof valueRef === 'boolean'
-				? valueRef
-					? 'vrai'
-					: 'faux'
-				: valueRef
-		}.`;
+		return errorMessage(valueRef);
 	}
 
 	return '';
@@ -90,11 +100,14 @@ export const checkValue = valueRef => value => {
 
 /**
  * setup the date checker
+ * @param {function} errorMessage the error message generator
  * @returns the field checker
  */
-export const checkDate = () => value => {
+export const checkDate = (
+	errorMessage = () => `The date is not correct.`
+) => value => {
 	if (!(value instanceof Date && !isNaN(value))) {
-		return `La date n'est pas correcte.`;
+		return errorMessage();
 	}
 
 	return '';

@@ -1,4 +1,7 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import checkField, {
 	checkMinLength,
@@ -12,7 +15,8 @@ import {
 	EMAIL as EMAIL_TYPE,
 	PHONE_NUMBER,
 	COUNTRY_CODE as COUNTRY_CODE_TYPE
-} from '../../utils/forms/Field';
+} from '../../utils/forms/Field/TextField';
+import languages from '../../utils/languages';
 
 import Form from '../../utils/forms/Form';
 
@@ -35,147 +39,264 @@ export const NETWORK = 'network';
 export const USERNAME = 'username';
 export const URL = 'url';
 
-function BasicsContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+BasicsContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the form template
 	const template = {
 		[NAME]: {
 			type: TEXT,
-			label: 'Nom complet',
-			checkField: checkField([checkMinLength(3)]),
+			label: languages[systemLanguageCode].cv.basics.name.label,
+			checkField: checkField([
+				checkMinLength(
+					3,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'Jean Dupont'
+				placeholder:
+					languages[systemLanguageCode].cv.basics.name.placeholder
 			}
 		},
 		[LABEL]: {
 			type: TEXT,
-			label: 'Titre',
-			checkField: checkField([checkMinLength(3)]),
+			label: languages[systemLanguageCode].cv.basics.label.label,
+			checkField: checkField([
+				checkMinLength(
+					3,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'Ingénieur en développement informatique'
+				placeholder:
+					languages[systemLanguageCode].cv.basics.label.placeholder
 			}
 		},
 		[SUMMARY]: {
 			type: TEXTAREA,
-			label: 'Résumé',
-			checkField: checkField([checkMinLength(3)]),
+			label: languages[systemLanguageCode].cv.basics.summary.label,
+			checkField: checkField([
+				checkMinLength(
+					3,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'Une petite description de M. Dupont'
+				placeholder:
+					languages[systemLanguageCode].cv.basics.summary.placeholder
 			}
 		},
 		[PICTURE]: {
 			type: URL_TYPE,
-			label: 'Image de profil',
-			checkField: checkField([checkMinLength(8)]),
+			label: languages[systemLanguageCode].cv.basics.picture.label,
+			checkField: checkField([
+				checkMinLength(
+					8,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'https://jean-dupont.fr/mon-image.jpg'
+				placeholder:
+					languages[systemLanguageCode].cv.basics.picture.placeholder
 			}
 		},
 		[EMAIL]: {
 			type: EMAIL_TYPE,
-			label: 'Adresse mail',
+			label: languages[systemLanguageCode].cv.basics.email.label,
 			checkField: checkField([
-				checkMinLength(3),
-				checkRegex(/^[a-z0-9.\-_]+@[a-z0-9.\-_]+\.[a-z0-9]{2,}$/)
+				checkMinLength(
+					3,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				),
+				checkRegex(
+					/^[a-z0-9.\-_]+@[a-z0-9.\-_]+\.[a-z0-9]{2,}$/,
+					languages[systemLanguageCode].checkFieldErrorMessage.regex
+				)
 			]),
 			inputParam: {
-				placeholder: 'dupont@gmail.com'
+				placeholder:
+					languages[systemLanguageCode].cv.basics.email.placeholder
 			}
 		},
 		[PHONE]: {
 			type: PHONE_NUMBER,
-			label: 'Numéro de téléphone',
-			checkField: checkField([checkMinLength(6)]),
+			label: languages[systemLanguageCode].cv.basics.phone.label,
+			checkField: checkField([
+				checkMinLength(
+					6,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: '(+33) 6 12 34 56 78'
+				placeholder:
+					languages[systemLanguageCode].cv.basics.phone.placeholder
 			}
 		},
 		[WEBSITE]: {
 			type: URL_TYPE,
-			label: 'Site internet',
-			checkField: checkField([checkMinLength(8)]),
+			label: languages[systemLanguageCode].cv.basics.website.label,
+			checkField: checkField([
+				checkMinLength(
+					8,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'https://jean-dupont.fr'
+				placeholder:
+					languages[systemLanguageCode].cv.basics.website.placeholder
 			}
 		},
 		[ADDRESS]: {
 			type: TEXT,
-			label: 'Adresse postale',
+			label: languages[systemLanguageCode].cv.basics.address.label,
 			checkField: checkField([]),
 			inputParam: {
-				placeholder: '42, rue de la République',
+				placeholder:
+					languages[systemLanguageCode].cv.basics.address.placeholder,
 				required: false
 			}
 		},
 		[POSTAL_CODE]: {
 			type: TEXT,
-			label: 'Code postal',
+			label: languages[systemLanguageCode].cv.basics.postalCode.label,
 			checkField: checkField([]),
 			inputParam: {
-				placeholder: '75001',
+				placeholder:
+					languages[systemLanguageCode].cv.basics.postalCode
+						.placeholder,
 				required: false
 			}
 		},
 		[CITY]: {
 			type: TEXT,
-			label: 'Ville',
-			checkField: checkField([checkMinLength(3)]),
+			label: languages[systemLanguageCode].cv.basics.city.label,
+			checkField: checkField([
+				checkMinLength(
+					3,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'Paris'
+				placeholder:
+					languages[systemLanguageCode].cv.basics.city.placeholder
 			}
 		},
 		[REGION]: {
 			type: TEXT,
-			label: 'Région',
+			label: languages[systemLanguageCode].cv.basics.region.label,
 			checkField: checkField([]),
 			inputParam: {
-				placeholder: 'Île de France',
+				placeholder:
+					languages[systemLanguageCode].cv.basics.region.placeholder,
 				required: false
 			}
 		},
 		[COUNTRY_CODE]: {
 			type: COUNTRY_CODE_TYPE,
-			label: 'Code pays',
-			checkField: checkField([checkExactLength(2)]),
+			label: languages[systemLanguageCode].cv.basics.countryCode.label,
+			checkField: checkField([
+				checkExactLength(
+					2,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.exactLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'FR'
+				placeholder:
+					languages[systemLanguageCode].cv.basics.countryCode
+						.placeholder
 			}
 		},
 		[PROFILES]: {
 			subform: {
 				[NETWORK]: {
 					type: TEXT,
-					label: 'Réseau',
+					label:
+						languages[systemLanguageCode].cv.basics.network.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(2)]),
+					checkField: checkField([
+						checkMinLength(
+							2,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'LinkedIn'
+						placeholder:
+							languages[systemLanguageCode].cv.basics.network
+								.placeholder
 					}
 				},
 				[USERNAME]: {
 					type: TEXT,
-					label: "Nom d'utilisateur",
+					label:
+						languages[systemLanguageCode].cv.basics.username.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'dupont'
+						placeholder:
+							languages[systemLanguageCode].cv.basics.username
+								.placeholder
 					}
 				},
 				[URL]: {
 					type: URL_TYPE,
-					label: 'Adresse URL',
+					label: languages[systemLanguageCode].cv.basics.url.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(8)]),
+					checkField: checkField([
+						checkMinLength(
+							8,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'https://www.linkedin.com/in/jean-dupont/'
+						placeholder:
+							languages[systemLanguageCode].cv.basics.url
+								.placeholder
 					}
 				}
 			},
-			addLabel: 'Ajouter un profil',
-			removeLabel: 'Supprimer le profil'
+			addLabel: languages[systemLanguageCode].cv.basics.addProfile,
+			removeLabel: languages[systemLanguageCode].cv.basics.removeProfile
 		}
 	};
 
-	return <Form template={template} errorMessage="Erreur" {...props} />;
+	return (
+		<Form
+			template={template}
+			errorMessage={languages[systemLanguageCode].cv.error}
+			sendingMessage={
+				languages[systemLanguageCode].generic.sendingMessage
+			}
+			{...props}
+		/>
+	);
 }
 
-export default BasicsContainer;
+export default connect(mapStateToProps)(BasicsContainer);

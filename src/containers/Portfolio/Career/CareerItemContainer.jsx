@@ -1,14 +1,24 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
+import { connect } from 'react-redux';
+
 import { useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
+
+import languages from '../../../utils/languages';
 
 import CareerItem, {
 	WORK,
 	EDUCATION,
 	VOLUNTEER
 } from '../../../components/Portfolio/Career/CareerItem';
+
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
 
 // configure the prop types validation
 CareerItemContainer.propTypes = {
@@ -45,20 +55,31 @@ CareerItemContainer.propTypes = {
 				.isRequired,
 			type: PropTypes.oneOf([VOLUNTEER]).isRequired
 		})
-	]).isRequired
+	]).isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function CareerItemContainer({ career, ...props }) {
+function CareerItemContainer({
+	career,
+	language: { systemLanguageCode },
+	...props
+}) {
 	// setup the breakpoints matchers hooks
 	const { breakpoints } = useTheme();
 	const isUpSm = useMediaQuery(breakpoints.up('sm'));
 
 	// compute the dates, the title associated to the career item, the name of the career reference entity and the highlights elements associated to the career item
-	const startDate = new Date(career.startDate).toLocaleDateString();
+	const startDate = new Intl.DateTimeFormat(systemLanguageCode).format(
+		new Date(career.startDate)
+	);
 	const endDate =
 		career.endDate !== undefined
-			? new Date(career.endDate).toLocaleDateString()
-			: 'Présent';
+			? new Intl.DateTimeFormat(systemLanguageCode).format(
+					new Date(career.endDate)
+			  )
+			: languages[systemLanguageCode].portfolio.career.current;
 	const careerTitle =
 		career.type === EDUCATION
 			? career.studyType
@@ -83,9 +104,10 @@ function CareerItemContainer({ career, ...props }) {
 			careerTitle={careerTitle}
 			entityName={entityName}
 			careerHighlights={careerHighlights}
+			language={{ systemLanguageCode }}
 			{...props}
 		/>
 	);
 }
 
-export default CareerItemContainer;
+export default connect(mapStateToProps)(CareerItemContainer);

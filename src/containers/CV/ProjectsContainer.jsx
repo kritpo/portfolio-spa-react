@@ -1,4 +1,7 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import checkField, {
 	checkMinLength,
@@ -7,10 +10,10 @@ import checkField, {
 import {
 	TEXT,
 	TEXTAREA,
-	DATE,
-	DATE_MASKABLE,
 	URL as URL_TYPE
-} from '../../utils/forms/Field';
+} from '../../utils/forms/Field/TextField';
+import { DATE, DATE_MASKABLE } from '../../utils/forms/Field/DateField';
+import languages from '../../utils/languages';
 
 import Form from '../../utils/forms/Form';
 
@@ -25,92 +28,184 @@ export const END_DATE = 'end_date';
 export const TECHNOLOGIES = 'technologies';
 export const TECHNOLOGY = 'technology';
 
-function ProjectsContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+ProjectsContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the form template
 	const template = {
 		[PROJECTS]: {
 			subform: {
 				[NAME]: {
 					type: TEXT,
-					label: 'Nom du projet',
+					label: languages[systemLanguageCode].cv.projects.name.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Projet'
+						placeholder:
+							languages[systemLanguageCode].cv.projects.name
+								.placeholder
 					}
 				},
 				[SUMMARY]: {
 					type: TEXTAREA,
-					label: 'Description',
+					label:
+						languages[systemLanguageCode].cv.projects.summary.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Description du projet'
+						placeholder:
+							languages[systemLanguageCode].cv.projects.summary
+								.placeholder
 					}
 				},
 				[PICTURE]: {
 					type: URL_TYPE,
-					label: 'Illustration',
+					label:
+						languages[systemLanguageCode].cv.projects.picture.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(8)]),
+					checkField: checkField([
+						checkMinLength(
+							8,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'https://jean-dupont.fr/mon-projet.jpg'
+						placeholder:
+							languages[systemLanguageCode].cv.projects.picture
+								.placeholder
 					}
 				},
 				[URL]: {
 					type: URL_TYPE,
-					label: 'Adresse URL du projet',
+					label: languages[systemLanguageCode].cv.projects.url.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(8)]),
+					checkField: checkField([
+						checkMinLength(
+							8,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'https://github.com/dupont/projet/'
+						placeholder:
+							languages[systemLanguageCode].cv.projects.url
+								.placeholder
 					}
 				},
 				[START_DATE]: {
 					type: DATE,
-					label: 'Date de début',
+					label:
+						languages[systemLanguageCode].cv.projects.startDate
+							.label,
 					defaultValue: new Date(),
-					checkField: checkField([checkDate()]),
+					checkField: checkField([
+						checkDate(
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.date
+						)
+					]),
 					configParam: {
 						maxDate: new Date(),
 						maxDateField: END_DATE,
 						maxDateMessage:
-							'La date de début devrait être avant la date de fin'
+							languages[systemLanguageCode].cv.maxDateMessage,
+						dateFormat: languages[systemLanguageCode].cv.dateFormat,
+						invalidDateMessage:
+							languages[systemLanguageCode].cv.invalidDateMessage
 					}
 				},
 				[END_DATE]: {
 					type: DATE_MASKABLE,
-					label: 'Date de fin',
+					label:
+						languages[systemLanguageCode].cv.projects.endDate.label,
 					defaultValue: new Date(),
-					checkField: checkField([checkDate()]),
+					checkField: checkField([
+						checkDate(
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.date
+						)
+					]),
 					configParam: {
 						minDateField: START_DATE,
 						minDateMessage:
-							'La date de fin devrait être après la date de début'
+							languages[systemLanguageCode].cv.minDateMessage,
+						dateFormat: languages[systemLanguageCode].cv.dateFormat,
+						invalidDateMessage:
+							languages[systemLanguageCode].cv.invalidDateMessage,
+						currentLabel:
+							languages[systemLanguageCode].cv.currentLabel
 					}
 				},
 				[TECHNOLOGIES]: {
 					subform: {
 						[TECHNOLOGY]: {
 							type: TEXT,
-							label: 'Technologie',
+							label:
+								languages[systemLanguageCode].cv.projects
+									.technology.label,
 							defaultValue: '',
-							checkField: checkField([checkMinLength(3)]),
+							checkField: checkField([
+								checkMinLength(
+									3,
+									languages[systemLanguageCode]
+										.checkFieldErrorMessage.minLength
+								)
+							]),
 							inputParam: {
-								placeholder: 'Javascript'
+								placeholder:
+									languages[systemLanguageCode].cv.projects
+										.technology.placeholder
 							}
 						}
 					},
-					addLabel: 'Ajouter une technologie',
-					removeLabel: 'Supprimer la technologie'
+					addLabel:
+						languages[systemLanguageCode].cv.projects
+							.addTechnologies,
+					removeLabel:
+						languages[systemLanguageCode].cv.projects
+							.removeTechnologies
 				}
 			},
-			addLabel: 'Ajouter un projet',
-			removeLabel: 'Supprimer le projet'
+			addLabel: languages[systemLanguageCode].cv.projects.addProjects,
+			removeLabel:
+				languages[systemLanguageCode].cv.projects.removeProjects
 		}
 	};
 
-	return <Form template={template} errorMessage="Erreur" {...props} />;
+	return (
+		<Form
+			template={template}
+			errorMessage={languages[systemLanguageCode].cv.error}
+			sendingMessage={
+				languages[systemLanguageCode].generic.sendingMessage
+			}
+			{...props}
+		/>
+	);
 }
 
-export default ProjectsContainer;
+export default connect(mapStateToProps)(ProjectsContainer);

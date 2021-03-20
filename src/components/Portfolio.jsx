@@ -1,6 +1,8 @@
 import React, { lazy, Fragment, Suspense } from 'react';
 import { PropTypes } from 'prop-types';
 
+import languages from '../utils/languages';
+
 import { Box, Container, Paper, IconButton } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
@@ -11,13 +13,19 @@ import AutoHashMatcher from '../utils/AutoHashMatcher';
 import HeroContainer from '../containers/Portfolio/HeroContainer';
 
 // import components in lazy mode
-const Details = lazy(() => import('./Portfolio/Details'));
+const DetailsContainer = lazy(() =>
+	import('../containers/Portfolio/DetailsContainer')
+);
 const CareerContainer = lazy(() =>
 	import('../containers/Portfolio/CareerContainer')
 );
-const Projects = lazy(() => import('./Portfolio/Projects'));
+const ProjectsContainer = lazy(() =>
+	import('../containers/Portfolio/ProjectsContainer')
+);
 const Skills = lazy(() => import('./Portfolio/Skills'));
-const References = lazy(() => import('./Portfolio/References'));
+const ReferencesContainer = lazy(() =>
+	import('../containers/Portfolio/ReferencesContainer')
+);
 
 // configure the prop types validation
 Portfolio.propTypes = {
@@ -27,13 +35,17 @@ Portfolio.propTypes = {
 		error: PropTypes.string
 	}).isRequired,
 	navIntersectionRef: PropTypes.func,
-	isMain: PropTypes.bool.isRequired
+	isMain: PropTypes.bool.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function Portfolio({
 	resume: { resume, isLoading, error },
 	navIntersectionRef,
-	isMain
+	isMain,
+	language: { systemLanguageCode }
 }) {
 	return (
 		<Fragment>
@@ -56,7 +68,10 @@ function Portfolio({
 								<Loading size="40vh" />
 							) : error !== null ? (
 								<Error size="40vh">
-									Impossible de charger les données
+									{
+										languages[systemLanguageCode].generic
+											.loadingError
+									}
 								</Error>
 							) : (
 								<Fragment>
@@ -72,7 +87,7 @@ function Portfolio({
 													<Loading size="40vh" />
 												}
 											>
-												<Details
+												<DetailsContainer
 													basics={resume.basics}
 													isMain={isMain}
 												/>
@@ -111,7 +126,7 @@ function Portfolio({
 													<Loading size="40vh" />
 												}
 											>
-												<Projects
+												<ProjectsContainer
 													projects={resume.projects}
 												/>
 											</Suspense>
@@ -149,7 +164,7 @@ function Portfolio({
 													<Loading size="40vh" />
 												}
 											>
-												<References
+												<ReferencesContainer
 													references={
 														resume.references
 													}

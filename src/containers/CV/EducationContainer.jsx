@@ -1,10 +1,15 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import checkField, {
 	checkMinLength,
 	checkDate
 } from '../../utils/forms/checkField';
-import { TEXT, NUMBER_2, DATE, DATE_MASKABLE } from '../../utils/forms/Field';
+import { TEXT, NUMBER_2 } from '../../utils/forms/Field/TextField';
+import { DATE, DATE_MASKABLE } from '../../utils/forms/Field/DateField';
+import languages from '../../utils/languages';
 
 import Form from '../../utils/forms/Form';
 
@@ -21,107 +26,216 @@ export const CATEGORY = 'category';
 export const COURSES_COURSES = 'courses_courses';
 export const COURSE = 'course';
 
-function VolunteerContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+EducationContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function EducationContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the form template
 	const template = {
 		[EDUCATION]: {
 			subform: {
 				[INSTITUTION]: {
 					type: TEXT,
-					label: 'Établissement',
+					label:
+						languages[systemLanguageCode].cv.education.institution
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Ecole'
+						placeholder:
+							languages[systemLanguageCode].cv.education
+								.institution.placeholder
 					}
 				},
 				[GPA]: {
 					type: NUMBER_2,
-					label: 'GPA',
+					label: languages[systemLanguageCode].cv.education.gpa.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(1)]),
+					checkField: checkField([
+						checkMinLength(
+							1,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: '3.5'
+						placeholder:
+							languages[systemLanguageCode].cv.education.gpa
+								.placeholder
 					}
 				},
 				[AREA]: {
 					type: TEXT,
-					label: 'Domaine',
+					label:
+						languages[systemLanguageCode].cv.education.area.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Ingénierie informatique'
+						placeholder:
+							languages[systemLanguageCode].cv.education.area
+								.placeholder
 					}
 				},
 				[STUDY_TYPE]: {
 					type: TEXT,
-					label: 'Type',
+					label:
+						languages[systemLanguageCode].cv.education.studyType
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: "Diplôme d'ingénieur"
+						placeholder:
+							languages[systemLanguageCode].cv.education.studyType
+								.placeholder
 					}
 				},
 				[START_DATE]: {
 					type: DATE,
-					label: 'Date de début',
+					label:
+						languages[systemLanguageCode].cv.education.startDate
+							.label,
 					defaultValue: new Date(),
-					checkField: checkField([checkDate()]),
+					checkField: checkField([
+						checkDate(
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.date
+						)
+					]),
 					configParam: {
 						maxDate: new Date(),
 						maxDateField: END_DATE,
 						maxDateMessage:
-							'La date de début devrait être avant la date de fin'
+							languages[systemLanguageCode].cv.maxDateMessage,
+						dateFormat: languages[systemLanguageCode].cv.dateFormat,
+						invalidDateMessage:
+							languages[systemLanguageCode].cv.invalidDateMessage
 					}
 				},
 				[END_DATE]: {
 					type: DATE_MASKABLE,
-					label: 'Date de fin',
+					label:
+						languages[systemLanguageCode].cv.education.endDate
+							.label,
 					defaultValue: new Date(),
-					checkField: checkField([checkDate()]),
+					checkField: checkField([
+						checkDate(
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.date
+						)
+					]),
 					configParam: {
 						minDateField: START_DATE,
 						minDateMessage:
-							'La date de fin devrait être après la date de début'
+							languages[systemLanguageCode].cv.minDateMessage,
+						dateFormat: languages[systemLanguageCode].cv.dateFormat,
+						invalidDateMessage:
+							languages[systemLanguageCode].cv.invalidDateMessage,
+						currentLabel:
+							languages[systemLanguageCode].cv.currentLabel
 					}
 				},
 				[COURSES]: {
 					subform: {
 						[CATEGORY]: {
 							type: TEXT,
-							label: 'Catégorie',
+							label:
+								languages[systemLanguageCode].cv.education
+									.category.label,
 							defaultValue: '',
-							checkField: checkField([checkMinLength(1)]),
+							checkField: checkField([
+								checkMinLength(
+									1,
+									languages[systemLanguageCode]
+										.checkFieldErrorMessage.minLength
+								)
+							]),
 							inputParam: {
-								placeholder: 'S1'
+								placeholder:
+									languages[systemLanguageCode].cv.education
+										.category.placeholder
 							}
 						},
 						[COURSES_COURSES]: {
 							subform: {
 								[COURSE]: {
 									type: TEXT,
-									label: 'Cours',
+									label:
+										languages[systemLanguageCode].cv
+											.education.course.label,
 									defaultValue: '',
-									checkField: checkField([checkMinLength(3)]),
+									checkField: checkField([
+										checkMinLength(
+											3,
+											languages[systemLanguageCode]
+												.checkFieldErrorMessage
+												.minLength
+										)
+									]),
 									inputParam: {
-										placeholder: 'TS1001 - Algorithmique'
+										placeholder:
+											languages[systemLanguageCode].cv
+												.education.course.placeholder
 									}
 								}
 							},
-							addLabel: 'Ajouter un cours',
-							removeLabel: 'Supprimer le cours'
+							addLabel:
+								languages[systemLanguageCode].cv.education
+									.addCoursesCourses,
+							removeLabel:
+								languages[systemLanguageCode].cv.education
+									.removeCoursesCourses
 						}
 					},
-					addLabel: 'Ajouter une catégorie de cours',
-					removeLabel: 'Supprimer la catégorie'
+					addLabel:
+						languages[systemLanguageCode].cv.education.addCourses,
+					removeLabel:
+						languages[systemLanguageCode].cv.education.removeCourses
 				}
 			},
-			addLabel: 'Ajouter une formation',
-			removeLabel: 'Supprimer la formation'
+			addLabel: languages[systemLanguageCode].cv.education.addEducation,
+			removeLabel:
+				languages[systemLanguageCode].cv.education.removeEducation
 		}
 	};
 
-	return <Form template={template} errorMessage="Erreur" {...props} />;
+	return (
+		<Form
+			template={template}
+			errorMessage={languages[systemLanguageCode].cv.error}
+			sendingMessage={
+				languages[systemLanguageCode].generic.sendingMessage
+			}
+			{...props}
+		/>
+	);
 }
 
-export default VolunteerContainer;
+export default connect(mapStateToProps)(EducationContainer);

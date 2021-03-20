@@ -6,13 +6,15 @@ import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { fetchResume } from '../actions';
+import languages from '../utils/languages';
 
-import CVUpdate, { tabData } from '../components/CVUpdate';
+import CVUpdate from '../components/CVUpdate';
 
 // configure the states to pass as props to the component
-const mapStateToProps = ({ resume, username }, ...props) => ({
+const mapStateToProps = ({ resume, username, language }, ...props) => ({
 	resume,
 	username,
+	language,
 	...props
 });
 
@@ -24,10 +26,18 @@ const mapDispatchToProps = {
 // configure the prop types validation
 CVUpdateContainer.propTypes = {
 	username: PropTypes.string.isRequired,
-	fetchResume: PropTypes.func.isRequired
+	fetchResume: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function CVUpdateContainer({ username, fetchResume, ...props }) {
+function CVUpdateContainer({
+	username,
+	fetchResume,
+	language: { systemLanguageCode },
+	...props
+}) {
 	// retrieve the location hook
 	const location = useLocation();
 
@@ -51,7 +61,9 @@ function CVUpdateContainer({ username, fetchResume, ...props }) {
 	const [update, setUpdate] = useState(false);
 
 	// setup the current tab hook
-	const [currentTab, setCurrentTab] = useState(tabData[0].key);
+	const [currentTab, setCurrentTab] = useState(
+		languages[systemLanguageCode].cvUpdate.tabData[0].key
+	);
 
 	// setup the next tab hook
 	const [nextTab, setNextTab] = useState(null);
@@ -108,6 +120,7 @@ function CVUpdateContainer({ username, fetchResume, ...props }) {
 			handleTabChange={handleTabChange}
 			handleClose={handleClose}
 			setForm={setForm}
+			language={{ systemLanguageCode }}
 			{...props}
 		/>
 	);

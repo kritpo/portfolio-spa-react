@@ -35,7 +35,7 @@ HomeContainer.propTypes = {
 
 function HomeContainer({
 	fetchResume,
-	language: { resumeLanguageCode },
+	language: { resumeLanguageCode, ...language },
 	...props
 }) {
 	// setup the cookies hook
@@ -56,7 +56,7 @@ function HomeContainer({
 		});
 	}, [fetchResume, resumeLanguageCode, setCookies]);
 
-	return <Portfolio isMain={true} {...props} />;
+	return <Portfolio isMain={true} language={language} {...props} />;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

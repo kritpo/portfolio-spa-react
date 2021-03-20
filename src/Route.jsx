@@ -8,8 +8,8 @@ import routes from './routes';
 import { Switch, Route } from 'react-router-dom';
 
 import Loading from './utils/Loading';
-import Error401 from './components/Error401';
-import Error404 from './components/Error404';
+import Error401Container from './containers/Error401Container';
+import Error404Container from './containers/Error404Container';
 
 // convert routes details to React component
 const routesList = username =>
@@ -19,7 +19,12 @@ const routesList = username =>
 		(!logged && username === '') ? (
 			<Route path={path} exact={exact} component={component} key={path} />
 		) : (
-			<Route path={path} exact={exact} component={Error401} key={path} />
+			<Route
+				path={path}
+				exact={exact}
+				component={Error401Container}
+				key={path}
+			/>
 		)
 	);
 
@@ -40,7 +45,7 @@ function Routes({ username }) {
 			<Switch>
 				{routesList(username)}
 				<Route>
-					<Error404 />
+					<Error404Container />
 				</Route>
 			</Switch>
 		</Suspense>

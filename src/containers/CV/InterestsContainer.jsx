@@ -1,7 +1,11 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import checkField, { checkMinLength } from '../../utils/forms/checkField';
-import { TEXT } from '../../utils/forms/Field';
+import { TEXT } from '../../utils/forms/Field/TextField';
+import languages from '../../utils/languages';
 
 import Form from '../../utils/forms/Form';
 
@@ -11,42 +15,87 @@ export const NAME = 'name';
 export const KEYWORDS = 'keywords';
 export const KEYWORD = 'keyword';
 
-function InterestsContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+InterestsContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function InterestsContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the form template
 	const template = {
 		[INTERESTS]: {
 			subform: {
 				[NAME]: {
 					type: TEXT,
-					label: 'Nom',
+					label:
+						languages[systemLanguageCode].cv.interests.name.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Informatique'
+						placeholder:
+							languages[systemLanguageCode].cv.interests.name
+								.placeholder
 					}
 				},
 				[KEYWORDS]: {
 					subform: {
 						[KEYWORD]: {
 							type: TEXT,
-							label: 'Mot clé',
+							label:
+								languages[systemLanguageCode].cv.interests
+									.keyword.label,
 							defaultValue: '',
-							checkField: checkField([checkMinLength(3)]),
+							checkField: checkField([
+								checkMinLength(
+									3,
+									languages[systemLanguageCode]
+										.checkFieldErrorMessage.minLength
+								)
+							]),
 							inputParam: {
-								placeholder: 'Résolution de problèmes'
+								placeholder:
+									languages[systemLanguageCode].cv.interests
+										.keyword.placeholder
 							}
 						}
 					},
-					addLabel: 'Ajouter un mot clé',
-					removeLabel: 'Supprimer le mot clé'
+					addLabel:
+						languages[systemLanguageCode].cv.interests.addKeywords,
+					removeLabel:
+						languages[systemLanguageCode].cv.interests
+							.removeKeywords
 				}
 			},
-			addLabel: "Ajouter un centre d'intérêts",
-			removeLabel: "Supprimer le centre d'intérêts"
+			addLabel: languages[systemLanguageCode].cv.interests.addInterests,
+			removeLabel:
+				languages[systemLanguageCode].cv.interests.removeInterests
 		}
 	};
 
-	return <Form template={template} errorMessage="Erreur" {...props} />;
+	return (
+		<Form
+			template={template}
+			errorMessage={languages[systemLanguageCode].cv.error}
+			sendingMessage={
+				languages[systemLanguageCode].generic.sendingMessage
+			}
+			{...props}
+		/>
+	);
 }
 
-export default InterestsContainer;
+export default connect(mapStateToProps)(InterestsContainer);

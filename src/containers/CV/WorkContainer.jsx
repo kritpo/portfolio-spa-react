@@ -1,17 +1,16 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import checkField, {
 	checkMinLength,
 	checkDate
 } from '../../utils/forms/checkField';
-import {
-	TEXT,
-	TEXTAREA,
-	URL,
-	CHECKBOX,
-	DATE,
-	DATE_MASKABLE
-} from '../../utils/forms/Field';
+import { TEXT, TEXTAREA, URL } from '../../utils/forms/Field/TextField';
+import { CHECKBOX } from '../../utils/forms/Field/CheckboxField';
+import { DATE, DATE_MASKABLE } from '../../utils/forms/Field/DateField';
+import languages from '../../utils/languages';
 
 import Form from '../../utils/forms/Form';
 
@@ -27,99 +26,185 @@ export const SUMMARY = 'summary';
 export const HIGHLIGHTS = 'highlights';
 export const HIGHLIGHT = 'highlight';
 
-function WorkContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+WorkContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function WorkContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the form template
 	const template = {
 		[WORK]: {
 			subform: {
 				[IS_INTERNSHIP]: {
 					type: CHECKBOX,
-					label: 'Stage',
+					label:
+						languages[systemLanguageCode].cv.work.isInternship
+							.label,
 					defaultValue: false,
 					checkField: checkField([])
 				},
 				[COMPANY]: {
 					type: TEXT,
-					label: 'Entreprise',
+					label: languages[systemLanguageCode].cv.work.company.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Entreprise'
+						placeholder:
+							languages[systemLanguageCode].cv.work.company
+								.placeholder
 					}
 				},
 				[POSITION]: {
 					type: TEXT,
-					label: 'Poste',
+					label: languages[systemLanguageCode].cv.work.position.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Développeur'
+						placeholder:
+							languages[systemLanguageCode].cv.work.position
+								.placeholder
 					}
 				},
 				[WEBSITE]: {
 					type: URL,
-					label: 'Site internet',
+					label: languages[systemLanguageCode].cv.work.website.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(8)]),
+					checkField: checkField([
+						checkMinLength(
+							8,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'https://entreprise.fr/'
+						placeholder:
+							languages[systemLanguageCode].cv.work.website
+								.placeholder
 					}
 				},
 				[START_DATE]: {
 					type: DATE,
-					label: 'Date de début',
+					label:
+						languages[systemLanguageCode].cv.work.startDate.label,
 					defaultValue: new Date(),
-					checkField: checkField([checkDate()]),
+					checkField: checkField([
+						checkDate(
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.date
+						)
+					]),
 					configParam: {
 						maxDate: new Date(),
 						maxDateField: END_DATE,
 						maxDateMessage:
-							'La date de début devrait être avant la date de fin'
+							languages[systemLanguageCode].cv.maxDateMessage,
+						dateFormat: languages[systemLanguageCode].cv.dateFormat,
+						invalidDateMessage:
+							languages[systemLanguageCode].cv.invalidDateMessage
 					}
 				},
 				[END_DATE]: {
 					type: DATE_MASKABLE,
-					label: 'Date de fin',
+					label: languages[systemLanguageCode].cv.work.endDate.label,
 					defaultValue: new Date(),
-					checkField: checkField([checkDate()]),
+					checkField: checkField([
+						checkDate(
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.date
+						)
+					]),
 					configParam: {
 						minDateField: START_DATE,
 						minDateMessage:
-							'La date de fin devrait être après la date de début'
+							languages[systemLanguageCode].cv.minDateMessage,
+						dateFormat: languages[systemLanguageCode].cv.dateFormat,
+						invalidDateMessage:
+							languages[systemLanguageCode].cv.invalidDateMessage,
+						currentLabel:
+							languages[systemLanguageCode].cv.currentLabel
 					}
 				},
 				[SUMMARY]: {
 					type: TEXTAREA,
-					label: 'Résumé',
+					label: languages[systemLanguageCode].cv.work.summary.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: "Une petite description de l'expérience"
+						placeholder:
+							languages[systemLanguageCode].cv.work.summary
+								.placeholder
 					}
 				},
 				[HIGHLIGHTS]: {
 					subform: {
 						[HIGHLIGHT]: {
 							type: TEXT,
-							label: 'Réalisation',
+							label:
+								languages[systemLanguageCode].cv.work.highlight
+									.label,
 							defaultValue: '',
-							checkField: checkField([checkMinLength(3)]),
+							checkField: checkField([
+								checkMinLength(
+									3,
+									languages[systemLanguageCode]
+										.checkFieldErrorMessage.minLength
+								)
+							]),
 							inputParam: {
 								placeholder:
-									"Réalisation du site de l'entreprise"
+									languages[systemLanguageCode].cv.work
+										.highlight.placeholder
 							}
 						}
 					},
-					addLabel: 'Ajouter une réalisation',
-					removeLabel: 'Supprimer la réalisation'
+					addLabel:
+						languages[systemLanguageCode].cv.work.addHighlights,
+					removeLabel:
+						languages[systemLanguageCode].cv.work.removeHighlights
 				}
 			},
-			addLabel: 'Ajouter une expérience professionnelle',
-			removeLabel: "Supprimer l'expérience"
+			addLabel: languages[systemLanguageCode].cv.work.addWork,
+			removeLabel: languages[systemLanguageCode].cv.work.removeWork
 		}
 	};
 
-	return <Form template={template} errorMessage="Erreur" {...props} />;
+	return (
+		<Form
+			template={template}
+			errorMessage={languages[systemLanguageCode].cv.error}
+			sendingMessage={
+				languages[systemLanguageCode].generic.sendingMessage
+			}
+			{...props}
+		/>
+	);
 }
 
-export default WorkContainer;
+export default connect(mapStateToProps)(WorkContainer);

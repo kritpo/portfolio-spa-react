@@ -1,6 +1,8 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
+import languages from '../../utils/languages';
+
 import { Box, Grid, Typography } from '@material-ui/core';
 
 import ProjectItemContainer from '../../containers/Portfolio/Projects/ProjectItemContainer';
@@ -17,20 +19,28 @@ const projectsList = projects =>
 
 // configure the prop types validation
 Projects.propTypes = {
-	projects: PropTypes.arrayOf(PropTypes.object).isRequired
+	projects: PropTypes.arrayOf(PropTypes.object).isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function Projects({ projects }) {
+function Projects({ projects, language: { systemLanguageCode } }) {
 	return (
 		<Box textAlign="center">
 			<Typography component="h3" variant="h4" gutterBottom>
-				Mes projets
+				{languages[systemLanguageCode].portfolio.projects.title}
 			</Typography>
 			<Grid container spacing={2} justify="center">
 				{projects.length > 0 ? (
 					projectsList(projects)
 				) : (
-					<Typography variant="body1">Aucun projet</Typography>
+					<Typography variant="body1">
+						{
+							languages[systemLanguageCode].portfolio.projects
+								.noElements
+						}
+					</Typography>
 				)}
 			</Grid>
 		</Box>

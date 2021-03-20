@@ -34,9 +34,10 @@ import { INTERESTS } from '../containers/CV/InterestsContainer';
 import { REFERENCES } from '../containers/CV/ReferencesContainer';
 import { encryptForm, decryptForm } from '../utils/forms/Form';
 import checkField, { checkMinLength } from '../utils/forms/checkField';
-import { TEXT } from '../utils/forms/Field';
+import { TEXT } from '../utils/forms/Field/TextField';
 import { CV_LIST } from '../routes';
 import * as cvUtils from '../utils/cvUtils';
+import languages from '../utils/languages';
 
 import CVCreate from '../components/CVCreate';
 
@@ -44,8 +45,9 @@ import CVCreate from '../components/CVCreate';
 const LANGUAGE_CODE = 'language_code';
 
 // configure the states to pass as props to the component
-const mapStateToProps = ({ username }, ...props) => ({
+const mapStateToProps = ({ username, language }, ...props) => ({
 	username,
+	language,
 	...props
 });
 
@@ -57,10 +59,18 @@ const mapDispatchToProps = {
 // configure the prop types validation
 CVCreateContainer.propTypes = {
 	username: PropTypes.string.isRequired,
-	fetchResumeLanguages: PropTypes.func.isRequired
+	fetchResumeLanguages: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function CVCreateContainer({ username, fetchResumeLanguages, ...props }) {
+function CVCreateContainer({
+	username,
+	fetchResumeLanguages,
+	language: { systemLanguageCode },
+	...props
+}) {
 	// setup the history hook
 	const history = useHistory();
 
@@ -127,9 +137,19 @@ function CVCreateContainer({ username, fetchResumeLanguages, ...props }) {
 	const languageCodeTemplate = {
 		[LANGUAGE_CODE]: {
 			type: TEXT,
-			label: 'Code langue',
-			checkField: checkField([checkMinLength(2)]),
-			inputParam: { placeholder: 'fr' }
+			label: languages[systemLanguageCode].cvCreate.languageCode.label,
+			checkField: checkField([
+				checkMinLength(
+					2,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
+			inputParam: {
+				placeholder:
+					languages[systemLanguageCode].cvCreate.languageCode
+						.placeholder
+			}
 		}
 	};
 
@@ -188,6 +208,7 @@ function CVCreateContainer({ username, fetchResumeLanguages, ...props }) {
 			languageCodeData={languageCodeData}
 			languageCodeTemplate={languageCodeTemplate}
 			onSubmit={onSubmit}
+			language={{ systemLanguageCode }}
 			{...props}
 		/>
 	);

@@ -1,6 +1,9 @@
 import React, { useCallback } from 'react';
+import { PropTypes } from 'prop-types';
 
 import { useHistory } from 'react-router-dom';
+
+import { connect } from 'react-redux';
 
 import { Auth } from 'aws-amplify';
 
@@ -14,9 +17,10 @@ import checkField, {
 import {
 	TEXT,
 	EMAIL as EMAIL_TYPE,
-	PASSWORD as PASSWORD_TYPE,
-	CHECKBOX
-} from '../utils/forms/Field';
+	PASSWORD as PASSWORD_TYPE
+} from '../utils/forms/Field/TextField';
+import { CHECKBOX } from '../utils/forms/Field/CheckboxField';
+import languages from '../utils/languages';
 
 import SignUp from '../components/SignUp';
 
@@ -26,7 +30,20 @@ const EMAIL = 'email';
 const PASSWORD = 'password';
 const GDPR = 'gdpr';
 
-function SignUpContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+SignUpContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function SignUpContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the history hook
 	const history = useHistory();
 
@@ -54,44 +71,72 @@ function SignUpContainer({ ...props }) {
 	const template = {
 		[USERNAME]: {
 			type: TEXT,
-			label: 'Pseudo',
-			checkField: checkField([checkMinLength(3)]),
+			label: languages[systemLanguageCode].signUp.username.label,
+			checkField: checkField([
+				checkMinLength(
+					3,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				)
+			]),
 			inputParam: {
-				placeholder: 'dupont'
+				placeholder:
+					languages[systemLanguageCode].signUp.username.placeholder
 			}
 		},
 		[EMAIL]: {
 			type: EMAIL_TYPE,
-			label: 'Adresse mail',
+			label: languages[systemLanguageCode].signUp.email.label,
 			checkField: checkField([
-				checkMinLength(3),
-				checkRegex(/^[a-z0-9.\-_]+@[a-z0-9.\-_]+\.[a-z0-9]{2,}$/)
+				checkMinLength(
+					3,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				),
+				checkRegex(
+					/^[a-z0-9.\-_]+@[a-z0-9.\-_]+\.[a-z0-9]{2,}$/,
+					languages[systemLanguageCode].checkFieldErrorMessage.regex
+				)
 			]),
 			inputParam: {
-				placeholder: 'dupont@gmail.com'
+				placeholder:
+					languages[systemLanguageCode].signUp.email.placeholder
 			}
 		},
 		[PASSWORD]: {
 			type: PASSWORD_TYPE,
-			label: 'Mot de passe',
+			label: languages[systemLanguageCode].signUp.password.label,
 			checkField: checkField([
-				checkMinLength(8),
-				checkCharType({
-					lowercase: true,
-					uppercase: true,
-					number: true,
-					symbols: true
-				})
+				checkMinLength(
+					8,
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.minLength
+				),
+				checkCharType(
+					{
+						lowercase: true,
+						uppercase: true,
+						number: true,
+						symbols: true
+					},
+					languages[systemLanguageCode].checkFieldErrorMessage
+						.charType
+				)
 			]),
 			inputParam: {
-				placeholder: 'Mot de passe'
+				placeholder:
+					languages[systemLanguageCode].signUp.password.placeholder
 			}
 		},
 		[GDPR]: {
 			type: CHECKBOX,
-			label:
-				"J'ai pris connaissance et j'accepte sans réserves le traitement de mes données personnelles tel qu'énoncé dans les mentions légales.",
-			checkField: checkField([checkValue(true)])
+			label: languages[systemLanguageCode].signUp.gdpr.label,
+			checkField: checkField([
+				checkValue(
+					true,
+					languages[systemLanguageCode].checkFieldErrorMessage.value
+				)
+			])
 		}
 	};
 
@@ -123,9 +168,10 @@ function SignUpContainer({ ...props }) {
 			data={data}
 			template={template}
 			onSubmit={onSubmit}
+			language={{ systemLanguageCode }}
 			{...props}
 		/>
 	);
 }
 
-export default SignUpContainer;
+export default connect(mapStateToProps)(SignUpContainer);

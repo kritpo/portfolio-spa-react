@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { HOME, SIGN_UP } from '../routes';
+import languages from '../utils/languages';
 
 import { Container, Box, Paper, Typography } from '@material-ui/core';
 
@@ -13,15 +14,28 @@ import CustomLink from '../utils/CustomLink';
 SignIn.propTypes = {
 	data: PropTypes.array.isRequired,
 	template: PropTypes.object.isRequired,
-	onSubmit: PropTypes.func.isRequired
+	onSubmit: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function SignIn({ data, template, onSubmit }) {
+function SignIn({
+	data,
+	template,
+	onSubmit,
+	language: { systemLanguageCode }
+}) {
 	return (
 		<Fragment>
 			<Header
-				title="Connexion"
-				history={[{ link: HOME, title: 'Accueil' }]}
+				title={languages[systemLanguageCode].pages.signIn}
+				history={[
+					{
+						link: HOME,
+						title: languages[systemLanguageCode].pages.home
+					}
+				]}
 			/>
 			<Container component="main" fixed>
 				<Box
@@ -33,17 +47,23 @@ function SignIn({ data, template, onSubmit }) {
 				>
 					<Paper>
 						<Typography component="h2" variant="h4">
-							Connexion
+							{languages[systemLanguageCode].pages.signIn}
 						</Typography>
 						<Form
 							data={data}
 							template={template}
 							onSubmit={onSubmit}
-							errorMessage="Une erreur inattendue est survenue. Vérifiez vos identifiants, sinon veuillez réessayer ultérieurement."
-							action="Connexion"
+							errorMessage={
+								languages[systemLanguageCode].signIn.error
+							}
+							sendingMessage={
+								languages[systemLanguageCode].generic
+									.sendingMessage
+							}
+							action={languages[systemLanguageCode].signIn.action}
 						>
 							<CustomLink to={SIGN_UP}>
-								Pas encore inscrit ? Inscrivez-vous
+								{languages[systemLanguageCode].signIn.goSignUp}
 							</CustomLink>
 						</Form>
 					</Paper>

@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
+import { PropTypes } from 'prop-types';
 
 import { HOME } from '../routes';
+import languages from '../utils/languages';
 
 import {
 	Container,
@@ -14,19 +16,34 @@ import { Mail, Telegram } from '@material-ui/icons';
 
 import Header from './Header';
 
-function Terms() {
+// configure the prop types validation
+Terms.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function Terms({ language: { systemLanguageCode } }) {
 	return (
 		<Fragment>
 			<Header
-				title="Mentions légales"
-				history={[{ link: HOME, title: 'Accueil' }]}
+				title={languages[systemLanguageCode].pages.terms}
+				history={[
+					{
+						link: HOME,
+						title: languages[systemLanguageCode].pages.home
+					}
+				]}
 			/>
 			<Container component="main" fixed>
 				<Box mb={2} clone>
 					<Card>
 						<CardContent>
 							<Typography component="h2" variant="h4">
-								Éditeur
+								{
+									languages[systemLanguageCode].terms.labels
+										.editor
+								}
 							</Typography>
 							<Typography variant="body2" component="p">
 								Jimmy Weng
@@ -46,7 +63,10 @@ function Terms() {
 					<Card>
 						<CardContent>
 							<Typography component="h2" variant="h4">
-								Hébergeur
+								{
+									languages[systemLanguageCode].terms.labels
+										.hosting
+								}
 							</Typography>
 							<Typography variant="body2" component="p">
 								Amazon Web Services EMEA SARL
@@ -64,23 +84,22 @@ function Terms() {
 					<Card>
 						<CardContent>
 							<Typography component="h2" variant="h4">
-								Cookies
+								{
+									languages[systemLanguageCode].terms.labels
+										.cookies
+								}
 							</Typography>
 							<Typography variant="body2" component="p">
-								Dans le cadre de l'amélioration de l'expérience
-								utilisateur de l'internaute, nous sommes
-								contraints de faire usage de cookies. Ces
-								cookies stockerons uniquement des données qui
-								sont relatif à l'usage de ce site par
-								l'internaute, tel que ses préférences, ses
-								identifiants de connexion, etc... Ces derniers
-								ne seront jamais utilisés à des fins
-								commerciales.
+								{
+									languages[systemLanguageCode].terms.content
+										.cookies[0]
+								}
 								<br />
 								<br />
-								En poursuivant votre navigation, vous acceptez
-								sans réserves que ces dits cookies soient fait
-								usages.
+								{
+									languages[systemLanguageCode].terms.content
+										.cookies[1]
+								}
 							</Typography>
 						</CardContent>
 					</Card>
@@ -89,66 +108,64 @@ function Terms() {
 					<Card>
 						<CardContent>
 							<Typography component="h2" variant="h4">
-								Données personnelles
+								{
+									languages[systemLanguageCode].terms.labels
+										.privacy
+								}
 							</Typography>
 							<Typography variant="body2" component="p">
-								Pour toutes questions relatives aux données
-								personnelles, veuillez vous addresser à
-								l'éditeur de ce site.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[0]
+								}
 								<br />
 								<br />
-								Dans un usage "visiteur", ce site web ne fera
-								usage d'aucune données personnelles venant de
-								l'internaute.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[1]
+								}
 								<br />
 								<br />
-								Dans un usage "utilisateur", ce site web
-								stockera un nom d'utilisateur, une adresse email
-								et un mot de passe, qui seront utilisés pour
-								pouvoir identifier de manière unique un
-								internaute. Il sera ensuite libre à l'internaute
-								de fournir un ou plusieurs CV qui seront dès
-								lors également stockés par ce site.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[2]
+								}
 								<br />
-								Les informations identifiant distinctement un
-								internaute, exit le mot de passe, ne seront
-								accessible que par l'éditeur du site et sur
-								decision de justice aux personnes habilitées par
-								cette dite décision.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[3]
+								}
 								<br />
-								Les CV fournis par les internautes seront quant
-								à eux disponible à consultation par tout
-								internaute de ce site.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[4]
+								}
 								<br />
 								<br />
-								La récupération et le stockage de ces données
-								pré-citées sont obligatoires pour les finalités
-								également pré-citées.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[5]
+								}
 								<br />
-								Le consentement de l'internaute sera
-								explicitement récupéré dès l'inscription de
-								l'internaute pour que puisse être effectué les
-								stockages et traitements de données personnelles
-								pré-citées.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[6]
+								}
 								<br />
-								Toutes ces données seront stockés dans les
-								serveurs AWS en France, au Royaume-Uni et en
-								Irlande.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[7]
+								}
 								<br />
-								En application de la RGPD (Règlement Général sur
-								la Protection des Données), l'internaute dispose
-								d'un droit d'accès, de rectification, de
-								modification et de suppression pour toutes les
-								données le concernant. Pour pouvoir exercer ce
-								droit, l'internaute peut contacter directement
-								l'éditeur de ce site, ou à défaut utiliser les
-								moyens qui lui seront alors proposés pour
-								procéder à l'action voulue.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[8]
+								}
 								<br />
-								L'internaute peut également exercer son droit à
-								l'oubli en contactant directement l'éditeur de
-								ce site et en formulant son désir d'exercer ce
-								droit explicitement.
+								{
+									languages[systemLanguageCode].terms.content
+										.privacy[9]
+								}
 							</Typography>
 						</CardContent>
 					</Card>
@@ -157,16 +174,16 @@ function Terms() {
 					<Card>
 						<CardContent>
 							<Typography component="h2" variant="h4">
-								Responsabilités
+								{
+									languages[systemLanguageCode].terms.labels
+										.responsibilities
+								}
 							</Typography>
 							<Typography variant="body2" component="p">
-								Ce site décline toute responsabilités quant aux
-								données et contenus sur les CV fournis par les
-								internautes. L'internaute est responsable du
-								contenu qu'il produit, l'éditeur de ce site est
-								libre de bannir définitivement un utilisateur
-								qui publierait du contenu inapproprié sur ce
-								site.
+								{
+									languages[systemLanguageCode].terms.content
+										.responsibilities[0]
+								}
 							</Typography>
 						</CardContent>
 					</Card>
@@ -175,17 +192,27 @@ function Terms() {
 					<Card>
 						<CardContent>
 							<Typography component="h2" variant="h4">
-								Crédits
+								{
+									languages[systemLanguageCode].terms.labels
+										.credits
+								}
 							</Typography>
 							<Typography variant="body2" component="p">
-								Merci à :<br />
+								{
+									languages[systemLanguageCode].terms.content
+										.credits[0]
+								}
+								<br />
 								<Link
 									href="https://www.iconfinder.com/"
 									target="_blank"
 								>
 									IconFinder
 								</Link>{' '}
-								pour la plupart des icônes présentes sur ce site
+								{
+									languages[systemLanguageCode].terms.content
+										.credits[1]
+								}
 								<br />
 								<Link
 									href="https://devicon.dev/"
@@ -193,8 +220,10 @@ function Terms() {
 								>
 									Devicon
 								</Link>{' '}
-								pour les icônes relatives au développement et la
-								programmation
+								{
+									languages[systemLanguageCode].terms.content
+										.credits[2]
+								}
 								<br />
 								<Link
 									href="https://github.com/danalloway/react-country-flag"
@@ -202,8 +231,10 @@ function Terms() {
 								>
 									react-country-flag
 								</Link>{' '}
-								pour les icônes représentant les drapeaux des
-								pays
+								{
+									languages[systemLanguageCode].terms.content
+										.credits[3]
+								}
 								<br />
 							</Typography>
 						</CardContent>
@@ -212,11 +243,16 @@ function Terms() {
 				<Card>
 					<CardContent>
 						<Typography component="h2" variant="h4">
-							Juridiction
+							{
+								languages[systemLanguageCode].terms.labels
+									.jurisdiction
+							}
 						</Typography>
 						<Typography variant="body2" component="p">
-							Ce site web et tout son contenu est soumis aux lois
-							françaises.
+							{
+								languages[systemLanguageCode].terms.content
+									.jurisdiction[0]
+							}
 						</Typography>
 					</CardContent>
 				</Card>

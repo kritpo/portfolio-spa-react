@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { HOME, SIGN_UP } from '../routes';
+import languages from '../utils/languages';
 
 import { Container, Box, Paper, Typography, Button } from '@material-ui/core';
 
@@ -17,7 +18,10 @@ SignUpConfirm.propTypes = {
 	setForm: PropTypes.func.isRequired,
 	resend: PropTypes.func.isRequired,
 	resendWaitMessage: PropTypes.string.isRequired,
-	resendErrorMessage: PropTypes.string.isRequired
+	resendErrorMessage: PropTypes.string.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function SignUpConfirm({
@@ -27,15 +31,22 @@ function SignUpConfirm({
 	setForm,
 	resend,
 	resendWaitMessage,
-	resendErrorMessage
+	resendErrorMessage,
+	language: { systemLanguageCode }
 }) {
 	return (
 		<Fragment>
 			<Header
-				title="Confirmation d'inscription"
+				title={languages[systemLanguageCode].pages.signUpConfirm}
 				history={[
-					{ link: HOME, title: 'Accueil' },
-					{ link: SIGN_UP, title: 'Inscription' }
+					{
+						link: HOME,
+						title: languages[systemLanguageCode].pages.home
+					},
+					{
+						link: SIGN_UP,
+						title: languages[systemLanguageCode].pages.signUp
+					}
 				]}
 			/>
 			<Container component="main" fixed>
@@ -48,7 +59,7 @@ function SignUpConfirm({
 				>
 					<Paper>
 						<Typography component="h2" variant="h4">
-							Confirmation d'inscription
+							{languages[systemLanguageCode].pages.signUpConfirm}
 						</Typography>
 						<Form
 							data={data}
@@ -66,17 +77,31 @@ function SignUpConfirm({
 									) : resendWaitMessage !== '' ? (
 										resendWaitMessage
 									) : (
-										'Renvoyer'
+										languages[systemLanguageCode]
+											.signUpConfirm.resendCode.resend
 									)}
 								</Button>
 							)}
 							onSubmit={onSubmit}
-							errorMessage="Une erreur inattendue est survenue. Vérifiez le code, sinon veuillez réessayer ultérieurement."
-							action="Confirmer"
+							errorMessage={
+								languages[systemLanguageCode].signUpConfirm
+									.error
+							}
+							sendingMessage={
+								languages[systemLanguageCode].generic
+									.sendingMessage
+							}
+							action={
+								languages[systemLanguageCode].signUpConfirm
+									.action
+							}
 							setForm={setForm}
 						>
 							<CustomLink to={SIGN_UP}>
-								Pas encore inscrit ? Inscrivez-vous
+								{
+									languages[systemLanguageCode].signUpConfirm
+										.goSignUp
+								}
 							</CustomLink>
 						</Form>
 					</Paper>

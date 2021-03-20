@@ -2,6 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 import { CV_UPDATE } from '../../routes';
+import languages from '../../utils/languages';
 
 import {
 	Box,
@@ -31,7 +32,10 @@ LanguageItem.propTypes = {
 	handleClose: PropTypes.func.isRequired,
 	onDeletePending: PropTypes.func.isRequired,
 	onDelete: PropTypes.func.isRequired,
-	setDefault: PropTypes.func.isRequired
+	setDefault: PropTypes.func.isRequired,
+	languageState: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function LanguageItem({
@@ -42,7 +46,8 @@ function LanguageItem({
 	handleClose,
 	onDeletePending,
 	onDelete,
-	setDefault
+	setDefault,
+	languageState: { systemLanguageCode }
 }) {
 	return (
 		<TableRow key={languageCode}>
@@ -50,7 +55,10 @@ function LanguageItem({
 				{languageCode}
 				{defaultLanguage.languageCode === languageCode && (
 					<Box m={1} clone>
-						<Chip label="Par défaut" color="primary" />
+						<Chip
+							label={languages[systemLanguageCode].cvList.default}
+							color="primary"
+						/>
 					</Box>
 				)}
 			</TableCell>
@@ -63,7 +71,7 @@ function LanguageItem({
 							color="secondary"
 							startIcon={<Create />}
 						>
-							Modifier
+							{languages[systemLanguageCode].cvList.update}
 						</Button>
 					</Box>
 				</CustomLink>
@@ -74,7 +82,7 @@ function LanguageItem({
 						startIcon={<Delete />}
 						onClick={onDeletePending}
 					>
-						Supprimer
+						{languages[systemLanguageCode].cvList.delete}
 					</Button>
 				</Box>
 				{defaultLanguage.languageCode !== languageCode && (
@@ -85,7 +93,7 @@ function LanguageItem({
 							startIcon={<FirstPage />}
 							onClick={setDefault(languageCode)}
 						>
-							Mettre par défaut
+							{languages[systemLanguageCode].cvList.setDefault}
 						</Button>
 					</Box>
 				)}
@@ -96,22 +104,31 @@ function LanguageItem({
 					aria-describedby={`alert-dialog-description-${languageCode}`}
 				>
 					<DialogTitle id={`alert-dialog-title-${languageCode}`}>
-						Supprimer le CV {language}
+						{languages[
+							systemLanguageCode
+						].cvList.deleteDialog.title(language)}
 					</DialogTitle>
 					<DialogContent>
 						<DialogContentText
 							id={`alert-dialog-description-${languageCode}`}
 						>
-							Souhaitez-vous réellement supprimer le CV {language}
-							? Cette action est irreversible!
+							{languages[
+								systemLanguageCode
+							].cvList.deleteDialog.content(language)}
 						</DialogContentText>
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleClose} color="primary" autoFocus>
-							Annuler
+							{
+								languages[systemLanguageCode].cvList
+									.deleteDialog.cancel
+							}
 						</Button>
 						<Button onClick={onDelete} color="primary">
-							Confirmer
+							{
+								languages[systemLanguageCode].cvList
+									.deleteDialog.confirm
+							}
 						</Button>
 					</DialogActions>
 				</Dialog>

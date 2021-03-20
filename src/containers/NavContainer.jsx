@@ -12,6 +12,7 @@ import { useTheme } from '@material-ui/styles';
 
 import { updateNavIntersection } from '../actions';
 import { HOME, PORTFOLIO } from '../routes';
+import languages from '../utils/languages';
 
 import Nav from '../components/Nav';
 
@@ -19,35 +20,42 @@ import Nav from '../components/Nav';
  * setup the list of links
  * @param {boolean} isCV if the path is a CV path
  * @param {string} pathname the current pathname
+ * @param {string} _language the system language code
  * @returns the list of links
  */
-const links = (isCV, pathname) => [
+const links = (isCV, pathname, { systemLanguageCode }) => [
 	{
-		title: 'Présentation',
+		title: languages[systemLanguageCode].portfolio.details.label,
 		link: `${isCV ? pathname : HOME}#details`,
 		isHash: true
 	},
 	{
-		title: 'Parcours',
+		title: languages[systemLanguageCode].portfolio.career.label,
 		link: `${isCV ? pathname : HOME}#career`,
 		isHash: true
 	},
 	{
-		title: 'Projets',
+		title: languages[systemLanguageCode].portfolio.projects.label,
 		link: `${isCV ? pathname : HOME}#projects`,
 		isHash: true
 	},
 	{
-		title: 'Compétences',
+		title: languages[systemLanguageCode].portfolio.skills.label,
 		link: `${isCV ? pathname : HOME}#skills`,
 		isHash: true
 	},
 	{
-		title: 'Recommandations',
+		title: languages[systemLanguageCode].portfolio.references.label,
 		link: `${isCV ? pathname : HOME}#references`,
 		isHash: true
 	}
 ];
+
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
 
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
@@ -56,10 +64,13 @@ const mapDispatchToProps = {
 
 // configure the prop types validation
 NavContainer.propTypes = {
-	updateNavIntersection: PropTypes.func.isRequired
+	updateNavIntersection: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function NavContainer({ updateNavIntersection, ...props }) {
+function NavContainer({ updateNavIntersection, language, ...props }) {
 	// setup the nav type hook
 	const [showBar, setShowBar] = useState(false);
 
@@ -97,7 +108,7 @@ function NavContainer({ updateNavIntersection, ...props }) {
 
 	return (
 		<Nav
-			links={links(isCV, pathname)}
+			links={links(isCV, pathname, language)}
 			showBar={showBar}
 			isHome={isHome}
 			isCV={isCV}
@@ -107,4 +118,4 @@ function NavContainer({ updateNavIntersection, ...props }) {
 	);
 }
 
-export default connect(null, mapDispatchToProps)(NavContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(NavContainer);

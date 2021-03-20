@@ -1,6 +1,8 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
+import languages from '../../utils/languages';
+
 import { Box, Typography } from '@material-ui/core';
 
 import ReferenceItem from './References/ReferenceItem';
@@ -17,19 +19,27 @@ const referencesList = references =>
 
 // configure the prop types validation
 References.propTypes = {
-	references: PropTypes.arrayOf(PropTypes.object).isRequired
+	references: PropTypes.arrayOf(PropTypes.object).isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function References({ references }) {
+function References({ references, language: { systemLanguageCode } }) {
 	return (
 		<Box textAlign="center">
 			<Typography component="h3" variant="h4" gutterBottom>
-				Mes recommandations
+				{languages[systemLanguageCode].portfolio.references.title}
 			</Typography>
 			{references.length > 0 ? (
 				referencesList(references)
 			) : (
-				<Typography variant="body1">Aucune référence</Typography>
+				<Typography variant="body1">
+					{
+						languages[systemLanguageCode].portfolio.references
+							.noElements
+					}
+				</Typography>
 			)}
 		</Box>
 	);

@@ -5,7 +5,7 @@ import { Box } from '@material-ui/core';
 
 import NavBarContainer from '../containers/Nav/NavBarContainer';
 import NavBurger from './Nav/NavBurger';
-import HomeMenu from './Nav/HomeMenu';
+import HomeMenuContainer from '../containers/Nav/HomeMenuContainer';
 import UserMenuContainer from '../containers/Nav/UserMenuContainer';
 import PreferenceContainerMenu from '../containers/Nav/PreferenceMenuContainer';
 
@@ -28,7 +28,9 @@ function Nav({ links, showBar, isHome, isCV, showTextBreakpoint }) {
 					}
 					left={
 						!isHome ? (
-							<HomeMenu showTextBreakpoint={showTextBreakpoint} />
+							<HomeMenuContainer
+								showTextBreakpoint={showTextBreakpoint}
+							/>
 						) : null
 					}
 					right={
@@ -46,7 +48,7 @@ function Nav({ links, showBar, isHome, isCV, showTextBreakpoint }) {
 					}
 					top={
 						!isHome ? (
-							<HomeMenu
+							<HomeMenuContainer
 								showTextBreakpoint={showTextBreakpoint}
 								isBurger={true}
 							/>

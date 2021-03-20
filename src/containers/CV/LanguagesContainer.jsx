@@ -1,4 +1,7 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import checkField, {
 	checkMinLength,
@@ -7,7 +10,8 @@ import checkField, {
 import {
 	TEXT,
 	COUNTRY_CODE as COUNTRY_CODE_TYPE
-} from '../../utils/forms/Field';
+} from '../../utils/forms/Field/TextField';
+import languages from '../../utils/languages';
 
 import Form from '../../utils/forms/Form';
 
@@ -17,45 +21,98 @@ export const COUNTRY_CODE = 'country_code';
 export const LANGUAGE = 'language';
 export const FLUENCY = 'fluency';
 
-function LanguagesContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+LanguagesContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function LanguagesContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the form template
 	const template = {
 		[LANGUAGES]: {
 			subform: {
 				[COUNTRY_CODE]: {
 					type: COUNTRY_CODE_TYPE,
-					label: 'Code du pays',
+					label:
+						languages[systemLanguageCode].cv.languages.countryCode
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkExactLength(2)]),
+					checkField: checkField([
+						checkExactLength(
+							2,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.exactLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'FR'
+						placeholder:
+							languages[systemLanguageCode].cv.languages
+								.countryCode.placeholder
 					}
 				},
 				[LANGUAGE]: {
 					type: TEXT,
-					label: 'Langue',
+					label:
+						languages[systemLanguageCode].cv.languages.language
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Français'
+						placeholder:
+							languages[systemLanguageCode].cv.languages.language
+								.placeholder
 					}
 				},
 				[FLUENCY]: {
 					type: TEXT,
-					label: 'Niveau',
+					label:
+						languages[systemLanguageCode].cv.languages.fluency
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Avancé'
+						placeholder:
+							languages[systemLanguageCode].cv.languages.fluency
+								.placeholder
 					}
 				}
 			},
-			addLabel: 'Ajouter une langue',
-			removeLabel: 'Supprimer la langue'
+			addLabel: languages[systemLanguageCode].cv.languages.addLanguages,
+			removeLabel:
+				languages[systemLanguageCode].cv.languages.removeLanguages
 		}
 	};
 
-	return <Form template={template} errorMessage="Erreur" {...props} />;
+	return (
+		<Form
+			template={template}
+			errorMessage={languages[systemLanguageCode].cv.error}
+			sendingMessage={
+				languages[systemLanguageCode].generic.sendingMessage
+			}
+			{...props}
+		/>
+	);
 }
 
-export default LanguagesContainer;
+export default connect(mapStateToProps)(LanguagesContainer);

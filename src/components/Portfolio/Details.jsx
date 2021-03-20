@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
+import languages from '../../utils/languages';
+
 import {
 	Box,
 	Grid,
@@ -42,7 +44,10 @@ Details.propTypes = {
 		summary: PropTypes.string.isRequired,
 		website: PropTypes.string.isRequired
 	}).isRequired,
-	isMain: PropTypes.bool.isRequired
+	isMain: PropTypes.bool.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function Details({
@@ -56,13 +61,14 @@ function Details({
 		summary,
 		website
 	},
-	isMain
+	isMain,
+	language: { systemLanguageCode }
 }) {
 	return (
 		<Fragment>
 			<Box textAlign="center" clone>
 				<Typography component="h3" variant="h4" gutterBottom>
-					Ma présentation
+					{languages[systemLanguageCode].portfolio.details.title}
 				</Typography>
 			</Box>
 			<Grid container spacing={2}>
@@ -77,7 +83,7 @@ function Details({
 					>
 						<Box mb={2} clone>
 							<Avatar
-								alt={`Portfolio de ${name}`}
+								alt={name}
 								src={picture}
 								style={{ height: '20vh', width: '20vh' }}
 							/>
@@ -120,7 +126,10 @@ function Details({
 										href={website}
 										target="_blank"
 									>
-										Aller sur son site
+										{
+											languages[systemLanguageCode]
+												.portfolio.details.goToWebsite
+										}
 									</Button>
 								</Box>
 							)}

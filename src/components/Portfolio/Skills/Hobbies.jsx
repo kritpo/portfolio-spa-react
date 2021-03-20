@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
+import languages from '../../../utils/languages';
+
 import { Grid, Typography } from '@material-ui/core';
 
 import InterestItem from './Hobbies/InterestItem';
@@ -17,21 +19,27 @@ const hobbies = interests =>
 
 // configure the prop types validation
 Hobbies.propTypes = {
-	interests: PropTypes.arrayOf(PropTypes.object).isRequired
+	interests: PropTypes.arrayOf(PropTypes.object).isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function Hobbies({ interests }) {
+function Hobbies({ interests, language: { systemLanguageCode } }) {
 	return (
 		<Fragment>
 			<Typography component="h3" variant="h4" gutterBottom>
-				Centres d'intérêts
+				{languages[systemLanguageCode].portfolio.interests.title}
 			</Typography>
 			<Grid container spacing={2} justify="center" alignItems="center">
 				{interests.length > 0 ? (
 					hobbies(interests)
 				) : (
 					<Typography variant="body1">
-						Aucun centre d'intérêts
+						{
+							languages[systemLanguageCode].portfolio.interests
+								.noElements
+						}
 					</Typography>
 				)}
 			</Grid>

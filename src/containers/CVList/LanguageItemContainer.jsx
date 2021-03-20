@@ -7,6 +7,12 @@ import { deleteResume, updateResumeDefaultLanguage } from '../../actions';
 
 import LanguageItem from '../../components/CVList/LanguageItem';
 
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	languageState: language,
+	...props
+});
+
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
 	deleteResume,
@@ -70,4 +76,7 @@ function LanguageItemContainer({
 	);
 }
 
-export default connect(null, mapDispatchToProps)(LanguageItemContainer);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(LanguageItemContainer);

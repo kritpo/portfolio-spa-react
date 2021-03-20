@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { HOME, CV_LIST } from '../routes';
+import languages from '../utils/languages';
 
 import {
 	Container,
@@ -32,23 +33,15 @@ import UpdateLanguagesContainer from '../containers/CVUpdate/UpdateLanguagesCont
 import UpdateInterestsContainer from '../containers/CVUpdate/UpdateInterestsContainer';
 import UpdateReferencesContainer from '../containers/CVUpdate/UpdateReferencesContainer';
 
-// setup tab data constants
-export const tabData = [
-	{ key: 'basics', label: 'Détails' },
-	{ key: 'work', label: 'Expérience professionnelle' },
-	{ key: 'volunteer', label: 'Expérience associative' },
-	{ key: 'education', label: 'Formation' },
-	{ key: 'projects', label: 'Projets' },
-	{ key: 'skills', label: 'Compétences' },
-	{ key: 'languages', label: 'Langues' },
-	{ key: 'interests', label: "Centre d'intérêts" },
-	{ key: 'references', label: 'Références' }
-];
-
-// setup tabs
-const tabs = tabData.map(({ key, label }) => (
-	<Tab label={label} value={key} key={key} />
-));
+/**
+ * setup tabs
+ * @param {array} tabData the list of tab
+ * @returns the list of tab components
+ */
+const tabs = tabData =>
+	tabData.map(({ key, label }) => (
+		<Tab label={label} value={key} key={key} />
+	));
 
 /**
  * create the list of update components
@@ -98,9 +91,10 @@ const components = (resume, setForm) => ({
 /**
  * setup the tabs content
  * @param {object} components the list of components
+ * @param {array} tabData the list of tab
  * @returns the list of tab content
  */
-const tabContent = components =>
+const tabContent = (components, tabData) =>
 	tabData.map(({ key }) => (
 		<Box width="100%" clone key={key}>
 			<TabPanel value={key}>
@@ -123,7 +117,10 @@ CVUpdate.propTypes = {
 	handleNextTabChange: PropTypes.func.isRequired,
 	handleTabChange: PropTypes.func.isRequired,
 	handleClose: PropTypes.func.isRequired,
-	setForm: PropTypes.func.isRequired
+	setForm: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function CVUpdate({
@@ -133,19 +130,26 @@ function CVUpdate({
 	handleNextTabChange,
 	handleTabChange,
 	handleClose,
-	setForm
+	setForm,
+	language: { systemLanguageCode }
 }) {
 	return (
 		<Fragment>
 			<Header
-				title={`Modifier le CV : ${
+				title={`${languages[systemLanguageCode].pages.cvUpdate} : ${
 					resume.languageCode !== undefined
 						? resume.languageCode.toUpperCase()
 						: ''
 				}`}
 				history={[
-					{ link: HOME, title: 'Accueil' },
-					{ link: CV_LIST, title: 'CVs' }
+					{
+						link: HOME,
+						title: languages[systemLanguageCode].pages.home
+					},
+					{
+						link: CV_LIST,
+						title: languages[systemLanguageCode].pages.cvList
+					}
 				]}
 			/>
 			<Container component="main" fixed>
@@ -158,7 +162,9 @@ function CVUpdate({
 				>
 					<Paper>
 						<Typography component="h2" variant="h4">
-							{`Modifier le CV : ${
+							{`${
+								languages[systemLanguageCode].pages.cvUpdate
+							} : ${
 								resume.languageCode !== undefined
 									? resume.languageCode.toUpperCase()
 									: ''
@@ -168,7 +174,10 @@ function CVUpdate({
 							<Loading size="40vh" />
 						) : error !== null ? (
 							<Error size="40vh">
-								Impossible de charger les données
+								{
+									languages[systemLanguageCode].generic
+										.loadingError
+								}
 							</Error>
 						) : (
 							<Fragment>
@@ -181,10 +190,17 @@ function CVUpdate({
 											variant="scrollable"
 											scrollButtons="auto"
 										>
-											{tabs}
+											{tabs(
+												languages[systemLanguageCode]
+													.cvUpdate.tabData
+											)}
 										</TabList>
 									</AppBar>
-									{tabContent(components(resume, setForm))}
+									{tabContent(
+										components(resume, setForm),
+										languages[systemLanguageCode].cvUpdate
+											.tabData
+									)}
 								</TabContext>
 								<Dialog
 									open={nextTab !== null}
@@ -193,15 +209,18 @@ function CVUpdate({
 									aria-describedby="alert-dialog-description"
 								>
 									<DialogTitle id="alert-dialog-title">
-										Avez-vous sauvegardé votre modification
-										?
+										{
+											languages[systemLanguageCode]
+												.cvUpdate.changeTabDialog.title
+										}
 									</DialogTitle>
 									<DialogContent>
 										<DialogContentText id="alert-dialog-description">
-											Avant de changer d'onglet, nous vous
-											conseillons de sauvegarder les
-											modifications, sinon elles seront
-											perdues.
+											{
+												languages[systemLanguageCode]
+													.cvUpdate.changeTabDialog
+													.content
+											}
 										</DialogContentText>
 									</DialogContent>
 									<DialogActions>
@@ -210,13 +229,21 @@ function CVUpdate({
 											color="primary"
 											autoFocus
 										>
-											Revenir aux modifications
+											{
+												languages[systemLanguageCode]
+													.cvUpdate.changeTabDialog
+													.cancel
+											}
 										</Button>
 										<Button
 											onClick={handleTabChange}
 											color="primary"
 										>
-											Continuer
+											{
+												languages[systemLanguageCode]
+													.cvUpdate.changeTabDialog
+													.continue
+											}
 										</Button>
 									</DialogActions>
 								</Dialog>

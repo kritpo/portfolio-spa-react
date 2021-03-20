@@ -1,7 +1,11 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import checkField, { checkMinLength } from '../../utils/forms/checkField';
-import { TEXT, TEXTAREA } from '../../utils/forms/Field';
+import { TEXT, TEXTAREA } from '../../utils/forms/Field/TextField';
+import languages from '../../utils/languages';
 
 import Form from '../../utils/forms/Form';
 
@@ -10,36 +14,78 @@ export const REFERENCES = 'references';
 export const NAME = 'name';
 export const REFERENCE = 'reference';
 
-function ReferencesContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+ReferencesContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function ReferencesContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the form template
 	const template = {
 		[REFERENCES]: {
 			subform: {
 				[NAME]: {
 					type: TEXT,
-					label: 'Nom',
+					label:
+						languages[systemLanguageCode].cv.references.name.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Jeanne Dupont'
+						placeholder:
+							languages[systemLanguageCode].cv.references.name
+								.placeholder
 					}
 				},
 				[REFERENCE]: {
 					type: TEXTAREA,
-					label: 'Référence',
+					label:
+						languages[systemLanguageCode].cv.references.reference
+							.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Jean est un très bon élément.'
+						placeholder:
+							languages[systemLanguageCode].cv.references
+								.reference.placeholder
 					}
 				}
 			},
-			addLabel: 'Ajouter une référence',
-			removeLabel: 'Supprimer la référence'
+			addLabel: languages[systemLanguageCode].cv.references.addReferences,
+			removeLabel:
+				languages[systemLanguageCode].cv.references.removeReferences
 		}
 	};
 
-	return <Form template={template} errorMessage="Erreur" {...props} />;
+	return (
+		<Form
+			template={template}
+			errorMessage={languages[systemLanguageCode].cv.error}
+			sendingMessage={
+				languages[systemLanguageCode].generic.sendingMessage
+			}
+			{...props}
+		/>
+	);
 }
 
-export default ReferencesContainer;
+export default connect(mapStateToProps)(ReferencesContainer);

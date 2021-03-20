@@ -1,8 +1,12 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import checkField, { checkMinLength } from '../../utils/forms/checkField';
-import { TEXT, SELECT } from '../../utils/forms/Field';
-import { LEVEL as LEVEL_CONST } from '../../components/Portfolio/Skills/Skill/SkillItem';
+import { TEXT } from '../../utils/forms/Field/TextField';
+import { SELECT } from '../../utils/forms/Field/SelectField';
+import languages from '../../utils/languages';
 
 import Form from '../../utils/forms/Form';
 
@@ -11,36 +15,67 @@ export const SKILLS = 'skills';
 export const NAME = 'name';
 export const LEVEL = 'level';
 
-function SkillsContainer({ ...props }) {
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
+
+// configure the prop types validation
+SkillsContainer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function SkillsContainer({ language: { systemLanguageCode }, ...props }) {
 	// setup the form template
 	const template = {
 		[SKILLS]: {
 			subform: {
 				[NAME]: {
 					type: TEXT,
-					label: 'Nom',
+					label: languages[systemLanguageCode].cv.skills.name.label,
 					defaultValue: '',
-					checkField: checkField([checkMinLength(3)]),
+					checkField: checkField([
+						checkMinLength(
+							3,
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.minLength
+						)
+					]),
 					inputParam: {
-						placeholder: 'Javascript'
+						placeholder:
+							languages[systemLanguageCode].cv.skills.name
+								.placeholder
 					}
 				},
 				[LEVEL]: {
 					type: SELECT,
-					label: 'Niveau',
-					defaultValue: LEVEL_CONST[0],
+					label: languages[systemLanguageCode].cv.skills.level.label,
+					defaultValue:
+						languages[systemLanguageCode].generic.level[0],
 					checkField: checkField([]),
 					configParam: {
-						fields: LEVEL_CONST
+						fields: languages[systemLanguageCode].generic.level
 					}
 				}
 			},
-			addLabel: 'Ajouter une compétence',
-			removeLabel: 'Supprimer la compétence'
+			addLabel: languages[systemLanguageCode].cv.skills.addSkills,
+			removeLabel: languages[systemLanguageCode].cv.skills.removeSkills
 		}
 	};
 
-	return <Form template={template} errorMessage="Erreur" {...props} />;
+	return (
+		<Form
+			template={template}
+			errorMessage={languages[systemLanguageCode].cv.error}
+			sendingMessage={
+				languages[systemLanguageCode].generic.sendingMessage
+			}
+			{...props}
+		/>
+	);
 }
 
-export default SkillsContainer;
+export default connect(mapStateToProps)(SkillsContainer);

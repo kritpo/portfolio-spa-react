@@ -4,8 +4,8 @@ import { PropTypes } from 'prop-types';
 import { Grid, Box } from '@material-ui/core';
 
 import SkillContainer from '../../containers/Portfolio/Skills/SkillContainer';
-import Languages from './Skills/Languages';
-import Hobbies from './Skills/Hobbies';
+import LanguagesContainer from '../../containers/Portfolio/Skills/LanguagesContainer';
+import HobbiesContainer from '../../containers/Portfolio/Skills/HobbiesContainer';
 
 // configure the prop types validation
 Skills.propTypes = {
@@ -22,10 +22,10 @@ function Skills({ skills, languages, interests }) {
 					<SkillContainer skills={skills} />
 				</Grid>
 				<Grid item xs={12} md={6}>
-					<Languages languages={languages} />
+					<LanguagesContainer languages={languages} />
 				</Grid>
 				<Grid item xs={12} md={6}>
-					<Hobbies interests={interests} />
+					<HobbiesContainer interests={interests} />
 				</Grid>
 			</Grid>
 		</Box>

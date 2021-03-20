@@ -30,7 +30,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 import Route from './Route';
 import NavContainer from './containers/NavContainer';
-import Footer from './components/Footer';
+import FooterContainer from './containers/FooterContainer';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ darkMode }, ...props) => ({
@@ -135,7 +135,7 @@ function App({
 			<BrowserRouter>
 				<NavContainer />
 				<Route />
-				<Footer />
+				<FooterContainer />
 			</BrowserRouter>
 		</ThemeProvider>
 	);

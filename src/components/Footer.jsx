@@ -1,13 +1,22 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 
 import { TERMS } from '../routes';
+import languages from '../utils/languages';
 
 import { Paper, Box, Typography, Button } from '@material-ui/core';
 
 import CustomIcon from '../utils/icons/CustomIcon';
 import CustomLink from '../utils/CustomLink';
 
-function Footer() {
+// configure the prop types validation
+Footer.propTypes = {
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
+};
+
+function Footer({ language: { systemLanguageCode } }) {
 	return (
 		<Box component="footer">
 			<Paper square>
@@ -63,8 +72,10 @@ function Footer() {
 						</Button>
 					</Box>
 					<Typography variant="body2">
-						&copy; Réalisé par Jimmy Weng -{' '}
-						<CustomLink to={TERMS}>Mentions légales</CustomLink>
+						&copy; {languages[systemLanguageCode].footer.credits} -{' '}
+						<CustomLink to={TERMS}>
+							{languages[systemLanguageCode].pages.terms}
+						</CustomLink>
 					</Typography>
 				</Box>
 			</Paper>

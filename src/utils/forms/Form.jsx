@@ -116,6 +116,11 @@ const checkError = (form, template, setForm) => {
 	return errors;
 };
 
+// configure default props
+Form.defaultProps = {
+	sendingMessage: 'Sending in progress...'
+};
+
 // configure the prop types validation
 Form.propTypes = {
 	data: PropTypes.arrayOf(
@@ -136,6 +141,7 @@ Form.propTypes = {
 	).isRequired,
 	onSubmit: PropTypes.func.isRequired,
 	errorMessage: PropTypes.string.isRequired,
+	sendingMessage: PropTypes.string.isRequired,
 	action: PropTypes.string.isRequired,
 	setForm: PropTypes.func
 };
@@ -146,6 +152,7 @@ function Form({
 	template,
 	onSubmit,
 	errorMessage,
+	sendingMessage,
 	action,
 	setForm: setExtForm
 }) {
@@ -239,7 +246,7 @@ function Form({
 						<Box mb={2}>
 							<Loading size="32px" />
 							<Typography variant="body1">
-								Envoi en cours...
+								{sendingMessage}
 							</Typography>
 						</Box>
 					)}

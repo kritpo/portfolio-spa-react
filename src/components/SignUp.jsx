@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { HOME, SIGN_IN, SIGN_UP_CONFIRM } from '../routes';
+import languages from '../utils/languages';
 
 import { Container, Box, Paper, Typography } from '@material-ui/core';
 
@@ -13,15 +14,28 @@ import CustomLink from '../utils/CustomLink';
 SignUp.propTypes = {
 	data: PropTypes.array.isRequired,
 	template: PropTypes.object.isRequired,
-	onSubmit: PropTypes.func.isRequired
+	onSubmit: PropTypes.func.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function SignUp({ data, template, onSubmit }) {
+function SignUp({
+	data,
+	template,
+	onSubmit,
+	language: { systemLanguageCode }
+}) {
 	return (
 		<Fragment>
 			<Header
-				title="Inscription"
-				history={[{ link: HOME, title: 'Accueil' }]}
+				title={languages[systemLanguageCode].pages.signUp}
+				history={[
+					{
+						link: HOME,
+						title: languages[systemLanguageCode].pages.home
+					}
+				]}
 			/>
 			<Container component="main" fixed>
 				<Box
@@ -33,21 +47,35 @@ function SignUp({ data, template, onSubmit }) {
 				>
 					<Paper>
 						<Typography component="h2" variant="h4">
-							Inscription
+							{languages[systemLanguageCode].pages.signUp}
 						</Typography>
 						<Form
 							data={data}
 							template={template}
 							onSubmit={onSubmit}
-							errorMessage="Une erreur inattendue est survenue. Veuillez réessayer ultérieurement."
-							action="Inscription"
+							errorMessage={
+								languages[systemLanguageCode].signUp.error
+							}
+							sendingMessage={
+								languages[systemLanguageCode].generic
+									.sendingMessage
+							}
+							action={languages[systemLanguageCode].signUp.action}
 						>
-							Déjà inscrit ?
+							{
+								languages[systemLanguageCode].signUp
+									.alreadyRegistered
+							}
 							<br />
-							<CustomLink to={SIGN_IN}>Connectez vous</CustomLink>
+							<CustomLink to={SIGN_IN}>
+								{languages[systemLanguageCode].signUp.goSignIn}
+							</CustomLink>
 							<br />
 							<CustomLink to={SIGN_UP_CONFIRM}>
-								Confirmez votre inscription
+								{
+									languages[systemLanguageCode].signUp
+										.goSignInConfirm
+								}
 							</CustomLink>
 						</Form>
 					</Paper>

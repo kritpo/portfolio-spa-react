@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { HOME, PORTFOLIO, CV_CREATE } from '../routes';
+import languages from '../utils/languages';
 
 import {
 	Container,
@@ -41,22 +42,34 @@ const languagesList = (languages, defaultLanguage) =>
 	));
 
 // configure the prop types validation
-User.propTypes = {
+CVList.propTypes = {
 	resumeLanguages: PropTypes.shape({
 		isLoading: PropTypes.bool.isRequired,
 		resumeLanguages: PropTypes.object.isRequired,
 		error: PropTypes.string
 	}).isRequired,
-	username: PropTypes.string.isRequired
+	username: PropTypes.string.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function User({
+function CVList({
 	resumeLanguages: { isLoading, resumeLanguages, error },
-	username
+	username,
+	language: { systemLanguageCode }
 }) {
 	return (
 		<Fragment>
-			<Header title="CVs" history={[{ link: HOME, title: 'Accueil' }]} />
+			<Header
+				title={languages[systemLanguageCode].pages.cvList}
+				history={[
+					{
+						link: HOME,
+						title: languages[systemLanguageCode].pages.home
+					}
+				]}
+			/>
 			<Container component="main" fixed>
 				<Box
 					display="flex"
@@ -67,13 +80,16 @@ function User({
 				>
 					<Paper>
 						<Typography component="h2" variant="h4">
-							CVs
+							{languages[systemLanguageCode].pages.cvList}
 						</Typography>
 						{isLoading ? (
 							<Loading size="40vh" />
 						) : error !== null ? (
 							<Error size="40vh">
-								Impossible de charger les données
+								{
+									languages[systemLanguageCode].generic
+										.loadingError
+								}
 							</Error>
 						) : (
 							<Fragment>
@@ -82,13 +98,25 @@ function User({
 										<TableHead>
 											<TableRow>
 												<TableCell>
-													Code langue
+													{
+														languages[
+															systemLanguageCode
+														].cvList.languageCode
+													}
 												</TableCell>
 												<TableCell align="center">
-													Langue
+													{
+														languages[
+															systemLanguageCode
+														].cvList.language
+													}
 												</TableCell>
 												<TableCell align="center">
-													Actions
+													{
+														languages[
+															systemLanguageCode
+														].cvList.actions
+													}
 												</TableCell>
 											</TableRow>
 										</TableHead>
@@ -105,7 +133,11 @@ function User({
 														align="center"
 														colSpan={3}
 													>
-														Aucun CV
+														{
+															languages[
+																systemLanguageCode
+															].cvList.noElements
+														}
 													</TableCell>
 												</TableRow>
 											)}
@@ -120,7 +152,11 @@ function User({
 												color="secondary"
 												startIcon={<Add />}
 											>
-												Créer
+												{
+													languages[
+														systemLanguageCode
+													].cvList.create
+												}
 											</Button>
 										</Box>
 									</CustomLink>
@@ -137,7 +173,11 @@ function User({
 													color="secondary"
 													startIcon={<Visibility />}
 												>
-													Voir
+													{
+														languages[
+															systemLanguageCode
+														].cvList.see
+													}
 												</Button>
 											</Box>
 										</CustomLink>
@@ -152,4 +192,4 @@ function User({
 	);
 }
 
-export default User;
+export default CVList;

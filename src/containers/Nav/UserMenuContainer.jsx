@@ -11,8 +11,9 @@ import { HOME } from '../../routes';
 import UserMenu from '../../components/Nav/UserMenu';
 
 // configure the states to pass as props to the component
-const mapStateToProps = ({ username }, ...props) => ({
+const mapStateToProps = ({ username, language }, ...props) => ({
 	username,
+	language,
 	...props
 });
 

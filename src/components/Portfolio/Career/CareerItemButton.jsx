@@ -11,9 +11,6 @@ import {
 	Typography
 } from '@material-ui/core';
 
-// setup no category course constant
-export const NO_CATEGORY = 'NO_CATEGORY';
-
 /**
  * convert course content details to React component
  * @param {array} courseContent the list of courses data
@@ -40,7 +37,7 @@ const buttonsList = (buttons, updateCategory) =>
 				disabled={active}
 				onClick={updateCategory(name)}
 			>
-				{name === NO_CATEGORY ? 'Défaut' : name}
+				{name}
 			</Button>
 		</Grid>
 	));

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 
 import { WORK, EDUCATION, VOLUNTEER } from './Career/CareerItem';
+import languages from '../../utils/languages';
 
 import { Box, Grid, Button, Typography } from '@material-ui/core';
 import { ArrowUpward, Star } from '@material-ui/icons';
@@ -39,7 +40,10 @@ Career.propTypes = {
 	educationToggle: PropTypes.func.isRequired,
 	volunteerToggle: PropTypes.func.isRequired,
 	allToggle: PropTypes.func.isRequired,
-	isUpMd: PropTypes.bool.isRequired
+	isUpMd: PropTypes.bool.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function Career({
@@ -49,13 +53,14 @@ function Career({
 	educationToggle,
 	volunteerToggle,
 	allToggle,
-	isUpMd
+	isUpMd,
+	language: { systemLanguageCode }
 }) {
 	return (
 		<Fragment>
 			<Box textAlign="center" clone>
 				<Typography component="h3" variant="h4" gutterBottom>
-					Mon parcours
+					{languages[systemLanguageCode].portfolio.career.title}
 				</Typography>
 			</Box>
 			<Grid container spacing={2} justify="center">
@@ -65,7 +70,10 @@ function Career({
 						color="primary"
 						onClick={allToggle}
 					>
-						Inverser la sélection
+						{
+							languages[systemLanguageCode].portfolio.career.menu
+								.invert
+						}
 					</Button>
 				</Grid>
 				<Grid item>
@@ -75,7 +83,10 @@ function Career({
 						disableElevation={show[WORK]}
 						onClick={workToggle}
 					>
-						Professionnel
+						{
+							languages[systemLanguageCode].portfolio.career.menu
+								.work
+						}
 					</Button>
 				</Grid>
 				<Grid item>
@@ -85,7 +96,10 @@ function Career({
 						disableElevation={show[EDUCATION]}
 						onClick={educationToggle}
 					>
-						Scolaire
+						{
+							languages[systemLanguageCode].portfolio.career.menu
+								.education
+						}
 					</Button>
 				</Grid>
 				<Grid item>
@@ -95,7 +109,10 @@ function Career({
 						disableElevation={show[VOLUNTEER]}
 						onClick={volunteerToggle}
 					>
-						Associatif
+						{
+							languages[systemLanguageCode].portfolio.career.menu
+								.volunteer
+						}
 					</Button>
 				</Grid>
 			</Grid>
@@ -115,7 +132,10 @@ function Career({
 						<Box mt={1} clone>
 							<TimelineContent>
 								<Typography variant="body1">
-									Aucun élément à afficher
+									{
+										languages[systemLanguageCode].portfolio
+											.career.noElements
+									}
 								</Typography>
 							</TimelineContent>
 						</Box>

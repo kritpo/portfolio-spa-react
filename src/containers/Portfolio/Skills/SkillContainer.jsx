@@ -1,6 +1,14 @@
 import React, { useState, useCallback } from 'react';
 
+import { connect } from 'react-redux';
+
 import Skill from '../../../components/Portfolio/Skills/Skill';
+
+// configure the states to pass as props to the component
+const mapStateToProps = ({ language }, ...props) => ({
+	language,
+	...props
+});
 
 function SkillContainer({ ...props }) {
 	// setup the collapse status hook
@@ -20,4 +28,4 @@ function SkillContainer({ ...props }) {
 	);
 }
 
-export default SkillContainer;
+export default connect(mapStateToProps)(SkillContainer);

@@ -3,6 +3,8 @@ import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import languages from '../../utils/languages';
+
 import Hero from '../../components/Portfolio/Hero';
 
 // setup cursor speed constants
@@ -98,8 +100,9 @@ const writingAnimation = (setState, setCursorState, text, isTitle) => {
 };
 
 // configure the states to pass as props to the component
-const mapStateToProps = ({ webpSupport }, ...props) => ({
+const mapStateToProps = ({ webpSupport, language }, ...props) => ({
 	webpSupport,
+	language,
 	...props
 });
 
@@ -115,12 +118,16 @@ HeroContainer.propTypes = {
 		isLoading: PropTypes.bool.isRequired,
 		error: PropTypes.string
 	}).isRequired,
-	isMain: PropTypes.bool.isRequired
+	isMain: PropTypes.bool.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function HeroContainer({
 	resume: { resume, isLoading, error },
 	isMain,
+	language: { systemLanguageCode },
 	...props
 }) {
 	// setup the title state hook
@@ -138,20 +145,22 @@ function HeroContainer({
 			!isLoading && error === null
 				? `<${resume.basics.name} />`
 				: isMain
-				? '<Jimmy Weng />'
+				? languages[systemLanguageCode].portfolio.hero.titleDefault
 				: isLoading
-				? 'En chargement...'
-				: 'Erreur de chargement';
+				? languages[systemLanguageCode].portfolio.hero.titleLoading
+				: languages[systemLanguageCode].portfolio.hero.titleError;
 
 		// retrieve the final description
 		const finalDescription =
 			!isLoading && error === null
 				? resume.basics.label
 				: isMain
-				? 'Développeur Full-Stack'
+				? languages[systemLanguageCode].portfolio.hero
+						.descriptionDefault
 				: isLoading
-				? 'Patientez un moment...'
-				: "Le CV n'existe pas";
+				? languages[systemLanguageCode].portfolio.hero
+						.descriptionLoading
+				: languages[systemLanguageCode].portfolio.hero.descriptionError;
 
 		// start the writing animation
 		writingAnimation(setTitle, setTitleCursor, finalTitle, true);
@@ -167,7 +176,7 @@ function HeroContainer({
 			clearTimeout(titleTimeout);
 			clearTimeout(descriptionTimeout);
 		};
-	}, [error, isLoading, isMain, resume]);
+	}, [error, isLoading, isMain, resume, systemLanguageCode]);
 
 	return (
 		<Hero

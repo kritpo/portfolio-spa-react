@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 
 import { SIGN_UP, SIGN_IN, CV_LIST } from '../../routes';
+import languages from '../../utils/languages';
 
 import { Box, Button, Typography, IconButton } from '@material-ui/core';
 import {
@@ -41,7 +42,10 @@ UserMenu.propTypes = {
 	username: PropTypes.string.isRequired,
 	logout: PropTypes.func.isRequired,
 	showTextBreakpoint: PropTypes.bool.isRequired,
-	isBurger: PropTypes.bool.isRequired
+	isBurger: PropTypes.bool.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function UserMenu({
@@ -49,7 +53,8 @@ function UserMenu({
 	username,
 	logout,
 	showTextBreakpoint,
-	isBurger
+	isBurger,
+	language: { systemLanguageCode }
 }) {
 	return (
 		<Box
@@ -72,11 +77,20 @@ function UserMenu({
 						{isBurger ? (
 							<Button startIcon={<User />} fullWidth>
 								<Typography component="div" color="textPrimary">
-									<Box fontSize="5vh">Connexion</Box>
+									<Box fontSize="5vh">
+										{
+											languages[systemLanguageCode].pages
+												.signIn
+										}
+									</Box>
 								</Typography>
 							</Button>
 						) : showTextBreakpoint ? (
-							<Button endIcon={<User />}>Connexion</Button>
+							<Button endIcon={<User />}>
+								<Typography noWrap>
+									{languages[systemLanguageCode].pages.signIn}
+								</Typography>
+							</Button>
 						) : (
 							<IconButton>
 								<User />
@@ -94,11 +108,20 @@ function UserMenu({
 						{isBurger ? (
 							<Button startIcon={<SignUp />} fullWidth>
 								<Typography component="div" color="textPrimary">
-									<Box fontSize="5vh">Inscription</Box>
+									<Box fontSize="5vh">
+										{
+											languages[systemLanguageCode].pages
+												.signUp
+										}
+									</Box>
 								</Typography>
 							</Button>
 						) : showTextBreakpoint ? (
-							<Button endIcon={<SignUp />}>Inscription</Button>
+							<Button endIcon={<SignUp />}>
+								<Typography noWrap>
+									{languages[systemLanguageCode].pages.signUp}
+								</Typography>
+							</Button>
 						) : (
 							<IconButton>
 								<SignUp />
@@ -133,12 +156,14 @@ function UserMenu({
 							fullWidth
 						>
 							<Typography component="div" color="textPrimary">
-								<Box fontSize="5vh">Déconnexion</Box>
+								<Box fontSize="5vh">
+									{languages[systemLanguageCode].pages.logout}
+								</Box>
 							</Typography>
 						</Button>
 					) : showTextBreakpoint ? (
 						<Button endIcon={<SignOut />} onClick={logout}>
-							Déconnexion
+							{languages[systemLanguageCode].pages.logout}
 						</Button>
 					) : (
 						<IconButton onClick={logout}>

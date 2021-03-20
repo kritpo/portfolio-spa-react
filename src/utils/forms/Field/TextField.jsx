@@ -1,8 +1,7 @@
 import { TextField as MuiTextField } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React from 'react';
-
-import MaskField from './MaskField';
+import MaskField from './MasterField/MaskField';
 
 // setup fields types constants
 export const TEXT = 'text';
@@ -12,7 +11,6 @@ export const PASSWORD = 'password';
 export const NUMBER_2 = 'number_2';
 export const URL = 'url';
 export const PHONE_NUMBER = 'phone_number';
-export const COUNTRY_CODE = 'country_code';
 
 // setup the mask array
 const maskInput = {
@@ -35,14 +33,6 @@ const maskInput = {
 		props: {
 			definitions: {
 				1: /[1-9]/
-			}
-		}
-	},
-	[COUNTRY_CODE]: {
-		mask: 'AA',
-		props: {
-			definitions: {
-				A: /[A-Z]/
 			}
 		}
 	}

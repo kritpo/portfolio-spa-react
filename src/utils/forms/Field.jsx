@@ -1,10 +1,18 @@
 import { PropTypes } from 'prop-types';
 import React from 'react';
-
 import CheckboxField, { CHECKBOX } from './Field/CheckboxField';
+import CountryCodeField, { COUNTRY_CODE } from './Field/CountryCodeField';
 import DateField, { DATE, DATE_MASKABLE } from './Field/DateField';
 import SelectField, { SELECT } from './Field/SelectField';
-import TextField, { COUNTRY_CODE, EMAIL, NUMBER_2, PASSWORD, PHONE_NUMBER, TEXT, TEXTAREA, URL } from './Field/TextField';
+import TextField, {
+	EMAIL,
+	NUMBER_2,
+	PASSWORD,
+	PHONE_NUMBER,
+	TEXT,
+	TEXTAREA,
+	URL
+} from './Field/TextField';
 
 // configure the prop types validation
 Field.propTypes = {
@@ -26,7 +34,6 @@ function Field({ form, template, handleForm, autoSubmit, preName }) {
 		case NUMBER_2:
 		case URL:
 		case PHONE_NUMBER:
-		case COUNTRY_CODE:
 			return (
 				<TextField
 					form={form}
@@ -65,6 +72,18 @@ function Field({ form, template, handleForm, autoSubmit, preName }) {
 		case DATE_MASKABLE:
 			return (
 				<DateField
+					form={form}
+					template={template}
+					handleForm={handleForm}
+					autoSubmit={autoSubmit}
+					preName={preName}
+				/>
+			);
+
+		// check if the field must be a autocomplete field
+		case COUNTRY_CODE:
+			return (
+				<CountryCodeField
 					form={form}
 					template={template}
 					handleForm={handleForm}

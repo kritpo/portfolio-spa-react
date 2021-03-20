@@ -1,9 +1,19 @@
 import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-
-import checkField, { checkExactLength, checkMinLength, checkRegex } from '../../utils/forms/checkField';
-import { COUNTRY_CODE as COUNTRY_CODE_TYPE, EMAIL as EMAIL_TYPE, PHONE_NUMBER, TEXT, TEXTAREA, URL as URL_TYPE } from '../../utils/forms/Field/TextField';
+import checkField, {
+	checkExactLength,
+	checkMinLength,
+	checkRegex
+} from '../../utils/forms/checkField';
+import { COUNTRY_CODE as COUNTRY_CODE_TYPE } from '../../utils/forms/Field/CountryCodeField';
+import {
+	EMAIL as EMAIL_TYPE,
+	PHONE_NUMBER,
+	TEXT,
+	TEXTAREA,
+	URL as URL_TYPE
+} from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
 import languages from '../../utils/languages';
 

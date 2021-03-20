@@ -157,7 +157,7 @@ function BurgerMenu({
 		<Box className={`${root} ${isOpen ? 'open' : ''}`}>
 			<CssNoScroll scroll={!isOpen} />
 			<Box
-				zIndex="appBar"
+				zIndex="drawer"
 				position="fixed"
 				top={bottom === undefined ? top : ''}
 				bottom={bottom ?? ''}

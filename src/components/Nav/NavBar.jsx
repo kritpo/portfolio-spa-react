@@ -72,7 +72,7 @@ function NavBar({
 }) {
 	return (
 		<Box
-			zIndex="appBar"
+			zIndex="drawer"
 			position="fixed"
 			display="flex"
 			alignItems="center"

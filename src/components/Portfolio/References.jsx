@@ -1,10 +1,8 @@
-import React from 'react';
+import { Box, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
 import languages from '../../utils/languages';
-
-import { Box, Typography } from '@material-ui/core';
-
 import ReferenceItem from './References/ReferenceItem';
 
 /**

@@ -1,22 +1,13 @@
-import React, { Fragment } from 'react';
-import { PropTypes } from 'prop-types';
-
-import { WORK, EDUCATION, VOLUNTEER } from './Career/CareerItem';
-import languages from '../../utils/languages';
-
-import { Box, Grid, Button, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { ArrowUpward, Star } from '@material-ui/icons';
-import {
-	Timeline,
-	TimelineItem,
-	TimelineContent,
-	TimelineSeparator,
-	TimelineConnector,
-	TimelineDot
-} from '@material-ui/lab';
+import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@material-ui/lab';
+import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
-import CustomLink from '../../utils/CustomLink';
 import CareerItemContainer from '../../containers/Portfolio/Career/CareerItemContainer';
+import CustomLink from '../../utils/CustomLink';
+import languages from '../../utils/languages';
+import { EDUCATION, VOLUNTEER, WORK } from './Career/CareerItem';
 
 /**
  * convert careers details to React component

@@ -1,29 +1,15 @@
-import React, { Fragment } from 'react';
-import { PropTypes } from 'prop-types';
-
-import { HOME, PORTFOLIO, CV_CREATE } from '../routes';
-import languages from '../utils/languages';
-
-import {
-	Container,
-	Box,
-	Paper,
-	Typography,
-	TableContainer,
-	Table,
-	TableHead,
-	TableRow,
-	TableCell,
-	TableBody,
-	Button
-} from '@material-ui/core';
+import { Box, Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import { Add, Visibility } from '@material-ui/icons';
+import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
-import Header from './Header';
-import Loading from '../utils/Loading';
-import Error from '../utils/Error';
-import CustomLink from '../utils/CustomLink';
 import LanguageItemContainer from '../containers/CVList/LanguageItemContainer';
+import { CV_CREATE, HOME, PORTFOLIO } from '../routes';
+import CustomLink from '../utils/CustomLink';
+import Error from '../utils/Error';
+import languages from '../utils/languages';
+import Loading from '../utils/Loading';
+import Header from './Header';
 
 /**
  * convert languages details to React component

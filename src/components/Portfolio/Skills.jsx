@@ -1,11 +1,10 @@
-import React from 'react';
+import { Box, Grid } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
-import { Grid, Box } from '@material-ui/core';
-
-import SkillContainer from '../../containers/Portfolio/Skills/SkillContainer';
-import LanguagesContainer from '../../containers/Portfolio/Skills/LanguagesContainer';
 import HobbiesContainer from '../../containers/Portfolio/Skills/HobbiesContainer';
+import LanguagesContainer from '../../containers/Portfolio/Skills/LanguagesContainer';
+import SkillContainer from '../../containers/Portfolio/Skills/SkillContainer';
 
 // configure the prop types validation
 Skills.propTypes = {

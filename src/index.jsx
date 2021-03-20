@@ -1,19 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import store from './store';
-
 import Amplify, { Auth } from 'aws-amplify';
-
-import config from './aws-exports';
-
+import React from 'react';
+import { CookiesProvider } from 'react-cookie';
+import ReactDOM from 'react-dom';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { Provider } from 'react-redux';
 
-import { CookiesProvider } from 'react-cookie';
-
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-
 import App from './App';
+import config from './aws-exports';
+import store from './store';
 
 // configure Amplify
 Amplify.configure({

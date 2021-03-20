@@ -1,24 +1,11 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
-
+import React from 'react';
 import { connect } from 'react-redux';
 
-import checkField, {
-	checkMinLength,
-	checkExactLength,
-	checkRegex
-} from '../../utils/forms/checkField';
-import {
-	TEXT,
-	TEXTAREA,
-	URL as URL_TYPE,
-	EMAIL as EMAIL_TYPE,
-	PHONE_NUMBER,
-	COUNTRY_CODE as COUNTRY_CODE_TYPE
-} from '../../utils/forms/Field/TextField';
-import languages from '../../utils/languages';
-
+import checkField, { checkExactLength, checkMinLength, checkRegex } from '../../utils/forms/checkField';
+import { COUNTRY_CODE as COUNTRY_CODE_TYPE, EMAIL as EMAIL_TYPE, PHONE_NUMBER, TEXT, TEXTAREA, URL as URL_TYPE } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
+import languages from '../../utils/languages';
 
 // setup field name constants
 export const BASICS = 'basics';

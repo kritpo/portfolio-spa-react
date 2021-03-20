@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify';
 
-import { SET_USERNAME, RESET_USERNAME } from './types';
+import { RESET_USERNAME, SET_USERNAME } from './types';
 
 /**
  * auto-login the user

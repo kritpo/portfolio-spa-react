@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 
 import Languages from '../../../components/Portfolio/Skills/Languages';

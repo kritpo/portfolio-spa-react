@@ -1,13 +1,11 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
-
+import React from 'react';
 import { connect } from 'react-redux';
 
 import checkField, { checkMinLength } from '../../utils/forms/checkField';
 import { TEXT } from '../../utils/forms/Field/TextField';
-import languages from '../../utils/languages';
-
 import Form from '../../utils/forms/Form';
+import languages from '../../utils/languages';
 
 // setup field name constants
 export const INTERESTS = 'interests';

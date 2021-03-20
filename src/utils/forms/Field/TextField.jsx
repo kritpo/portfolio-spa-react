@@ -1,7 +1,6 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-
 import { TextField as MuiTextField } from '@material-ui/core';
+import { PropTypes } from 'prop-types';
+import React from 'react';
 
 import MaskField from './MaskField';
 

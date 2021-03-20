@@ -1,17 +1,12 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
-
+import React from 'react';
 import { connect } from 'react-redux';
 
-import checkField, {
-	checkMinLength,
-	checkDate
-} from '../../utils/forms/checkField';
-import { TEXT, TEXTAREA, URL } from '../../utils/forms/Field/TextField';
+import checkField, { checkDate, checkMinLength } from '../../utils/forms/checkField';
 import { DATE, DATE_MASKABLE } from '../../utils/forms/Field/DateField';
-import languages from '../../utils/languages';
-
+import { TEXT, TEXTAREA, URL } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
+import languages from '../../utils/languages';
 
 // setup field name constants
 export const VOLUNTEER = 'volunteer';

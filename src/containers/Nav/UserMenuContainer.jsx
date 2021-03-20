@@ -1,14 +1,11 @@
-import React, { useCallback } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
-
 import { useHistory } from 'react-router-dom';
 
 import { logout } from '../../actions';
-import { HOME } from '../../routes';
-
 import UserMenu from '../../components/Nav/UserMenu';
+import { HOME } from '../../routes';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ username, language }, ...props) => ({

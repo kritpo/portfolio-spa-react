@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types';
-
 import { withStyles } from '@material-ui/styles';
+import PropTypes from 'prop-types';
 
 // define the style of the component
 const styles = {

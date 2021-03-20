@@ -1,8 +1,7 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-
 import { Box, Card, CardContent, Typography } from '@material-ui/core';
 import { FormatQuote } from '@material-ui/icons';
+import { PropTypes } from 'prop-types';
+import React from 'react';
 
 // configure the prop types validation
 ReferenceItem.propTypes = {

@@ -1,4 +1,4 @@
-import { SET_USERNAME, RESET_USERNAME } from '../actions/types';
+import { RESET_USERNAME, SET_USERNAME } from '../actions/types';
 
 // configure initial state
 const initialState = '';

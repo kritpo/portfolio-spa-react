@@ -1,10 +1,9 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-
-import languages from '../../../../utils/languages';
-
 import { Box, LinearProgress } from '@material-ui/core';
+import { PropTypes } from 'prop-types';
+import React from 'react';
+
 import CustomIcon from '../../../../utils/icons/CustomIcon';
+import languages from '../../../../utils/languages';
 
 // configure the prop types validation
 SkillItem.propTypes = {

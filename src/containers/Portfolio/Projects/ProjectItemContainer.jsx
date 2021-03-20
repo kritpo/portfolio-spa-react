@@ -1,11 +1,9 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
-
+import React from 'react';
 import { connect } from 'react-redux';
 
-import languages from '../../../utils/languages';
-
 import ProjectItem from '../../../components/Portfolio/Projects/ProjectItem';
+import languages from '../../../utils/languages';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ language }, ...props) => ({

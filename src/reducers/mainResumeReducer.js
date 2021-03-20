@@ -1,8 +1,4 @@
-import {
-	MAIN_RESUME_LOADING,
-	MAIN_RESUME_LOADED,
-	MAIN_RESUME_FAILED
-} from '../actions/types';
+import { MAIN_RESUME_FAILED, MAIN_RESUME_LOADED, MAIN_RESUME_LOADING } from '../actions/types';
 
 // configure initial state
 const initialState = {

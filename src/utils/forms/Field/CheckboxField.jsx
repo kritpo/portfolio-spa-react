@@ -1,12 +1,6 @@
-import React from 'react';
+import { Checkbox, FormControl, FormControlLabel, FormHelperText } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-
-import {
-	FormControl,
-	FormControlLabel,
-	FormHelperText,
-	Checkbox
-} from '@material-ui/core';
+import React from 'react';
 
 // setup fields types constants
 export const CHECKBOX = 'checkbox';

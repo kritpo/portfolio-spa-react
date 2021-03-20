@@ -1,12 +1,12 @@
 import * as BASICS from '../containers/CV/BasicsContainer';
-import * as WORK from '../containers/CV/WorkContainer';
-import * as VOLUNTEER from '../containers/CV/VolunteerContainer';
 import * as EDUCATION from '../containers/CV/EducationContainer';
-import * as PROJECTS from '../containers/CV/ProjectsContainer';
-import * as SKILLS from '../containers/CV/SkillsContainer';
-import * as LANGUAGES from '../containers/CV/LanguagesContainer';
 import * as INTERESTS from '../containers/CV/InterestsContainer';
+import * as LANGUAGES from '../containers/CV/LanguagesContainer';
+import * as PROJECTS from '../containers/CV/ProjectsContainer';
 import * as REFERENCES from '../containers/CV/ReferencesContainer';
+import * as SKILLS from '../containers/CV/SkillsContainer';
+import * as VOLUNTEER from '../containers/CV/VolunteerContainer';
+import * as WORK from '../containers/CV/WorkContainer';
 
 /**
  * convert basics form to an object

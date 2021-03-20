@@ -1,8 +1,6 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-
 import { Box, Grid, Typography } from '@material-ui/core';
-
+import { PropTypes } from 'prop-types';
+import React from 'react';
 import ReactCountryFlag from 'react-country-flag';
 
 // configure the prop types validation

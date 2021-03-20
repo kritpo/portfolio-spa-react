@@ -1,19 +1,10 @@
-import React, { Fragment } from 'react';
+import { Box, Card, CardContent, Container, Link, Typography } from '@material-ui/core';
+import { Mail, Telegram } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
 import { HOME } from '../routes';
 import languages from '../utils/languages';
-
-import {
-	Container,
-	Box,
-	Card,
-	CardContent,
-	Link,
-	Typography
-} from '@material-ui/core';
-import { Mail, Telegram } from '@material-ui/icons';
-
 import Header from './Header';
 
 // configure the prop types validation

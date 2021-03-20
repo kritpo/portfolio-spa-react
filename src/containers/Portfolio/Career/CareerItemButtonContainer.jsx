@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import CareerItemButton from '../../../components/Portfolio/Career/CareerItemButton';
 

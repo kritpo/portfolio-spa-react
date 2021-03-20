@@ -1,7 +1,6 @@
-import React from 'react';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-
-import { Box, Grid, Button, Typography } from '@material-ui/core';
+import React from 'react';
 
 import CustomIcon from '../../../utils/icons/CustomIcon';
 

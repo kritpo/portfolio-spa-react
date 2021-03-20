@@ -1,19 +1,12 @@
-import React, { Fragment } from 'react';
-import { PropTypes } from 'prop-types';
-
+import { Box, Button, IconButton, Typography } from '@material-ui/core';
+import { ExitToApp as SignOut, PersonAdd as SignUp, AccountCircle as User } from '@material-ui/icons';
 import { withStyles } from '@material-ui/styles';
+import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
-import { SIGN_UP, SIGN_IN, CV_LIST } from '../../routes';
-import languages from '../../utils/languages';
-
-import { Box, Button, Typography, IconButton } from '@material-ui/core';
-import {
-	AccountCircle as User,
-	PersonAdd as SignUp,
-	ExitToApp as SignOut
-} from '@material-ui/icons';
-
+import { CV_LIST, SIGN_IN, SIGN_UP } from '../../routes';
 import CustomLink from '../../utils/CustomLink';
+import languages from '../../utils/languages';
 
 /**
  * define the style of the component

@@ -1,6 +1,4 @@
-import {
-	SET_THEME_MODE
-} from '../actions/types';
+import { SET_THEME_MODE } from '../actions/types';
 
 // configure initial state
 const initialState = false;

@@ -1,27 +1,13 @@
-import React, { useCallback } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
-import { CV_LIST } from '../../routes';
 import { updateResume } from '../../actions';
+import { CV_LIST } from '../../routes';
+import CustomLink from '../../utils/CustomLink';
 import * as cvUtils from '../../utils/cvUtils';
 import languages from '../../utils/languages';
-
-import EducationContainer, {
-	EDUCATION,
-	INSTITUTION,
-	AREA,
-	STUDY_TYPE,
-	START_DATE,
-	END_DATE,
-	GPA,
-	COURSES,
-	CATEGORY,
-	COURSES_COURSES,
-	COURSE
-} from '../CV/EducationContainer';
-import CustomLink from '../../utils/CustomLink';
+import EducationContainer, { AREA, CATEGORY, COURSE, COURSES, COURSES_COURSES, EDUCATION, END_DATE, GPA, INSTITUTION, START_DATE, STUDY_TYPE } from '../CV/EducationContainer';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ language }, ...props) => ({

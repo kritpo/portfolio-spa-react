@@ -1,11 +1,9 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-
-import languages from '../../utils/languages';
-
 import { Box, Grid, Typography } from '@material-ui/core';
+import { PropTypes } from 'prop-types';
+import React from 'react';
 
 import ProjectItemContainer from '../../containers/Portfolio/Projects/ProjectItemContainer';
+import languages from '../../utils/languages';
 
 /**
  * convert projects details to React component

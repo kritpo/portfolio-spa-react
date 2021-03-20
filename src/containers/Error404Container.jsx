@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 
 import Error404 from '../components/Error404';

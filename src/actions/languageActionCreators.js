@@ -1,7 +1,5 @@
+import LANGUAGE_CONST, { DEFAULT_LANGUAGE_CODE } from '../utils/languages/languageConst';
 import { SET_LANGUAGE } from './types';
-import LANGUAGE_CONST, {
-	DEFAULT_LANGUAGE_CODE
-} from '../utils/languages/languageConst';
 
 /**
  * redux action: set the language

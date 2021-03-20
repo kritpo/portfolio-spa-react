@@ -1,21 +1,12 @@
-import React, { Fragment } from 'react';
+import { Box, Card, CardContent, Hidden, Typography } from '@material-ui/core';
+import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineOppositeContent, TimelineSeparator } from '@material-ui/lab';
 import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
-import languages from '../../../utils/languages';
-
-import { Box, Card, CardContent, Typography, Hidden } from '@material-ui/core';
-import {
-	TimelineItem,
-	TimelineContent,
-	TimelineOppositeContent,
-	TimelineSeparator,
-	TimelineConnector,
-	TimelineDot
-} from '@material-ui/lab';
-
-import CustomIcon from '../../../utils/icons/CustomIcon';
-import CustomLink from '../../../utils/CustomLink';
 import CareerItemButtonContainer from '../../../containers/Portfolio/Career/CareerItemButtonContainer';
+import CustomLink from '../../../utils/CustomLink';
+import CustomIcon from '../../../utils/icons/CustomIcon';
+import languages from '../../../utils/languages';
 
 // setup career types constants
 export const WORK = 'work';

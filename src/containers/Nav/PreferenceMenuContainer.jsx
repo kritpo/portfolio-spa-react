@@ -1,13 +1,10 @@
-import React, { useState, useCallback } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { connect } from 'react-redux';
 
-import { useCookies } from 'react-cookie';
-
-import LANGUAGES_CONST from '../../utils/languages/languageConst';
-
 import PreferenceMenu from '../../components/Nav/PreferenceMenu';
+import LANGUAGES_CONST from '../../utils/languages/languageConst';
 
 // retrieve the system languages
 const systemLanguages = Object.entries(LANGUAGES_CONST)

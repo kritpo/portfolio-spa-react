@@ -1,46 +1,21 @@
-import React, { Fragment } from 'react';
+import { Box, Button, Container, Paper, Step, StepContent, StepLabel, Stepper, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
-import { HOME, CV_LIST } from '../routes';
-import languages from '../utils/languages';
-
-import {
-	Container,
-	Box,
-	Paper,
-	Stepper,
-	Step,
-	StepLabel,
-	StepContent,
-	Typography,
-	Button
-} from '@material-ui/core';
-
-import Header from './Header';
 import BasicsContainer, { BASICS } from '../containers/CV/BasicsContainer';
-import WorkContainer, { WORK } from '../containers/CV/WorkContainer';
-import VolunteerContainer, {
-	VOLUNTEER
-} from '../containers/CV/VolunteerContainer';
-import EducationContainer, {
-	EDUCATION
-} from '../containers/CV/EducationContainer';
-import ProjectsContainer, {
-	PROJECTS
-} from '../containers/CV/ProjectsContainer';
+import EducationContainer, { EDUCATION } from '../containers/CV/EducationContainer';
+import InterestsContainer, { INTERESTS } from '../containers/CV/InterestsContainer';
+import LanguagesContainer, { LANGUAGES } from '../containers/CV/LanguagesContainer';
+import ProjectsContainer, { PROJECTS } from '../containers/CV/ProjectsContainer';
+import ReferencesContainer, { REFERENCES } from '../containers/CV/ReferencesContainer';
 import SkillsContainer, { SKILLS } from '../containers/CV/SkillsContainer';
-import LanguagesContainer, {
-	LANGUAGES
-} from '../containers/CV/LanguagesContainer';
-import InterestsContainer, {
-	INTERESTS
-} from '../containers/CV/InterestsContainer';
-import ReferencesContainer, {
-	REFERENCES
-} from '../containers/CV/ReferencesContainer';
+import VolunteerContainer, { VOLUNTEER } from '../containers/CV/VolunteerContainer';
+import WorkContainer, { WORK } from '../containers/CV/WorkContainer';
+import { CV_LIST, HOME } from '../routes';
 import CustomLink from '../utils/CustomLink';
-
 import Form from '../utils/forms/Form';
+import languages from '../utils/languages';
+import Header from './Header';
 
 /**
  * setup the components list

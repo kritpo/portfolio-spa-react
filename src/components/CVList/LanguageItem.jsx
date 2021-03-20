@@ -1,24 +1,11 @@
-import React from 'react';
+import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TableCell, TableRow } from '@material-ui/core';
+import { Create, Delete, FirstPage } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
 import { CV_UPDATE } from '../../routes';
-import languages from '../../utils/languages';
-
-import {
-	Box,
-	TableRow,
-	TableCell,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogContentText,
-	DialogActions,
-	Button,
-	Chip
-} from '@material-ui/core';
-import { Create, Delete, FirstPage } from '@material-ui/icons';
-
 import CustomLink from '../../utils/CustomLink';
+import languages from '../../utils/languages';
 
 // configure the prop types validation
 LanguageItem.propTypes = {

@@ -1,19 +1,9 @@
-import React, { Fragment } from 'react';
+import { Avatar, Box, Button, Grid, Paper, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-
-import languages from '../../utils/languages';
-
-import {
-	Box,
-	Grid,
-	Paper,
-	Typography,
-	Avatar,
-	Button
-} from '@material-ui/core';
-
+import React, { Fragment } from 'react';
 import ReactCountryFlag from 'react-country-flag';
 
+import languages from '../../utils/languages';
 import SocialNetwork from './Details/SocialNetwork';
 
 /**

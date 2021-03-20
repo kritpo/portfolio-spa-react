@@ -1,17 +1,7 @@
 import { API } from 'aws-amplify';
 
 import { fetchResumeLanguages } from './resumeLanguagesActionCreators';
-
-import {
-	RESUME_LOADING,
-	RESUME_LOADED,
-	RESUME_FAILED,
-	MAIN_RESUME_LOADING,
-	MAIN_RESUME_LOADED,
-	MAIN_RESUME_FAILED,
-	UPDATE_RESUME,
-	DELETE_RESUME
-} from './types';
+import { DELETE_RESUME, MAIN_RESUME_FAILED, MAIN_RESUME_LOADED, MAIN_RESUME_LOADING, RESUME_FAILED, RESUME_LOADED, RESUME_LOADING, UPDATE_RESUME } from './types';
 
 /**
  * fetch the resume on portfolio-api-serverless

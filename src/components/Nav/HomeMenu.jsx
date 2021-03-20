@@ -1,13 +1,11 @@
-import React from 'react';
+import { Box, Button, IconButton, Typography } from '@material-ui/core';
+import { Home } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
 import { HOME } from '../../routes';
-import languages from '../../utils/languages';
-
-import { Box, Button, Typography, IconButton } from '@material-ui/core';
-import { Home } from '@material-ui/icons';
-
 import CustomLink from '../../utils/CustomLink';
+import languages from '../../utils/languages';
 
 // configure default props
 HomeMenu.defaultProps = {

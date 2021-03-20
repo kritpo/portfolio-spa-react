@@ -1,7 +1,6 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
-
 import { Box, CircularProgress } from '@material-ui/core';
+import { PropTypes } from 'prop-types';
+import React from 'react';
 
 // configure the prop types validation
 Loading.propTypes = {

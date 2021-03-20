@@ -1,14 +1,11 @@
-import React, { useEffect, useState, useCallback } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-
 import { useLocation } from 'react-router-dom';
 
 import { fetchResume } from '../actions';
-import languages from '../utils/languages';
-
 import CVUpdate from '../components/CVUpdate';
+import languages from '../utils/languages';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ resume, username, language }, ...props) => ({

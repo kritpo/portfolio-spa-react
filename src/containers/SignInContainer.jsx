@@ -1,22 +1,15 @@
-import React, { useCallback } from 'react';
+import { Auth } from 'aws-amplify';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { connect } from 'react-redux';
-
-import { Auth } from 'aws-amplify';
-
 import { login } from '../actions';
+import SignIn from '../components/SignIn';
 import { HOME } from '../routes';
 import checkField, { checkMinLength } from '../utils/forms/checkField';
-import {
-	TEXT,
-	PASSWORD as PASSWORD_TYPE
-} from '../utils/forms/Field/TextField';
+import { PASSWORD as PASSWORD_TYPE, TEXT } from '../utils/forms/Field/TextField';
 import languages from '../utils/languages';
-
-import SignIn from '../components/SignIn';
 
 // setup field name constants
 const USERNAME = 'username';

@@ -1,13 +1,8 @@
-import React, { Fragment, useCallback } from 'react';
-import { PropTypes } from 'prop-types';
-
 import DateFnsUtils from '@date-io/date-fns';
-
-import { FormControlLabel, Checkbox } from '@material-ui/core';
-import {
-	MuiPickersUtilsProvider,
-	KeyboardDatePicker
-} from '@material-ui/pickers';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { PropTypes } from 'prop-types';
+import React, { Fragment, useCallback } from 'react';
 
 // setup fields types constants
 export const DATE = 'date';

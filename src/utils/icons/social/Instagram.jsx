@@ -1,6 +1,5 @@
-import React from 'react';
-
 import SvgIcon from '@material-ui/core/SvgIcon';
+import React from 'react';
 
 /* thanks to https://www.iconfinder.com/ for the SVG */
 

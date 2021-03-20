@@ -1,18 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import { Auth } from 'aws-amplify';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback, useState } from 'react';
 import { connect } from 'react-redux';
-
 import { useHistory } from 'react-router-dom';
 
-import { Auth } from 'aws-amplify';
-
+import SignUpConfirm from '../components/SignUpConfirm';
 import { SIGN_IN } from '../routes';
 import checkField, { checkMinLength } from '../utils/forms/checkField';
 import { TEXT } from '../utils/forms/Field/TextField';
 import languages from '../utils/languages';
-
-import SignUpConfirm from '../components/SignUpConfirm';
 
 // setup field name constants
 const USERNAME = 'username';

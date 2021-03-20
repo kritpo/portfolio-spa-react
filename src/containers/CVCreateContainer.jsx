@@ -1,45 +1,26 @@
-import React, { useCallback, useState } from 'react';
+import { API } from 'aws-amplify';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback, useState } from 'react';
 import { connect } from 'react-redux';
-
 import { useHistory } from 'react-router-dom';
 
-import { API } from 'aws-amplify';
-
 import { fetchResumeLanguages } from '../actions';
-import {
-	NAME,
-	LABEL,
-	SUMMARY,
-	PICTURE,
-	EMAIL,
-	PHONE,
-	WEBSITE,
-	ADDRESS,
-	POSTAL_CODE,
-	CITY,
-	REGION,
-	COUNTRY_CODE,
-	PROFILES,
-	BASICS
-} from '../containers/CV/BasicsContainer';
-import { WORK } from '../containers/CV/WorkContainer';
-import { VOLUNTEER } from '../containers/CV/VolunteerContainer';
+import CVCreate from '../components/CVCreate';
+import { ADDRESS, BASICS, CITY, COUNTRY_CODE, EMAIL, LABEL, NAME, PHONE, PICTURE, POSTAL_CODE, PROFILES, REGION, SUMMARY, WEBSITE } from '../containers/CV/BasicsContainer';
 import { EDUCATION } from '../containers/CV/EducationContainer';
-import { PROJECTS } from '../containers/CV/ProjectsContainer';
-import { SKILLS } from '../containers/CV/SkillsContainer';
-import { LANGUAGES } from '../containers/CV/LanguagesContainer';
 import { INTERESTS } from '../containers/CV/InterestsContainer';
+import { LANGUAGES } from '../containers/CV/LanguagesContainer';
+import { PROJECTS } from '../containers/CV/ProjectsContainer';
 import { REFERENCES } from '../containers/CV/ReferencesContainer';
-import { encryptForm, decryptForm } from '../utils/forms/Form';
-import checkField, { checkMinLength } from '../utils/forms/checkField';
-import { TEXT } from '../utils/forms/Field/TextField';
+import { SKILLS } from '../containers/CV/SkillsContainer';
+import { VOLUNTEER } from '../containers/CV/VolunteerContainer';
+import { WORK } from '../containers/CV/WorkContainer';
 import { CV_LIST } from '../routes';
 import * as cvUtils from '../utils/cvUtils';
+import checkField, { checkMinLength } from '../utils/forms/checkField';
+import { TEXT } from '../utils/forms/Field/TextField';
+import { decryptForm, encryptForm } from '../utils/forms/Form';
 import languages from '../utils/languages';
-
-import CVCreate from '../components/CVCreate';
 
 // setup field name constants
 const LANGUAGE_CODE = 'language_code';

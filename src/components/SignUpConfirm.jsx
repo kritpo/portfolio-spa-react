@@ -1,14 +1,12 @@
-import React, { Fragment } from 'react';
+import { Box, Button, Container, Paper, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
 import { HOME, SIGN_UP } from '../routes';
-import languages from '../utils/languages';
-
-import { Container, Box, Paper, Typography, Button } from '@material-ui/core';
-
-import Form from '../utils/forms/Form';
-import Header from './Header';
 import CustomLink from '../utils/CustomLink';
+import Form from '../utils/forms/Form';
+import languages from '../utils/languages';
+import Header from './Header';
 
 // configure the prop types validation
 SignUpConfirm.propTypes = {

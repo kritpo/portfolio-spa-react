@@ -1,11 +1,8 @@
-import React, { useMemo, lazy, Suspense } from 'react';
-import { PropTypes } from 'prop-types';
-
-import icons, { SOCIAL, CAREER, TECHNOLOGY, HOBBY } from './icons';
-
 import { Box } from '@material-ui/core';
-
+import { PropTypes } from 'prop-types';
+import React, { lazy, Suspense, useMemo } from 'react';
 import Loading from '../Loading';
+import icons, { CAREER, HOBBY, SOCIAL, TECHNOLOGY } from './icons';
 
 /**
  * retrieve the icon or return the keyword

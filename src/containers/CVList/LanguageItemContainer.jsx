@@ -1,10 +1,8 @@
-import React, { useCallback, useState } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { deleteResume, updateResumeDefaultLanguage } from '../../actions';
-
 import LanguageItem from '../../components/CVList/LanguageItem';
 
 // configure the states to pass as props to the component

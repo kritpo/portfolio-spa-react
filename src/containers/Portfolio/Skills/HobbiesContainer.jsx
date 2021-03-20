@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 
 import Hobbies from '../../../components/Portfolio/Skills/Hobbies';

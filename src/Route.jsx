@@ -1,15 +1,11 @@
-import React, { Suspense } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
-
-import routes from './routes';
-
-import { Switch, Route } from 'react-router-dom';
-
-import Loading from './utils/Loading';
+import { Route, Switch } from 'react-router-dom';
 import Error401Container from './containers/Error401Container';
 import Error404Container from './containers/Error404Container';
+import routes from './routes';
+import Loading from './utils/Loading';
 
 // convert routes details to React component
 const routesList = username =>

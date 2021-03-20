@@ -1,25 +1,13 @@
-import React, { useCallback } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
-import { CV_LIST } from '../../routes';
 import { updateResume } from '../../actions';
+import { CV_LIST } from '../../routes';
+import CustomLink from '../../utils/CustomLink';
 import * as cvUtils from '../../utils/cvUtils';
 import languages from '../../utils/languages';
-
-import VolunteerContainer, {
-	VOLUNTEER,
-	ORGANIZATION,
-	POSITION,
-	WEBSITE,
-	START_DATE,
-	END_DATE,
-	SUMMARY,
-	HIGHLIGHTS,
-	HIGHLIGHT
-} from '../CV/VolunteerContainer';
-import CustomLink from '../../utils/CustomLink';
+import VolunteerContainer, { END_DATE, HIGHLIGHT, HIGHLIGHTS, ORGANIZATION, POSITION, START_DATE, SUMMARY, VOLUNTEER, WEBSITE } from '../CV/VolunteerContainer';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ language }, ...props) => ({

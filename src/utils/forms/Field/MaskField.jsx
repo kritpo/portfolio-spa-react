@@ -1,6 +1,5 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
-
+import React from 'react';
 import { IMaskInput } from 'react-imask';
 
 // configure the prop types validation

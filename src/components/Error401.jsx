@@ -1,13 +1,11 @@
-import React, { Fragment } from 'react';
+import { Box } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
 import { HOME } from '../routes';
-import languages from '../utils/languages';
-
-import { Box } from '@material-ui/core';
-
-import Header from './Header';
 import Error from '../utils/Error';
+import languages from '../utils/languages';
+import Header from './Header';
 
 // configure the prop types validation
 Error401.propTypes = {

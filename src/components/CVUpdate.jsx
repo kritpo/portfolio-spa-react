@@ -1,37 +1,22 @@
-import React, { Fragment } from 'react';
-import { PropTypes } from 'prop-types';
-
-import { HOME, CV_LIST } from '../routes';
-import languages from '../utils/languages';
-
-import {
-	Container,
-	Box,
-	Paper,
-	AppBar,
-	Tab,
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	DialogContentText,
-	DialogActions,
-	Button,
-	Typography
-} from '@material-ui/core';
+import { AppBar, Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Tab, Typography } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
+import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
-import Header from './Header';
-import Loading from '../utils/Loading';
-import Error from '../utils/Error';
 import UpdateBasicsContainer from '../containers/CVUpdate/UpdateBasicsContainer';
-import UpdateWorkContainer from '../containers/CVUpdate/UpdateWorkContainer';
-import UpdateVolunteerContainer from '../containers/CVUpdate/UpdateVolunteerContainer';
 import UpdateEducationContainer from '../containers/CVUpdate/UpdateEducationContainer';
-import UpdateProjectsContainer from '../containers/CVUpdate/UpdateProjectsContainer';
-import UpdateSkillsContainer from '../containers/CVUpdate/UpdateSkillsContainer';
-import UpdateLanguagesContainer from '../containers/CVUpdate/UpdateLanguagesContainer';
 import UpdateInterestsContainer from '../containers/CVUpdate/UpdateInterestsContainer';
+import UpdateLanguagesContainer from '../containers/CVUpdate/UpdateLanguagesContainer';
+import UpdateProjectsContainer from '../containers/CVUpdate/UpdateProjectsContainer';
 import UpdateReferencesContainer from '../containers/CVUpdate/UpdateReferencesContainer';
+import UpdateSkillsContainer from '../containers/CVUpdate/UpdateSkillsContainer';
+import UpdateVolunteerContainer from '../containers/CVUpdate/UpdateVolunteerContainer';
+import UpdateWorkContainer from '../containers/CVUpdate/UpdateWorkContainer';
+import { CV_LIST, HOME } from '../routes';
+import Error from '../utils/Error';
+import languages from '../utils/languages';
+import Loading from '../utils/Loading';
+import Header from './Header';
 
 /**
  * setup tabs

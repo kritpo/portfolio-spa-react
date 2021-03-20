@@ -1,28 +1,15 @@
-import React, { useCallback } from 'react';
+import { Auth } from 'aws-amplify';
 import { PropTypes } from 'prop-types';
-
+import React, { useCallback } from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { connect } from 'react-redux';
-
-import { Auth } from 'aws-amplify';
-
-import { SIGN_UP_CONFIRM } from '../routes';
-import checkField, {
-	checkMinLength,
-	checkRegex,
-	checkCharType,
-	checkValue
-} from '../utils/forms/checkField';
-import {
-	TEXT,
-	EMAIL as EMAIL_TYPE,
-	PASSWORD as PASSWORD_TYPE
-} from '../utils/forms/Field/TextField';
-import { CHECKBOX } from '../utils/forms/Field/CheckboxField';
-import languages from '../utils/languages';
-
 import SignUp from '../components/SignUp';
+import { SIGN_UP_CONFIRM } from '../routes';
+import checkField, { checkCharType, checkMinLength, checkRegex, checkValue } from '../utils/forms/checkField';
+import { CHECKBOX } from '../utils/forms/Field/CheckboxField';
+import { EMAIL as EMAIL_TYPE, PASSWORD as PASSWORD_TYPE, TEXT } from '../utils/forms/Field/TextField';
+import languages from '../utils/languages';
 
 // setup field name constants
 const USERNAME = 'username';

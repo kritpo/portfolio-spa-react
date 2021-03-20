@@ -1,19 +1,10 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
-import TextField, {
-	TEXT,
-	TEXTAREA,
-	EMAIL,
-	PASSWORD,
-	NUMBER_2,
-	URL,
-	PHONE_NUMBER,
-	COUNTRY_CODE
-} from './Field/TextField';
 import CheckboxField, { CHECKBOX } from './Field/CheckboxField';
-import SelectField, { SELECT } from './Field/SelectField';
 import DateField, { DATE, DATE_MASKABLE } from './Field/DateField';
+import SelectField, { SELECT } from './Field/SelectField';
+import TextField, { COUNTRY_CODE, EMAIL, NUMBER_2, PASSWORD, PHONE_NUMBER, TEXT, TEXTAREA, URL } from './Field/TextField';
 
 // configure the prop types validation
 Field.propTypes = {

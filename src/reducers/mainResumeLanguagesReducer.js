@@ -1,8 +1,4 @@
-import {
-	MAIN_RESUME_LANGUAGES_LOADING,
-	MAIN_RESUME_LANGUAGES_LOADED,
-	MAIN_RESUME_LANGUAGES_FAILED
-} from '../actions/types';
+import { MAIN_RESUME_LANGUAGES_FAILED, MAIN_RESUME_LANGUAGES_LOADED, MAIN_RESUME_LANGUAGES_LOADING } from '../actions/types';
 
 // configure initial state
 const initialState = {

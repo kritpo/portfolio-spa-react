@@ -1,13 +1,11 @@
-import React, { useCallback } from 'react';
+import { Link } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-
-import impPreloader from './impPreloader';
-import routes from '../routes';
-
-import { Link as RouterLink, NavLink as NavRouterLink } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { NavLink as NavRouterLink, Link as RouterLink } from 'react-router-dom';
 import { HashLink, NavHashLink } from 'react-router-hash-link';
 
-import { Link } from '@material-ui/core';
+import routes from '../routes';
+import impPreloader from './impPreloader';
 
 // configure default props
 CustomLink.defaultProps = {

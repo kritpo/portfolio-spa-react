@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import languages from '../../utils/languages';
-
 import Hero from '../../components/Portfolio/Hero';
+import languages from '../../utils/languages';
 
 // setup cursor speed constants
 const CURSOR_SPEED = 250;

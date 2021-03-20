@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchResumeLanguages } from '../actions';
-
 import CVList from '../components/CVList';
 
 // configure the states to pass as props to the component

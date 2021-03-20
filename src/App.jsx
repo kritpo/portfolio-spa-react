@@ -1,36 +1,18 @@
-import React, { useEffect, useMemo } from 'react';
-import { PropTypes } from 'prop-types';
-
-import { connect } from 'react-redux';
-
-import { useCookies } from 'react-cookie';
-
+import { CssBaseline } from '@material-ui/core';
+import { amber, blue, deepPurple, green, orange, red } from '@material-ui/core/colors';
+import { ThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import {
-	amber,
-	blue,
-	deepPurple,
-	green,
-	orange,
-	red
-} from '@material-ui/core/colors';
-
-import {
-	checkWebpSupport,
-	setThemeMode,
-	autoLogin,
-	setLanguage
-} from './actions';
-
+import { PropTypes } from 'prop-types';
+import React, { useEffect, useMemo } from 'react';
+import { useCookies } from 'react-cookie';
+import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import { CssBaseline } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/core/styles';
-
-import Route from './Route';
-import NavContainer from './containers/NavContainer';
+import { autoLogin, checkWebpSupport, setLanguage, setThemeMode } from './actions';
 import FooterContainer from './containers/FooterContainer';
+import NavContainer from './containers/NavContainer';
+import Route from './Route';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ darkMode }, ...props) => ({

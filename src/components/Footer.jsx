@@ -1,13 +1,11 @@
-import React from 'react';
+import { Box, Button, Paper, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
 import { TERMS } from '../routes';
-import languages from '../utils/languages';
-
-import { Paper, Box, Typography, Button } from '@material-ui/core';
-
-import CustomIcon from '../utils/icons/CustomIcon';
 import CustomLink from '../utils/CustomLink';
+import CustomIcon from '../utils/icons/CustomIcon';
+import languages from '../utils/languages';
 
 // configure the prop types validation
 Footer.propTypes = {

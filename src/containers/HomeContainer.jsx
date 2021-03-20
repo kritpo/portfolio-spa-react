@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-
+import React, { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { connect } from 'react-redux';
 
-import { useCookies } from 'react-cookie';
-
 import { fetchResume } from '../actions';
-
 import Portfolio from '../components/Portfolio';
 
 // configure the states to pass as props to the component

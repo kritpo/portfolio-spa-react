@@ -1,15 +1,22 @@
 import { Box } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { lazy, Suspense, useMemo } from 'react';
+
 import Loading from '../Loading';
-import icons, { CAREER, HOBBY, SOCIAL, TECHNOLOGY } from './icons';
+import careerIcons from './career';
+import hobbyIcons from './hobby';
+import socialIcons from './social';
+import technologyIcons from './technology';
 
 /**
  * retrieve the icon or return the keyword
- * @param {object} props input keyword object
- * @returns the icon or a keyword
+ * @param {string} social the social keyword
+ * @param {string} career the career keyword
+ * @param {string} technology the technology keyword
+ * @param {string} hobby the hobby keyword
+ * @returns the icon or the keyword
  */
-const retrieveIcon = (social, career, technology, hobby, notExact = true) => {
+const retrieveIcon = (social, career, technology, hobby) => {
 	// check if no props is defined
 	if (
 		social === undefined &&
@@ -21,29 +28,15 @@ const retrieveIcon = (social, career, technology, hobby, notExact = true) => {
 		return null;
 	}
 
-	// retrieve the subset of icon infos which match the input request
-	const filteredIcons =
-		social !== undefined
-			? icons.filter(({ type }) => type === SOCIAL)
-			: career !== undefined
-			? icons.filter(({ type }) => type === CAREER)
-			: technology !== undefined
-			? icons.filter(({ type }) => type === TECHNOLOGY)
-			: icons.filter(({ type }) => type === HOBBY);
-
-	// retrieve and convert the keyword in lowercase for normalization
-	const currKeyword = (social || career || technology || hobby).toLowerCase();
-
 	// find the icon corresponding to the keyword
-	const icon = filteredIcons.find(({ keyword }) => {
-		// find an keyword which match the input keyword
-		const finalKeyword = keyword.find(key =>
-			notExact ? key === currKeyword : key.includes(currKeyword)
-		);
-
-		// if a keyword is found, then the icon match the input request
-		return finalKeyword !== undefined;
-	});
+	const icon =
+		social !== undefined
+			? socialIcons[social]
+			: career !== undefined
+			? careerIcons[career]
+			: technology !== undefined
+			? technologyIcons[technology]
+			: hobbyIcons[hobby];
 
 	// check if an icon is found
 	if (icon !== undefined) {
@@ -51,7 +44,7 @@ const retrieveIcon = (social, career, technology, hobby, notExact = true) => {
 		return lazy(icon.loadIcon);
 	} else {
 		// otherwise return the input keyword
-		return currKeyword;
+		return social || career || technology || hobby;
 	}
 };
 
@@ -94,26 +87,20 @@ const customValidator = (
 	}
 };
 
-// configure default props
-CustomIcon.defaultProps = {
-	notExact: true
-};
-
 // configure the prop types validation
 CustomIcon.propTypes = {
 	social: PropTypes.string,
 	career: PropTypes.string,
 	technology: PropTypes.string,
 	hobby: PropTypes.string,
-	customValidator,
-	notExact: PropTypes.bool.isRequired
+	customValidator
 };
 
-function CustomIcon({ social, career, technology, hobby, notExact }) {
+function CustomIcon({ social, career, technology, hobby }) {
 	// retrieve the icon
 	const Icon = useMemo(
-		() => retrieveIcon(social, career, technology, hobby, notExact),
-		[career, hobby, notExact, social, technology]
+		() => retrieveIcon(social, career, technology, hobby),
+		[career, hobby, social, technology]
 	);
 
 	return (
@@ -124,7 +111,7 @@ function CustomIcon({ social, career, technology, hobby, notExact }) {
 				</Box>
 			}
 		>
-			{typeof Icon === 'string' ? Icon : <Icon />}
+			{typeof Icon === 'string' || Icon === null ? Icon : <Icon />}
 		</Suspense>
 	);
 }

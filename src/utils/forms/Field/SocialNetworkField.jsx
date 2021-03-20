@@ -1,22 +1,19 @@
 import { Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { Fragment, useCallback } from 'react';
-import ReactCountryFlag from 'react-country-flag';
 
-import COUNTRY_CONST from '../../languages/countryConst';
+import CustomIcon from '../../icons/CustomIcon';
+import socialIcons from '../../icons/social';
 import AutocompleteField from './MasterField/AutocompleteField';
 
 // setup fields types constants
-export const COUNTRY_CODE = 'country_code';
+export const SOCIAL_NETWORK = 'social_network';
 
 // retrieve all country constants
-const countries = Object.entries(COUNTRY_CONST).reduce(
-	(array, [, country]) => [...array, country],
-	[]
-);
+const social_networks = Object.keys(socialIcons);
 
 // configure the prop types validation
-CountryCodeField.propTypes = {
+SocialField.propTypes = {
 	form: PropTypes.object.isRequired,
 	template: PropTypes.object.isRequired,
 	handleForm: PropTypes.shape({
@@ -26,7 +23,7 @@ CountryCodeField.propTypes = {
 	preName: PropTypes.string
 };
 
-function CountryCodeField({
+function SocialField({
 	form,
 	template,
 	handleForm: { onChange },
@@ -35,12 +32,12 @@ function CountryCodeField({
 }) {
 	// setup local onChange
 	const autocompleteOnChange = useCallback(
-		(event, country) => {
-			// check if the country is defined
-			if (country) {
-				// update the country code
+		(event, value) => {
+			// check if the value is defined
+			if (value) {
+				// update the value code
 				onChange(template.name)({
-					target: { value: country.countryCode }
+					target: { value }
 				});
 			}
 		},
@@ -48,19 +45,14 @@ function CountryCodeField({
 	);
 
 	// setup the option label retriever
-	const getOptionLabel = useCallback(
-		({ countryCode, country }) => `${countryCode}-${country}`,
-		[]
-	);
+	const getOptionLabel = socialNetwork => socialNetwork;
 
 	// setup the option render
 	const renderOption = useCallback(
-		({ countryCode, country }) => (
+		socialNetwork => (
 			<Fragment>
-				<ReactCountryFlag countryCode={countryCode} svg />
-				<Typography>
-					{countryCode}-{country}
-				</Typography>
+				<CustomIcon social={socialNetwork} svg />
+				<Typography>{socialNetwork}</Typography>
 			</Fragment>
 		),
 		[]
@@ -68,9 +60,9 @@ function CountryCodeField({
 
 	// retrieve the value
 	const value =
-		COUNTRY_CONST[form[template.name].value] !== undefined
-			? COUNTRY_CONST[form[template.name].value]
-			: COUNTRY_CONST.FR;
+		socialIcons[form[template.name].value] !== undefined
+			? socialIcons[form[template.name].value].name
+			: '';
 
 	return (
 		<AutocompleteField
@@ -80,11 +72,11 @@ function CountryCodeField({
 			preName={preName}
 			value={value}
 			onChange={autocompleteOnChange}
-			options={countries}
+			options={social_networks}
 			getOptionLabel={getOptionLabel}
 			renderOption={renderOption}
 		/>
 	);
 }
 
-export default CountryCodeField;
+export default SocialField;

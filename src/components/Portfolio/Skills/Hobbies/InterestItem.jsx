@@ -16,7 +16,7 @@ function ReferenceItem({ interest: { name, keywords } }) {
 	return (
 		<Box fontSize="2em" clone>
 			<Grid item xs={12} sm={6} lg={4} xl={3}>
-				<CustomIcon hobby={name} notExact />
+				<CustomIcon hobby={name} />
 				{keywords.map((keyword, index) => (
 					<Typography
 						variant="body2"

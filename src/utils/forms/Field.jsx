@@ -1,18 +1,12 @@
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
 import CheckboxField, { CHECKBOX } from './Field/CheckboxField';
 import CountryCodeField, { COUNTRY_CODE } from './Field/CountryCodeField';
 import DateField, { DATE, DATE_MASKABLE } from './Field/DateField';
 import SelectField, { SELECT } from './Field/SelectField';
-import TextField, {
-	EMAIL,
-	NUMBER_2,
-	PASSWORD,
-	PHONE_NUMBER,
-	TEXT,
-	TEXTAREA,
-	URL
-} from './Field/TextField';
+import SocialNetworkField, { SOCIAL_NETWORK } from './Field/SocialNetworkField';
+import TextField, { EMAIL, NUMBER_2, PASSWORD, PHONE_NUMBER, TEXT, TEXTAREA, URL } from './Field/TextField';
 
 // configure the prop types validation
 Field.propTypes = {
@@ -80,10 +74,22 @@ function Field({ form, template, handleForm, autoSubmit, preName }) {
 				/>
 			);
 
-		// check if the field must be a autocomplete field
+		// check if the field must be a country code field
 		case COUNTRY_CODE:
 			return (
 				<CountryCodeField
+					form={form}
+					template={template}
+					handleForm={handleForm}
+					autoSubmit={autoSubmit}
+					preName={preName}
+				/>
+			);
+
+		// check if the field must be a social network field
+		case SOCIAL_NETWORK:
+			return (
+				<SocialNetworkField
 					form={form}
 					template={template}
 					handleForm={handleForm}

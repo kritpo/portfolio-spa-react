@@ -9,9 +9,9 @@ import CustomIcon from '../../../utils/icons/CustomIcon';
 import languages from '../../../utils/languages';
 
 // setup career types constants
-export const WORK = 'work';
-export const EDUCATION = 'education';
-export const VOLUNTEER = 'volunteer';
+export const WORK = 'Work';
+export const EDUCATION = 'Education';
+export const VOLUNTEER = 'Volunteer';
 
 /**
  * retrieve the good icon

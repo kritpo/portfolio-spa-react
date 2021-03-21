@@ -1,23 +1,22 @@
 import { PropTypes } from 'prop-types';
 import React, { Fragment, useCallback } from 'react';
-import ReactCountryFlag from 'react-country-flag';
 
 import { Typography } from '@material-ui/core';
 
-import COUNTRY_CONST from '../../languages/countryConst';
+import LANGUAGE_CONST from '../../languages/languageConst';
 import AutocompleteField from './MasterField/AutocompleteField';
 
 // setup fields types constants
-export const COUNTRY_CODE = 'country_code';
+export const LANGUAGE_CODE = 'language_code';
 
-// retrieve all country constants
-const countries = Object.entries(COUNTRY_CONST).reduce(
-	(array, [, country]) => [...array, country],
+// retrieve all language constants
+const languages = Object.entries(LANGUAGE_CONST).reduce(
+	(array, [, language]) => [...array, language],
 	[]
 );
 
 // configure the prop types validation
-CountryCodeField.propTypes = {
+LanguageCodeField.propTypes = {
 	form: PropTypes.object.isRequired,
 	template: PropTypes.object.isRequired,
 	handleForm: PropTypes.shape({
@@ -27,7 +26,7 @@ CountryCodeField.propTypes = {
 	preName: PropTypes.string
 };
 
-function CountryCodeField({
+function LanguageCodeField({
 	form,
 	template,
 	handleForm: { onChange },
@@ -36,12 +35,12 @@ function CountryCodeField({
 }) {
 	// setup local onChange
 	const autocompleteOnChange = useCallback(
-		(event, country) => {
-			// check if the country is defined
-			if (country) {
-				// update the country code
+		(event, language) => {
+			// check if the language is defined
+			if (language) {
+				// update the language code
 				onChange(template.name)({
-					target: { value: country.countryCode }
+					target: { value: language.languageCode }
 				});
 			}
 		},
@@ -50,17 +49,16 @@ function CountryCodeField({
 
 	// setup the option label retriever
 	const getOptionLabel = useCallback(
-		({ countryCode, country }) => `${countryCode}-${country}`,
+		({ languageCode, language }) => `${languageCode}-${language}`,
 		[]
 	);
 
 	// setup the option render
 	const renderOption = useCallback(
-		({ countryCode, country }) => (
+		({ languageCode, language }) => (
 			<Fragment>
-				<ReactCountryFlag countryCode={countryCode} svg />
 				<Typography>
-					{countryCode}-{country}
+					{languageCode}-{language}
 				</Typography>
 			</Fragment>
 		),
@@ -69,9 +67,9 @@ function CountryCodeField({
 
 	// retrieve the value
 	const value =
-		COUNTRY_CONST[form[template.name].value] !== undefined
-			? COUNTRY_CONST[form[template.name].value]
-			: { countryCode: '', country: '' };
+		LANGUAGE_CONST[form[template.name].value] !== undefined
+			? LANGUAGE_CONST[form[template.name].value]
+			: { languageCode: '', language: '' };
 
 	return (
 		<AutocompleteField
@@ -81,11 +79,11 @@ function CountryCodeField({
 			preName={preName}
 			value={value}
 			onChange={autocompleteOnChange}
-			options={countries}
+			options={languages}
 			getOptionLabel={getOptionLabel}
 			renderOption={renderOption}
 		/>
 	);
 }
 
-export default CountryCodeField;
+export default LanguageCodeField;

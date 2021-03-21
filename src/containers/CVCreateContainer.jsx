@@ -32,7 +32,7 @@ import { VOLUNTEER } from '../containers/CV/VolunteerContainer';
 import { WORK } from '../containers/CV/WorkContainer';
 import { CV_LIST } from '../routes';
 import * as cvUtils from '../utils/cvUtils';
-import { TEXT } from '../utils/forms/Field/TextField';
+import { LANGUAGE_CODE as LANGUAGE_CODE_TYPE } from '../utils/forms/Field/LanguageCodeField';
 import { decryptForm, encryptForm } from '../utils/forms/Form';
 import checkField, { checkMinLength } from '../utils/forms/checkField';
 import languages from '../utils/languages';
@@ -132,7 +132,7 @@ function CVCreateContainer({
 	// setup the form template
 	const languageCodeTemplate = {
 		[LANGUAGE_CODE]: {
-			type: TEXT,
+			type: LANGUAGE_CODE_TYPE,
 			label: languages[systemLanguageCode].cvCreate.languageCode.label,
 			checkField: checkField([
 				checkMinLength(

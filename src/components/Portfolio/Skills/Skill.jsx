@@ -4,8 +4,8 @@ import React, { Fragment } from 'react';
 import { Box, Collapse, IconButton, Typography } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
-import SkillItemContainer from '../../../containers/Portfolio/Skills/Skill/SkillItemContainer';
 import languages from '../../../utils/languages';
+import SkillItem from './Skill/SkillItem';
 
 /**
  * convert skills details to React component
@@ -17,9 +17,7 @@ import languages from '../../../utils/languages';
 const skillsList = (skills, start, end) =>
 	skills
 		.slice(start, end)
-		.map((skill, index) => (
-			<SkillItemContainer skill={skill} key={index} />
-		));
+		.map((skill, index) => <SkillItem skill={skill} key={index} />);
 
 // configure the prop types validation
 Skill.propTypes = {

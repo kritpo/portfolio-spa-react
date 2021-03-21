@@ -2,6 +2,7 @@ import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { LEVEL as LEVEL_CONST } from '../../components/Portfolio/Skills/Skill/SkillItem';
 import { TECHNOLOGY } from '../../utils/forms/Field/IconSetField';
 import { SELECT } from '../../utils/forms/Field/SelectField';
 import Form from '../../utils/forms/Form';
@@ -51,11 +52,10 @@ function SkillsContainer({ language: { systemLanguageCode }, ...props }) {
 				[LEVEL]: {
 					type: SELECT,
 					label: languages[systemLanguageCode].cv.skills.level.label,
-					defaultValue:
-						languages[systemLanguageCode].generic.level[0],
+					defaultValue: LEVEL_CONST[0],
 					checkField: checkField([]),
 					configParam: {
-						fields: languages[systemLanguageCode].generic.level
+						fields: LEVEL_CONST
 					}
 				}
 			},

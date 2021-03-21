@@ -2,7 +2,6 @@
 const en = {
 	generic: {
 		loadingError: 'Unable to load data.',
-		level: ['Novice', 'Intermediate', 'Advanced', 'Master'],
 		formSendingMessage: 'Sending in progress...'
 	},
 	pages: {

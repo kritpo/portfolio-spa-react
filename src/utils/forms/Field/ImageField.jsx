@@ -116,7 +116,6 @@ function ImageField({
 
 				// retrieve image
 				var file = event.target.files[0];
-				console.log(file.type);
 
 				// check the file is describe as image
 				if (/^image\/.+$/.test(file.type)) {
@@ -185,10 +184,12 @@ function ImageField({
 				.then(({ key }) => {
 					// check if the component is still mounted
 					if (_isMounted.current) {
-						Auth.currentCredentials().then(({ identityId }) => ({
-							identityId,
-							key
-						}));
+						return Auth.currentCredentials().then(
+							({ identityId }) => ({
+								identityId,
+								key
+							})
+						);
 					}
 				})
 				.then(result => {

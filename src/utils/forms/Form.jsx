@@ -173,7 +173,7 @@ function Form({
 	const { executeRecaptcha } = useGoogleReCaptcha();
 
 	// setup form states
-	const [form, setIntForm] = useState({});
+	const [form, setIntForm] = useState(encryptForm(data));
 	const [isSending, setIsSending] = useState(false);
 	const [isSended, setIsSended] = useState(false);
 	const [error, setError] = useState('');
@@ -191,12 +191,6 @@ function Form({
 		},
 		[setExtForm]
 	);
-
-	// initialize the form state
-	useEffect(() => {
-		setForm(encryptForm(data));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	// setup the form submit handler
 	const handleSubmit = useCallback(() => {

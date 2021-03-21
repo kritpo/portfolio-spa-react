@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import SignUpConfirm from '../components/SignUpConfirm';
 import { SIGN_IN } from '../routes';
 import { TEXT } from '../utils/forms/Field/TextField';
+import { encryptForm } from '../utils/forms/Form';
 import checkField, {
 	checkExactLength,
 	checkMinLength,
@@ -54,9 +55,6 @@ function SignUpConfirmContainer({
 	// setup the history hook
 	const history = useHistory();
 
-	// setup the form hook
-	const [form, setForm] = useState({});
-
 	// retrieve the default username
 	let defaultUsername =
 		state !== undefined && state !== null && state.username !== undefined
@@ -78,6 +76,9 @@ function SignUpConfirmContainer({
 			payload: ''
 		}
 	];
+
+	// setup the form hook
+	const [form, setForm] = useState(encryptForm(data));
 
 	// setup the form template
 	const template = waitComponent => ({

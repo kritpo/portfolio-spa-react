@@ -9,46 +9,60 @@ import { useTheme } from '@material-ui/styles';
 
 import { updateNavIntersection } from '../actions';
 import Nav from '../components/Nav';
-import { HOME, PORTFOLIO } from '../routes';
+import { CV_CREATE, CV_LIST, CV_UPDATE, HOME, PORTFOLIO } from '../routes';
 import languages from '../utils/languages';
 
 /**
  * setup the list of links
  * @param {boolean} isCV if the path is a CV path
  * @param {string} pathname the current pathname
+ * @param {string} username the current username
  * @param {string} _language the system language code
  * @returns the list of links
  */
-const links = (isCV, pathname, { systemLanguageCode }) => [
-	{
-		title: languages[systemLanguageCode].portfolio.details.label,
-		link: `${isCV ? pathname : HOME}#details`,
-		isHash: true
-	},
-	{
-		title: languages[systemLanguageCode].portfolio.career.label,
-		link: `${isCV ? pathname : HOME}#career`,
-		isHash: true
-	},
-	{
-		title: languages[systemLanguageCode].portfolio.projects.label,
-		link: `${isCV ? pathname : HOME}#projects`,
-		isHash: true
-	},
-	{
-		title: languages[systemLanguageCode].portfolio.skills.label,
-		link: `${isCV ? pathname : HOME}#skills`,
-		isHash: true
-	},
-	{
-		title: languages[systemLanguageCode].portfolio.references.label,
-		link: `${isCV ? pathname : HOME}#references`,
-		isHash: true
-	}
-];
+const links = (isCV, pathname, username, { systemLanguageCode }) => {
+	// retrieve the final url
+	const url = !isCV
+		? (pathname === CV_LIST ||
+				pathname === CV_CREATE ||
+				pathname === CV_UPDATE) &&
+		  username !== ''
+			? PORTFOLIO.replace(':username', username)
+			: HOME
+		: pathname;
+
+	return [
+		{
+			title: languages[systemLanguageCode].portfolio.details.label,
+			link: `${url}#details`,
+			isHash: true
+		},
+		{
+			title: languages[systemLanguageCode].portfolio.career.label,
+			link: `${url}#career`,
+			isHash: true
+		},
+		{
+			title: languages[systemLanguageCode].portfolio.projects.label,
+			link: `${url}#projects`,
+			isHash: true
+		},
+		{
+			title: languages[systemLanguageCode].portfolio.skills.label,
+			link: `${url}#skills`,
+			isHash: true
+		},
+		{
+			title: languages[systemLanguageCode].portfolio.references.label,
+			link: `${url}#references`,
+			isHash: true
+		}
+	];
+};
 
 // configure the states to pass as props to the component
-const mapStateToProps = ({ language }, ...props) => ({
+const mapStateToProps = ({ username, language }, ...props) => ({
+	username,
 	language,
 	...props
 });
@@ -61,12 +75,13 @@ const mapDispatchToProps = {
 // configure the prop types validation
 NavContainer.propTypes = {
 	updateNavIntersection: PropTypes.func.isRequired,
+	username: PropTypes.string.isRequired,
 	language: PropTypes.shape({
 		systemLanguageCode: PropTypes.string.isRequired
 	}).isRequired
 };
 
-function NavContainer({ updateNavIntersection, language, ...props }) {
+function NavContainer({ updateNavIntersection, username, language, ...props }) {
 	// setup the nav type hook
 	const [showBar, setShowBar] = useState(false);
 
@@ -104,7 +119,7 @@ function NavContainer({ updateNavIntersection, language, ...props }) {
 
 	return (
 		<Nav
-			links={links(isCV, pathname, language)}
+			links={links(isCV, pathname, username, language)}
 			showBar={showBar}
 			isHome={isHome}
 			isCV={isCV}

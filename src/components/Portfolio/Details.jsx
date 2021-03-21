@@ -96,7 +96,11 @@ function Details({
 						<Box mb={2}>
 							<Typography variant="body1">{address}</Typography>
 							<Typography variant="body1">
-								{`${postalCode}, ${city}, ${region}, `}
+								{`${postalCode}${
+									postalCode !== '' ? ', ' : ''
+								}${city}, ${region}${
+									region !== '' ? ', ' : ''
+								}`}
 								<ReactCountryFlag
 									countryCode={countryCode}
 									svg

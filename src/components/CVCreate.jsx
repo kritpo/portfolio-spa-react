@@ -223,6 +223,11 @@ function CVCreate({
 														systemLanguageCode
 													].generic.sendingMessage
 												}
+												sendedMessage={
+													languages[
+														systemLanguageCode
+													].generic.sendedMessage
+												}
 											/>
 										</Box>
 									</StepContent>

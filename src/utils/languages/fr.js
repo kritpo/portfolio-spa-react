@@ -2,7 +2,8 @@
 const fr = {
 	generic: {
 		loadingError: 'Impossible de charger les données.',
-		formSendingMessage: 'Envoi en cours...'
+		sendingMessage: 'Envoi en cours...',
+		sendedMessage: 'Envoi réussi !'
 	},
 	pages: {
 		home: 'Accueil',

@@ -346,6 +346,7 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			sendingMessage={
 				languages[systemLanguageCode].generic.sendingMessage
 			}
+			sendedMessage={languages[systemLanguageCode].generic.sendedMessage}
 			{...props}
 		>
 			<CustomLink to={CV_LIST}>

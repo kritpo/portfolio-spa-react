@@ -52,6 +52,7 @@ function SignUp({
 							data={data}
 							template={template}
 							onSubmit={onSubmit}
+							action={languages[systemLanguageCode].signUp.action}
 							errorMessage={
 								languages[systemLanguageCode].signUp.error
 							}
@@ -59,7 +60,10 @@ function SignUp({
 								languages[systemLanguageCode].generic
 									.sendingMessage
 							}
-							action={languages[systemLanguageCode].signUp.action}
+							sendedMessage={
+								languages[systemLanguageCode].generic
+									.sendedMessage
+							}
 						>
 							{
 								languages[systemLanguageCode].signUp

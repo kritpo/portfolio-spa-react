@@ -82,6 +82,10 @@ function SignUpConfirm({
 								</Button>
 							)}
 							onSubmit={onSubmit}
+							action={
+								languages[systemLanguageCode].signUpConfirm
+									.action
+							}
 							errorMessage={
 								languages[systemLanguageCode].signUpConfirm
 									.error
@@ -90,9 +94,9 @@ function SignUpConfirm({
 								languages[systemLanguageCode].generic
 									.sendingMessage
 							}
-							action={
-								languages[systemLanguageCode].signUpConfirm
-									.action
+							sendedMessage={
+								languages[systemLanguageCode].generic
+									.sendedMessage
 							}
 							setForm={setForm}
 						>

@@ -1,5 +1,5 @@
 import { PropTypes } from 'prop-types';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 import {
@@ -141,6 +141,7 @@ Form.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
 	errorMessage: PropTypes.string.isRequired,
 	sendingMessage: PropTypes.string.isRequired,
+	sendedMessage: PropTypes.string.isRequired,
 	action: PropTypes.string.isRequired,
 	setForm: PropTypes.func
 };
@@ -152,15 +153,29 @@ function Form({
 	onSubmit,
 	errorMessage,
 	sendingMessage,
+	sendedMessage,
 	action,
 	setForm: setExtForm
 }) {
+	// setup the mounting status checker hook
+	let _isMounted = useRef(true);
+
+	// auto unsubscribe
+	useEffect(
+		// config the willUnmount cleanup
+		() => () => {
+			_isMounted.current = false;
+		},
+		[]
+	);
+
 	// setup a recaptcha hook
 	const { executeRecaptcha } = useGoogleReCaptcha();
 
 	// setup form states
 	const [form, setIntForm] = useState(encryptForm(data));
 	const [isSending, setIsSending] = useState(false);
+	const [isSended, setIsSended] = useState(false);
 	const [error, setError] = useState('');
 
 	// setup the form setter
@@ -191,13 +206,30 @@ function Form({
 			const unlockForm = () => setIsSending(false);
 
 			// resolve the form submit promise
-			onSubmit(form, executeRecaptcha(), unlockForm).catch(() => {
-				// update the error message
-				setError(errorMessage);
+			onSubmit(form, executeRecaptcha(), unlockForm)
+				.then(() => {
+					// check if the component is still mounted
+					if (_isMounted.current) {
+						// inform the user of the success
+						setIsSended(true);
 
-				// unlock the form
-				unlockForm();
-			});
+						// remove the message after 1 second
+						setTimeout(() => {
+							// check if the component is still mounted
+							if (_isMounted.current) {
+								// reset the is sended status
+								setIsSended(false);
+							}
+						}, 1000);
+					}
+				})
+				.catch(() => {
+					// update the error message
+					setError(errorMessage);
+
+					// unlock the form
+					unlockForm();
+				});
 		}
 	}, [errorMessage, executeRecaptcha, form, onSubmit, template]);
 
@@ -241,11 +273,11 @@ function Form({
 					<FormHelperText>{error}</FormHelperText>
 				</FormControl>
 				<Box mt={2} textAlign="center">
-					{isSending && (
+					{(isSending || isSended) && (
 						<Box mb={2}>
 							<Loading size="32px" />
 							<Typography variant="body1">
-								{sendingMessage}
+								{(isSending && sendingMessage) || sendedMessage}
 							</Typography>
 						</Box>
 					)}

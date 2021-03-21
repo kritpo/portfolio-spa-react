@@ -2,7 +2,8 @@
 const en = {
 	generic: {
 		loadingError: 'Unable to load data.',
-		formSendingMessage: 'Sending in progress...'
+		sendingMessage: 'Sending in progress...',
+		sendedMessage: 'Sending succeed!'
 	},
 	pages: {
 		home: 'Home',

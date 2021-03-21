@@ -52,6 +52,7 @@ function SignIn({
 							data={data}
 							template={template}
 							onSubmit={onSubmit}
+							action={languages[systemLanguageCode].signIn.action}
 							errorMessage={
 								languages[systemLanguageCode].signIn.error
 							}
@@ -59,7 +60,10 @@ function SignIn({
 								languages[systemLanguageCode].generic
 									.sendingMessage
 							}
-							action={languages[systemLanguageCode].signIn.action}
+							sendedMessage={
+								languages[systemLanguageCode].generic
+									.sendedMessage
+							}
 						>
 							<CustomLink to={SIGN_UP}>
 								{languages[systemLanguageCode].signIn.goSignUp}

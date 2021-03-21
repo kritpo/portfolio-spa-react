@@ -513,7 +513,7 @@ const fr = {
 			`Le champ doit contenir au moins ${length} caractères.`,
 		exactLength: length =>
 			`Le champ doit contenir exactement ${length} caractères.`,
-		regex: rgx => `Le champs doit être dans le bon format.`,
+		regex: rgx => `Le champ doit être dans le bon format.`,
 		charType: ({ lowercase, uppercase, number, symbols }) =>
 			`Le champ doit contenir au moins${
 				lowercase ? ' - 1 minuscule' : ''
@@ -521,7 +521,7 @@ const fr = {
 				number ? ' - 1 chiffre' : ''
 			}${symbols ? ' - 1 caractère spécial' : ''}.`,
 		value: valueRef =>
-			`Le champs doit correspondre à ${
+			`Le champ doit correspondre à ${
 				typeof valueRef === 'boolean'
 					? valueRef
 						? 'vrai'

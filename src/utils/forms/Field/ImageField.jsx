@@ -252,6 +252,11 @@ function ImageField({
 		]
 	);
 
+	// retrieve the current file
+	const currentFile = IMAGE_REGEX.test(form[name].value)
+		? JSON.parse(form[name].value).key.replace(/^\d+_/, '')
+		: '';
+
 	return (
 		<FormControl
 			error={form[name].error !== '' && progressMessage === ''}
@@ -312,6 +317,20 @@ function ImageField({
 						</Box>
 					</Box>
 				)}
+				<Box
+					display="flex"
+					alignItems="center"
+					justifyContent="center"
+					ml={2}
+				>
+					<Typography
+						variant="caption"
+						component="span"
+						color="textSecondary"
+					>
+						{currentFile}
+					</Typography>
+				</Box>
 			</Box>
 			<FormHelperText
 				id={`${preName !== undefined ? `${preName}_` : ''}${name}_text`}

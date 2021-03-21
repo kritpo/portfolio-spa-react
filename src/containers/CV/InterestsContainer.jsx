@@ -2,6 +2,7 @@ import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { HOBBY } from '../../utils/forms/Field/IconSetField';
 import { TEXT } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
 import checkField, { checkMinLength } from '../../utils/forms/checkField';
@@ -32,7 +33,7 @@ function InterestsContainer({ language: { systemLanguageCode }, ...props }) {
 		[INTERESTS]: {
 			subform: {
 				[NAME]: {
-					type: TEXT,
+					type: HOBBY,
 					label:
 						languages[systemLanguageCode].cv.interests.name.label,
 					defaultValue: '',

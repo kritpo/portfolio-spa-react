@@ -1,20 +1,26 @@
 import { PropTypes } from 'prop-types';
 import React, { Fragment, useCallback } from 'react';
 
-import { Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
 import CustomIcon from '../../icons/CustomIcon';
+import hobbyIcons from '../../icons/hobby';
 import socialIcons from '../../icons/social';
+import technologyIcons from '../../icons/technology';
 import AutocompleteField from './MasterField/AutocompleteField';
 
 // setup fields types constants
-export const SOCIAL_NETWORK = 'social_network';
+export const HOBBY = 'hobby';
+export const SOCIAL = 'social';
+export const TECHNOLOGY = 'technology';
 
-// retrieve all country constants
-const social_networks = Object.keys(socialIcons);
+// retrieve all icons constants
+const hobbies = Object.keys(hobbyIcons);
+const socials = Object.keys(socialIcons);
+const technologies = Object.keys(technologyIcons);
 
 // configure the prop types validation
-SocialField.propTypes = {
+IconSetField.propTypes = {
 	form: PropTypes.object.isRequired,
 	template: PropTypes.object.isRequired,
 	handleForm: PropTypes.shape({
@@ -24,7 +30,7 @@ SocialField.propTypes = {
 	preName: PropTypes.string
 };
 
-function SocialField({
+function IconSetField({
 	form,
 	template,
 	handleForm: { onChange },
@@ -46,23 +52,37 @@ function SocialField({
 	);
 
 	// setup the option label retriever
-	const getOptionLabel = socialNetwork => socialNetwork;
+	const getOptionLabel = value => value;
 
 	// setup the option render
 	const renderOption = useCallback(
-		socialNetwork => (
+		value => (
 			<Fragment>
-				<CustomIcon social={socialNetwork} svg />
-				<Typography>{socialNetwork}</Typography>
+				<CustomIcon
+					hobby={template.type === HOBBY ? value : undefined}
+					social={template.type === SOCIAL ? value : undefined}
+					technology={
+						template.type === TECHNOLOGY ? value : undefined
+					}
+					svg
+				/>
+				<Box ml={1}>{value}</Box>
 			</Fragment>
 		),
-		[]
+		[template.type]
 	);
 
 	// retrieve the value
 	const value =
-		socialIcons[form[template.name].value] !== undefined
+		template.type === HOBBY &&
+		hobbyIcons[form[template.name].value] !== undefined
+			? hobbyIcons[form[template.name].value].name
+			: template.type === SOCIAL &&
+			  socialIcons[form[template.name].value] !== undefined
 			? socialIcons[form[template.name].value].name
+			: template.type === TECHNOLOGY &&
+			  technologyIcons[form[template.name].value] !== undefined
+			? technologyIcons[form[template.name].value].name
 			: '';
 
 	return (
@@ -73,11 +93,17 @@ function SocialField({
 			preName={preName}
 			value={value}
 			onChange={autocompleteOnChange}
-			options={social_networks}
+			options={
+				template.type === HOBBY
+					? hobbies
+					: template.type === SOCIAL
+					? socials
+					: technologies
+			}
 			getOptionLabel={getOptionLabel}
 			renderOption={renderOption}
 		/>
 	);
 }
 
-export default SocialField;
+export default IconSetField;

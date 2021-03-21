@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { COUNTRY_CODE as COUNTRY_CODE_TYPE } from '../../utils/forms/Field/CountryCodeField';
-import { SOCIAL_NETWORK } from '../../utils/forms/Field/SocialNetworkField';
+import { SOCIAL } from '../../utils/forms/Field/IconSetField';
 import {
 	EMAIL as EMAIL_TYPE,
 	PHONE_NUMBER,
@@ -228,7 +228,7 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 		[PROFILES]: {
 			subform: {
 				[NETWORK]: {
-					type: SOCIAL_NETWORK,
+					type: SOCIAL,
 					label:
 						languages[systemLanguageCode].cv.basics.network.label,
 					defaultValue: '',

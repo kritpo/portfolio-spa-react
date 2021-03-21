@@ -4,8 +4,8 @@ import React from 'react';
 import CheckboxField, { CHECKBOX } from './Field/CheckboxField';
 import CountryCodeField, { COUNTRY_CODE } from './Field/CountryCodeField';
 import DateField, { DATE, DATE_MASKABLE } from './Field/DateField';
+import IconSetField, { HOBBY, SOCIAL, TECHNOLOGY } from './Field/IconSetField';
 import SelectField, { SELECT } from './Field/SelectField';
-import SocialNetworkField, { SOCIAL_NETWORK } from './Field/SocialNetworkField';
 import TextField, {
 	EMAIL,
 	NUMBER_2,
@@ -94,10 +94,12 @@ function Field({ form, template, handleForm, autoSubmit, preName }) {
 				/>
 			);
 
-		// check if the field must be a social network field
-		case SOCIAL_NETWORK:
+		// check if the field must be an icon set field
+		case HOBBY:
+		case SOCIAL:
+		case TECHNOLOGY:
 			return (
-				<SocialNetworkField
+				<IconSetField
 					form={form}
 					template={template}
 					handleForm={handleForm}

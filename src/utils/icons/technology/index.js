@@ -1,7 +1,7 @@
 // store all details about icons
 const icons = {
-	AmazonWebServices: {
-		name: 'AmazonWebServices',
+	'Amazon Web Services': {
+		name: 'Amazon Web Services',
 		loadIcon: () => import('./AmazonWebServices')
 	},
 	Android: {

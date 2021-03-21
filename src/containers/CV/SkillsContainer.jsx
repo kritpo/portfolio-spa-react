@@ -2,8 +2,8 @@ import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { TECHNOLOGY } from '../../utils/forms/Field/IconSetField';
 import { SELECT } from '../../utils/forms/Field/SelectField';
-import { TEXT } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
 import checkField, { checkMinLength } from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
@@ -32,7 +32,7 @@ function SkillsContainer({ language: { systemLanguageCode }, ...props }) {
 		[SKILLS]: {
 			subform: {
 				[NAME]: {
-					type: TEXT,
+					type: TECHNOLOGY,
 					label: languages[systemLanguageCode].cv.skills.name.label,
 					defaultValue: '',
 					checkField: checkField([

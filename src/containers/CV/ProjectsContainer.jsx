@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { DATE, DATE_MASKABLE } from '../../utils/forms/Field/DateField';
+import { TECHNOLOGY as TECHNOLOGY_TYPE } from '../../utils/forms/Field/IconSetField';
 import {
 	TEXT,
 	TEXTAREA,
@@ -161,7 +162,7 @@ function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 				[TECHNOLOGIES]: {
 					subform: {
 						[TECHNOLOGY]: {
-							type: TEXT,
+							type: TECHNOLOGY_TYPE,
 							label:
 								languages[systemLanguageCode].cv.projects
 									.technology.label,

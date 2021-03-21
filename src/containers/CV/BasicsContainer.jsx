@@ -2,6 +2,8 @@ import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { CV_LIST } from '../../routes';
+import CustomLink from '../../utils/CustomLink';
 import { COUNTRY_CODE as COUNTRY_CODE_TYPE } from '../../utils/forms/Field/CountryCodeField';
 import { SOCIAL } from '../../utils/forms/Field/IconSetField';
 import {
@@ -294,7 +296,11 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 				languages[systemLanguageCode].generic.sendingMessage
 			}
 			{...props}
-		/>
+		>
+			<CustomLink to={CV_LIST}>
+				{languages[systemLanguageCode].cv.goToCVList}
+			</CustomLink>
+		</Form>
 	);
 }
 

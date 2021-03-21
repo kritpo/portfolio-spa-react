@@ -2,6 +2,8 @@ import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { CV_LIST } from '../../routes';
+import CustomLink from '../../utils/CustomLink';
 import { CHECKBOX } from '../../utils/forms/Field/CheckboxField';
 import { DATE, DATE_MASKABLE } from '../../utils/forms/Field/DateField';
 import { TEXT, TEXTAREA, URL } from '../../utils/forms/Field/TextField';
@@ -201,7 +203,11 @@ function WorkContainer({ language: { systemLanguageCode }, ...props }) {
 				languages[systemLanguageCode].generic.sendingMessage
 			}
 			{...props}
-		/>
+		>
+			<CustomLink to={CV_LIST}>
+				{languages[systemLanguageCode].cv.goToCVList}
+			</CustomLink>
+		</Form>
 	);
 }
 

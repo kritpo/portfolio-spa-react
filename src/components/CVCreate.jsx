@@ -35,7 +35,6 @@ import VolunteerContainer, {
 } from '../containers/CV/VolunteerContainer';
 import WorkContainer, { WORK } from '../containers/CV/WorkContainer';
 import { CV_LIST, HOME } from '../routes';
-import CustomLink from '../utils/CustomLink';
 import Form from '../utils/forms/Form';
 import languages from '../utils/languages';
 import Header from './Header';
@@ -229,11 +228,6 @@ function CVCreate({
 									</StepContent>
 								</Step>
 							</Stepper>
-						</Box>
-						<Box mt={2} textAlign="center">
-							<CustomLink to={CV_LIST}>
-								{languages[systemLanguageCode].cv.goToCVList}
-							</CustomLink>
 						</Box>
 					</Paper>
 				</Box>

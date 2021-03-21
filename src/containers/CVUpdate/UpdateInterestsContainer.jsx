@@ -3,8 +3,6 @@ import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { updateResume } from '../../actions';
-import { CV_LIST } from '../../routes';
-import CustomLink from '../../utils/CustomLink';
 import * as cvUtils from '../../utils/cvUtils';
 import languages from '../../utils/languages';
 import InterestsContainer, {
@@ -83,11 +81,7 @@ function UpdateInterestsContainer({
 			onSubmit={onSubmit}
 			action={languages[systemLanguageCode].cvUpdate.action}
 			setForm={setForm}
-		>
-			<CustomLink to={CV_LIST}>
-				{languages[systemLanguageCode].cv.goToCVList}
-			</CustomLink>
-		</InterestsContainer>
+		/>
 	);
 }
 

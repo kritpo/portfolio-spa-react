@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { LEVEL as LEVEL_CONST } from '../../components/Portfolio/Skills/Skill/SkillItem';
+import { CV_LIST } from '../../routes';
+import CustomLink from '../../utils/CustomLink';
 import { TECHNOLOGY } from '../../utils/forms/Field/IconSetField';
 import { SELECT } from '../../utils/forms/Field/SelectField';
 import Form from '../../utils/forms/Form';
@@ -72,7 +74,11 @@ function SkillsContainer({ language: { systemLanguageCode }, ...props }) {
 				languages[systemLanguageCode].generic.sendingMessage
 			}
 			{...props}
-		/>
+		>
+			<CustomLink to={CV_LIST}>
+				{languages[systemLanguageCode].cv.goToCVList}
+			</CustomLink>
+		</Form>
 	);
 }
 

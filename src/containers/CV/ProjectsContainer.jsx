@@ -2,6 +2,8 @@ import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { CV_LIST } from '../../routes';
+import CustomLink from '../../utils/CustomLink';
 import { DATE, DATE_MASKABLE } from '../../utils/forms/Field/DateField';
 import { TECHNOLOGY as TECHNOLOGY_TYPE } from '../../utils/forms/Field/IconSetField';
 import {
@@ -203,7 +205,11 @@ function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 				languages[systemLanguageCode].generic.sendingMessage
 			}
 			{...props}
-		/>
+		>
+			<CustomLink to={CV_LIST}>
+				{languages[systemLanguageCode].cv.goToCVList}
+			</CustomLink>
+		</Form>
 	);
 }
 

@@ -2,6 +2,8 @@ import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { CV_LIST } from '../../routes';
+import CustomLink from '../../utils/CustomLink';
 import { HOBBY } from '../../utils/forms/Field/IconSetField';
 import { TEXT } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
@@ -93,7 +95,11 @@ function InterestsContainer({ language: { systemLanguageCode }, ...props }) {
 				languages[systemLanguageCode].generic.sendingMessage
 			}
 			{...props}
-		/>
+		>
+			<CustomLink to={CV_LIST}>
+				{languages[systemLanguageCode].cv.goToCVList}
+			</CustomLink>
+		</Form>
 	);
 }
 

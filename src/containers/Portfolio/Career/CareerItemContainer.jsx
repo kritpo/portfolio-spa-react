@@ -90,7 +90,9 @@ function CareerItemContainer({
 			: career.organization;
 	const careerHighlights =
 		career.type === EDUCATION
-			? `${career.area} - GPA: ${career.gpa}`
+			? `${career.area}${career.gpa !== '' ? ' - GPA: ' : ''}${
+					career.gpa
+			  }`
 			: career.highlights.join(' - ');
 
 	return (

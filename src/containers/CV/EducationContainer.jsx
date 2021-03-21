@@ -73,17 +73,12 @@ function EducationContainer({ language: { systemLanguageCode }, ...props }) {
 					type: NUMBER_2,
 					label: languages[systemLanguageCode].cv.education.gpa.label,
 					defaultValue: '',
-					checkField: checkField([
-						checkUpdated(
-							'',
-							languages[systemLanguageCode].checkFieldErrorMessage
-								.updated
-						)
-					]),
+					checkField: checkField([]),
 					inputParam: {
 						placeholder:
 							languages[systemLanguageCode].cv.education.gpa
-								.placeholder
+								.placeholder,
+						required: false
 					}
 				},
 				[AREA]: {

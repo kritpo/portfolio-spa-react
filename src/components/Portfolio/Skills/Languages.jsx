@@ -1,6 +1,7 @@
-import { Grid, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
+
+import { Grid, Typography } from '@material-ui/core';
 
 import languages_const from '../../../utils/languages';
 import LanguageItem from './Languages/LanguageItem';

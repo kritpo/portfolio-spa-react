@@ -7,7 +7,11 @@ import { CV_LIST } from '../../routes';
 import CustomLink from '../../utils/CustomLink';
 import * as cvUtils from '../../utils/cvUtils';
 import languages from '../../utils/languages';
-import ReferencesContainer, { NAME, REFERENCE, REFERENCES } from '../CV/ReferencesContainer';
+import ReferencesContainer, {
+	NAME,
+	REFERENCE,
+	REFERENCES
+} from '../CV/ReferencesContainer';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ language }, ...props) => ({

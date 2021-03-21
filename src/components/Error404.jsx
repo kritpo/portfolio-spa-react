@@ -1,6 +1,7 @@
-import { Box } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
+
+import { Box } from '@material-ui/core';
 
 import { HOME } from '../routes';
 import Error from '../utils/Error';

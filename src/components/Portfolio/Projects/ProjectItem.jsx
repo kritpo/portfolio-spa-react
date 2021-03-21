@@ -1,7 +1,15 @@
-import { Box, ButtonBase, Card, CardContent, Grid, Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import {
+	Box,
+	ButtonBase,
+	Card,
+	CardContent,
+	Grid,
+	Typography
+} from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 
 import CustomIcon from '../../../utils/icons/CustomIcon';
 

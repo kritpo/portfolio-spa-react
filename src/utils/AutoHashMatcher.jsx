@@ -1,8 +1,9 @@
-import { Box } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { useCallback, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useHistory, useLocation } from 'react-router-dom';
+
+import { Box } from '@material-ui/core';
 
 // configure default props
 AutoHashMatcher.defaultProps = {

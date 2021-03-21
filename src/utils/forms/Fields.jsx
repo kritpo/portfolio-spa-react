@@ -1,8 +1,9 @@
+import { PropTypes } from 'prop-types';
+import React, { useCallback, useMemo } from 'react';
+
 import { Box, Button, Paper } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 import { useTheme } from '@material-ui/styles';
-import { PropTypes } from 'prop-types';
-import React, { useCallback, useMemo } from 'react';
 
 import Field from './Field';
 

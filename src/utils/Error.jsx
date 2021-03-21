@@ -1,7 +1,8 @@
-import { Box, Typography } from '@material-ui/core';
-import { Warning } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { Box, Typography } from '@material-ui/core';
+import { Warning } from '@material-ui/icons';
 
 // configure the prop types validation
 Error.propTypes = {

@@ -1,7 +1,8 @@
-import { Box, Collapse, IconButton, Typography } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
+
+import { Box, Collapse, IconButton, Typography } from '@material-ui/core';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 import SkillItemContainer from '../../../containers/Portfolio/Skills/Skill/SkillItemContainer';
 import languages from '../../../utils/languages';

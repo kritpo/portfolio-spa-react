@@ -1,4 +1,6 @@
-import LANGUAGE_CONST, { DEFAULT_LANGUAGE_CODE } from '../utils/languages/languageConst';
+import LANGUAGE_CONST, {
+	DEFAULT_LANGUAGE_CODE
+} from '../utils/languages/languageConst';
 import { SET_LANGUAGE } from './types';
 
 /**

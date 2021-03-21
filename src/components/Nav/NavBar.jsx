@@ -1,7 +1,8 @@
-import { Box, Button, Grid, Paper } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { Box, Button, Grid, Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 
 import CustomLink from '../../utils/CustomLink';
 

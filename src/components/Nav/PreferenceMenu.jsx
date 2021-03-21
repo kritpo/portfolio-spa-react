@@ -1,7 +1,19 @@
-import { Box, Button, FormControlLabel, Menu, MenuItem, Switch } from '@material-ui/core';
-import { Brightness4 as Dark, Brightness7 as Light, Translate } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import {
+	Box,
+	Button,
+	FormControlLabel,
+	Menu,
+	MenuItem,
+	Switch
+} from '@material-ui/core';
+import {
+	Brightness4 as Dark,
+	Brightness7 as Light,
+	Translate
+} from '@material-ui/icons';
 
 /**
  * convert languages to menu items

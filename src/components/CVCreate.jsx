@@ -1,15 +1,38 @@
-import { Box, Button, Container, Paper, Step, StepContent, StepLabel, Stepper, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
 
+import {
+	Box,
+	Button,
+	Container,
+	Paper,
+	Step,
+	StepContent,
+	StepLabel,
+	Stepper,
+	Typography
+} from '@material-ui/core';
+
 import BasicsContainer, { BASICS } from '../containers/CV/BasicsContainer';
-import EducationContainer, { EDUCATION } from '../containers/CV/EducationContainer';
-import InterestsContainer, { INTERESTS } from '../containers/CV/InterestsContainer';
-import LanguagesContainer, { LANGUAGES } from '../containers/CV/LanguagesContainer';
-import ProjectsContainer, { PROJECTS } from '../containers/CV/ProjectsContainer';
-import ReferencesContainer, { REFERENCES } from '../containers/CV/ReferencesContainer';
+import EducationContainer, {
+	EDUCATION
+} from '../containers/CV/EducationContainer';
+import InterestsContainer, {
+	INTERESTS
+} from '../containers/CV/InterestsContainer';
+import LanguagesContainer, {
+	LANGUAGES
+} from '../containers/CV/LanguagesContainer';
+import ProjectsContainer, {
+	PROJECTS
+} from '../containers/CV/ProjectsContainer';
+import ReferencesContainer, {
+	REFERENCES
+} from '../containers/CV/ReferencesContainer';
 import SkillsContainer, { SKILLS } from '../containers/CV/SkillsContainer';
-import VolunteerContainer, { VOLUNTEER } from '../containers/CV/VolunteerContainer';
+import VolunteerContainer, {
+	VOLUNTEER
+} from '../containers/CV/VolunteerContainer';
 import WorkContainer, { WORK } from '../containers/CV/WorkContainer';
 import { CV_LIST, HOME } from '../routes';
 import CustomLink from '../utils/CustomLink';

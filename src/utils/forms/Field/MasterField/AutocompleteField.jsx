@@ -1,7 +1,8 @@
-import { Box, TextField } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
 import { PropTypes } from 'prop-types';
 import React, { useCallback } from 'react';
+
+import { Box, TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 
 // configure the prop types validation
 AutoCompleteField.propTypes = {

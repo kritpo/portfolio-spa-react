@@ -1,7 +1,8 @@
-import { Box, Container, Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { Box, Container, Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 
 import hero1366w from '../../assets/hero/hero-1366w.png';
 import webpHero1366w from '../../assets/hero/hero-1366w.webp';

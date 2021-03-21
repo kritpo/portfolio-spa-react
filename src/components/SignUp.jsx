@@ -1,6 +1,7 @@
-import { Box, Container, Paper, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
+
+import { Box, Container, Paper, Typography } from '@material-ui/core';
 
 import { HOME, SIGN_IN, SIGN_UP_CONFIRM } from '../routes';
 import CustomLink from '../utils/CustomLink';

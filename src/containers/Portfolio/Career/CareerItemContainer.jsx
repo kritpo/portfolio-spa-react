@@ -1,10 +1,15 @@
-import { useMediaQuery } from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import CareerItem, { EDUCATION, VOLUNTEER, WORK } from '../../../components/Portfolio/Career/CareerItem';
+import { useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
+
+import CareerItem, {
+	EDUCATION,
+	VOLUNTEER,
+	WORK
+} from '../../../components/Portfolio/Career/CareerItem';
 import languages from '../../../utils/languages';
 
 // configure the states to pass as props to the component

@@ -6,9 +6,18 @@ import { useHistory } from 'react-router-dom';
 
 import SignUp from '../components/SignUp';
 import { SIGN_UP_CONFIRM } from '../routes';
-import checkField, { checkCharType, checkMinLength, checkRegex, checkValue } from '../utils/forms/checkField';
 import { CHECKBOX } from '../utils/forms/Field/CheckboxField';
-import { EMAIL as EMAIL_TYPE, PASSWORD as PASSWORD_TYPE, TEXT } from '../utils/forms/Field/TextField';
+import {
+	EMAIL as EMAIL_TYPE,
+	PASSWORD as PASSWORD_TYPE,
+	TEXT
+} from '../utils/forms/Field/TextField';
+import checkField, {
+	checkCharType,
+	checkMinLength,
+	checkRegex,
+	checkValue
+} from '../utils/forms/checkField';
 import languages from '../utils/languages';
 
 // setup field name constants

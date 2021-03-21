@@ -1,10 +1,11 @@
-import { useMediaQuery } from '@material-ui/core';
-import { useTheme } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+
+import { useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
 
 import { updateNavIntersection } from '../actions';
 import Nav from '../components/Nav';

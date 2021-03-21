@@ -1,11 +1,16 @@
-import { useMediaQuery } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
 import React, { useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 
+import { useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+
 import Career from '../../components/Portfolio/Career';
-import { EDUCATION, VOLUNTEER, WORK } from '../../components/Portfolio/Career/CareerItem';
+import {
+	EDUCATION,
+	VOLUNTEER,
+	WORK
+} from '../../components/Portfolio/Career/CareerItem';
 
 /**
  * setup the anti-chronological comparator between two career objects

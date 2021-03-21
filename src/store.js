@@ -2,7 +2,17 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 
-import { darkMode, language, mainResume, mainResumeLanguages, navIntersection, resume, resumeLanguages, username, webpSupport } from './reducers';
+import {
+	darkMode,
+	language,
+	mainResume,
+	mainResumeLanguages,
+	navIntersection,
+	resume,
+	resumeLanguages,
+	username,
+	webpSupport
+} from './reducers';
 
 // configure the root reducer by combining all reducers
 const rootReducer = combineReducers({

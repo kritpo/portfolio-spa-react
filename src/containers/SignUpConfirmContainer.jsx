@@ -6,8 +6,8 @@ import { useHistory } from 'react-router-dom';
 
 import SignUpConfirm from '../components/SignUpConfirm';
 import { SIGN_IN } from '../routes';
-import checkField, { checkMinLength } from '../utils/forms/checkField';
 import { TEXT } from '../utils/forms/Field/TextField';
+import checkField, { checkMinLength } from '../utils/forms/checkField';
 import languages from '../utils/languages';
 
 // setup field name constants

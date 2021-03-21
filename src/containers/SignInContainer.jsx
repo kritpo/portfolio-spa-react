@@ -7,8 +7,11 @@ import { useHistory } from 'react-router-dom';
 import { login } from '../actions';
 import SignIn from '../components/SignIn';
 import { HOME } from '../routes';
+import {
+	PASSWORD as PASSWORD_TYPE,
+	TEXT
+} from '../utils/forms/Field/TextField';
 import checkField, { checkMinLength } from '../utils/forms/checkField';
-import { PASSWORD as PASSWORD_TYPE, TEXT } from '../utils/forms/Field/TextField';
 import languages from '../utils/languages';
 
 // setup field name constants

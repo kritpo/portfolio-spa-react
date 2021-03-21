@@ -1,7 +1,21 @@
-import { AppBar, Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Tab, Typography } from '@material-ui/core';
-import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
+
+import {
+	AppBar,
+	Box,
+	Button,
+	Container,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	Paper,
+	Tab,
+	Typography
+} from '@material-ui/core';
+import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 
 import UpdateBasicsContainer from '../containers/CVUpdate/UpdateBasicsContainer';
 import UpdateEducationContainer from '../containers/CVUpdate/UpdateEducationContainer';
@@ -14,8 +28,8 @@ import UpdateVolunteerContainer from '../containers/CVUpdate/UpdateVolunteerCont
 import UpdateWorkContainer from '../containers/CVUpdate/UpdateWorkContainer';
 import { CV_LIST, HOME } from '../routes';
 import Error from '../utils/Error';
-import languages from '../utils/languages';
 import Loading from '../utils/Loading';
+import languages from '../utils/languages';
 import Header from './Header';
 
 /**

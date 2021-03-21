@@ -1,6 +1,7 @@
-import { Box } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { Box } from '@material-ui/core';
 
 import HomeMenuContainer from '../containers/Nav/HomeMenuContainer';
 import NavBarContainer from '../containers/Nav/NavBarContainer';

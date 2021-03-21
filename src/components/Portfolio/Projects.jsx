@@ -1,6 +1,7 @@
-import { Box, Grid, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { Box, Grid, Typography } from '@material-ui/core';
 
 import ProjectItemContainer from '../../containers/Portfolio/Projects/ProjectItemContainer';
 import languages from '../../utils/languages';

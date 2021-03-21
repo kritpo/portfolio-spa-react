@@ -1,6 +1,15 @@
-import { Box, Button, Dialog, DialogContent, DialogTitle, Grid, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
+
+import {
+	Box,
+	Button,
+	Dialog,
+	DialogContent,
+	DialogTitle,
+	Grid,
+	Typography
+} from '@material-ui/core';
 
 /**
  * convert course content details to React component

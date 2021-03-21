@@ -1,8 +1,9 @@
-import { Link } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { useCallback } from 'react';
 import { NavLink as NavRouterLink, Link as RouterLink } from 'react-router-dom';
 import { HashLink, NavHashLink } from 'react-router-hash-link';
+
+import { Link } from '@material-ui/core';
 
 import routes from '../routes';
 import impPreloader from './impPreloader';

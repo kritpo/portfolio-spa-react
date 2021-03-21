@@ -6,7 +6,15 @@ import CountryCodeField, { COUNTRY_CODE } from './Field/CountryCodeField';
 import DateField, { DATE, DATE_MASKABLE } from './Field/DateField';
 import SelectField, { SELECT } from './Field/SelectField';
 import SocialNetworkField, { SOCIAL_NETWORK } from './Field/SocialNetworkField';
-import TextField, { EMAIL, NUMBER_2, PASSWORD, PHONE_NUMBER, TEXT, TEXTAREA, URL } from './Field/TextField';
+import TextField, {
+	EMAIL,
+	NUMBER_2,
+	PASSWORD,
+	PHONE_NUMBER,
+	TEXT,
+	TEXTAREA,
+	URL
+} from './Field/TextField';
 
 // configure the prop types validation
 Field.propTypes = {

@@ -1,4 +1,10 @@
-import { DELETE_RESUME, RESUME_FAILED, RESUME_LOADED, RESUME_LOADING, UPDATE_RESUME } from '../actions/types';
+import {
+	DELETE_RESUME,
+	RESUME_FAILED,
+	RESUME_LOADED,
+	RESUME_LOADING,
+	UPDATE_RESUME
+} from '../actions/types';
 
 // configure initial state
 const initialState = {

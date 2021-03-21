@@ -1,7 +1,19 @@
-import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TableCell, TableRow } from '@material-ui/core';
-import { Create, Delete, FirstPage } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import {
+	Box,
+	Button,
+	Chip,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	TableCell,
+	TableRow
+} from '@material-ui/core';
+import { Create, Delete, FirstPage } from '@material-ui/icons';
 
 import { CV_UPDATE } from '../../routes';
 import CustomLink from '../../utils/CustomLink';

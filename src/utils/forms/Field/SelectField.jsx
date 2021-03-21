@@ -1,6 +1,13 @@
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import {
+	FormControl,
+	FormHelperText,
+	InputLabel,
+	MenuItem,
+	Select
+} from '@material-ui/core';
 
 // setup fields types constants
 export const SELECT = 'select';

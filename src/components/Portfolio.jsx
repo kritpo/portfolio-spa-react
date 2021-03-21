@@ -1,14 +1,15 @@
+import { PropTypes } from 'prop-types';
+import React, { Fragment, Suspense, lazy } from 'react';
+
 import { Box, Container, IconButton, Paper } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import { PropTypes } from 'prop-types';
-import React, { Fragment, lazy, Suspense } from 'react';
 
 import HeroContainer from '../containers/Portfolio/HeroContainer';
 import AutoHashMatcher from '../utils/AutoHashMatcher';
 import CustomLink from '../utils/CustomLink';
 import Error from '../utils/Error';
-import languages from '../utils/languages';
 import Loading from '../utils/Loading';
+import languages from '../utils/languages';
 
 // import components in lazy mode
 const DetailsContainer = lazy(() =>

@@ -1,6 +1,7 @@
-import { Box } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-import React, { lazy, Suspense, useMemo } from 'react';
+import React, { Suspense, lazy, useMemo } from 'react';
+
+import { Box } from '@material-ui/core';
 
 import Loading from '../Loading';
 import careerIcons from './career';

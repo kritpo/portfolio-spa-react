@@ -1,6 +1,7 @@
-import { Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { Fragment, useCallback } from 'react';
+
+import { Typography } from '@material-ui/core';
 
 import CustomIcon from '../../icons/CustomIcon';
 import socialIcons from '../../icons/social';

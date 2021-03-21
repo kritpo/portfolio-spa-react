@@ -1,7 +1,14 @@
-import { Box, Button, FormControl, FormHelperText, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { useCallback, useState } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+
+import {
+	Box,
+	Button,
+	FormControl,
+	FormHelperText,
+	Typography
+} from '@material-ui/core';
 
 import Loading from '../Loading';
 import Fields from './Fields';

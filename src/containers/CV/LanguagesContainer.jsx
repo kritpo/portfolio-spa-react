@@ -1,13 +1,14 @@
 import { PropTypes } from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+
+import { COUNTRY_CODE as COUNTRY_CODE_TYPE } from '../../utils/forms/Field/CountryCodeField';
+import { TEXT } from '../../utils/forms/Field/TextField';
+import Form from '../../utils/forms/Form';
 import checkField, {
 	checkExactLength,
 	checkMinLength
 } from '../../utils/forms/checkField';
-import { COUNTRY_CODE as COUNTRY_CODE_TYPE } from '../../utils/forms/Field/CountryCodeField';
-import { TEXT } from '../../utils/forms/Field/TextField';
-import Form from '../../utils/forms/Form';
 import languages from '../../utils/languages';
 
 // setup field name constants

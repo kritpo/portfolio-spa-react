@@ -7,7 +7,24 @@ import { CV_LIST } from '../../routes';
 import CustomLink from '../../utils/CustomLink';
 import * as cvUtils from '../../utils/cvUtils';
 import languages from '../../utils/languages';
-import BasicsContainer, { ADDRESS, CITY, COUNTRY_CODE, EMAIL, LABEL, NAME, NETWORK, PHONE, PICTURE, POSTAL_CODE, PROFILES, REGION, SUMMARY, URL, USERNAME, WEBSITE } from '../CV/BasicsContainer';
+import BasicsContainer, {
+	ADDRESS,
+	CITY,
+	COUNTRY_CODE,
+	EMAIL,
+	LABEL,
+	NAME,
+	NETWORK,
+	PHONE,
+	PICTURE,
+	POSTAL_CODE,
+	PROFILES,
+	REGION,
+	SUMMARY,
+	URL,
+	USERNAME,
+	WEBSITE
+} from '../CV/BasicsContainer';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ language }, ...props) => ({

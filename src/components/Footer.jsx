@@ -1,6 +1,7 @@
-import { Box, Button, Paper, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { Box, Button, Paper, Typography } from '@material-ui/core';
 
 import { TERMS } from '../routes';
 import CustomLink from '../utils/CustomLink';

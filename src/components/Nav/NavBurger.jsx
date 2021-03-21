@@ -1,7 +1,9 @@
-import { Box, MenuList } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { Box, MenuList } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
+
 import BurgerMenu from '../../utils/BurgerMenu';
 import NavHashItem from './NavBurger/NavHashItem';
 

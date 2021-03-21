@@ -1,14 +1,27 @@
-import { Box, Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
-import { Add, Visibility } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
+
+import {
+	Box,
+	Button,
+	Container,
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Typography
+} from '@material-ui/core';
+import { Add, Visibility } from '@material-ui/icons';
 
 import LanguageItemContainer from '../containers/CVList/LanguageItemContainer';
 import { CV_CREATE, HOME, PORTFOLIO } from '../routes';
 import CustomLink from '../utils/CustomLink';
 import Error from '../utils/Error';
-import languages from '../utils/languages';
 import Loading from '../utils/Loading';
+import languages from '../utils/languages';
 import Header from './Header';
 
 /**

@@ -1,7 +1,15 @@
-import { Box, Card, CardContent, Hidden, Typography } from '@material-ui/core';
-import { TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineOppositeContent, TimelineSeparator } from '@material-ui/lab';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
+
+import { Box, Card, CardContent, Hidden, Typography } from '@material-ui/core';
+import {
+	TimelineConnector,
+	TimelineContent,
+	TimelineDot,
+	TimelineItem,
+	TimelineOppositeContent,
+	TimelineSeparator
+} from '@material-ui/lab';
 
 import CareerItemButtonContainer from '../../../containers/Portfolio/Career/CareerItemButtonContainer';
 import CustomLink from '../../../utils/CustomLink';

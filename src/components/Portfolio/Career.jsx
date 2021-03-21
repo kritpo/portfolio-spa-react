@@ -1,8 +1,16 @@
-import { Box, Button, Grid, Typography } from '@material-ui/core';
-import { ArrowUpward, Star } from '@material-ui/icons';
-import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineSeparator } from '@material-ui/lab';
 import { PropTypes } from 'prop-types';
 import React, { Fragment } from 'react';
+
+import { Box, Button, Grid, Typography } from '@material-ui/core';
+import { ArrowUpward, Star } from '@material-ui/icons';
+import {
+	Timeline,
+	TimelineConnector,
+	TimelineContent,
+	TimelineDot,
+	TimelineItem,
+	TimelineSeparator
+} from '@material-ui/lab';
 
 import CareerItemContainer from '../../containers/Portfolio/Career/CareerItemContainer';
 import CustomLink from '../../utils/CustomLink';

@@ -1,7 +1,8 @@
-import { Box, Breadcrumbs, Paper, Typography } from '@material-ui/core';
-import { NavigateNext } from '@material-ui/icons';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { Box, Breadcrumbs, Paper, Typography } from '@material-ui/core';
+import { NavigateNext } from '@material-ui/icons';
 
 import CustomLink from '../utils/CustomLink';
 

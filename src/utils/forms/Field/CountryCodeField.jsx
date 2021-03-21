@@ -1,7 +1,8 @@
-import { Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React, { Fragment, useCallback } from 'react';
 import ReactCountryFlag from 'react-country-flag';
+
+import { Typography } from '@material-ui/core';
 
 import COUNTRY_CONST from '../../languages/countryConst';
 import AutocompleteField from './MasterField/AutocompleteField';

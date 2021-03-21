@@ -1,7 +1,8 @@
-import { MenuItem } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { MenuItem } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 
 import CustomLink from '../../../utils/CustomLink';
 

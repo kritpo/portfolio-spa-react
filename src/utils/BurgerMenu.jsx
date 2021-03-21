@@ -1,7 +1,8 @@
-import { Box, IconButton, Slide } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import { PropTypes } from 'prop-types';
 import React, { useCallback, useState } from 'react';
+
+import { Box, IconButton, Slide } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 
 import CssNoScroll from './css/CssNoScroll';
 

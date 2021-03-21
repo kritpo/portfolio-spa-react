@@ -7,7 +7,12 @@ import { CV_LIST } from '../../routes';
 import CustomLink from '../../utils/CustomLink';
 import * as cvUtils from '../../utils/cvUtils';
 import languages from '../../utils/languages';
-import InterestsContainer, { INTERESTS, KEYWORD, KEYWORDS, NAME } from '../CV/InterestsContainer';
+import InterestsContainer, {
+	INTERESTS,
+	KEYWORD,
+	KEYWORDS,
+	NAME
+} from '../CV/InterestsContainer';
 
 // configure the states to pass as props to the component
 const mapStateToProps = ({ language }, ...props) => ({

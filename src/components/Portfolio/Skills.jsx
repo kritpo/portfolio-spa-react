@@ -1,6 +1,7 @@
-import { Box, Grid } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import React from 'react';
+
+import { Box, Grid } from '@material-ui/core';
 
 import HobbiesContainer from '../../containers/Portfolio/Skills/HobbiesContainer';
 import LanguagesContainer from '../../containers/Portfolio/Skills/LanguagesContainer';

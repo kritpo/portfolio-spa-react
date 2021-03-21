@@ -6,7 +6,22 @@ import { useHistory } from 'react-router-dom';
 
 import { fetchResumeLanguages } from '../actions';
 import CVCreate from '../components/CVCreate';
-import { ADDRESS, BASICS, CITY, COUNTRY_CODE, EMAIL, LABEL, NAME, PHONE, PICTURE, POSTAL_CODE, PROFILES, REGION, SUMMARY, WEBSITE } from '../containers/CV/BasicsContainer';
+import {
+	ADDRESS,
+	BASICS,
+	CITY,
+	COUNTRY_CODE,
+	EMAIL,
+	LABEL,
+	NAME,
+	PHONE,
+	PICTURE,
+	POSTAL_CODE,
+	PROFILES,
+	REGION,
+	SUMMARY,
+	WEBSITE
+} from '../containers/CV/BasicsContainer';
 import { EDUCATION } from '../containers/CV/EducationContainer';
 import { INTERESTS } from '../containers/CV/InterestsContainer';
 import { LANGUAGES } from '../containers/CV/LanguagesContainer';
@@ -17,9 +32,9 @@ import { VOLUNTEER } from '../containers/CV/VolunteerContainer';
 import { WORK } from '../containers/CV/WorkContainer';
 import { CV_LIST } from '../routes';
 import * as cvUtils from '../utils/cvUtils';
-import checkField, { checkMinLength } from '../utils/forms/checkField';
 import { TEXT } from '../utils/forms/Field/TextField';
 import { decryptForm, encryptForm } from '../utils/forms/Form';
+import checkField, { checkMinLength } from '../utils/forms/checkField';
 import languages from '../utils/languages';
 
 // setup field name constants

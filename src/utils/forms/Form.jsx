@@ -226,8 +226,11 @@ function Form({
 
 						// remove the message after 1 second
 						setTimeout(() => {
-							// reset the is sended status
-							setIsSended(false);
+							// check if the component is still mounted
+							if (_isMounted.current) {
+								// reset the is sended status
+								setIsSended(false);
+							}
 						}, 1000);
 					}
 				})

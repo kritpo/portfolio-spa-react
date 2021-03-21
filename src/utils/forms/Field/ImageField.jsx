@@ -203,8 +203,11 @@ function ImageField({
 
 						// setup the progress message auto clear after 1 seconds
 						setTimeout(() => {
-							// reset the progress message
-							setProgressMessage('');
+							// check if the component is still mounted
+							if (_isMounted.current) {
+								// reset the progress message
+								setProgressMessage('');
+							}
 						}, 1000);
 
 						// update the field

@@ -28,7 +28,6 @@ const socialNetwork = profiles =>
 Details.propTypes = {
 	basics: PropTypes.shape({
 		name: PropTypes.string.isRequired,
-		picture: PropTypes.string.isRequired,
 		email: PropTypes.string.isRequired,
 		phone: PropTypes.string.isRequired,
 		location: PropTypes.shape({
@@ -43,6 +42,7 @@ Details.propTypes = {
 		website: PropTypes.string.isRequired
 	}).isRequired,
 	isMain: PropTypes.bool.isRequired,
+	imageUrl: PropTypes.string.isRequired,
 	language: PropTypes.shape({
 		systemLanguageCode: PropTypes.string.isRequired
 	}).isRequired
@@ -51,7 +51,6 @@ Details.propTypes = {
 function Details({
 	basics: {
 		name,
-		picture,
 		email,
 		phone,
 		location: { address, postalCode, city, region, countryCode },
@@ -60,6 +59,7 @@ function Details({
 		website
 	},
 	isMain,
+	imageUrl,
 	language: { systemLanguageCode }
 }) {
 	return (
@@ -82,7 +82,7 @@ function Details({
 						<Box mb={2} clone>
 							<Avatar
 								alt={name}
-								src={picture}
+								src={imageUrl}
 								style={{ height: '20vh', width: '20vh' }}
 							/>
 						</Box>

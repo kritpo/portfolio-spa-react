@@ -5,6 +5,7 @@ import CheckboxField, { CHECKBOX } from './Field/CheckboxField';
 import CountryCodeField, { COUNTRY_CODE } from './Field/CountryCodeField';
 import DateField, { DATE, DATE_MASKABLE } from './Field/DateField';
 import IconSetField, { HOBBY, SOCIAL, TECHNOLOGY } from './Field/IconSetField';
+import ImageField, { IMAGE } from './Field/ImageField';
 import LanguageCodeField, { LANGUAGE_CODE } from './Field/LanguageCodeField';
 import SelectField, { SELECT } from './Field/SelectField';
 import TextField, {
@@ -117,6 +118,17 @@ function Field({ form, template, handleForm, autoSubmit, preName }) {
 					template={template}
 					handleForm={handleForm}
 					autoSubmit={autoSubmit}
+					preName={preName}
+				/>
+			);
+
+		// check if the field must be a image field
+		case IMAGE:
+			return (
+				<ImageField
+					form={form}
+					template={template}
+					handleForm={handleForm}
 					preName={preName}
 				/>
 			);

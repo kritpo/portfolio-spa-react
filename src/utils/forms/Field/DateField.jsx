@@ -68,7 +68,7 @@ function DateField({
 			dateFormat,
 			invalidDateMessage,
 			currentLabel
-		}
+		} = {}
 	},
 	handleForm: { onChange, onBlur, onError },
 	autoSubmit,

@@ -6,6 +6,7 @@ import { CV_LIST } from '../../routes';
 import CustomLink from '../../utils/CustomLink';
 import { DATE, DATE_MASKABLE } from '../../utils/forms/Field/DateField';
 import { TECHNOLOGY as TECHNOLOGY_TYPE } from '../../utils/forms/Field/IconSetField';
+import { IMAGE } from '../../utils/forms/Field/ImageField';
 import {
 	TEXT,
 	TEXTAREA,
@@ -83,7 +84,7 @@ function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 					}
 				},
 				[PICTURE]: {
-					type: URL_TYPE,
+					type: IMAGE,
 					label:
 						languages[systemLanguageCode].cv.projects.picture.label,
 					defaultValue: '',

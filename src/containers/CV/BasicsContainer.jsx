@@ -6,6 +6,7 @@ import { CV_LIST } from '../../routes';
 import CustomLink from '../../utils/CustomLink';
 import { COUNTRY_CODE as COUNTRY_CODE_TYPE } from '../../utils/forms/Field/CountryCodeField';
 import { SOCIAL } from '../../utils/forms/Field/IconSetField';
+import { IMAGE } from '../../utils/forms/Field/ImageField';
 import {
 	EMAIL as EMAIL_TYPE,
 	PHONE_NUMBER,
@@ -102,7 +103,7 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			}
 		},
 		[PICTURE]: {
-			type: URL_TYPE,
+			type: IMAGE,
 			label: languages[systemLanguageCode].cv.basics.picture.label,
 			checkField: checkField([
 				checkMinLength(

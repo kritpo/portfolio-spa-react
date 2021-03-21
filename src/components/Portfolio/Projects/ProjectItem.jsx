@@ -30,7 +30,7 @@ const styles = ({
 		}
 	},
 	image: {
-		backgroundImage: ({ project: { picture } }) => `url(${picture})`,
+		backgroundImage: ({ imageUrl }) => `url(${imageUrl})`,
 		backgroundPosition: 'center',
 		backgroundSize: 'cover'
 	},
@@ -59,12 +59,12 @@ ProjectItem.propTypes = {
 	project: PropTypes.shape({
 		name: PropTypes.string.isRequired,
 		summary: PropTypes.string.isRequired,
-		picture: PropTypes.string.isRequired,
 		url: PropTypes.string.isRequired,
 		technologies: PropTypes.arrayOf(PropTypes.string).isRequired
 	}).isRequired,
 	startDate: PropTypes.string.isRequired,
-	endDate: PropTypes.string.isRequired
+	endDate: PropTypes.string.isRequired,
+	imageUrl: PropTypes.string.isRequired
 };
 
 function ProjectItem({

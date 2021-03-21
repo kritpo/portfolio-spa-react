@@ -1,6 +1,6 @@
 import { Storage } from 'aws-amplify';
 import { PropTypes } from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 
 import Details from '../../components/Portfolio/Details';
@@ -20,6 +20,18 @@ DetailsContainer.propTypes = {
 };
 
 function DetailsContainer({ basics, ...props }) {
+	// setup the mounting status checker hook
+	let _isMounted = useRef(true);
+
+	// auto unsubscribe
+	useEffect(
+		// config the willUnmount cleanup
+		() => () => {
+			_isMounted.current = false;
+		},
+		[]
+	);
+
 	// setup the image url hook
 	const [imageUrl, setImageUrl] = useState('');
 
@@ -31,22 +43,17 @@ function DetailsContainer({ basics, ...props }) {
 			return;
 		}
 
-		// setup the subscription status
-		let isSubscribed = true;
-
 		// retrieve image data
 		const { identityId, key } = JSON.parse(basics.picture);
 
 		// retrieve the image
 		Storage.get(key, { level: 'protected', identityId }).then(url => {
-			// check if the subscription is valid
-			if (isSubscribed) {
+			// check if the component is still mounted
+			if (_isMounted) {
 				// update image url
 				setImageUrl(url);
 			}
 		});
-
-		return () => (isSubscribed = false);
 	}, [basics.picture]);
 
 	return <Details basics={basics} imageUrl={imageUrl} {...props} />;

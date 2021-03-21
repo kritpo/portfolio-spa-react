@@ -1,6 +1,6 @@
 import { Storage } from 'aws-amplify';
 import { PropTypes } from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 
 import ProjectItem from '../../../components/Portfolio/Projects/ProjectItem';
@@ -30,6 +30,18 @@ function ProjectItemContainer({
 	language: { systemLanguageCode },
 	...props
 }) {
+	// setup the mounting status checker hook
+	let _isMounted = useRef(true);
+
+	// auto unsubscribe
+	useEffect(
+		// config the willUnmount cleanup
+		() => () => {
+			_isMounted.current = false;
+		},
+		[]
+	);
+
 	// compute the dates associated to the project item
 	const startDate = new Date(project.startDate).toLocaleDateString();
 	const endDate =
@@ -48,22 +60,17 @@ function ProjectItemContainer({
 			return;
 		}
 
-		// setup the subscription status
-		let isSubscribed = true;
-
 		// retrieve image data
 		const { identityId, key } = JSON.parse(project.picture);
 
 		// retrieve the image
 		Storage.get(key, { level: 'protected', identityId }).then(url => {
-			// check if the subscription is valid
-			if (isSubscribed) {
+			// check if the component is still mounted
+			if (_isMounted.current) {
 				// update image url
 				setImageUrl(url);
 			}
 		});
-
-		return () => (isSubscribed = false);
 	}, [project.picture]);
 
 	return (

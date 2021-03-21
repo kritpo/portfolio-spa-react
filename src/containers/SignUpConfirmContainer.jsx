@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify';
 import { PropTypes } from 'prop-types';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -39,6 +39,18 @@ function SignUpConfirmContainer({
 	language: { systemLanguageCode },
 	...props
 }) {
+	// setup the mounting status checker hook
+	let _isMounted = useRef(true);
+
+	// auto unsubscribe
+	useEffect(
+		// config the willUnmount cleanup
+		() => () => {
+			_isMounted.current = false;
+		},
+		[]
+	);
+
 	// setup the history hook
 	const history = useHistory();
 
@@ -145,26 +157,37 @@ function SignUpConfirmContainer({
 							// clear the interval
 							clearInterval(interval);
 
-							// clear the wait message
-							setResendWaitMessage('');
+							// check if the component is still mounted
+							if (_isMounted.current) {
+								// clear the wait message
+								setResendWaitMessage('');
+							}
 
 							return;
 						}
 
-						// update the wait message
-						setResendWaitMessage(
-							languages[
-								systemLanguageCode
-							].signUpConfirm.resendCode.waitingMessage(waitLeft)
-						);
+						// check if the component is still mounted
+						if (_isMounted.current) {
+							// update the wait message
+							setResendWaitMessage(
+								languages[
+									systemLanguageCode
+								].signUpConfirm.resendCode.waitingMessage(
+									waitLeft
+								)
+							);
+						}
 					}, 1000);
 				})
 				.catch(() => {
-					// lock the resend button
-					setResendErrorMessage(
-						languages[systemLanguageCode].signUpConfirm.resendCode
-							.error
-					);
+					// check if the component is still mounted
+					if (_isMounted.current) {
+						// lock the resend button
+						setResendErrorMessage(
+							languages[systemLanguageCode].signUpConfirm
+								.resendCode.error
+						);
+					}
 
 					// setup a timeout to unlock the resend button
 					setTimeout(() => {

@@ -203,7 +203,12 @@ function Form({
 			setIsSending(true);
 
 			// setup the form unlock
-			const unlockForm = () => setIsSending(false);
+			const unlockForm = () => {
+				// check if the component is still mounted
+				if (_isMounted.current) {
+					setIsSending(false);
+				}
+			};
 
 			// resolve the form submit promise
 			onSubmit(form, executeRecaptcha(), unlockForm)
@@ -215,17 +220,17 @@ function Form({
 
 						// remove the message after 1 second
 						setTimeout(() => {
-							// check if the component is still mounted
-							if (_isMounted.current) {
-								// reset the is sended status
-								setIsSended(false);
-							}
+							// reset the is sended status
+							setIsSended(false);
 						}, 1000);
 					}
 				})
 				.catch(() => {
-					// update the error message
-					setError(errorMessage);
+					// check if the component is still mounted
+					if (_isMounted.current) {
+						// update the error message
+						setError(errorMessage);
+					}
 
 					// unlock the form
 					unlockForm();
@@ -273,11 +278,18 @@ function Form({
 					<FormHelperText>{error}</FormHelperText>
 				</FormControl>
 				<Box mt={2} textAlign="center">
-					{(isSending || isSended) && (
+					{isSending && (
 						<Box mb={2}>
 							<Loading size="32px" />
 							<Typography variant="body1">
-								{(isSending && sendingMessage) || sendedMessage}
+								{sendingMessage}
+							</Typography>
+						</Box>
+					)}
+					{isSended && (
+						<Box mb={2} color="success.main">
+							<Typography variant="body1">
+								{sendedMessage}
 							</Typography>
 						</Box>
 					)}

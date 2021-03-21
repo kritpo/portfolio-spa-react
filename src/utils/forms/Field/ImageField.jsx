@@ -1,6 +1,6 @@
 import { Auth, Storage } from 'aws-amplify';
 import { PropTypes } from 'prop-types';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
 	Box,
@@ -65,6 +65,18 @@ function ImageField({
 	handleForm: { onChange, onError },
 	preName
 }) {
+	// setup the mounting status checker hook
+	let _isMounted = useRef(true);
+
+	// auto unsubscribe
+	useEffect(
+		// config the willUnmount cleanup
+		() => () => {
+			_isMounted.current = false;
+		},
+		[]
+	);
+
 	// setup the progress hook
 	const [progress, setProgress] = useState(-1);
 
@@ -122,83 +134,104 @@ function ImageField({
 				}
 			})
 				.then(file => {
-					// check if a previous value exist for the file key
-					if (IMAGE_REGEX.test(form[name].value)) {
-						// retrieve image data
-						const { key } = JSON.parse(form[name].value);
+					// check if the component is still mounted
+					if (_isMounted.current) {
+						// check if a previous value exist for the file key
+						if (IMAGE_REGEX.test(form[name].value)) {
+							// retrieve image data
+							const { key } = JSON.parse(form[name].value);
 
-						// set the progress message to inform of the deletion
-						setProgressMessage(
-							previousDeletionMessage !== undefined
-								? previousDeletionMessage
-								: 'The previous file is being deleted...'
-						);
+							// set the progress message to inform of the deletion
+							setProgressMessage(
+								previousDeletionMessage !== undefined
+									? previousDeletionMessage
+									: 'The previous file is being deleted...'
+							);
 
-						// remove the file from S3
-						return Storage.remove(key, {
-							level: 'protected'
-						}).then(() => file);
+							// remove the file from S3
+							return Storage.remove(key, {
+								level: 'protected'
+							}).then(() => file);
+						}
+
+						return file;
 					}
-
-					return file;
 				})
 				.then(file => {
-					// set the progress message to inform the uploading
-					setProgressMessage(
-						startUploadMessage !== undefined
-							? startUploadMessage
-							: 'The file is being uploaded...'
-					);
+					// check if the component is still mounted
+					if (_isMounted.current) {
+						// set the progress message to inform the uploading
+						setProgressMessage(
+							startUploadMessage !== undefined
+								? startUploadMessage
+								: 'The file is being uploaded...'
+						);
 
-					// put the image to S3
-					return Storage.put(`${Date.now()}_${file.name}`, file, {
-						level: 'protected',
-						contentType: 'image/*',
-						progressCallback({ loaded, total }) {
-							// update the progress status
-							setProgress((loaded / total) * 100);
-						}
-					});
+						// put the image to S3
+						return Storage.put(`${Date.now()}_${file.name}`, file, {
+							level: 'protected',
+							contentType: 'image/*',
+							progressCallback({ loaded, total }) {
+								// check if the component is still mounted
+								if (_isMounted.current) {
+									// update the progress status
+									setProgress((loaded / total) * 100);
+								}
+							}
+						});
+					}
 				})
 				// retrieve the user id
-				.then(({ key }) =>
-					Auth.currentCredentials().then(({ identityId }) => ({
-						identityId,
-						key
-					}))
-				)
+				.then(({ key }) => {
+					// check if the component is still mounted
+					if (_isMounted.current) {
+						Auth.currentCredentials().then(({ identityId }) => ({
+							identityId,
+							key
+						}));
+					}
+				})
 				.then(result => {
-					// setup the final progress message
-					setProgressMessage(
-						uploadSucceedMessage !== undefined
-							? uploadSucceedMessage
-							: 'The upload succeed!'
-					);
+					// check if the component is still mounted
+					if (_isMounted.current) {
+						// setup the final progress message
+						setProgressMessage(
+							uploadSucceedMessage !== undefined
+								? uploadSucceedMessage
+								: 'The upload succeed!'
+						);
 
-					// setup the progress message auto clear after 1 seconds
-					setTimeout(() => {
-						setProgressMessage('');
-					}, 1000);
+						// setup the progress message auto clear after 1 seconds
+						setTimeout(() => {
+							// reset the progress message
+							setProgressMessage('');
+						}, 1000);
 
-					// update the field
-					onChange(name)({
-						target: { value: JSON.stringify(result) }
-					});
+						// update the field
+						onChange(name)({
+							target: { value: JSON.stringify(result) }
+						});
 
-					// unset the error message
-					onError(name)('');
+						// unset the error message
+						onError(name)('');
+					}
 				})
 				.catch(({ message }) => {
-					console.log('start');
-					// unset the progress message
-					setProgressMessage('');
+					// check if the component is still mounted
+					if (_isMounted.current) {
+						// unset the progress message
+						setProgressMessage('');
 
-					// set a error message
-					onError(name)(message);
+						// set a error message
+						onError(name)(message);
+					}
 				})
 				.finally(() => {
-					// set the progress status to default one
-					setProgress(-1);
+					// check if the component is still mounted
+					if (_isMounted.current) {
+						// set the progress status to default one
+						setProgress(-1);
+					}
 				});
 		},
 		[

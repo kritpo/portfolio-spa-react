@@ -34,7 +34,7 @@ import { CV_LIST } from '../routes';
 import * as cvUtils from '../utils/cvUtils';
 import { LANGUAGE_CODE as LANGUAGE_CODE_TYPE } from '../utils/forms/Field/LanguageCodeField';
 import { decryptForm, encryptForm } from '../utils/forms/Form';
-import checkField, { checkMinLength } from '../utils/forms/checkField';
+import checkField, { checkUpdated } from '../utils/forms/checkField';
 import languages from '../utils/languages';
 
 // setup field name constants
@@ -135,10 +135,9 @@ function CVCreateContainer({
 			type: LANGUAGE_CODE_TYPE,
 			label: languages[systemLanguageCode].cvCreate.languageCode.label,
 			checkField: checkField([
-				checkMinLength(
-					2,
-					languages[systemLanguageCode].checkFieldErrorMessage
-						.minLength
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
 				)
 			]),
 			inputParam: {

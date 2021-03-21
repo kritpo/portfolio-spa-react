@@ -9,7 +9,8 @@ import { TEXT, TEXTAREA, URL } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
 import checkField, {
 	checkDate,
-	checkMinLength
+	checkMinLength,
+	checkUpdated
 } from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
 
@@ -49,6 +50,11 @@ function VolunteerContainer({ language: { systemLanguageCode }, ...props }) {
 							.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -69,6 +75,11 @@ function VolunteerContainer({ language: { systemLanguageCode }, ...props }) {
 					defaultValue: '',
 					checkField: checkField([
 						checkMinLength(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
+						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
 								.minLength
@@ -87,6 +98,11 @@ function VolunteerContainer({ language: { systemLanguageCode }, ...props }) {
 							.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							8,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -151,6 +167,11 @@ function VolunteerContainer({ language: { systemLanguageCode }, ...props }) {
 							.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -172,6 +193,11 @@ function VolunteerContainer({ language: { systemLanguageCode }, ...props }) {
 									.highlight.label,
 							defaultValue: '',
 							checkField: checkField([
+								checkUpdated(
+									'',
+									languages[systemLanguageCode]
+										.checkFieldErrorMessage.updated
+								),
 								checkMinLength(
 									3,
 									languages[systemLanguageCode]

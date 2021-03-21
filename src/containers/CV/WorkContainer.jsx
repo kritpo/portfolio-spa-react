@@ -10,7 +10,8 @@ import { TEXT, TEXTAREA, URL } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
 import checkField, {
 	checkDate,
-	checkMinLength
+	checkMinLength,
+	checkUpdated
 } from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
 
@@ -57,6 +58,11 @@ function WorkContainer({ language: { systemLanguageCode }, ...props }) {
 					label: languages[systemLanguageCode].cv.work.company.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -74,6 +80,11 @@ function WorkContainer({ language: { systemLanguageCode }, ...props }) {
 					label: languages[systemLanguageCode].cv.work.position.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.update
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -91,6 +102,11 @@ function WorkContainer({ language: { systemLanguageCode }, ...props }) {
 					label: languages[systemLanguageCode].cv.work.website.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							8,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -150,6 +166,11 @@ function WorkContainer({ language: { systemLanguageCode }, ...props }) {
 					label: languages[systemLanguageCode].cv.work.summary.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -171,6 +192,11 @@ function WorkContainer({ language: { systemLanguageCode }, ...props }) {
 									.label,
 							defaultValue: '',
 							checkField: checkField([
+								checkUpdated(
+									'',
+									languages[systemLanguageCode]
+										.checkFieldErrorMessage.updated
+								),
 								checkMinLength(
 									3,
 									languages[systemLanguageCode]

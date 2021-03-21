@@ -16,9 +16,9 @@ import {
 } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
 import checkField, {
-	checkExactLength,
 	checkMinLength,
-	checkRegex
+	checkRegex,
+	checkUpdated
 } from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
 
@@ -61,6 +61,10 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			type: TEXT,
 			label: languages[systemLanguageCode].cv.basics.name.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					3,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -76,6 +80,10 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			type: TEXT,
 			label: languages[systemLanguageCode].cv.basics.label.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					3,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -91,6 +99,10 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			type: TEXTAREA,
 			label: languages[systemLanguageCode].cv.basics.summary.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					3,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -106,10 +118,9 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			type: IMAGE,
 			label: languages[systemLanguageCode].cv.basics.picture.label,
 			checkField: checkField([
-				checkMinLength(
-					8,
-					languages[systemLanguageCode].checkFieldErrorMessage
-						.minLength
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
 				)
 			]),
 			inputParam: {
@@ -135,6 +146,10 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			type: EMAIL_TYPE,
 			label: languages[systemLanguageCode].cv.basics.email.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					3,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -154,6 +169,10 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			type: PHONE_NUMBER,
 			label: languages[systemLanguageCode].cv.basics.phone.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					6,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -169,6 +188,10 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			type: URL_TYPE,
 			label: languages[systemLanguageCode].cv.basics.website.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					8,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -205,6 +228,10 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			type: TEXT,
 			label: languages[systemLanguageCode].cv.basics.city.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					3,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -230,10 +257,9 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			type: COUNTRY_CODE_TYPE,
 			label: languages[systemLanguageCode].cv.basics.countryCode.label,
 			checkField: checkField([
-				checkExactLength(
-					2,
-					languages[systemLanguageCode].checkFieldErrorMessage
-						.exactLength
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
 				)
 			]),
 			inputParam: {
@@ -250,10 +276,10 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 						languages[systemLanguageCode].cv.basics.network.label,
 					defaultValue: '',
 					checkField: checkField([
-						checkMinLength(
-							2,
+						checkUpdated(
+							'',
 							languages[systemLanguageCode].checkFieldErrorMessage
-								.minLength
+								.updated
 						)
 					]),
 					inputParam: {
@@ -268,6 +294,11 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 						languages[systemLanguageCode].cv.basics.username.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -285,6 +316,11 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 					label: languages[systemLanguageCode].cv.basics.url.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							8,
 							languages[systemLanguageCode].checkFieldErrorMessage

@@ -9,7 +9,8 @@ import { NUMBER_2, TEXT } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
 import checkField, {
 	checkDate,
-	checkMinLength
+	checkMinLength,
+	checkUpdated
 } from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
 
@@ -51,6 +52,11 @@ function EducationContainer({ language: { systemLanguageCode }, ...props }) {
 							.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -68,10 +74,10 @@ function EducationContainer({ language: { systemLanguageCode }, ...props }) {
 					label: languages[systemLanguageCode].cv.education.gpa.label,
 					defaultValue: '',
 					checkField: checkField([
-						checkMinLength(
-							1,
+						checkUpdated(
+							'',
 							languages[systemLanguageCode].checkFieldErrorMessage
-								.minLength
+								.updated
 						)
 					]),
 					inputParam: {
@@ -86,6 +92,11 @@ function EducationContainer({ language: { systemLanguageCode }, ...props }) {
 						languages[systemLanguageCode].cv.education.area.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -105,6 +116,11 @@ function EducationContainer({ language: { systemLanguageCode }, ...props }) {
 							.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -171,8 +187,13 @@ function EducationContainer({ language: { systemLanguageCode }, ...props }) {
 									.category.label,
 							defaultValue: '',
 							checkField: checkField([
+								checkUpdated(
+									'',
+									languages[systemLanguageCode]
+										.checkFieldErrorMessage.updated
+								),
 								checkMinLength(
-									1,
+									2,
 									languages[systemLanguageCode]
 										.checkFieldErrorMessage.minLength
 								)
@@ -192,6 +213,11 @@ function EducationContainer({ language: { systemLanguageCode }, ...props }) {
 											.education.course.label,
 									defaultValue: '',
 									checkField: checkField([
+										checkUpdated(
+											'',
+											languages[systemLanguageCode]
+												.checkFieldErrorMessage.updated
+										),
 										checkMinLength(
 											3,
 											languages[systemLanguageCode]

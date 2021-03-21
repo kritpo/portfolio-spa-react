@@ -15,7 +15,8 @@ import {
 import Form from '../../utils/forms/Form';
 import checkField, {
 	checkDate,
-	checkMinLength
+	checkMinLength,
+	checkUpdated
 } from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
 
@@ -53,6 +54,11 @@ function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 					label: languages[systemLanguageCode].cv.projects.name.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -71,6 +77,11 @@ function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 						languages[systemLanguageCode].cv.projects.summary.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -89,10 +100,10 @@ function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 						languages[systemLanguageCode].cv.projects.picture.label,
 					defaultValue: '',
 					checkField: checkField([
-						checkMinLength(
-							8,
+						checkUpdated(
+							'',
 							languages[systemLanguageCode].checkFieldErrorMessage
-								.minLength
+								.updated
 						)
 					]),
 					inputParam: {
@@ -124,6 +135,11 @@ function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 					label: languages[systemLanguageCode].cv.projects.url.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							8,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -189,10 +205,10 @@ function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 									.technology.label,
 							defaultValue: '',
 							checkField: checkField([
-								checkMinLength(
-									3,
+								checkUpdated(
+									'',
 									languages[systemLanguageCode]
-										.checkFieldErrorMessage.minLength
+										.checkFieldErrorMessage.updated
 								)
 							]),
 							inputParam: {

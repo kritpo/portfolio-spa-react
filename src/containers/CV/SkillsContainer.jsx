@@ -8,7 +8,7 @@ import CustomLink from '../../utils/CustomLink';
 import { TECHNOLOGY } from '../../utils/forms/Field/IconSetField';
 import { SELECT } from '../../utils/forms/Field/SelectField';
 import Form from '../../utils/forms/Form';
-import checkField, { checkMinLength } from '../../utils/forms/checkField';
+import checkField, { checkUpdated } from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
 
 // setup field name constants
@@ -39,10 +39,10 @@ function SkillsContainer({ language: { systemLanguageCode }, ...props }) {
 					label: languages[systemLanguageCode].cv.skills.name.label,
 					defaultValue: '',
 					checkField: checkField([
-						checkMinLength(
-							3,
+						checkUpdated(
+							'',
 							languages[systemLanguageCode].checkFieldErrorMessage
-								.minLength
+								.updated
 						)
 					]),
 					inputParam: {
@@ -55,7 +55,13 @@ function SkillsContainer({ language: { systemLanguageCode }, ...props }) {
 					type: SELECT,
 					label: languages[systemLanguageCode].cv.skills.level.label,
 					defaultValue: LEVEL_CONST[0],
-					checkField: checkField([]),
+					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						)
+					]),
 					configParam: {
 						fields: LEVEL_CONST
 					}

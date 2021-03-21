@@ -1,4 +1,21 @@
 /**
+ * setup the updated checker
+ * @param {string} initialValue the initial value
+ * @param {function} errorMessage the error message generator
+ * @returns the field checker
+ */
+export const checkUpdated = (
+	initialValue,
+	errorMessage = length => `The field should be different of ${initialValue}.`
+) => value => {
+	if (value === initialValue) {
+		return errorMessage(initialValue);
+	}
+
+	return '';
+};
+
+/**
  * setup the minlength checker
  * @param {string} length the minimum length
  * @param {function} errorMessage the error message generator

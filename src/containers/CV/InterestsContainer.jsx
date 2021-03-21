@@ -7,7 +7,10 @@ import CustomLink from '../../utils/CustomLink';
 import { HOBBY } from '../../utils/forms/Field/IconSetField';
 import { TEXT } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
-import checkField, { checkMinLength } from '../../utils/forms/checkField';
+import checkField, {
+	checkMinLength,
+	checkUpdated
+} from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
 
 // setup field name constants
@@ -40,10 +43,10 @@ function InterestsContainer({ language: { systemLanguageCode }, ...props }) {
 						languages[systemLanguageCode].cv.interests.name.label,
 					defaultValue: '',
 					checkField: checkField([
-						checkMinLength(
-							3,
+						checkUpdated(
+							'',
 							languages[systemLanguageCode].checkFieldErrorMessage
-								.minLength
+								.updated
 						)
 					]),
 					inputParam: {
@@ -61,6 +64,11 @@ function InterestsContainer({ language: { systemLanguageCode }, ...props }) {
 									.keyword.label,
 							defaultValue: '',
 							checkField: checkField([
+								checkUpdated(
+									'',
+									languages[systemLanguageCode]
+										.checkFieldErrorMessage.updated
+								),
 								checkMinLength(
 									3,
 									languages[systemLanguageCode]

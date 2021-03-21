@@ -6,7 +6,10 @@ import { CV_LIST } from '../../routes';
 import CustomLink from '../../utils/CustomLink';
 import { TEXT, TEXTAREA } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
-import checkField, { checkMinLength } from '../../utils/forms/checkField';
+import checkField, {
+	checkMinLength,
+	checkUpdated
+} from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
 
 // setup field name constants
@@ -38,6 +41,11 @@ function ReferencesContainer({ language: { systemLanguageCode }, ...props }) {
 						languages[systemLanguageCode].cv.references.name.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -57,6 +65,11 @@ function ReferencesContainer({ language: { systemLanguageCode }, ...props }) {
 							.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage

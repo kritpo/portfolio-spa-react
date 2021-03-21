@@ -16,6 +16,7 @@ import checkField, {
 	checkCharType,
 	checkMinLength,
 	checkRegex,
+	checkUpdated,
 	checkValue
 } from '../utils/forms/checkField';
 import languages from '../utils/languages';
@@ -69,6 +70,10 @@ function SignUpContainer({ language: { systemLanguageCode }, ...props }) {
 			type: TEXT,
 			label: languages[systemLanguageCode].signUp.username.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					3,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -84,6 +89,10 @@ function SignUpContainer({ language: { systemLanguageCode }, ...props }) {
 			type: EMAIL_TYPE,
 			label: languages[systemLanguageCode].signUp.email.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					3,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -103,6 +112,10 @@ function SignUpContainer({ language: { systemLanguageCode }, ...props }) {
 			type: PASSWORD_TYPE,
 			label: languages[systemLanguageCode].signUp.password.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					8,
 					languages[systemLanguageCode].checkFieldErrorMessage

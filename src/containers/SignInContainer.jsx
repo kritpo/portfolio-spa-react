@@ -11,7 +11,10 @@ import {
 	PASSWORD as PASSWORD_TYPE,
 	TEXT
 } from '../utils/forms/Field/TextField';
-import checkField, { checkMinLength } from '../utils/forms/checkField';
+import checkField, {
+	checkMinLength,
+	checkUpdated
+} from '../utils/forms/checkField';
 import languages from '../utils/languages';
 
 // setup field name constants
@@ -73,6 +76,10 @@ function SignInContainer({
 			type: TEXT,
 			label: languages[systemLanguageCode].signIn.username.label,
 			checkField: checkField([
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
+				),
 				checkMinLength(
 					3,
 					languages[systemLanguageCode].checkFieldErrorMessage
@@ -88,10 +95,9 @@ function SignInContainer({
 			type: PASSWORD_TYPE,
 			label: languages[systemLanguageCode].signIn.password.label,
 			checkField: checkField([
-				checkMinLength(
-					1,
-					languages[systemLanguageCode].checkFieldErrorMessage
-						.minLength
+				checkUpdated(
+					'',
+					languages[systemLanguageCode].checkFieldErrorMessage.updated
 				)
 			]),
 			inputParam: {

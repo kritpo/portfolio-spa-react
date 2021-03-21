@@ -507,6 +507,7 @@ const fr = {
 		}
 	},
 	checkFieldErrorMessage: {
+		updated: () => `Le champ est requis.`,
 		minLength: length =>
 			`Le champ doit contenir au moins ${length} caractères.`,
 		exactLength: length =>

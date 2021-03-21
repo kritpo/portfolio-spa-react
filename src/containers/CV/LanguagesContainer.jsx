@@ -9,7 +9,8 @@ import { TEXT } from '../../utils/forms/Field/TextField';
 import Form from '../../utils/forms/Form';
 import checkField, {
 	checkExactLength,
-	checkMinLength
+	checkMinLength,
+	checkUpdated
 } from '../../utils/forms/checkField';
 import languages from '../../utils/languages';
 
@@ -44,10 +45,10 @@ function LanguagesContainer({ language: { systemLanguageCode }, ...props }) {
 							.label,
 					defaultValue: '',
 					checkField: checkField([
-						checkExactLength(
-							2,
+						checkUpdated(
+							'',
 							languages[systemLanguageCode].checkFieldErrorMessage
-								.exactLength
+								.updated
 						)
 					]),
 					inputParam: {
@@ -63,6 +64,11 @@ function LanguagesContainer({ language: { systemLanguageCode }, ...props }) {
 							.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage
@@ -82,6 +88,11 @@ function LanguagesContainer({ language: { systemLanguageCode }, ...props }) {
 							.label,
 					defaultValue: '',
 					checkField: checkField([
+						checkUpdated(
+							'',
+							languages[systemLanguageCode].checkFieldErrorMessage
+								.updated
+						),
 						checkMinLength(
 							3,
 							languages[systemLanguageCode].checkFieldErrorMessage

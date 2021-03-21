@@ -19,7 +19,6 @@ import { Add, Visibility } from '@material-ui/icons';
 import LanguageItemContainer from '../containers/CVList/LanguageItemContainer';
 import { CV_CREATE, HOME, PORTFOLIO } from '../routes';
 import CustomLink from '../utils/CustomLink';
-import Error from '../utils/Error';
 import Loading from '../utils/Loading';
 import languages from '../utils/languages';
 import Header from './Header';
@@ -83,13 +82,6 @@ function CVList({
 						</Typography>
 						{isLoading ? (
 							<Loading size="40vh" />
-						) : error !== null ? (
-							<Error size="40vh">
-								{
-									languages[systemLanguageCode].generic
-										.loadingError
-								}
-							</Error>
 						) : (
 							<Fragment>
 								<TableContainer component={Paper}>

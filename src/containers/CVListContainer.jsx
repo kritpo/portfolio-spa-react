@@ -24,17 +24,40 @@ const mapDispatchToProps = {
 // configure the prop types validation
 UserContainer.propTypes = {
 	username: PropTypes.string.isRequired,
-	fetchResumeLanguages: PropTypes.func.isRequired
+	fetchResumeLanguages: PropTypes.func.isRequired,
+	resumeLanguages: PropTypes.shape({
+		resumeLanguages: PropTypes.object.isRequired,
+		error: PropTypes.string
+	}).isRequired
 };
 
-function UserContainer({ username, fetchResumeLanguages, ...props }) {
+function UserContainer({
+	username,
+	fetchResumeLanguages,
+	resumeLanguages: {
+		isLoading,
+		resumeLanguages: originalResumeLanguages,
+		error
+	},
+	...props
+}) {
 	// setup the resume languages fetching hook
 	useEffect(() => {
 		// fetch the resume languages at the loading of the component
 		fetchResumeLanguages(false, username);
 	}, [fetchResumeLanguages, username]);
 
-	return <CVList username={username} {...props} />;
+	// override the resume languages if an error occurs
+	const resumeLanguages =
+		error === null ? originalResumeLanguages : { languages: [] };
+
+	return (
+		<CVList
+			username={username}
+			resumeLanguages={{ isLoading, resumeLanguages }}
+			{...props}
+		/>
+	);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer);

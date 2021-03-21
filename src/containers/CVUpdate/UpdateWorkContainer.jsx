@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { updateResume } from '../../actions';
 import * as cvUtils from '../../utils/cvUtils';
+import { MAX_DATE } from '../../utils/forms/Field/DateField';
 import languages from '../../utils/languages';
 import WorkContainer, {
 	COMPANY,
@@ -88,7 +89,11 @@ function UpdateWorkContainer({
 					{ name: POSITION, payload: position },
 					{ name: WEBSITE, payload: website },
 					{ name: START_DATE, payload: new Date(startDate) },
-					{ name: END_DATE, payload: new Date(endDate) },
+					{
+						name: END_DATE,
+						payload:
+							endDate !== undefined ? new Date(endDate) : MAX_DATE
+					},
 					{ name: SUMMARY, payload: summary },
 					{
 						name: HIGHLIGHTS,

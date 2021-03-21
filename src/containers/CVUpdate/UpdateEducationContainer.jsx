@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { updateResume } from '../../actions';
 import * as cvUtils from '../../utils/cvUtils';
+import { MAX_DATE } from '../../utils/forms/Field/DateField';
 import languages from '../../utils/languages';
 import EducationContainer, {
 	AREA,
@@ -91,7 +92,11 @@ function UpdateEducationContainer({
 					{ name: AREA, payload: area },
 					{ name: STUDY_TYPE, payload: studyType },
 					{ name: START_DATE, payload: new Date(startDate) },
-					{ name: END_DATE, payload: new Date(endDate) },
+					{
+						name: END_DATE,
+						payload:
+							endDate !== undefined ? new Date(endDate) : MAX_DATE
+					},
 					{ name: GPA, payload: gpa },
 					{
 						name: COURSES,

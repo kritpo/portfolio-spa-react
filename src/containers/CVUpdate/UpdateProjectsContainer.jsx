@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { updateResume } from '../../actions';
 import * as cvUtils from '../../utils/cvUtils';
+import { MAX_DATE } from '../../utils/forms/Field/DateField';
 import languages from '../../utils/languages';
 import ProjectsContainer, {
 	END_DATE,
@@ -83,7 +84,11 @@ function UpdateProjectsContainer({
 					{ name: NAME, payload: name },
 					{ name: SUMMARY, payload: summary },
 					{ name: START_DATE, payload: new Date(startDate) },
-					{ name: END_DATE, payload: new Date(endDate) },
+					{
+						name: END_DATE,
+						payload:
+							endDate !== undefined ? new Date(endDate) : MAX_DATE
+					},
 					{ name: PICTURE, payload: picture },
 					{ name: URL, payload: url },
 					{

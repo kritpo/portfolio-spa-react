@@ -394,6 +394,12 @@ const en = {
 		dateFormat: 'MM/dd/yyyy',
 		invalidDateMessage: 'Incorrect date format',
 		currentLabel: 'Current',
+		startProcessMessage: 'The processing started...',
+		previousDeletionMessage: 'The previous file is being deleted...',
+		startUploadMessage: 'The file is being uploaded...',
+		uploadSucceedMessage: 'The upload succeed!',
+		noFileErrorMessage: 'No file provided...',
+		notImageErrorMessage: 'The provided file is not an image...',
 		error: 'The action failed. Check the fields.'
 	},
 	cvList: {

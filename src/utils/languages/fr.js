@@ -394,6 +394,13 @@ const fr = {
 		dateFormat: 'dd/MM/yyyy',
 		invalidDateMessage: 'Format de date incorrect',
 		currentLabel: 'En cours',
+		startProcessMessage: 'Le traitement a commencé...',
+		previousDeletionMessage:
+			'Le fichier précédent est en cours de suppression...',
+		startUploadMessage: 'Le fichier est en cours de chargement...',
+		uploadSucceedMessage: 'Le chargement a réussi!',
+		noFileErrorMessage: 'Aucun fichier fourni...',
+		notImageErrorMessage: "Le fichier fourni n'est pas une image...",
 		error: "L'action a échoué. Vérifiez les champs."
 	},
 	cvList: {

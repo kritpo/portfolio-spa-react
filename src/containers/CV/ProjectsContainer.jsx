@@ -99,6 +99,24 @@ function ProjectsContainer({ language: { systemLanguageCode }, ...props }) {
 						placeholder:
 							languages[systemLanguageCode].cv.projects.picture
 								.placeholder
+					},
+					configParam: {
+						startProcessMessage:
+							languages[systemLanguageCode].cv
+								.startProcessMessage,
+						previousDeletionMessage:
+							languages[systemLanguageCode].cv
+								.previousDeletionMessage,
+						startUploadMessage:
+							languages[systemLanguageCode].cv.startUploadMessage,
+						uploadSucceedMessage:
+							languages[systemLanguageCode].cv
+								.uploadSucceedMessage,
+						noFileErrorMessage:
+							languages[systemLanguageCode].cv.noFileErrorMessage,
+						notImageErrorMessage:
+							languages[systemLanguageCode].cv
+								.notImageErrorMessage
 					}
 				},
 				[URL]: {

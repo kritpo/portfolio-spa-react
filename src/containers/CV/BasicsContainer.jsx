@@ -115,6 +115,20 @@ function BasicsContainer({ language: { systemLanguageCode }, ...props }) {
 			inputParam: {
 				placeholder:
 					languages[systemLanguageCode].cv.basics.picture.placeholder
+			},
+			configParam: {
+				startProcessMessage:
+					languages[systemLanguageCode].cv.startProcessMessage,
+				previousDeletionMessage:
+					languages[systemLanguageCode].cv.previousDeletionMessage,
+				startUploadMessage:
+					languages[systemLanguageCode].cv.startUploadMessage,
+				uploadSucceedMessage:
+					languages[systemLanguageCode].cv.uploadSucceedMessage,
+				noFileErrorMessage:
+					languages[systemLanguageCode].cv.noFileErrorMessage,
+				notImageErrorMessage:
+					languages[systemLanguageCode].cv.notImageErrorMessage
 			}
 		},
 		[EMAIL]: {

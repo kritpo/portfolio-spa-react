@@ -147,7 +147,7 @@ function ImageField({
 					setProgressMessage(
 						startUploadMessage !== undefined
 							? startUploadMessage
-							: 'A file is being uploaded...'
+							: 'The file is being uploaded...'
 					);
 
 					// put the image to S3

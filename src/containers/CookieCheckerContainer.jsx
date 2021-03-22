@@ -29,7 +29,10 @@ function CookieCheckerContainer({ ...props }) {
 	// setup the agree callback
 	const handleAgree = useCallback(() => {
 		// set the agreement cookie
-		setCookies('agreement', 'agree');
+		setCookies('agreement', 'agree', {
+			path: '/',
+			sameSite: true
+		});
 	}, [setCookies]);
 
 	// setup the disagree callback

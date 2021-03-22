@@ -16,6 +16,11 @@ const fr = {
 		cvCreate: 'Créer un CV',
 		cvUpdate: 'Modifier le CV'
 	},
+	cookieChecker: {
+		title: 'Utilisation des cookies',
+		agree: "J'accepte l'usage des cookies",
+		disagree: "Je refuse l'usage des cookies"
+	},
 	footer: {
 		credits: 'Réalisé par Jimmy Weng'
 	},

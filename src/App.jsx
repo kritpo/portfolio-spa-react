@@ -24,6 +24,7 @@ import {
 	setLanguage,
 	setThemeMode
 } from './actions';
+import CookieCheckerContainer from './containers/CookieCheckerContainer';
 import FooterContainer from './containers/FooterContainer';
 import NavContainer from './containers/NavContainer';
 
@@ -127,6 +128,7 @@ function App({
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
+			<CookieCheckerContainer />
 			<BrowserRouter>
 				<NavContainer />
 				<Route />

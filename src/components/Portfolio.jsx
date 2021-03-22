@@ -57,8 +57,13 @@ function Portfolio({
 					<Box px={2} pb={2} clone>
 						<Paper id="start" ref={navIntersectionRef}>
 							<Box mb={2} textAlign="center">
-								<CustomLink to="#start" hash smooth>
-									<IconButton>
+								<CustomLink
+									aria-label="Start"
+									to="#start"
+									hash
+									smooth
+								>
+									<IconButton aria-label="See">
 										<ExpandMore />
 									</IconButton>
 								</CustomLink>

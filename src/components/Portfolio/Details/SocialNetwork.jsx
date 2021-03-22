@@ -17,7 +17,7 @@ SocialNetwork.propTypes = {
 function SocialNetwork({ profile: { url, network, username } }) {
 	return (
 		<Grid item xs={6} sm={4}>
-			<Button href={url} target="_blank">
+			<Button href={url} target="_blank" rel="noreferrer noopener">
 				<Box display="flex" flexDirection="column" alignItems="center">
 					<CustomIcon social={network} />
 					<Typography

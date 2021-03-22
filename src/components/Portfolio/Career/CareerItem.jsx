@@ -114,7 +114,7 @@ function CareerItem({
 				</TimelineOppositeContent>
 				<Hidden xsDown>
 					<TimelineSeparator>
-						<CustomLink to="#career" hash smooth>
+						<CustomLink aria-label="Work" to="#career" hash smooth>
 							<TimelineDot color="secondary">
 								{icon(career)}
 							</TimelineDot>

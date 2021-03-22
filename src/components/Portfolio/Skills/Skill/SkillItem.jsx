@@ -22,6 +22,7 @@ function SkillItem({ skill: { name, level } }) {
 			<CustomIcon technology={name} />
 			<Box ml={2} width="100%">
 				<LinearProgress
+					aria-label={name}
 					variant="determinate"
 					value={
 						level === LEVEL[3]

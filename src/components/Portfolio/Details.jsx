@@ -87,7 +87,9 @@ function Details({
 							/>
 						</Box>
 						<Box mb={2}>
-							<Typography variant="h5">{name}</Typography>
+							<Typography component="span" variant="h5">
+								{name}
+							</Typography>
 						</Box>
 						<Box mb={2}>
 							<Typography variant="body1">{email}</Typography>
@@ -103,6 +105,7 @@ function Details({
 								}`}
 								<ReactCountryFlag
 									countryCode={countryCode}
+									title={countryCode}
 									svg
 								/>
 								{` ${countryCode}`}
@@ -127,6 +130,7 @@ function Details({
 										size="large"
 										href={website}
 										target="_blank"
+										rel="noreferrer noopener"
 									>
 										{
 											languages[systemLanguageCode]

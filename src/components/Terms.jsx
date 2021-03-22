@@ -205,6 +205,7 @@ function Terms({ language: { systemLanguageCode } }) {
 								<Link
 									href="https://www.iconfinder.com/"
 									target="_blank"
+									rel="noreferrer noopener"
 								>
 									IconFinder
 								</Link>{' '}
@@ -216,6 +217,7 @@ function Terms({ language: { systemLanguageCode } }) {
 								<Link
 									href="https://devicon.dev/"
 									target="_blank"
+									rel="noreferrer noopener"
 								>
 									Devicon
 								</Link>{' '}
@@ -227,6 +229,7 @@ function Terms({ language: { systemLanguageCode } }) {
 								<Link
 									href="https://github.com/danalloway/react-country-flag"
 									target="_blank"
+									rel="noreferrer noopener"
 								>
 									react-country-flag
 								</Link>{' '}

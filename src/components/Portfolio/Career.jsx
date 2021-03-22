@@ -121,7 +121,12 @@ function Career({
 				) : (
 					<TimelineItem>
 						<TimelineSeparator>
-							<CustomLink to="#career" hash smooth>
+							<CustomLink
+								aria-label="Work"
+								to="#career"
+								hash
+								smooth
+							>
 								<TimelineDot color="primary">
 									<Star />
 								</TimelineDot>
@@ -142,7 +147,7 @@ function Career({
 				)}
 				<TimelineItem>
 					<TimelineSeparator>
-						<CustomLink to="#career" hash smooth>
+						<CustomLink aria-label="Work" to="#career" hash smooth>
 							<TimelineDot color="primary">
 								<ArrowUpward />
 							</TimelineDot>

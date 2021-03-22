@@ -102,6 +102,7 @@ function CareerItemButton({
 				href={link ?? ''}
 				target="_blank"
 				onClick={isEducation ? dialogToggle : undefined}
+				rel="noreferrer noopener"
 			>
 				{children}
 			</Button>

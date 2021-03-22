@@ -76,7 +76,12 @@ function ProjectItem({
 	return (
 		<Grid item xs={12} sm={6} md={4}>
 			<Box width="100%" clone>
-				<ButtonBase href={url} target="_blank" className={root}>
+				<ButtonBase
+					href={url}
+					target="_blank"
+					className={root}
+					rel="noreferrer noopener"
+				>
 					<Box
 						position="absolute"
 						width="100%"

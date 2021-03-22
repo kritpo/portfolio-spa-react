@@ -116,7 +116,11 @@ function PreferenceMenu({
 			</Box>
 			<FormControlLabel
 				control={
-					<Switch checked={darkMode} onChange={darkModeToggle} />
+					<Switch
+						aria-label="Dark mode"
+						checked={darkMode}
+						onChange={darkModeToggle}
+					/>
 				}
 				label={darkMode ? <Dark /> : <Light />}
 			/>

@@ -34,6 +34,7 @@ function Footer({ language: { systemLanguageCode } }) {
 						<Button
 							href="https://www.linkedin.com/in/jimmy-weng/"
 							target="_blank"
+							rel="noreferrer noopener"
 						>
 							<Box
 								display="flex"
@@ -53,6 +54,7 @@ function Footer({ language: { systemLanguageCode } }) {
 						<Button
 							href="https://github.com/kritpo"
 							target="_blank"
+							rel="noreferrer noopener"
 						>
 							<Box
 								display="flex"

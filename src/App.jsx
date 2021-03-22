@@ -128,11 +128,11 @@ function App({
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<CookieCheckerContainer />
 			<BrowserRouter>
 				<NavContainer />
 				<Route />
 				<FooterContainer />
+				<CookieCheckerContainer />
 			</BrowserRouter>
 		</ThemeProvider>
 	);

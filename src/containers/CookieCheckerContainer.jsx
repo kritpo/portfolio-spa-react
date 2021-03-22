@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { connect } from 'react-redux';
 
@@ -15,16 +15,7 @@ function CookieCheckerContainer({ ...props }) {
 	const [cookies, setCookies] = useCookies(['agreement']);
 
 	// setup the dialog status hook
-	const [open, setOpen] = useState(true);
-
-	// check if the cookie agreement is already accorded
-	useEffect(() => {
-		// check if the cookie agreement is defined
-		if (cookies.agreement === 'agree') {
-			// update the dialog status
-			setOpen(false);
-		}
-	}, [cookies.agreement]);
+	const [open, setOpen] = useState(cookies.agreement !== 'agree');
 
 	// setup the agree callback
 	const handleAgree = useCallback(() => {
@@ -33,6 +24,9 @@ function CookieCheckerContainer({ ...props }) {
 			path: '/',
 			sameSite: true
 		});
+
+		// close the dialog
+		setOpen(false);
 	}, [setCookies]);
 
 	// setup the disagree callback

@@ -53,7 +53,10 @@ export const encryptForm = formData =>
 							triggered: false
 					  }
 					: Array.isArray(payload)
-					? payload.map(subformData => encryptForm(subformData))
+					? payload.map((subformData, index) => ({
+							id: index,
+							...encryptForm(subformData)
+					  }))
 					: undefined
 		}),
 		{}
@@ -75,6 +78,12 @@ const checkError = (form, template, setForm) => {
 
 	// loop all fields
 	for (const fieldName in formCopy) {
+		// check if the field name is `id`
+		if (fieldName === 'id') {
+			// continue directly to the next execution of the loop
+			continue;
+		}
+
 		// retrieve the current field
 		const field = formCopy[fieldName];
 
@@ -117,7 +126,8 @@ const checkError = (form, template, setForm) => {
 
 // configure default props
 Form.defaultProps = {
-	sendingMessage: 'Sending in progress...'
+	sendingMessage: 'Sending in progress...',
+	sendedMessage: 'Sending succeed!'
 };
 
 // configure the prop types validation

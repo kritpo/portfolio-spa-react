@@ -1,8 +1,8 @@
 import { PropTypes } from 'prop-types';
 import React, { useCallback, useMemo } from 'react';
 
-import { Box, Button, Paper } from '@material-ui/core';
-import { Add, Remove } from '@material-ui/icons';
+import { Box, Button, IconButton, Paper } from '@material-ui/core';
+import { Add, ArrowDownward, ArrowUpward, Remove } from '@material-ui/icons';
 import { useTheme } from '@material-ui/styles';
 
 import Field from './Field';
@@ -16,7 +16,8 @@ Fields.propTypes = {
 				error: PropTypes.string.isRequired,
 				triggered: PropTypes.bool.isRequired
 			}),
-			PropTypes.array
+			PropTypes.array,
+			PropTypes.number
 		])
 	).isRequired,
 	setForm: PropTypes.func.isRequired,
@@ -34,7 +35,7 @@ Fields.propTypes = {
 	).isRequired,
 	autoSubmit: PropTypes.func.isRequired,
 	currentFieldsName: PropTypes.string,
-	currentFieldsIndex: PropTypes.number
+	currentFieldsId: PropTypes.number
 };
 
 function Fields({
@@ -43,7 +44,7 @@ function Fields({
 	template,
 	autoSubmit,
 	currentFieldsName,
-	currentFieldsIndex
+	currentFieldsId
 }) {
 	// setup the background color hooks
 	const {
@@ -139,7 +140,13 @@ function Fields({
 	const addSubform = useCallback(
 		field => () => {
 			// create a new subform
-			const subform = {};
+			const subform = {
+				id:
+					form[field].reduce(
+						(previousMax, { id }) => Math.max(previousMax, id),
+						0
+					) + 1
+			};
 
 			// check the template to hydrate the subform
 			Object.entries(template[field].subform).forEach(
@@ -171,7 +178,7 @@ function Fields({
 				return formCopy;
 			});
 		},
-		[setForm, template]
+		[form, setForm, template]
 	);
 
 	// setup the remove subform callback
@@ -191,6 +198,52 @@ function Fields({
 		[setForm]
 	);
 
+	// setup the move up subform callback
+	const moveUpSubform = useCallback(
+		(field, index) => () => {
+			// check if the index is greater than 0
+			if (index > 0) {
+				// update the form
+				setForm(prev => {
+					// retrieve a copy of the form
+					const formCopy = { ...prev };
+
+					// remove the subform from the field
+					const subForm = formCopy[field].splice(index, 1);
+
+					// replace the subform at the previous index
+					formCopy[field].splice(index - 1, 0, subForm[0]);
+
+					return formCopy;
+				});
+			}
+		},
+		[setForm]
+	);
+
+	// setup the move down subform callback
+	const moveDownSubform = useCallback(
+		(field, index) => () => {
+			// check if the index is lower than the last index
+			if (index < form[field].length - 1) {
+				// update the form
+				setForm(prev => {
+					// retrieve a copy of the form
+					const formCopy = { ...prev };
+
+					// remove the subform from the field
+					const subForm = formCopy[field].splice(index, 1);
+
+					// replace the subform at the nex index
+					formCopy[field].splice(index + 1, 0, subForm[0]);
+
+					return formCopy;
+				});
+			}
+		},
+		[form, setForm]
+	);
+
 	return Object.entries(form).map(([key, field]) =>
 		!Array.isArray(field) ? (
 			<Box mb={2} key={key}>
@@ -201,7 +254,7 @@ function Fields({
 					autoSubmit={autoSubmit}
 					preName={
 						currentFieldsName !== undefined
-							? `${currentFieldsName}_${currentFieldsIndex}`
+							? `${currentFieldsName}_${currentFieldsId}`
 							: undefined
 					}
 				/>
@@ -210,16 +263,46 @@ function Fields({
 			<Box mb={2} p={1} bgcolor={defaultBG} clone key={key}>
 				<Paper elevation={4}>
 					{field.map((subForm, index) => (
-						<Box mb={2} p={1} clone key={index}>
+						<Box mb={2} p={1} clone key={subForm.id}>
 							<Paper elevation={2}>
-								<Button
-									variant="contained"
-									color="secondary"
-									startIcon={<Remove />}
-									onClick={removeSubform(key, index)}
-								>
-									{template[key].removeLabel}
-								</Button>
+								<Box display="flex">
+									<Button
+										variant="contained"
+										color="secondary"
+										startIcon={<Remove />}
+										onClick={removeSubform(key, index)}
+									>
+										{template[key].removeLabel}
+									</Button>
+									<Box display="flex">
+										{index > 0 && (
+											<IconButton
+												variant="contained"
+												color="primary"
+												aria-label="up"
+												onClick={moveUpSubform(
+													key,
+													index
+												)}
+											>
+												<ArrowUpward />
+											</IconButton>
+										)}
+										{index < field.length - 1 && (
+											<IconButton
+												variant="contained"
+												color="primary"
+												aria-label="down"
+												onClick={moveDownSubform(
+													key,
+													index
+												)}
+											>
+												<ArrowDownward />
+											</IconButton>
+										)}
+									</Box>
+								</Box>
 								<Fields
 									form={subForm}
 									setForm={setSubform(key, index)}
@@ -227,10 +310,10 @@ function Fields({
 									autoSubmit={autoSubmit}
 									currentFieldsName={`${
 										currentFieldsName !== undefined
-											? `${currentFieldsName}_${currentFieldsIndex}_`
+											? `${currentFieldsName}_${currentFieldsId}_`
 											: ''
 									}${key}`}
-									currentFieldsIndex={index}
+									currentFieldsId={subForm.id}
 								/>
 							</Paper>
 						</Box>

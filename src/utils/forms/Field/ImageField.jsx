@@ -26,7 +26,8 @@ ImageField.propTypes = {
 				value: PropTypes.any,
 				error: PropTypes.string.isRequired
 			}),
-			PropTypes.array
+			PropTypes.array,
+			PropTypes.number
 		])
 	).isRequired,
 	template: PropTypes.shape({

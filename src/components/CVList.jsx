@@ -5,6 +5,7 @@ import {
 	Box,
 	Button,
 	Container,
+	Grid,
 	Paper,
 	Table,
 	TableBody,
@@ -135,44 +136,53 @@ function CVList({
 										</TableBody>
 									</Table>
 								</TableContainer>
-								<Box>
-									<CustomLink to={CV_CREATE}>
-										<Box m={2} clone>
-											<Button
-												variant="contained"
-												color="secondary"
-												startIcon={<Add />}
-											>
-												{
-													languages[
-														systemLanguageCode
-													].cvList.create
-												}
-											</Button>
-										</Box>
-									</CustomLink>
-									{resumeLanguages.languages.length > 0 && (
-										<CustomLink
-											to={PORTFOLIO.replace(
-												':username',
-												username
-											)}
-										>
-											<Box m={2} clone>
+								<Box mt={2}>
+									<Grid
+										container
+										spacing={2}
+										justify="center"
+									>
+										<Grid item>
+											<CustomLink to={CV_CREATE}>
 												<Button
 													variant="contained"
 													color="secondary"
-													startIcon={<Visibility />}
+													startIcon={<Add />}
 												>
 													{
 														languages[
 															systemLanguageCode
-														].cvList.see
+														].cvList.create
 													}
 												</Button>
-											</Box>
-										</CustomLink>
-									)}
+											</CustomLink>
+										</Grid>
+										{resumeLanguages.languages.length >
+											0 && (
+											<Grid item>
+												<CustomLink
+													to={PORTFOLIO.replace(
+														':username',
+														username
+													)}
+												>
+													<Button
+														variant="contained"
+														color="secondary"
+														startIcon={
+															<Visibility />
+														}
+													>
+														{
+															languages[
+																systemLanguageCode
+															].cvList.see
+														}
+													</Button>
+												</CustomLink>
+											</Grid>
+										)}
+									</Grid>
 								</Box>
 							</Fragment>
 						)}

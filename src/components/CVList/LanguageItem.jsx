@@ -10,6 +10,7 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
+	Grid,
 	TableCell,
 	TableRow
 } from '@material-ui/core';
@@ -63,39 +64,46 @@ function LanguageItem({
 			</TableCell>
 			<TableCell align="center">{language}</TableCell>
 			<TableCell align="center">
-				<CustomLink to={`${CV_UPDATE}?languageCode=${languageCode}`}>
-					<Box mx={2} my={1} clone>
+				<Grid container spacing={2} justify="center">
+					<Grid item>
+						<CustomLink
+							to={`${CV_UPDATE}?languageCode=${languageCode}`}
+						>
+							<Button
+								variant="contained"
+								color="secondary"
+								startIcon={<Create />}
+							>
+								{languages[systemLanguageCode].cvList.update}
+							</Button>
+						</CustomLink>
+					</Grid>
+					<Grid item>
 						<Button
 							variant="contained"
 							color="secondary"
-							startIcon={<Create />}
+							startIcon={<Delete />}
+							onClick={onDeletePending}
 						>
-							{languages[systemLanguageCode].cvList.update}
+							{languages[systemLanguageCode].cvList.delete}
 						</Button>
-					</Box>
-				</CustomLink>
-				<Box mx={2} my={1} clone>
-					<Button
-						variant="contained"
-						color="secondary"
-						startIcon={<Delete />}
-						onClick={onDeletePending}
-					>
-						{languages[systemLanguageCode].cvList.delete}
-					</Button>
-				</Box>
-				{defaultLanguage.languageCode !== languageCode && (
-					<Box mx={2} my={1} clone>
-						<Button
-							variant="contained"
-							color="secondary"
-							startIcon={<FirstPage />}
-							onClick={setDefault(languageCode)}
-						>
-							{languages[systemLanguageCode].cvList.setDefault}
-						</Button>
-					</Box>
-				)}
+					</Grid>
+					{defaultLanguage.languageCode !== languageCode && (
+						<Grid item>
+							<Button
+								variant="contained"
+								color="secondary"
+								startIcon={<FirstPage />}
+								onClick={setDefault(languageCode)}
+							>
+								{
+									languages[systemLanguageCode].cvList
+										.setDefault
+								}
+							</Button>
+						</Grid>
+					)}
+				</Grid>
 				<Dialog
 					open={deletePending}
 					onClose={handleClose}

@@ -3,9 +3,24 @@ import React, { useCallback, useMemo } from 'react';
 
 import { Box, Button, IconButton, Paper } from '@material-ui/core';
 import { Add, ArrowDownward, ArrowUpward, Remove } from '@material-ui/icons';
-import { useTheme } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
 
 import Field from './Field';
+
+/**
+ * define the style of the component
+ */
+const useStyles = makeStyles(
+	({
+		palette: {
+			background: { default: defaultBG }
+		}
+	}) => ({
+		subform: {
+			backgroundColor: defaultBG
+		}
+	})
+);
 
 // configure the prop types validation
 Fields.propTypes = {
@@ -46,12 +61,7 @@ function Fields({
 	currentFieldsName,
 	currentFieldsId
 }) {
-	// setup the background color hooks
-	const {
-		palette: {
-			background: { default: defaultBG }
-		}
-	} = useTheme();
+	const { subform: subformClass } = useStyles();
 
 	// setup form handler
 	const handleForm = useMemo(
@@ -260,8 +270,8 @@ function Fields({
 				/>
 			</Box>
 		) : (
-			<Box mb={2} p={1} bgcolor={defaultBG} clone key={key}>
-				<Paper elevation={4}>
+			<Box mb={2} p={1} clone key={key}>
+				<Paper className={subformClass} elevation={4}>
 					{field.map((subForm, index) => (
 						<Box mb={2} p={1} clone key={subForm.id}>
 							<Paper elevation={2}>

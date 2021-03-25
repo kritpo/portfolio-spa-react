@@ -1,18 +1,41 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
-import { useTheme, withStyles } from '@material-ui/styles';
+import { Box, Button, Grid, Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 
-import { Grid, Paper, Box, Button } from '@material-ui/core';
+import CustomLink from '../../utils/CustomLink';
 
-import CustomLink from '../../tools/CustomLink';
-
-// define the style of the component
-const styles = theme => ({
+/**
+ * define the style of the component
+ * @param {object} theme the current applied theme
+ * @returns the style object
+ */
+const styles = ({ palette: { divider } }) => ({
 	active: {
-		backgroundColor: theme.palette.divider
+		backgroundColor: divider
 	}
 });
+
+/**
+ * convert links details to React component
+ * @param {array} children the list of links data
+ * @param {object} active the active class
+ * @returns the components array
+ */
+const links = (children, active) =>
+	children.map(({ title, link, isHash = false }) => (
+		<CustomLink
+			to={link}
+			nav
+			hash={isHash}
+			activeClassName={active}
+			smooth={isHash}
+			key={link}
+		>
+			<Button>{title}</Button>
+		</CustomLink>
+	));
 
 // configure the prop types validation
 NavBar.propTypes = {
@@ -23,30 +46,34 @@ NavBar.propTypes = {
 			isHash: PropTypes.bool
 		})
 	).isRequired,
-	darkModeMenu: PropTypes.element.isRequired
+	theme: PropTypes.shape({
+		palette: PropTypes.shape({
+			primary: PropTypes.shape({
+				light: PropTypes.string.isRequired,
+				main: PropTypes.string.isRequired,
+				dark: PropTypes.string.isRequired
+			}).isRequired,
+			type: PropTypes.string.isRequired
+		}).isRequired
+	}).isRequired,
+	darkModeMenu: PropTypes.element.isRequired,
+	left: PropTypes.element,
+	right: PropTypes.element
 };
 
-function NavBar({ classes, children, darkModeMenu }) {
-	// retrieve the current theme
-	const theme = useTheme();
-
-	// convert links details to React component
-	const links = children.map(({ title, link, isHash = false }, index) => (
-		<CustomLink
-			to={link}
-			nav
-			hash={isHash}
-			activeClassName={classes.active}
-			smooth={isHash}
-			key={index}
-		>
-			<Button>{title}</Button>
-		</CustomLink>
-	));
-
+function NavBar({
+	classes: { active },
+	children,
+	theme: {
+		palette: { primary, type }
+	},
+	darkModeMenu,
+	left,
+	right
+}) {
 	return (
 		<Box
-			zIndex="appBar"
+			zIndex="drawer"
 			position="fixed"
 			display="flex"
 			alignItems="center"
@@ -57,12 +84,14 @@ function NavBar({ classes, children, darkModeMenu }) {
 			<Paper
 				square
 				style={{
-					backgroundColor: theme.palette.primary[theme.palette.type]
+					backgroundColor: primary[type]
 				}}
 			>
+				{left}
 				<Grid container spacing={2} justify="center">
-					{links}
+					{links(children, active)}
 				</Grid>
+				{right}
 				{darkModeMenu}
 			</Paper>
 		</Box>

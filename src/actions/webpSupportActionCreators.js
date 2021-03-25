@@ -1,4 +1,4 @@
-import * as ActionTypes from './types';
+import { SET_WEBP_SUPPORT } from './types';
 
 /**
  * check the webp image format support
@@ -22,17 +22,22 @@ export const checkWebpSupport = () => dispatch => {
 			// create image
 			.then(blob => createImageBitmap(blob))
 			// set the webp support state to true
-			.then(() => dispatch(setWebpSupport(true)))
+			.then(() => {
+				dispatch(setWebpSupport(true));
+			})
 			// set the webp support state to false, as an error occurs
-			.catch(() => dispatch(setWebpSupport(false)))
+			.catch(() => {
+				dispatch(setWebpSupport(false));
+			})
 	);
 };
 
 /**
  * redux action: check if the browser support the webp image format
  * @param {boolean} payload if the webp image format is supported
+ * @returns the action
  */
 export const setWebpSupport = payload => ({
-	type: ActionTypes.SET_WEBP_SUPPORT,
+	type: SET_WEBP_SUPPORT,
 	payload
 });

@@ -1,52 +1,45 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
+import React from 'react';
 
-import { Box, Card, CardContent, Typography } from '@material-ui/core';
-import { FormatQuote } from '@material-ui/icons';
+import { Box, Typography } from '@material-ui/core';
+
+import languages from '../../utils/languages';
+import ReferenceItem from './References/ReferenceItem';
+
+/**
+ * convert reference details to React component
+ * @param {array} references the list of references data
+ * @returns the components array
+ */
+const referencesList = references =>
+	references.map((reference, index) => (
+		<ReferenceItem reference={reference} key={index} />
+	));
 
 // configure the prop types validation
 References.propTypes = {
-	resume: PropTypes.shape({
-		references: PropTypes.arrayOf(
-			PropTypes.shape({
-				name: PropTypes.string.isRequired,
-				reference: PropTypes.string.isRequired
-			})
-		).isRequired
+	references: PropTypes.arrayOf(PropTypes.object).isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
 	}).isRequired
 };
 
-function References({ resume }) {
-	// convert reference details to React component
-	const references = resume.references.map((reference, index) => (
-		<Box m={4} elevation={4} clone key={index}>
-			<Card>
-				<Box mt={1} ml={2} align="left">
-					<FormatQuote fontSize="large" />
-				</Box>
-				<CardContent>
-					<Typography variant="body1">
-						{reference.reference}
-					</Typography>
-				</CardContent>
-				<Box ml={2} mb={1} align="left" fontStyle="italic">
-					<Typography variant="caption" color="textSecondary">
-						-- {reference.name}
-					</Typography>
-				</Box>
-				<Box mb={1} mr={2} align="right">
-					<FormatQuote fontSize="large" />
-				</Box>
-			</Card>
-		</Box>
-	));
-
+function References({ references, language: { systemLanguageCode } }) {
 	return (
 		<Box textAlign="center">
 			<Typography component="h3" variant="h4" gutterBottom>
-				Mes recommandations
+				{languages[systemLanguageCode].portfolio.references.title}
 			</Typography>
-			{references}
+			{references.length > 0 ? (
+				referencesList(references)
+			) : (
+				<Typography variant="body1">
+					{
+						languages[systemLanguageCode].portfolio.references
+							.noElements
+					}
+				</Typography>
+			)}
 		</Box>
 	);
 }

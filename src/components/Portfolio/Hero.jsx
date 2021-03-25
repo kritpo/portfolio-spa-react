@@ -1,28 +1,34 @@
-import React from 'react';
 import { PropTypes } from 'prop-types';
-
-import { withStyles } from '@material-ui/styles';
-
-import hero800w from '../../assets/hero/hero-800w.png';
-import hero1366w from '../../assets/hero/hero-1366w.png';
-import hero1440w from '../../assets/hero/hero-1440w.png';
-import hero1536w from '../../assets/hero/hero-1536w.png';
-import hero1920w from '../../assets/hero/hero-1920w.png';
-import hero2560w from '../../assets/hero/hero-2560w.png';
-import hero3768w from '../../assets/hero/hero-3768w.png';
-
-import webpHero800w from '../../assets/hero/hero-800w.webp';
-import webpHero1366w from '../../assets/hero/hero-1366w.webp';
-import webpHero1440w from '../../assets/hero/hero-1440w.webp';
-import webpHero1536w from '../../assets/hero/hero-1536w.webp';
-import webpHero1920w from '../../assets/hero/hero-1920w.webp';
-import webpHero2560w from '../../assets/hero/hero-2560w.webp';
-import webpHero3768w from '../../assets/hero/hero-3768w.webp';
+import React from 'react';
 
 import { Box, Container, Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/styles';
 
-// define the style of the component
-const styles = theme => ({
+import hero1366w from '../../assets/hero/hero-1366w.png';
+import webpHero1366w from '../../assets/hero/hero-1366w.webp';
+import hero1440w from '../../assets/hero/hero-1440w.png';
+import webpHero1440w from '../../assets/hero/hero-1440w.webp';
+import hero1536w from '../../assets/hero/hero-1536w.png';
+import webpHero1536w from '../../assets/hero/hero-1536w.webp';
+import hero1920w from '../../assets/hero/hero-1920w.png';
+import webpHero1920w from '../../assets/hero/hero-1920w.webp';
+import hero2560w from '../../assets/hero/hero-2560w.png';
+import webpHero2560w from '../../assets/hero/hero-2560w.webp';
+import hero3768w from '../../assets/hero/hero-3768w.png';
+import webpHero3768w from '../../assets/hero/hero-3768w.webp';
+import hero800w from '../../assets/hero/hero-800w.png';
+import webpHero800w from '../../assets/hero/hero-800w.webp';
+
+/**
+ * define the style of the component
+ * @param {object} theme the current applied theme
+ * @returns the style object
+ */
+const styles = ({
+	palette: {
+		background: { default: defaultBG }
+	}
+}) => ({
 	root: {
 		backgroundImage: ({ webpSupport }) =>
 			webpSupport ? `url(${webpHero800w})` : `url(${hero800w})`,
@@ -62,7 +68,7 @@ const styles = theme => ({
 	},
 	// filter the hero background to match the theme
 	filter: {
-		backgroundColor: `${theme.palette.background.default}66`
+		backgroundColor: `${defaultBG}66`
 	}
 });
 
@@ -74,15 +80,22 @@ Hero.propTypes = {
 	descriptionCursor: PropTypes.string.isRequired
 };
 
-function Hero({ classes, title, titleCursor, description, descriptionCursor }) {
+function Hero({
+	classes: { root, filter },
+	title,
+	titleCursor,
+	description,
+	descriptionCursor
+}) {
 	return (
 		<Box
 			component="header"
 			width="100%"
 			height="100vh"
-			className={classes.root}
+			overflow="hidden"
+			className={root}
 		>
-			<Box width="100%" height="100%" className={classes.filter}>
+			<Box width="100%" height="100%" className={filter}>
 				<Container fixed>
 					<Box
 						display="flex"

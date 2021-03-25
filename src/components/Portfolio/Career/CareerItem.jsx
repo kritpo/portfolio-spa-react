@@ -1,47 +1,45 @@
-import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
-import { useTheme } from '@material-ui/core/styles';
-
+import { Box, Card, CardContent, Hidden, Typography } from '@material-ui/core';
 import {
-	Box,
-	Card,
-	CardContent,
-	Typography,
-	Hidden,
-	useMediaQuery
-} from '@material-ui/core';
-import {
-	TimelineItem,
-	TimelineContent,
-	TimelineOppositeContent,
-	TimelineSeparator,
 	TimelineConnector,
-	TimelineDot
+	TimelineContent,
+	TimelineDot,
+	TimelineItem,
+	TimelineOppositeContent,
+	TimelineSeparator
 } from '@material-ui/lab';
 
-import CustomIcon from '../../../tools/icons/CustomIcon';
-import CustomLink from '../../../tools/CustomLink';
-import CareerItemButton from './CareerItemButton';
+import CareerItemButtonContainer from '../../../containers/Portfolio/Career/CareerItemButtonContainer';
+import CustomLink from '../../../utils/CustomLink';
+import CustomIcon from '../../../utils/icons/CustomIcon';
+import languages from '../../../utils/languages';
 
 // setup career types constants
-export const WORK = 'WORK';
-export const VOLUNTEER = 'VOLUNTEER';
-export const EDUCATION = 'EDUCATION';
+export const WORK = 'Work';
+export const EDUCATION = 'Education';
+export const VOLUNTEER = 'Volunteer';
+
+/**
+ * retrieve the good icon
+ * @param {object} career the career object
+ * @returns the component
+ */
+const icon = ({ type, isInternship }) => (
+	<CustomIcon
+		career={type !== WORK ? type : isInternship ? 'Internship' : WORK}
+	/>
+);
 
 // configure the prop types validation
 CareerItem.propTypes = {
 	career: PropTypes.oneOfType([
 		// work career object shape
 		PropTypes.shape({
-			company: PropTypes.string.isRequired,
-			position: PropTypes.string.isRequired,
+			isInternship: PropTypes.bool,
 			website: PropTypes.string.isRequired,
-			startDate: PropTypes.string.isRequired,
-			endDate: PropTypes.string,
 			summary: PropTypes.string.isRequired,
-			highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
-				.isRequired,
 			type: PropTypes.oneOf([WORK]).isRequired
 		}),
 
@@ -50,74 +48,47 @@ CareerItem.propTypes = {
 			institution: PropTypes.string.isRequired,
 			area: PropTypes.string.isRequired,
 			studyType: PropTypes.string.isRequired,
-			startDate: PropTypes.string.isRequired,
-			endDate: PropTypes.string,
 			gpa: PropTypes.string.isRequired,
-			courses: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+			courses: PropTypes.arrayOf(
+				PropTypes.shape({
+					category: PropTypes.string.isRequired,
+					courses: PropTypes.arrayOf(PropTypes.string).isRequired
+				})
+			).isRequired,
 			type: PropTypes.oneOf([EDUCATION]).isRequired
 		}),
 
 		// volunteer career object shape
 		PropTypes.shape({
 			organization: PropTypes.string.isRequired,
-			position: PropTypes.string.isRequired,
 			website: PropTypes.string.isRequired,
-			startDate: PropTypes.string.isRequired,
-			endDate: PropTypes.string,
 			summary: PropTypes.string.isRequired,
-			highlights: PropTypes.arrayOf(PropTypes.string.isRequired)
-				.isRequired,
 			type: PropTypes.oneOf([VOLUNTEER]).isRequired
 		})
 	]).isRequired,
-	id: PropTypes.number.isRequired
+	id: PropTypes.number.isRequired,
+	isUpSm: PropTypes.bool.isRequired,
+	startDate: PropTypes.string.isRequired,
+	endDate: PropTypes.string.isRequired,
+	careerTitle: PropTypes.string.isRequired,
+	entityName: PropTypes.string.isRequired,
+	careerHighlights: PropTypes.string.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
-function CareerItem({ career, id }) {
-	// setup the breakpoints matchers hooks
-	const theme = useTheme();
-	const isUpSm = useMediaQuery(theme.breakpoints.up('sm'));
-
-	// compute the dates
-	const startDate = new Date(career.startDate).toLocaleDateString();
-	const endDate =
-		career.endDate !== undefined
-			? new Date(career.endDate).toLocaleDateString()
-			: 'Présent';
-
-	// retrieve the good icon
-	const icon = (
-		<CustomIcon
-			career={
-				career.type !== WORK
-					? career.type
-					: career.position.includes('Stage')
-					? 'Internship'
-					: WORK
-			}
-		/>
-	);
-
-	// retrieve the title associated to the career item
-	const careerTitle =
-		career.type === EDUCATION
-			? career.studyType
-			: career.position.replace(/^\[.+?\]/, '');
-
-	// retrieve the name of the career reference entity
-	const entityName =
-		career.type === WORK
-			? career.company
-			: career.type === EDUCATION
-			? career.institution
-			: career.organization;
-
-	// retrieve the highlights elements associated to the career item
-	const careerHighlights =
-		career.type === EDUCATION
-			? `${career.area} - GPA: ${career.gpa}`
-			: career.highlights.join(' - ');
-
+function CareerItem({
+	career,
+	id,
+	isUpSm,
+	startDate,
+	endDate,
+	careerTitle,
+	entityName,
+	careerHighlights,
+	language: { systemLanguageCode }
+}) {
 	return (
 		<Box
 			flexDirection={isUpSm ? 'row' : 'column'}
@@ -143,8 +114,10 @@ function CareerItem({ career, id }) {
 				</TimelineOppositeContent>
 				<Hidden xsDown>
 					<TimelineSeparator>
-						<CustomLink to="#career" hash smooth>
-							<TimelineDot color="secondary">{icon}</TimelineDot>
+						<CustomLink aria-label="Work" to="#career" hash smooth>
+							<TimelineDot color="secondary">
+								{icon(career)}
+							</TimelineDot>
 						</CustomLink>
 						<TimelineConnector />
 					</TimelineSeparator>
@@ -171,15 +144,19 @@ function CareerItem({ career, id }) {
 								</Box>
 							)}
 							<Box mt={2}>
-								<CareerItemButton
+								<CareerItemButtonContainer
 									link={career.website}
 									courses={career.courses}
 									id={id}
 								>
 									{career.type === EDUCATION
-										? 'Voir les cours'
-										: 'Voir le site'}
-								</CareerItemButton>
+										? languages[systemLanguageCode]
+												.portfolio.career.menu
+												.showCourses
+										: languages[systemLanguageCode]
+												.portfolio.career.menu
+												.goToWebsite}
+								</CareerItemButtonContainer>
 							</Box>
 						</CardContent>
 					</Card>

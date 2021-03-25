@@ -1,9 +1,10 @@
+import { PropTypes } from 'prop-types';
 import React, { useEffect, useMemo } from 'react';
-
+import { useCookies } from 'react-cookie';
 import { connect } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { CssBaseline } from '@material-ui/core';
 import {
 	amber,
 	blue,
@@ -12,44 +13,88 @@ import {
 	orange,
 	red
 } from '@material-ui/core/colors';
-
-import { checkWebpSupport, setThemeMode } from './actions';
-
-import { BrowserRouter } from 'react-router-dom';
-
-import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
-
-import NavContainer from './containers/NavContainer';
-import Footer from './components/Footer';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Route from './Route';
+import {
+	autoLogin,
+	checkWebpSupport,
+	setLanguage,
+	setThemeMode
+} from './actions';
+import CookieCheckerContainer from './containers/CookieCheckerContainer';
+import FooterContainer from './containers/FooterContainer';
+import NavContainer from './containers/NavContainer';
 
 // configure the states to pass as props to the component
-const mapStateToProps = (state, ...props) => ({
-	darkMode: state.darkMode,
+const mapStateToProps = ({ darkMode }, ...props) => ({
+	darkMode,
 	...props
 });
 
 // configure the actions to pass as props to the component
 const mapDispatchToProps = {
 	checkWebpSupport,
-	setThemeMode
+	setThemeMode,
+	autoLogin,
+	setLanguage
 };
 
-function App({ darkMode, checkWebpSupport, setThemeMode }) {
-	// check the webp image support
-	useEffect(() => {
-		checkWebpSupport();
-	}, [checkWebpSupport]);
+// configure the prop types validation
+App.propTypes = {
+	darkMode: PropTypes.bool.isRequired,
+	checkWebpSupport: PropTypes.func.isRequired,
+	setThemeMode: PropTypes.func.isRequired,
+	autoLogin: PropTypes.func.isRequired,
+	setLanguage: PropTypes.func.isRequired
+};
+
+function App({
+	darkMode,
+	checkWebpSupport,
+	setThemeMode,
+	autoLogin,
+	setLanguage
+}) {
+	// setup the cookies hook
+	const [cookies] = useCookies(['darkMode', 'languageCode']);
 
 	// setup the dark mode status hook
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
+	// check the webp image support and try to auto login the user
+	useEffect(() => {
+		checkWebpSupport();
+		autoLogin();
+	}, [autoLogin, checkWebpSupport]);
+
 	// save the user theme
 	useEffect(() => {
-		setThemeMode(prefersDarkMode);
-	}, [prefersDarkMode, setThemeMode]);
+		// check if the cookie if not defined
+		if (cookies.darkMode === undefined) {
+			setThemeMode(prefersDarkMode);
+		} else {
+			setThemeMode(cookies.darkMode === 'true');
+		}
+	}, [cookies.darkMode, prefersDarkMode, setThemeMode]);
+
+	// save the user language
+	useEffect(() => {
+		// check if the cookie if not defined
+		if (cookies.languageCode === undefined) {
+			setLanguage(
+				(
+					(navigator.languages && navigator.languages[0]) ||
+					navigator.language ||
+					navigator.userLanguage
+				).substr(0, 2)
+			);
+		} else {
+			setLanguage(cookies.languageCode);
+		}
+	}, [cookies.languageCode, setLanguage]);
 
 	// setup the app theme
 	const theme = useMemo(
@@ -86,7 +131,8 @@ function App({ darkMode, checkWebpSupport, setThemeMode }) {
 			<BrowserRouter>
 				<NavContainer />
 				<Route />
-				<Footer />
+				<FooterContainer />
+				<CookieCheckerContainer />
 			</BrowserRouter>
 		</ThemeProvider>
 	);

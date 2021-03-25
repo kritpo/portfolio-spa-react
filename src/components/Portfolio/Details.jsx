@@ -1,69 +1,72 @@
-import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
+import ReactCountryFlag from 'react-country-flag';
 
 import {
+	Avatar,
 	Box,
+	Button,
 	Grid,
 	Paper,
-	Button,
-	Typography,
-	Avatar
+	Typography
 } from '@material-ui/core';
 
-import CustomIcon from '../../tools/icons/CustomIcon';
+import languages from '../../utils/languages';
+import SocialNetwork from './Details/SocialNetwork';
+
+/**
+ * convert profiles details to React component
+ * @param {array} profiles the list of profiles data
+ * @returns the components array
+ */
+const socialNetwork = profiles =>
+	profiles.map((profile, index) => (
+		<SocialNetwork profile={profile} key={index} />
+	));
 
 // configure the prop types validation
 Details.propTypes = {
-	resume: PropTypes.shape({
-		basics: PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			picture: PropTypes.string.isRequired,
-			email: PropTypes.string.isRequired,
-			phone: PropTypes.string.isRequired,
-			website: PropTypes.string.isRequired,
-			summary: PropTypes.string.isRequired,
-			location: PropTypes.shape({
-				address: PropTypes.string.isRequired,
-				postalCode: PropTypes.string.isRequired,
-				city: PropTypes.string.isRequired,
-				countryCode: PropTypes.string.isRequired,
-				region: PropTypes.string.isRequired
-			}).isRequired,
-			profiles: PropTypes.arrayOf(
-				PropTypes.shape({
-					network: PropTypes.string.isRequired,
-					username: PropTypes.string.isRequired,
-					url: PropTypes.string.isRequired
-				})
-			).isRequired
-		}).isRequired
+	basics: PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		email: PropTypes.string.isRequired,
+		phone: PropTypes.string.isRequired,
+		location: PropTypes.shape({
+			address: PropTypes.string.isRequired,
+			postalCode: PropTypes.string.isRequired,
+			city: PropTypes.string.isRequired,
+			region: PropTypes.string.isRequired,
+			countryCode: PropTypes.string.isRequired
+		}).isRequired,
+		profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
+		summary: PropTypes.string.isRequired,
+		website: PropTypes.string.isRequired
+	}).isRequired,
+	isMain: PropTypes.bool.isRequired,
+	imageUrl: PropTypes.string.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
 	}).isRequired
 };
 
-function Details({ resume }) {
-	// convert profiles details to React component
-	const socialNetwork = resume.basics.profiles.map((profile, index) => (
-		<Grid item xs={6} sm={4} key={index}>
-			<Button href={profile.url} target="_blank">
-				<Box display="flex" flexDirection="column" alignItems="center">
-					<CustomIcon social={profile.network} />
-					<Typography
-						variant="body1"
-						style={{ textTransform: 'none' }}
-						noWrap
-					>
-						{profile.username}
-					</Typography>
-				</Box>
-			</Button>
-		</Grid>
-	));
-
+function Details({
+	basics: {
+		name,
+		email,
+		phone,
+		location: { address, postalCode, city, region, countryCode },
+		profiles,
+		summary,
+		website
+	},
+	isMain,
+	imageUrl,
+	language: { systemLanguageCode }
+}) {
 	return (
 		<Fragment>
 			<Box textAlign="center" clone>
 				<Typography component="h3" variant="h4" gutterBottom>
-					Ma présentation
+					{languages[systemLanguageCode].portfolio.details.title}
 				</Typography>
 			</Box>
 			<Grid container spacing={2}>
@@ -78,34 +81,38 @@ function Details({ resume }) {
 					>
 						<Box mb={2} clone>
 							<Avatar
-								alt={`Portfolio de ${resume.basics.name}`}
-								src={resume.basics.picture}
-								style={{height:'20vh',width:'20vh'}}
+								alt={name}
+								src={imageUrl}
+								style={{ height: '20vh', width: '20vh' }}
 							/>
 						</Box>
 						<Box mb={2}>
-							<Typography variant="h5">
-								{resume.basics.name}
+							<Typography component="span" variant="h5">
+								{name}
 							</Typography>
 						</Box>
 						<Box mb={2}>
-							<Typography variant="body1">
-								{resume.basics.email}
-							</Typography>
-							<Typography variant="body1">
-								{resume.basics.phone}
-							</Typography>
+							<Typography variant="body1">{email}</Typography>
+							<Typography variant="body1">{phone}</Typography>
 						</Box>
 						<Box mb={2}>
+							<Typography variant="body1">{address}</Typography>
 							<Typography variant="body1">
-								{resume.basics.location.address}
-							</Typography>
-							<Typography variant="body1">
-								{`${resume.basics.location.postalCode}, ${resume.basics.location.city}, ${resume.basics.location.region}, ${resume.basics.location.countryCode}`}
+								{`${postalCode}${
+									postalCode !== '' ? ', ' : ''
+								}${city}, ${region}${
+									region !== '' ? ', ' : ''
+								}`}
+								<ReactCountryFlag
+									countryCode={countryCode}
+									title={countryCode}
+									svg
+								/>
+								{` ${countryCode}`}
 							</Typography>
 						</Box>
 						<Grid container spacing={2} justify="center">
-							{socialNetwork}
+							{socialNetwork(profiles)}
 						</Grid>
 					</Box>
 				</Grid>
@@ -114,9 +121,24 @@ function Details({ resume }) {
 						<Paper elevation={4}>
 							<Box whiteSpace="pre-line" clone>
 								<Typography variant="body2">
-									{resume.basics.summary}
+									{summary}
 								</Typography>
 							</Box>
+							{!isMain && website && website !== '' && (
+								<Box mt={2}>
+									<Button
+										size="large"
+										href={website}
+										target="_blank"
+										rel="noreferrer noopener"
+									>
+										{
+											languages[systemLanguageCode]
+												.portfolio.details.goToWebsite
+										}
+									</Button>
+								</Box>
+							)}
 						</Paper>
 					</Box>
 				</Grid>

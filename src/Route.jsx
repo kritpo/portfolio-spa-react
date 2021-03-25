@@ -1,33 +1,52 @@
+import { PropTypes } from 'prop-types';
 import React, { Suspense } from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 
+import Error401Container from './containers/Error401Container';
+import Error404Container from './containers/Error404Container';
 import routes from './routes';
+import Loading from './utils/Loading';
 
-import { Switch, Route } from 'react-router-dom';
+// convert routes details to React component
+const routesList = username =>
+	routes.map(({ path, exact, component, logged }) =>
+		logged === undefined ||
+		(logged && username !== '') ||
+		(!logged && username === '') ? (
+			<Route path={path} exact={exact} component={component} key={path} />
+		) : (
+			<Route
+				path={path}
+				exact={exact}
+				component={Error401Container}
+				key={path}
+			/>
+		)
+	);
 
-import Loading from './tools/Loading';
-import Error404 from './components/Error404';
+// configure the states to pass as props to the component
+const mapStateToProps = ({ username }, ...props) => ({
+	username,
+	...props
+});
 
-function Routes() {
-	// convert routes details to React component
-	const routesList = routes.map(route => (
-		<Route
-			path={route.path}
-			exact={route.exact}
-			component={route.component}
-			key={route.path}
-		/>
-	));
+// configure the prop types validation
+Routes.propTypes = {
+	username: PropTypes.string.isRequired
+};
 
+function Routes({ username }) {
 	return (
 		<Suspense fallback={<Loading size="50vh" />}>
 			<Switch>
-				{routesList}
+				{routesList(username)}
 				<Route>
-					<Error404 />
+					<Error404Container />
 				</Route>
 			</Switch>
 		</Suspense>
 	);
 }
 
-export default Routes;
+export default connect(mapStateToProps)(Routes);

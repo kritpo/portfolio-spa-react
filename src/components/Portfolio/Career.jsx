@@ -1,74 +1,65 @@
-import React, { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
+import React, { Fragment } from 'react';
 
-import { useTheme } from '@material-ui/core/styles';
-
-import {
-	Box,
-	Grid,
-	Button,
-	Typography,
-	useMediaQuery
-} from '@material-ui/core';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { ArrowUpward, Star } from '@material-ui/icons';
 import {
 	Timeline,
-	TimelineItem,
-	TimelineContent,
-	TimelineSeparator,
 	TimelineConnector,
-	TimelineDot
+	TimelineContent,
+	TimelineDot,
+	TimelineItem,
+	TimelineSeparator
 } from '@material-ui/lab';
 
-import CustomLink from '../../tools/CustomLink';
-import CareerItem, { WORK, EDUCATION, VOLUNTEER } from './Career/CareerItem';
+import CareerItemContainer from '../../containers/Portfolio/Career/CareerItemContainer';
+import CustomLink from '../../utils/CustomLink';
+import languages from '../../utils/languages';
+import { EDUCATION, VOLUNTEER, WORK } from './Career/CareerItem';
+
+/**
+ * convert careers details to React component
+ * @param {array} careers the list of careers data
+ * @returns the components array
+ */
+const careerList = careers =>
+	careers.map(career => (
+		<CareerItemContainer career={career} id={career.id} key={career.id} />
+	));
 
 // configure the prop types validation
 Career.propTypes = {
-	careers: PropTypes.arrayOf(
-		PropTypes.shape({
-			type: PropTypes.oneOf([WORK, EDUCATION, VOLUNTEER]).isRequired
-		})
-	).isRequired,
-	showWork: PropTypes.bool.isRequired,
+	careers: PropTypes.arrayOf(PropTypes.object).isRequired,
+	show: PropTypes.shape({
+		[WORK]: PropTypes.bool.isRequired,
+		[EDUCATION]: PropTypes.bool.isRequired,
+		[VOLUNTEER]: PropTypes.bool.isRequired
+	}).isRequired,
 	workToggle: PropTypes.func.isRequired,
-	showEducation: PropTypes.bool.isRequired,
 	educationToggle: PropTypes.func.isRequired,
-	showVolunteer: PropTypes.bool.isRequired,
-	volunteerToggle: PropTypes.func.isRequired
+	volunteerToggle: PropTypes.func.isRequired,
+	allToggle: PropTypes.func.isRequired,
+	isUpMd: PropTypes.bool.isRequired,
+	language: PropTypes.shape({
+		systemLanguageCode: PropTypes.string.isRequired
+	}).isRequired
 };
 
 function Career({
 	careers,
-	showWork,
+	show,
 	workToggle,
-	showEducation,
 	educationToggle,
-	showVolunteer,
-	volunteerToggle
+	volunteerToggle,
+	allToggle,
+	isUpMd,
+	language: { systemLanguageCode }
 }) {
-	// setup the breakpoints matchers hooks
-	const theme = useTheme();
-	const isUpMd = useMediaQuery(theme.breakpoints.up('md'));
-
-	// convert careers details to React component
-	const careerList = careers.map(career => (
-		<CareerItem career={career} id={career.id} key={career.id} />
-	));
-
-	// setup the all toddle handlers
-	const allToggle = () => {
-		// toggle all elements
-		workToggle();
-		educationToggle();
-		volunteerToggle();
-	};
-
 	return (
 		<Fragment>
 			<Box textAlign="center" clone>
 				<Typography component="h3" variant="h4" gutterBottom>
-					Mon parcours
+					{languages[systemLanguageCode].portfolio.career.title}
 				</Typography>
 			</Box>
 			<Grid container spacing={2} justify="center">
@@ -78,47 +69,64 @@ function Career({
 						color="primary"
 						onClick={allToggle}
 					>
-						Inverser la sélection
+						{
+							languages[systemLanguageCode].portfolio.career.menu
+								.invert
+						}
 					</Button>
 				</Grid>
 				<Grid item>
 					<Button
 						variant="contained"
-						color={showWork ? 'default' : 'primary'}
-						disableElevation={showWork}
+						color={show[WORK] ? 'default' : 'primary'}
+						disableElevation={show[WORK]}
 						onClick={workToggle}
 					>
-						Professionnel
+						{
+							languages[systemLanguageCode].portfolio.career.menu
+								.work
+						}
 					</Button>
 				</Grid>
 				<Grid item>
 					<Button
 						variant="contained"
-						color={showEducation ? 'default' : 'primary'}
-						disableElevation={showEducation}
+						color={show[EDUCATION] ? 'default' : 'primary'}
+						disableElevation={show[EDUCATION]}
 						onClick={educationToggle}
 					>
-						Scolaire
+						{
+							languages[systemLanguageCode].portfolio.career.menu
+								.education
+						}
 					</Button>
 				</Grid>
 				<Grid item>
 					<Button
 						variant="contained"
-						color={showVolunteer ? 'default' : 'primary'}
-						disableElevation={showVolunteer}
+						color={show[VOLUNTEER] ? 'default' : 'primary'}
+						disableElevation={show[VOLUNTEER]}
 						onClick={volunteerToggle}
 					>
-						Associatif
+						{
+							languages[systemLanguageCode].portfolio.career.menu
+								.volunteer
+						}
 					</Button>
 				</Grid>
 			</Grid>
 			<Timeline align={isUpMd ? 'alternate' : 'left'}>
-				{careerList.length > 0 ? (
-					careerList
+				{careers.length > 0 ? (
+					careerList(careers)
 				) : (
 					<TimelineItem>
 						<TimelineSeparator>
-							<CustomLink to="#career" hash smooth>
+							<CustomLink
+								aria-label="Work"
+								to="#career"
+								hash
+								smooth
+							>
 								<TimelineDot color="primary">
 									<Star />
 								</TimelineDot>
@@ -128,7 +136,10 @@ function Career({
 						<Box mt={1} clone>
 							<TimelineContent>
 								<Typography variant="body1">
-									Aucun élément à afficher
+									{
+										languages[systemLanguageCode].portfolio
+											.career.noElements
+									}
 								</Typography>
 							</TimelineContent>
 						</Box>
@@ -136,7 +147,7 @@ function Career({
 				)}
 				<TimelineItem>
 					<TimelineSeparator>
-						<CustomLink to="#career" hash smooth>
+						<CustomLink aria-label="Work" to="#career" hash smooth>
 							<TimelineDot color="primary">
 								<ArrowUpward />
 							</TimelineDot>
